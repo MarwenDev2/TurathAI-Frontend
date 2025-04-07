@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h4 class="card-title">My Tasks</h4>
+    <div>
+      <a href="javascript:void(0);" class="btn btn-sm btn-primary">
+        <i class="bx bx-plus me-1"></i>Create Task
+      </a>
+    </div>
+  </div>
+  
+  <div class="card-body p-0 pb-3">
+    <ngx-simplebar class="p-3" data-simplebar style="max-height: 386px">
+      @for (
+        task of taskList;
+        track $index;
+        let first = $first;
+        let last = $last
+      ) {
+        <div
+          class="form-check form-todo ps-4"
+          [ngClass]="{ 'py-1 my-2': !first && !last, 'pt-1 mt-2': last }"
+        >
+          <input
+            type="checkbox"
+            class="form-check-input rounded-circle mt-0 fs-18"
+            id="customCheck1"
+            [checked]="task.checked"
+          />
+          <label class="form-check-label" for="customCheck1">{{
+            task.task_name
+          }}</label>
+        </div>
+      }
+    </ngx-simplebar>
+  </div>
+</div>

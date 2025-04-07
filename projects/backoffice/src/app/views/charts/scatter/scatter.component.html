@@ -1,0 +1,97 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor mb-1" id="overview">Overview</h5>
+          <p class="mb-0">
+            <span class="fw-medium"
+              >Find the JS file for the following chart at:</span
+            >
+            <code> src/app/views/charts/scatter.component.ts</code>
+          </p>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title anchor" id="basic">Scatter (XY) Chart</h4>
+          <div dir="ltr">
+            <div id="basic-scatter" class="apex-charts">
+              <apx-chart
+                [series]="basicscatterChart.series!"
+                [chart]="basicscatterChart.chart!"
+                [xaxis]="basicscatterChart.xaxis!"
+                [yaxis]="basicscatterChart.yaxis!"
+                [colors]="basicscatterChart.colors!"
+                [grid]="basicscatterChart.grid!"
+                [legend]="basicscatterChart.legend!"
+                [responsive]="basicscatterChart.responsive!"
+              >
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title anchor" id="datetime">
+            Scatter Chart - Datetime
+          </h4>
+          <div dir="ltr">
+            <div id="datetime-scatter" class="apex-charts">
+              <apx-chart
+                [series]="datetimescatterChart.series!"
+                [chart]="datetimescatterChart.chart!"
+                [dataLabels]="datetimescatterChart.dataLabels!"
+                [xaxis]="datetimescatterChart.xaxis!"
+                [yaxis]="datetimescatterChart.yaxis!"
+                [colors]="datetimescatterChart.colors!"
+                [grid]="datetimescatterChart.grid!"
+                [legend]="datetimescatterChart.legend!"
+                [responsive]="datetimescatterChart.responsive!"
+              >
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title anchor" id="images">Scatter - Images</h4>
+          <div dir="ltr">
+            <div id="scatter-images" class="apex-charts scatter-images-chart">
+              <apx-chart
+                [series]="imagescatterChart.series!"
+                [chart]="imagescatterChart.chart!"
+                [xaxis]="imagescatterChart.xaxis!"
+                [yaxis]="imagescatterChart.yaxis!"
+                [colors]="imagescatterChart.colors!"
+                [legend]="imagescatterChart.legend!"
+                [markers]="imagescatterChart.markers!"
+                [fill]="imagescatterChart.fill!"
+              >
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  
+    <div class="col-xl-3">
+      <ui-examples-list
+        [linkList]="[
+          { label: 'Scatter (XY) Chart', link: '#basic' },
+          { label: 'Scatter Chart - Datetime', link: '#datetime' },
+          { label: 'Scatter - Images', link: '#images' }
+        ]"
+      />
+    </div>
+  </div>
+  
+</div>

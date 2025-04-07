@@ -1,0 +1,136 @@
+<div class="card position-relative overflow-hidden chatOffcanvas" id="chatOffcanvas">
+  <div class="card-header border-0 d-flex justify-content-between align-items-center">
+    <h4 class="card-title">Chat</h4>
+    <a (click)="openSetting('chatOffcanvas')" class="fs-18" type="button" aria-haspopup="true" aria-expanded="true">
+      <i class="bx bx-cog"></i>
+    </a>
+  </div>
+
+  <div class="chat-search px-3">
+    <div class="chat-search-box">
+      <input class="form-control" type="text" name="search" placeholder="Search ..." [(ngModel)]="searchText" (ngModelChange)="searchContact()" />
+      <button type="submit" class="btn btn-sm btn-link search-icon p-0"><i class="bx bx-search-alt"></i></button>
+    </div>
+  </div>
+
+  <div class="swiper mySwiper p-1 mx-3">
+    <swiper-container [config]="swiperConfig" class="swiper-wrapper">
+      @for (usr of userData; track $index) {
+      <swiper-slide class="swiper-slide avatar-sm">
+        <div class="chat-user-status-box">
+          <span><img [src]="usr.image" alt="avatar-1" class="img-fluid avatar-sm rounded-circle avatar-border" /></span>
+        </div>
+      </swiper-slide>
+      }
+    </swiper-container>
+  </div>
+
+  <ul ngbNav #nav="ngbNav" class="nav nav-tabs nav-justified nav-bordered border-top mt-2">
+    <li ngbNavItem class="nav-item">
+      <a ngbNavLink class="nav-link py-2">
+        Chat
+      </a>
+      <ng-template ngbNavContent>
+          <ngx-simplebar class="px-3 mb-3 chat-setting-height" data-simplebar>
+            @for (data of contactData; track $index) {
+            <a href="javascript:void(0);" (click)="getDetail(data)" class="text-body">
+              <div class="d-flex align-items-center p-2 chat-item">
+                <div class="flex-shrink-0 position-relative">
+                  <img [src]="data.image" class="me-2 rounded-circle" height="36" alt="avatar-2" />
+                </div>
+                <div class="flex-grow-1 overflow-hidden">
+                  <h5 class="my-0">
+                    <span class="float-end text-muted fs-13">{{
+                      data.time
+                      }}</span>
+                    {{ data.name }}
+                  </h5>
+                  <p class="mt-1 mb-0 fs-13 text-muted d-flex align-items-end justify-content-between">
+                    <span class="w-75" [ngClass]="{'text-primary':data.lastMsg=='typing...'}">{{ data.lastMsg }}</span>
+                    @if (data.isRead) {
+                    <i class="bx bx-check-double text-success"></i>
+                    }
+                  </p>
+                </div>
+              </div>
+            </a>
+            }
+          </ngx-simplebar>
+      </ng-template>
+    </li>
+    <li ngbNavItem class="nav-item">
+      <a ngbNavLink class="nav-link py-2">
+        Group
+      </a>
+      <ng-template ngbNavContent>
+        <div class="tab-pane" id="group-list">
+          <ngx-simplebar class="px-3 mb-3 chat-setting-height" data-simplebar>
+            <div class="d-flex align-items-center position-relative mb-3">
+              <a href="javascript:void(0);" class="me-2 stretched-link rounded text-bg-primary avatar d-flex align-items-center justify-content-center fs-18">
+                <i class="bx bxs-user"></i>
+              </a>
+              <div class="flex-grow-1">
+                <h5 class="my-0 fs-14">New Group</h5>
+              </div>
+            </div>
+            @for (data of groupData; track $index) {
+            <div class="chat-item d-flex mb-3 align-items-center position-relative">
+              <a href="javascript:void(0);" (click)="getDetail(data)" class="me-2 stretched-link rounded bg-soft-primary text-primary avatar d-flex align-items-center justify-content-center fs-18">{{ data.name.charAt(0) }}</a>
+              <div class="flex-grow-1 ps-1 overflow-hidden">
+                @if (data.badge) {
+                <div class="float-end">
+                  <span class="badge badge-outline-danger">+{{ data.badge }}</span>
+                </div>
+                }
+                <h5 class="fs-14 m-0">#{{ data.name }}</h5>
+              </div>
+            </div>
+            }
+          </ngx-simplebar>
+        </div>
+      </ng-template>
+    </li>
+    <li ngbNavItem class="nav-item">
+      <a ngbNavLink class="nav-link py-2">
+        Contact
+      </a>
+      <ng-template ngbNavContent>
+        <div class="tab-pane" id="contact-list">
+          <ngx-simplebar class="px-3 mb-3 chat-setting-height" data-simplebar>
+            <div class="chat-item d-flex align-items-center position-relative py-2">
+              <a href="javascript:void(0);" class="me-2 stretched-link rounded-circle text-bg-primary avatar d-flex align-items-center justify-content-center fs-18">
+                <i class="bx bx-group"></i>
+              </a>
+              <div class="flex-grow-1">
+                <h5 class="my-0 fs-14">New Group</h5>
+              </div>
+            </div>
+            <div class="chat-item d-flex align-items-center position-relative py-2">
+              <a href="javascript:void(0);" class="me-2 stretched-link rounded-circle text-bg-primary avatar d-flex align-items-center justify-content-center fs-18">
+                <i class="bx bx-user-plus"></i>
+              </a>
+              <div class="flex-grow-1">
+                <h5 class="my-0 fs-14">New Contact</h5>
+              </div>
+            </div>
+            @for (data of userContactList; track $index) {
+            <div class="chat-item d-flex align-items-center position-relative py-2">
+              <a href="javascript:void(0);" (click)="getDetail(data)" class="stretched-link"><img [src]="data.image" class="me-2 rounded-circle" height="36" alt="avatar-2" /></a>
+              <div class="flex-grow-1">
+                <h5 class="my-0 fs-14">
+                  {{ data.name }}
+                </h5>
+                <p class="mt-1 mb-0 text-muted">
+                  <span class="w-75">{{ data.status }}</span>
+                </p>
+              </div>
+            </div>
+            }
+          </ngx-simplebar>
+        </div>
+      </ng-template>
+    </li>
+  </ul>
+
+  <div class="tab-content" [ngbNavOutlet]="nav"></div>
+</div>

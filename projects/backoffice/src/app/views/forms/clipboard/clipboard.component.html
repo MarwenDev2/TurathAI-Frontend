@@ -1,0 +1,162 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="overview">
+            Overview
+            <a
+              class="btn btn-sm btn-outline-success rounded-2 float-end"
+              href="https://www.npmjs.com/package/ngx-clipboard"
+              target="_blank"
+            >
+              Official Website
+            </a>
+          </h5>
+          <p class="text-muted mb-3">
+            Choices.js is a lightweight and powerful datetime picker.
+          </p>
+  
+          <h5 class="mt-2">Usage</h5>
+          <p>
+            To use ngx-clipboard, follow the instructions from its documentation
+            over
+            <a
+              href="https://www.npmjs.com/package/ngx-clipboard"
+              class="text-primary"
+            >
+              here
+            </a>
+          </p>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="copy-from-element">
+            Copy text from another element
+            <a class="anchor-link" href="#copy-from-element">#</a>
+          </h5>
+          <p class="text-muted">
+            The value you include on this attribute needs to match another's
+            element selector.
+          </p>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <div class="input-group">
+                  <input
+                    id="clipboard_example"
+                    [(ngModel)]="text1"
+                    type="text"
+                    class="form-control"
+                    placeholder="name@example.com"
+                    value="name@example.com"
+                  />
+                  <button
+                    ngxClipboard
+                    [cbContent]="text1"
+                    (cbOnSuccess)="isCopied1 = true"
+                    (cbOnError)="onCopyFailure()"
+                    class="btn btn-primary btn-copy-clipboard"
+                    data-clipboard-target="#clipboard_example"
+                  >
+                    {{ isCopied1 ? 'Copied!' : 'Copy' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="cut-from-element">
+            Cut text from another element
+            <a class="anchor-link" href="#cut-from-element">#</a>
+          </h5>
+          <p class="text-muted">
+            Additionally, you can define a
+            <code>data-clipboard-action</code>
+            attribute to specify if you want to either <code>copy</code> or
+            <code>cut</code> content.
+          </p>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="d-flex gap-2 align-items-start mb-3">
+                <textarea
+                  id="clipboard_cut"
+                  [(ngModel)]="text2"
+                  class="form-control"
+                  cols="62"
+                  rows="6"
+                >
+                                  Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga.</textarea
+                >
+                <button
+                  ngxClipboard
+                  [cbContent]="text2"
+                  type="button"
+                  id="cutButton"
+                  (cbOnSuccess)="callServiceToCopy(); isCopied2 = true"
+                  class="btn btn-primary"
+                  data-clipboard-action="cut"
+                  data-clipboard-target="#clipboard_cut"
+                >
+                  {{ isCopied2 ? 'Copied!' : 'Cut' }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="copy-from-attribute">
+            Copy text from attribute
+            <a class="anchor-link" href="#copy-from-attribute">#</a>
+          </h5>
+  
+          <p class="text-muted">
+            Truth is, you don't even need another element to copy its content
+            from. You can just include a
+            <code>data-clipboard-text</code>
+            attribute in your trigger element.
+          </p>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <button
+                  ngxClipboard
+                  (cbOnSuccess)="isCopied3 = true"
+                  [cbContent]="
+                    'Just because you can doesnt mean you should — clipboard.js'
+                  "
+                  id="clipboard_text"
+                  class="btn btn-primary"
+                >
+                  {{ isCopied3 ? 'Copied!' : 'Copy to clipboard' }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-xl-3">
+      <ui-examples-list
+        [linkList]="[
+          { label: 'Copy text from another element', link: '#copy-from-element' },
+          { label: 'Cut text from another element', link: '#cut-from-element' },
+          { label: 'Copy text from attribute', link: '#copy-from-attribute' }
+        ]"
+      />
+    </div>
+  </div>
+</div>

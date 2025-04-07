@@ -1,0 +1,258 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor" id="overview">
+            Overview <a class="btn btn-sm btn-outline-success rounded-2 float-end"
+              href="https://apexcharts.com/javascript-chart-demos/" target="_blank"> Official Website </a>
+          </h5>
+          <p class="text-muted mb-3">ApexCharts is loaded with powerful features to fulfill your data-visualization
+            needs.</p>
+
+          <h5 class="mt-2">Usage</h5>
+          <p>Apexcharts's CSS and Javascript files are bundled in the <code>vender.min.css</code> and
+            <code>vendor.js</code> and globally included in all pages.</p>
+
+          <p class="mb-0"><span class="fw-medium">Find the JS file for the following chart at:</span>
+            <code> ../src/assets/js/components/apexchart-area.js</code></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor mb-3" id="basic">Basic Area Chart<a class="anchor-link" href="#basic">#</a></h5>
+          <div dir="ltr" class="mb-3">
+            <div id="basic-area" class="apex-charts"></div>
+            <apx-chart [series]="basicAreaChart.series!" [chart]="basicAreaChart.chart!" [xaxis]="basicAreaChart.xaxis!"
+              [stroke]="basicAreaChart.stroke!" [dataLabels]="basicAreaChart.dataLabels!"
+              [yaxis]="basicAreaChart.yaxis!" [labels]="basicAreaChart.labels!" [legend]="basicAreaChart.legend!"
+              [title]="basicAreaChart.title!" [subtitle]="basicAreaChart.subtitle!" [colors]="basicAreaChart.colors!"
+              dir="ltr"></apx-chart>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor mb-3" id="spline">Spline Area<a class="anchor-link" href="#spline">#</a></h5>
+
+          <div dir="ltr" class="mb-3">
+            <apx-chart
+            [series]="splineAreaChart.series!"
+            [chart]="splineAreaChart.chart!"
+            [xaxis]="splineAreaChart.xaxis!"
+            [stroke]="splineAreaChart.stroke!"
+            [tooltip]="splineAreaChart.tooltip!"
+            [dataLabels]="splineAreaChart.dataLabels!"
+            [colors]="splineAreaChart.colors!"
+            dir="ltr"
+          ></apx-chart>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+            <h5 class="card-title anchor" id="datetime">
+              Area Chart - Datetime X-axis<a class="anchor-link" href="#datetime">#</a>
+            </h5>
+            <div class="toolbar apex-toolbar">
+              <button id="one_month" class="btn btn-sm btn-soft-secondary me-1">1M</button>
+              <button id="six_months" class="btn btn-sm btn-soft-secondary me-1">6M</button>
+              <button id="one_year" class="btn btn-sm btn-soft-secondary active me-1">1Y</button>
+              <button id="ytd" class="btn btn-sm btn-soft-secondary me-1">YTD</button>
+              <button id="all" class="btn btn-sm btn-soft-secondary">ALL</button>
+            </div>
+          </div>
+          <div dir="ltr">
+            <apx-chart
+              #chart
+              [series]="datetimeAreaChart.series!"
+              [chart]="datetimeAreaChart.chart!"
+              [colors]="datetimeAreaChart.colors!"
+              [yaxis]="datetimeAreaChart.yaxis!"
+              [dataLabels]="datetimeAreaChart.dataLabels!"
+              [markers]="datetimeAreaChart.markers!"
+              [stroke]="datetimeAreaChart.stroke!"
+              [grid]="datetimeAreaChart.grid!"
+              [fill]="datetimeAreaChart.fill!"
+              [xaxis]="datetimeAreaChart.xaxis!"
+              [tooltip]="datetimeAreaChart.tooltip!"
+              [annotations]="datetimeAreaChart.annotations!"
+              [colors]="datetimeAreaChart.colors!"
+              dir="ltr"
+            ></apx-chart>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor mb-3" id="negative">
+            Area with Negative Values<a class="anchor-link" href="#negative">#</a>
+          </h5>
+          <div dir="ltr" class="mb-3">
+            <div id="area-chart-negative" class="apex-charts">
+              <apx-chart
+              [series]="negativeAreaChart.series!"
+              [chart]="negativeAreaChart.chart!"
+              [xaxis]="negativeAreaChart.xaxis!"
+              [stroke]="negativeAreaChart.stroke!"
+              [tooltip]="negativeAreaChart.tooltip!"
+              [dataLabels]="negativeAreaChart.dataLabels!"
+              [fill]="negativeAreaChart.fill!"
+              [yaxis]="negativeAreaChart.yaxis!"
+              [title]="negativeAreaChart.title!"
+              [colors]="negativeAreaChart.colors!"
+              dir="ltr"
+           />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor mb-3" id="github">
+            Selection - Github Style<a class="anchor-link" href="#github">#</a>
+          </h5>
+
+          <div class="mb-3">
+            <div id="area-chart-github" class="apex-charts">
+              <apx-chart
+              [series]="githubmYearAreaChart.series!"
+              [chart]="githubmYearAreaChart.chart!"
+              [colors]="githubmYearAreaChart.colors!"
+              [legend]="githubmYearAreaChart.legend!"
+              [dataLabels]="githubmYearAreaChart.dataLabels!"
+              [fill]="githubmYearAreaChart.fill!"
+              [stroke]="githubmYearAreaChart.stroke!"
+              [xaxis]="githubmYearAreaChart.xaxis!"
+              dir="ltr"
+            />
+            </div>
+            <div class="pt-2 pb-2">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <img src="assets/images/users/avatar-2.jpg" class="avatar-xs rounded" alt="file-image">
+                </div>
+                <div class="col ps-0">
+                  <a href="javascript:void(0);" class="text-muted fw-bold">Techzaa</a>
+                </div>
+              </div>
+            </div>
+            <div id="area-chart-github2" class="apex-charts">
+              <apx-chart
+              [series]="githubmMonthAreaChart.series!"
+              [chart]="githubmMonthAreaChart.chart!"
+              [colors]="githubmMonthAreaChart.colors!"
+              [yaxis]="githubmMonthAreaChart.yaxis!"
+              [dataLabels]="githubmMonthAreaChart.dataLabels!"
+              [fill]="githubmMonthAreaChart.fill!"
+              [stroke]="githubmMonthAreaChart.stroke!"
+              [xaxis]="githubmMonthAreaChart.xaxis!"
+              dir="ltr"
+           />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+
+        <div class="card-body">
+          <h5 class="card-title anchor mb-3" id="stacked">
+            Stacked Area<a class="anchor-link" href="#stacked">#</a>
+          </h5>
+          <div dir="ltr" class="mb-3">
+            <div id="stacked-area" class="apex-charts">
+              <apx-chart
+              [series]="stackedAreaChart.series!"
+              [chart]="stackedAreaChart.chart!"
+              [xaxis]="stackedAreaChart.xaxis!"
+              [dataLabels]="stackedAreaChart.dataLabels!"
+              [yaxis]="stackedAreaChart.yaxis!"
+              [colors]="stackedAreaChart.colors!"
+              [legend]="stackedAreaChart.legend!"
+              [stroke]="stackedAreaChart.stroke!"
+              [fill]="stackedAreaChart.fill!"
+              dir="ltr"
+            />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor mb-3" id="timeSeries">
+            Irregular TimeSeries<a class="anchor-link" href="#timeSeries">#</a>
+          </h5>
+          <div dir="ltr" class="mb-3">
+            <div id="area-timeSeries" class="apex-charts">
+              <apx-chart
+              [series]="timeSeriesChart.series!"
+              [chart]="timeSeriesChart.chart!"
+              [xaxis]="timeSeriesChart.xaxis!"
+              [dataLabels]="timeSeriesChart.dataLabels!"
+              [yaxis]="timeSeriesChart.yaxis!"
+              [colors]="timeSeriesChart.colors!"
+              [legend]="timeSeriesChart.legend!"
+              [fill]="timeSeriesChart.fill!"
+              [title]="timeSeriesChart.title!"
+              [grid]="timeSeriesChart.grid!"
+              [stroke]="timeSeriesChart.stroke!"
+              dir="ltr"
+            />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor mb-3" id="chart-nullvalues">
+            Area Chart with Null values<a class="anchor-link" href="#chart-nullvalues">#</a>
+          </h5>
+
+          <div dir="ltr" class="mb-3">
+            <div id="area-chart-nullvalues" class="apex-charts">
+              <apx-chart
+              [series]="nullvaluesChart.series!"
+              [chart]="nullvaluesChart.chart!"
+              [xaxis]="nullvaluesChart.xaxis!"
+              [stroke]="nullvaluesChart.stroke!"
+              [tooltip]="nullvaluesChart.tooltip!"
+              [dataLabels]="nullvaluesChart.dataLabels!"
+              [fill]="nullvaluesChart.fill!"
+              [markers]="nullvaluesChart.markers!"
+              [yaxis]="nullvaluesChart.yaxis!"
+              [title]="nullvaluesChart.title!"
+              [colors]="nullvaluesChart.colors!"
+              dir="ltr"
+            ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3">
+      <ui-examples-list
+      [linkList]="[
+        { label: 'Overview', link: '#overview' },
+        { label: 'Basic Area Chart', link: '#basic' },
+        { label: 'Spline Area', link: '#spline' },
+        { label: 'Area Chart - Datetime X-axis', link: '#datetime' },
+        { label: 'Area with Negative Values', link: '#negative' },
+        { label: 'Selection - Github Style', link: '#github' },
+        { label: 'Stacked Area', link: '#stacked' },
+        { label: 'Irregular TimeSeries', link: '#timeSeries' },
+        { label: 'Area Chart with Null values', link: '#chart-nullvalues' }
+      ]"
+    />
+    </div>
+  </div>
+</div>

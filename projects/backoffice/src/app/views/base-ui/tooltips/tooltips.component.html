@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+        <div class="card">
+            <div class="card-body">
+  
+                <h5 class="card-title mb-1 anchor" id="direction">
+                    Tooltip Direction<a class="anchor-link" href="#direction">#</a>
+                </h5>
+                <p class="text-muted">
+                    Four options are available: top, right, bottom, and left aligned.
+                </p>
+                <div class="mb-3">
+                    <div class="d-flex flex-wrap gap-3">
+                        <button type="button" class="btn btn-primary" placement="top" ngbTooltip="Tooltip on top">
+                            Tooltip on top
+                        </button>
+                        <button type="button" class="btn btn-primary" placement="right" ngbTooltip="Tooltip on right">
+                            Tooltip on right
+                        </button>
+                        <button type="button" class="btn btn-primary" placement="bottom" ngbTooltip="Tooltip on bottom">
+                            Tooltip on bottom
+                        </button>
+                        <button type="button" class="btn btn-primary" placement="left" ngbTooltip="Tooltip on left">
+                            Tooltip on left
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title mb-1 anchor" id="color_tooltip">
+                    Color Tooltip <a class="anchor-link" href="#color_tooltip">#</a>
+                </h5>
+                <p class="text-muted">We set a custom class with ex. <code>tooltipClass="primary-tooltip"</code> to scope our background-color primary appearance and use it to override a local CSS variable.</p>
+                <div class="mb-3">
+                    <div class="d-flex flex-wrap gap-3">
+                        <button type="button" class="btn btn-primary" placement="top" tooltipClass="primary-tooltip" ngbTooltip="This top tooltip is themed via CSS variables.">
+                            Primary tooltip
+                        </button>
+                        <button type="button" class="btn btn-danger" placement="top" tooltipClass="danger-tooltip" ngbTooltip="This top tooltip is themed via CSS variables.">
+                            Danger tooltip
+                        </button>
+                        <button type="button" class="btn btn-info" placement="top" tooltipClass="info-tooltip" ngbTooltip="This top tooltip is themed via CSS variables.">
+                            Info tooltip
+                        </button>
+                        <button type="button" class="btn btn-success" placement="top" tooltipClass="success-tooltip" ngbTooltip="This top tooltip is themed via CSS variables.">
+                            Success tooltip
+                        </button>
+                    </div>
+                </div>
+            </div> 
+        </div> 
+    </div> 
+  
+    <div class="col-xl-3">
+      <ui-examples-list
+      [linkList]="[
+        { label: 'Direction', link: '#direction' },
+        { label: 'Color Tooltip', link: '#color_tooltip' }
+      ]"
+    />
+    </div>
+  </div> 
+</div>

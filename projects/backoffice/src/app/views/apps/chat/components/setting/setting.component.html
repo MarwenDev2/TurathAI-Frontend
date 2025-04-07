@@ -1,0 +1,332 @@
+<div class="offcanvas-header">
+  <h5 class="offcanvas-title text-truncate w-50" id="user-settingLabel">
+    Profile
+  </h5>
+  <button type="button" class="btn-close" (click)="activeOffcanvas.close()" aria-label="Close"></button>
+</div>
+<ngx-simplebar class="offcanvas-body p-0 h-100" data-simplebar>
+  <h4 class="page-title p-3 my-0">Setting</h4>
+
+  <div class="d-flex align-items-center px-3 pb-3 border-bottom">
+    <img src="assets/images/users/avatar-1.jpg" class="me-2 rounded-circle" height="36" alt="avatar-1" />
+    <div class="flex-grow-1">
+      <div class="float-end">
+        <a href="javascript:void(0);"><i class="bx bx-qr-scan fs-20"></i></a>
+      </div>
+      <h5 class="my-0 fs-14">Gaston Lapierre</h5>
+      <p class="mt-1 mb-0 text-muted">
+        <span class="w-75">Hey there! I am using Larkon Chat.</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="px-3 my-3 app-chat-setting">
+    <div ngbAccordion [closeOthers]="true" class="accordion custom-accordion" id="accordionSetting">
+      <div ngbAccordionItem class="border-0">
+        <h5 ngbAccordionHeader class="my-0" id="headingAccount">
+          <button ngbAccordionButton class="px-0 pt-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAccount" aria-expanded="true" aria-controls="collapseAccount">
+            <span class="d-flex align-items-center">
+              <i class="bx bx-key me-3 fs-20"></i>
+              <span class="flex-grow-1">
+                <span class="fs-14 h5 mt-0 mb-1 d-block">Account</span>
+                <span class="mt-1 mb-0 text-muted w-75">Privacy, security, change number</span>
+              </span>
+            </span>
+          </button>
+        </h5>
+
+        <div ngbAccordionCollapse id="collapseAccount" aria-labelledby="headingAccount" data-bs-parent="#accordionSetting">
+          <div ngbAccordionBody class="pb-0">
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2">
+                <a href="javascript:void(0);"><i class="bx bx-lock-alt fs-18 me-2"></i>Privacy</a>
+              </li>
+              <li class="mb-2">
+                <a href="javascript:void(0);"><i class="bx bx-check-Reback fs-18 me-2"></i>Security</a>
+              </li>
+              <li class="mb-2">
+                <a href="javascript:void(0);"><i class="bx bx-badge-check fs-18 me-2"></i>Two-step
+                  verification</a>
+              </li>
+              <li class="mb-2">
+                <a href="javascript:void(0);"><i class="bx bx-arrow-from-left fs-18 me-2"></i>Change
+                  number</a>
+              </li>
+              <li class="mb-2">
+                <a href="javascript:void(0);"><i class="bx bx-info-circle fs-18 me-2"></i>Request account
+                  info</a>
+              </li>
+              <li>
+                <a href="javascript:void(0);"><i class="bx bx-trash fs-18 me-2"></i>Delete my account</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div ngbAccordionItem class="border-0">
+        <h5 ngbAccordionHeader class="my-0" id="headingChats">
+          <button ngbAccordionButton class="px-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseChats" aria-expanded="false" aria-controls="collapseChats">
+            <span class="d-flex align-items-center">
+              <i class="bx bx-message-dots me-3 fs-20"></i>
+              <span class="flex-grow-1">
+                <span class="fs-14 h5 mt-0 mb-1 d-block">Chats</span>
+                <span class="mt-1 mb-0 text-muted w-75">Theme, wallpapers, chat history</span>
+              </span>
+            </span>
+          </button>
+        </h5>
+
+        <div id="collapseChats" ngbAccordionCollapse aria-labelledby="headingChats" data-bs-parent="#accordionSetting">
+          <div ngbAccordionBody class="pb-0">
+            <h5 class="mb-2">Display</h5>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2 d-flex">
+                <i class="bx bx-palette fs-18 me-2"></i>
+                <div class="flex-grow-1">
+                  <a href="javascript:void(0);">Theme</a>
+                  <p class="mb-0 text-muted fs-12">System default</p>
+                </div>
+              </li>
+              <li class="mb-2">
+                <a href="javascript:void(0);"><i class="bx bx-image fs-16 me-2"></i>Wallpaper</a>
+              </li>
+            </ul>
+            <hr />
+            <h5>Chat Setting</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2 ms-2">
+                <div class="float-end">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="media" checked />
+                  </div>
+                </div>
+                <a href="javascript:void(0);">Media Visibility</a>
+                <p class="mb-0 text-muted fs-12">
+                  Show Newly downloaded media in your phone's gallery
+                </p>
+              </li>
+              <li class="mb-2 ms-2">
+                <div class="float-end">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="enter" />
+                  </div>
+                </div>
+                <a href="javascript:void(0);">Enter is send</a>
+                <p class="mb-0 text-muted fs-12">
+                  Enter key will send your message
+                </p>
+              </li>
+              <li class="mb-2 ms-2">
+                <a href="javascript:void(0);">Font size</a>
+                <p class="mb-0 text-muted fs-12">small</p>
+              </li>
+            </ul>
+            <hr />
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2">
+                <div class="d-flex">
+                  <i class="bx bx-text fs-16 me-2"></i>
+                  <div class="flex-grow-1">
+                    <a href="javascript:void(0);">App Language</a>
+                    <p class="mb-0 text-muted fs-12">English</p>
+                  </div>
+                </div>
+              </li>
+              <li class="mb-2">
+                <a href="javascript:void(0);"><i class="bx bx-cloud-upload fs-16 me-2"></i>Chat Backup</a>
+              </li>
+              <li>
+                <a href="javascript:void(0);"><i class="bx bx-history fs-16 me-2"></i>Chat History</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div ngbAccordionItem class="border-0">
+        <h5 ngbAccordionHeader class="my-0" id="headingNotification">
+          <button ngbAccordionButton class="px-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNotification" aria-expanded="false" aria-controls="collapseNotification">
+            <span class="d-flex align-items-center">
+              <i class="bx bx-bell me-3 fs-20"></i>
+              <span class="flex-grow-1">
+                <span class="fs-14 h5 mt-0 mb-1 d-block">Notification</span>
+                <span class="mt-1 mb-0 text-muted w-75">Message, group, call tones</span>
+              </span>
+            </span>
+          </button>
+        </h5>
+
+        <div ngbAccordionCollapse id="collapseNotification" aria-labelledby="headingNotification" data-bs-parent="#accordionSetting">
+          <div ngbAccordionBody class="pb-0">
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2">
+                <div class="float-end">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="conversation" checked />
+                  </div>
+                </div>
+                <a href="javascript:void(0);">Conversation Tones</a>
+                <p class="mb-0 text-muted fs-12">
+                  Play sound for incoming and outgoing message.
+                </p>
+              </li>
+            </ul>
+            <hr />
+            <h5>Messages</h5>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2">
+                <a href="javascript:void(0);">Notification Tone</a>
+                <p class="mb-0 text-muted fs-12">Default ringtone</p>
+              </li>
+              <li class="mb-2">
+                <a href="javascript:void(0);">Vibrate</a>
+                <p class="mb-0 text-muted fs-12">Default</p>
+              </li>
+              <li class="mb-2">
+                <a href="javascript:void(0);">Light</a>
+                <p class="mb-0 text-muted fs-12">White</p>
+              </li>
+            </ul>
+            <hr />
+            <h5>Groups</h5>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2">
+                <a href="javascript:void(0);">Notification Tone</a>
+                <p class="mb-0 text-muted fs-12">Default ringtone</p>
+              </li>
+              <li class="mb-2">
+                <a href="javascript:void(0);">Vibrate</a>
+                <p class="mb-0 text-muted fs-12">Off</p>
+              </li>
+              <li class="mb-2">
+                <a href="javascript:void(0);">Light</a>
+                <p class="mb-0 text-muted fs-12">Dark</p>
+              </li>
+            </ul>
+            <hr />
+            <h5>Calls</h5>
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2">
+                <a href="javascript:void(0);">Ringtone</a>
+                <p class="mb-0 text-muted fs-12">Default ringtone</p>
+              </li>
+              <li>
+                <a href="javascript:void(0);">Vibrate</a>
+                <p class="mb-0 text-muted fs-12">Default</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div ngbAccordionItem class="border-0">
+        <h5 ngbAccordionHeader class="my-0" id="headingStorage">
+          <button ngbAccordionButton class="px-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStorage" aria-expanded="false" aria-controls="collapseStorage">
+            <span class="d-flex align-items-center">
+              <i class="bx bx-history me-3 fs-20"></i>
+              <span class="flex-grow-1">
+                <span class="fs-14 h5 mt-0 mb-1 d-block">Storage and data</span>
+                <span class="mt-1 mb-0 text-muted w-75">Network usage, auto download</span>
+              </span>
+            </span>
+          </button>
+        </h5>
+
+        <div ngbAccordionCollapse id="collapseStorage" aria-labelledby="headingStorage" data-bs-parent="#accordionSetting">
+          <div ngbAccordionBody class="pb-0">
+            <ul class="list-unstyled mb-0">
+              <li class="d-flex">
+                <i class="bx bx-folder fs-16 me-2"></i>
+                <div class="flex-grow-1">
+                  <a href="javascript:void(0);">Manage storage</a>
+                  <p class="mb-0 text-muted fs-12">2.4 GB</p>
+                </div>
+              </li>
+            </ul>
+            <hr />
+            <ul class="list-unstyled mb-0">
+              <li class="d-flex">
+                <i class="bx bx-wifi fs-16 me-2"></i>
+                <div class="flex-grow-1">
+                  <a href="javascript:void(0);">Network usage</a>
+                  <p class="mb-0 text-muted fs-12">
+                    7.2 GB sent - 13.8 GB received
+                  </p>
+                </div>
+              </li>
+            </ul>
+            <hr />
+            <h5 class="mb-0">Media auto-download</h5>
+            <p class="mb-0 text-muted fs-12">
+              Voice message are always automatically downloaded
+            </p>
+            <ul class="list-unstyled mb-0 mt-2">
+              <li class="mb-2">
+                <a href="javascript:void(0);">When using mobile data</a>
+                <p class="mb-0 text-muted fs-12">No media</p>
+              </li>
+              <li class="mb-2 ms-2">
+                <a href="javascript:void(0);">When connected on wi-fi</a>
+                <p class="mb-0 text-muted fs-12">No media</p>
+              </li>
+              <li class="mb-2 ms-2">
+                <a href="javascript:void(0);">When roaming</a>
+                <p class="mb-0 text-muted fs-12">No media</p>
+              </li>
+            </ul>
+            <hr />
+            <h5 class="mb-0">Media upload quality</h5>
+            <p class="mb-0 text-muted fs-12">
+              Choose the quality of media files to be sent
+            </p>
+            <ul class="list-unstyled mb-0 mt-2">
+              <li class="ms-2">
+                <a href="javascript:void(0);">Photo upload quality</a>
+                <p class="mb-0 text-muted fs-12">Auto (recommended)</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div ngbAccordionItem class="border-0">
+        <h5 ngbAccordionHeader class="my-0" id="headingHelp">
+          <button ngbAccordionButton class="px-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHelp" aria-expanded="false" aria-controls="collapseHelp">
+            <span class="d-flex align-items-center">
+              <i class="bx bx-info-circle me-3 fs-20"></i>
+              <span class="flex-grow-1">
+                <span class="fs-14 h5 mt-0 mb-1 d-block">Help</span>
+                <span class="mt-1 mb-0 text-muted w-75">Help center, contact us, privacy policy</span>
+              </span>
+            </span>
+          </button>
+        </h5>
+
+        <div ngbAccordionCollapse id="collapseHelp" aria-labelledby="headingHelp" data-bs-parent="#accordionSetting">
+          <div ngbAccordionBody class="pb-0">
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2">
+                <a href="javascript:void(0);"><i class="bx bx-info-circle fs-16 me-2"></i>Help center</a>
+              </li>
+              <li class="mb-2 d-flex">
+                <i class="bx bxs-contact fs-16 me-2"></i>
+                <div class="flex-grow-1">
+                  <a href="javascript:void(0);">Contact us</a>
+                  <p class="mb-0 text-muted fs-12">Questions?</p>
+                </div>
+              </li>
+              <li class="mb-2">
+                <a href="javascript:void(0);"><i class="bx bx-book-content fs-16 me-2"></i>Teams and
+                  Privacy Policy</a>
+              </li>
+              <li>
+                <a href="javascript:void(0);"><i class="bx bx-info-circle fs-16 me-2"></i>App info</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ngx-simplebar>

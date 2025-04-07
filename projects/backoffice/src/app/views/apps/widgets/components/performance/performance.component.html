@@ -1,0 +1,44 @@
+<div class="p-3">
+  <div class="d-flex justify-content-between align-items-center">
+    <h4 class="card-title">Performance</h4>
+    <div>
+      <button type="button" class="btn btn-sm btn-outline-light me-1">
+        ALL
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-light me-1">
+        1M
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-light me-1">
+        6M
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-light active">
+        1Y
+      </button>
+    </div>
+  </div>
+  
+
+  <div class="alert alert-info mt-3 text text-truncate mb-0" role="alert">
+    We regret to inform you that our server is currently experiencing technical
+    difficulties.
+  </div>
+
+  <div dir="ltr">
+    <div id="dash-performance-chart" class="apex-charts">
+      <apx-chart
+        [series]="performanceChart.series!"
+        [chart]="performanceChart.chart!"
+        [stroke]="performanceChart.stroke!"
+        [fill]="performanceChart.fill!"
+        [markers]="performanceChart.markers!"
+        [xaxis]="performanceChart.xaxis!"
+        [yaxis]="performanceChart.yaxis!"
+        [grid]="performanceChart.grid!"
+        [legend]="performanceChart.legend!"
+        [plotOptions]="performanceChart.plotOptions!"
+        [colors]="performanceChart.colors!"
+        [tooltip]="performanceChart.tooltip!"
+      ></apx-chart>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,142 @@
+<div class="tab-content pt-0" id="email-tabContent">
+  @if (emailTab == 'inbox') {
+  <div class="tab-pane fade active show" id="email-inbox" role="tabpanel" aria-labelledby="email-inbox-tab">
+    <div>
+      <ul ngbNav #nav="ngbNav" (navChange)="typeFilter($event)" class="nav nav-tabs nav-justified">
+        <li ngbNavItem="primary" class="nav-item">
+          <a ngbNavLink class="nav-link d-flex align-items-center">
+            <span class="me-2"><i class="bx bxs-inbox fs-18"></i></span>
+            <span class="d-none d-md-block">Primary</span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+          </ng-template>
+        </li>
+        <li ngbNavItem="social" class="nav-item">
+          <a ngbNavLink class="nav-link d-flex align-items-center">
+            <span class="me-2"><i class="bx bxs-group fs-18"></i></span>
+            <span class="d-none d-md-block">Social</span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+          </ng-template>
+        </li>
+        <li ngbNavItem="promotions" class="nav-item">
+          <a ngbNavLink class="nav-link d-flex align-items-center">
+            <span class="me-2"><i class="bx bxs-purchase-tag fs-18"></i></span>
+            <span class="d-none d-md-block">Promotions</span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+          </ng-template>
+        </li>
+        <li ngbNavItem="updates" class="nav-item">
+          <a ngbNavLink class="nav-link d-flex align-items-center">
+            <span class="me-2"><i class="bx bxs-info-circle fs-18"></i></span>
+            <span class="d-none d-md-block">Updates</span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+          </ng-template>
+        </li>
+        <li ngbNavItem="forums" class="nav-item">
+          <a ngbNavLink class="nav-link d-flex align-items-center">
+            <span class="me-2"><i class="bx bxs-chat fs-18"></i></span>
+            <span class="d-none d-md-block">Forums</span>
+          </a>
+          <ng-template ngbNavContent>
+            <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="nav" class="tab-content text-muted pt-0"></div>
+    </div>
+  </div>
+  } @else {
+  <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+  }
+</div>
+
+
+<div class="px-3 py-2 mt-auto">
+  <div class="d-flex align-items-center justify-content-between">
+    <div class="">Showing 1 - 20 of 289</div>
+    <div class="btn-group">
+      <button type="button" class="btn btn-light btn-sm">
+        <i class="bx bx-chevron-left"></i>
+      </button>
+      <button type="button" class="btn btn-primary btn-sm">
+        <i class="bx bx-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #TabContent>
+  @if (emailTab == 'draft') {
+  <hr />
+  <div class="text-center mt-2">
+    <p class="mb-0">You don't have any saved drafts.</p>
+    <p class="mb-0">
+      Saving a draft allows you to keep a message you aren't ready to send
+      yet.
+    </p>
+  </div>
+  <hr class="mb-0" />
+  }
+  @if (emailTab == 'isTrash') {
+  <hr />
+  <div class="text-center mt-2">
+    <p class="mb-0">
+      Messages that have been in Trash more than 30 days will be
+      automatically deleted.
+      <a href="javascript: void(0);" class="text-primary ms-2">Empty Trash Now</a>
+    </p>
+  </div>
+  <hr class="mb-3" />
+  }
+  <ul class="message-list mb-0">
+    @for (mail of emailList; track $index) {
+    <li [class]="{ unread: mail.status == 'unread' }">
+      <div class="col-mail col-mail-1">
+        <div class="checkbox-wrapper-mail">
+          <input type="checkbox" [id]="mail.id" />
+          <label [for]="mail.id" class="toggle"></label>
+        </div>
+        @if (emailTab != 'isTrash') {
+        <span class="star-toggle" [ngClass]="mail.isStarred ? 'bx bxs-star text-warning' : 'bx bx-star'"></span>
+        }
+        <span class="bx important-toggle" [ngClass]="mail.isImportant ? 'bxs-tag-alt text-warning' : 'bx-tag-alt'"></span>
+        @if (emailTab == 'isTrash') {
+        <span class="bx bxs-trash trash-toggle"></span>
+        }
+        <a (click)="openDetail()" href="javascript:void(0);" class="title">{{ mail.sender }}</a>
+      </div>
+      <div class="col-mail col-mail-2">
+        @if (mail.attachments) {
+        <a (click)="openDetail()" class="subject">
+          {{ mail.subject }}
+          @for (attach of mail.attachments; track attach) {
+          <span class="badge bg-light border text-dark fw-semibold ms-1 me-1">
+            <i class="bx me-2" [ngClass]="{
+                        'bx-images text-primary': mail.attachType == 'image',
+                        'bxs-file-pdf text-danger': mail.attachType == 'pdf',
+                        'bxs-file-doc text-blue': mail.attachType == 'doc'
+                      }"></i>{{ attach }}
+          </span>
+          }
+          @if (mail.badge) {
+          <span class="badge bg-light border text-dark fw-semibold rounded-circle ms-1">{{ mail.badge }}</span>
+          }
+        </a>
+        } @else {
+        <a (click)="openDetail()" class="subject">
+          {{ mail.subject }} &nbsp;&ndash;&nbsp; <span>{{ mail.message }}</span>
+        </a>
+        }
+        <div class="date">{{ mail.date }}</div>
+      </div>
+    </li>
+    }
+  </ul>
+</ng-template>

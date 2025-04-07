@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="col-xl-9">
+       <div class="card">
+            <div class="card-body">
+                 <h5 class="card-title mb-1 anchor" id="overview">
+                      Overview <a class="btn btn-sm btn-outline-success rounded-2 float-end" href="https://sweetalert2.github.io/" target="_blank"> Official Website </a>
+                 </h5>
+                 <p class="text-muted mb-3">A beautiful, responsive, customizable, accessible (WAI-ARIA) replacement for JavaScript's popup boxes</p>
+
+                 <h5 class="mt-2">Usage</h5>
+                 <p class="mb-0">Sweetalert2's CSS and Javascript files are bundled in the <code>vender.min.css</code> and <code>vendor.js</code> and globally included in all pages.</p>
+            </div>
+       </div>
+
+       <div class="card">
+            <div class="card-body">
+                 <h5 class="card-title mb-3 anchor" id="basic">
+                      Basic<a class="anchor-link" href="#basic">#</a>
+                 </h5>
+
+                 <div>
+                      <button (click)="basicMessage()" type="button" class="btn btn-primary" id="sweetalert-basic">Click me</button>
+                 </div>
+            </div>
+       </div>
+
+       <div class="card">
+            <div class="card-body">
+                 <h5 class="card-title mb-3 anchor" id="title">
+                      A Title with a Text Under<a class="anchor-link" href="#title">#</a>
+                 </h5>
+
+                 <div>
+                      <button (click)="titleText()" type="button" class="btn btn-primary" id="sweetalert-title">Click me</button>
+                 </div>
+            </div>
+       </div>
+
+       <div class="card">
+            <div class="card-body">
+                 <h5 class="card-title mb-3 anchor" id="message">
+                      Message<a class="anchor-link" href="#message">#</a>
+                 </h5>
+
+                 <div class="hstack gap-2 mb-3">
+                      <button  (click)="success()" type="button" class="btn btn-success" id="sweetalert-success">Success</button>
+                      <button (click)="warning()" type="button" class="btn btn-warning" id="sweetalert-warning">Warning</button>
+                      <button (click)="info()" type="button" class="btn btn-info" id="sweetalert-info">Info</button>
+                      <button (click)="danger()" type="button" class="btn btn-danger" id="sweetalert-error">Error</button>
+                 </div>
+            </div>
+       </div>
+
+       <div class="card">
+            <div class="card-body">
+                 <h5 class="card-title mb-3 anchor" id="longcontent">
+                      Long content Images Message<a class="anchor-link" href="#longcontent">#</a>
+                 </h5>
+
+                 <div>
+                      <button (click)="longContent()" type="button" class="btn btn-primary" id="sweetalert-longcontent">Click me</button>
+                 </div>
+            </div>
+       </div>
+
+       <div class="card">
+            <div class="card-body">
+                 <h5 class="card-title mb-3 anchor" id="parameter">
+                      Parameter<a class="anchor-link" href="#parameter">#</a>
+                 </h5>
+
+                 <div>
+                      <button (click)="parameter()" type="button" class="btn btn-primary" id="sweetalert-params">Click me</button>
+                 </div>
+            </div> 
+       </div> 
+  </div> 
+
+  <div class="col-xl-3">
+    <ui-examples-list
+    [linkList]="[
+      { label: 'Overview', link: '#overview' },
+      { label: 'Basic', link: '#basic' },
+      { label: 'A Title with a Text Under', link: '#title' },
+      { label: 'Message', link: '#message' },
+      { label: 'long content Images Message', link: '#longcontent' },
+      { label: 'Parameter', link: '#parameter' },
+    ]"
+  />
+  </div>
+</div>

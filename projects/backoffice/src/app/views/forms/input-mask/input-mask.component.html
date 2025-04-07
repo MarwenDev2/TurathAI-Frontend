@@ -1,0 +1,219 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor" id="overview">
+            Overview
+            <a
+              class="btn btn-sm btn-outline-success rounded-2 float-end"
+              href="https://www.npmjs.com/package/ngx-mask"
+              target="_blank"
+            >
+              Official Website
+            </a>
+          </h5>
+          <p class="text-muted mb-3">
+            Ngx Mask is the best directive to solve masking input with needed
+            pattern.
+          </p>
+  
+          <h5 class="mt-2">Usage</h5>
+          <p>
+            To use ngx-mask, follow the instructions from its documentation over
+            <a href="https://www.npmjs.com/package/ngx-mask" class="text-primary">
+              here</a
+            >
+          </p>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor" id="default">
+            Input Masks<a class="anchor-link" href="#default">#</a>
+          </h5>
+          <p class="text-muted">
+            A Java-Script Plugin to make masks on form fields and HTML elements.
+          </p>
+          <div>
+            <div class="row">
+              <div class="col-md-6">
+                <form action="#">
+                  <div class="mb-3">
+                    <label class="form-label">Date</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [mask]="'d0/M0/0000'"
+                    />
+                    <span class="fs-13 text-muted">e.g "DD/MM/YYYY"</span>
+                    <p class="mt-1">
+                      Add attribute <code>[mask]="'d0/M0/0000'</code>
+                    </p>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Hour</label>
+                    <input type="text" class="form-control" [mask]="'Hh:m0:s0'" />
+                    <span class="fs-13 text-muted">e.g "HH:MM:SS"</span>
+                    <p class="mt-1">
+                      Add attribute <code>[mask]="'Hh:m0:s0'"</code>
+                    </p>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Date & Hour</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [mask]="'d0/M0/0000 Hh:m0:s0'"
+                    />
+                    <span class="fs-13 text-muted"
+                      >e.g "DD/MM/YYYY HH:MM:SS"</span
+                    >
+                    <p class="mt-1">
+                      Add attribute <code>[mask]="'d0/M0/0000 Hh:m0:s0'"</code>
+                    </p>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">ZIP Code</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [mask]="'00000-000'"
+                    />
+                    <span class="fs-13 text-muted">e.g "xxxxx-xxx"</span>
+                    <p class="mt-1">
+                      Add attribute <code>[mask]="'00000-000'"</code>
+                    </p>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Crazy Zip Code</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [mask]="'0-00-00-00'"
+                    />
+                    <span class="fs-13 text-muted">e.g "x-xx-xx-xx"</span>
+                    <p class="mt-1">
+                      Add attribute <code>[mask]="'0-00-00-00'"</code>
+                    </p>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Money</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [mask]="'000.000.000.000.000,00'"
+                    />
+                    <span class="fs-13 text-muted">e.g "Your money"</span>
+                    <p class="mt-1">
+                      Add attribute
+                      <code> [mask]="'000.000.000.000.000,00'"</code>
+                    </p>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Money 2</label>
+                    <input type="text" class="form-control" [mask]="'0.000,00'" />
+                    <span class="fs-13 text-muted">e.g "#.##0,00"</span>
+                    <p class="mt-1">
+                      Add attribute <code>[mask]="'0.000,00'"</code>
+                    </p>
+                  </div>
+                </form>
+              </div>
+  
+              <div class="col-md-6">
+                <form action="#">
+                  <div class="mb-3">
+                    <label class="form-label">Telephone</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [mask]="'0000-0000'"
+                    />
+                    <span class="fs-13 text-muted">e.g "xxxx-xxxx"</span>
+                    <p class="mt-1">
+                      Add attribute <code>[mask]="'0000-0000'"</code>
+                    </p>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Telephone with Code Area</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [mask]="'(00) 0000-0000'"
+                    />
+                    <span class="fs-13 text-muted">e.g "(xx) xxxx-xxxx"</span>
+                    <p class="mt-1">
+                      Add attribute <code>[mask]="'(00) 0000-0000'"</code>
+                    </p>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">US Telephone</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [mask]="'(000) 000-0000'"
+                    />
+                    <span class="fs-13 text-muted">e.g "(xxx) xxx-xxxx"</span>
+                    <p class="mt-1">
+                      Add attribute <code>[mask]="'(000) 000-0000'"</code>
+                    </p>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">São Paulo Celphones</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [mask]="'(00) 00000-0000'"
+                    />
+                    <span class="fs-13 text-muted">e.g "(xx) xxxxx-xxxx"</span>
+                    <p class="mt-1">
+                      Add attribute <code>[mask]="'(00) 00000-0000'"</code>
+                    </p>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">CPF</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [mask]="'000.000.000-00'"
+                    />
+                    <span class="fs-13 text-muted">e.g "xxx.xxx.xxxx-xx"</span>
+                    <p class="mt-1">
+                      Add attribute <code>[mask]="'000.000.000-00'"</code>
+                    </p>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">CNPJ</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [mask]="'00.000.000/0000-00'"
+                    />
+                    <span class="fs-13 text-muted">e.g "xx.xxx.xxx/xxxx-xx"</span>
+                    <p class="mt-1">
+                      Add attribute <code>[mask]="'00.000.000/0000-00'"</code>
+                    </p>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">IP Address</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [mask]="'099.099.099.099'"
+                    />
+                    <span class="fs-13 text-muted">e.g "xxx.xxx.xxx.xxx"</span>
+                    <p class="mt-1">
+                      Add attribute <code>[mask]="'099.099.099.099'" </code>
+                    </p>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

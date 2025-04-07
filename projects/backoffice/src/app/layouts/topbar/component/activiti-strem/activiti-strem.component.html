@@ -1,0 +1,79 @@
+<div class="d-flex align-items-center bg-primary p-3 offcanvas-header">
+  <h5 class="text-white m-0 fw-semibold">Activity Stream</h5>
+  <button type="button" class="btn-close btn-close-white ms-auto" (click)="activeOffcanvas.close()"></button>
+</div>
+
+<div class="offcanvas-body p-0">
+  <ngx-simplebar data-simplebar class="h-100 p-4">
+    <div class="position-relative ms-2">
+      <span class="position-absolute start-0 top-0 border border-dashed h-100"></span>
+      @for (data of activityList; track $index) {
+      <div class="position-relative ps-4">
+        <div class="mb-4">
+          <span class="position-absolute start-0 translate-middle-x d-inline-flex align-items-center justify-content-center rounded-circle text-light fs-20  bg-{{
+                data.variant
+              }} " [ngClass]="{ 'avatar-sm': !data.icon }">
+            @if (data.icon) {
+            <img [src]="data.icon" alt="avatar-5" class="avatar-sm rounded-circle" />
+            } @else if (data.type) {
+            <iconify-icon [icon]="getActivityIcon(data.type)"></iconify-icon>
+            } @else {
+            {{ data.title.charAt(0).toUpperCase() }}
+            }
+          </span>
+          <div class="ms-2">
+            <h5 class="mb-1 text-dark fw-semibold fs-15 lh-base">
+              {{ data.title }}
+              @if (data.status) {
+              <span class="badge bg-{{ data.variant }}-subtle text-{{
+                      data.variant
+                    }} px-2 py-1 ms-1">{{ data.status }}</span>
+              }
+            </h5>
+
+            @if (data.files && data.type) {
+            <p class="d-flex align-items-center">
+              Add {{ data.files.length }} files to
+              <span class="d-flex align-items-center text-primary ms-1">
+                <iconify-icon icon="iconamoon:file-light"></iconify-icon>
+                {{ data.type }}</span>
+            </p>
+            }
+            @if (data.content) {
+            <p>{{ data.content }}</p>
+            }
+            @if (data.files) {
+            <div class="bg-light bg-opacity-50 rounded-2 p-2">
+              <div class="row">
+                @for (file of data.files; track $index) {
+                @if (file.preview) {
+                <div class="col-lg-4">
+                  <a href="javascript:void(0);">
+                    <img [src]="file.preview" alt="" class="img-fluid rounded" /></a>
+                </div>
+                } @else {
+                <div class="border-end border-light" [ngClass]="{ 'col-lg-6': data.files.length > 1 }">
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bx fs-20" [class]="getFileExtensionIcon(file.name)"></i>
+                    <a href="javascript:void(0);" class="text-dark fw-medium">{{ file.name }}</a>
+                    <div class="ms-auto">
+                      <a href="javascript:void(0);" class="fw-medium text-primary fs-18" ngbTooltip="Download" placement="bottom">
+                        <iconify-icon icon="iconamoon:cloud-download-duotone"></iconify-icon>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                }
+                }
+              </div>
+            </div>
+            }
+            <h6 class="mt-2 text-muted">{{ data.time.toDateString() }}</h6>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    <a href="javascript:void(0);" class="btn btn-outline-dark w-100">View All</a>
+  </ngx-simplebar>
+</div>

@@ -1,0 +1,56 @@
+<div class="row">
+  @for(item of stateList;track $index){
+  <div class="col-md-3">
+    <app-widget-card [item]="item" />
+  </div> 
+  }
+
+</div> 
+
+<widget-state />
+
+
+<div class="row">
+  <div class="col-xl-6">
+    <widget-recent-project />
+  </div> 
+  <div class="col-xl-6">
+    <widget-schedule />
+  </div> 
+</div> 
+
+<widget-state2 />
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body p-0">
+        <div class="row g-0">
+          <div class="col-lg-4">
+            <widget-conversation />
+          </div> 
+          <div class="col-lg-8 border-start border-5">
+            <widget-performance />
+          </div> 
+        </div> 
+      </div> 
+    </div> 
+  </div> 
+</div> 
+
+<widget-state3 />
+
+<div class="row">
+  <div class="col-xl-4">
+    <widget-task />
+  </div> 
+
+  <div class="col-xl-4">
+    <widget-friend-request />
+  </div> 
+
+  <div class="col-xl-4">
+    <widget-transaction />
+  </div> 
+
+</div> 

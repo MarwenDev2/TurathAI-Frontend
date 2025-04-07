@@ -1,0 +1,94 @@
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card shadow-sm">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="card-title mb-0">All Users</h4>
+        <div class="d-flex align-items-center gap-2">
+          <a routerLink="/users/add" class="btn btn-sm btn-primary">
+            <iconify-icon icon="solar:add-circle-linear" style="font-size: 18px;"></iconify-icon> Add User
+          </a>
+          <div ngbDropdown class="dropdown">
+            <button ngbDropdownToggle class="btn btn-outline-secondary btn-sm">
+              Filter by Country
+              <iconify-icon icon="solar:sort-outline" style="font-size: 18px;"></iconify-icon>
+            </button>
+            <div ngbDropdownMenu>
+              <button class="dropdown-item" (click)="selectedCountry = null">All Countries</button>
+              <button
+                class="dropdown-item"
+                *ngFor="let country of uniqueCountries"
+                (click)="selectedCountry = country"
+              >
+                {{ country }}
+              </button>
+            </div>
+          </div>          
+        </div>
+      </div>
+      <div *ngIf="selectedCountry" class="mb-2">
+        <span class="badge bg-info text-dark">
+          Showing users from {{ selectedCountry }}
+          <button class="btn btn-sm btn-close ms-2" (click)="selectedCountry = null"></button>
+        </span>
+      </div>      
+      <div class="table-responsive">
+        <table class="table align-middle table-striped mb-0">
+          <thead class="table-light">
+            <tr>
+              <th></th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Country</th>
+              <th>Language</th>
+              <th>Interests</th>
+              <th>Role</th>
+              <th>Created</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of filteredUsers(); let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ user.firstName }} {{ user.lastName }}</td>
+              <td class="text-truncate" style="max-width: 200px">{{ user.email }}</td>
+              <td>
+                <img
+                  [src]="countryFlagMap[user.originCountry]"
+                  alt="Flag"
+                  class="me-1"
+                  *ngIf="countryFlagMap[user.originCountry]"
+                />
+                <span *ngIf="!countryFlagMap[user.originCountry]">No flag available</span>
+                {{ user.originCountry }}
+              </td>
+              <td>{{ user.spokenLanguage }}</td>
+              <td class="text-truncate" style="max-width: 200px" [title]="user.interests">
+                {{ user.interests }}
+              </td>              
+              <td>{{ user.role }}</td>
+              <td>{{ user.createdAt | date: 'short' }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <button class="btn btn-light btn-sm" title="View">
+                    <iconify-icon icon="solar:eye-broken" style="font-size: 16px;"></iconify-icon>
+                  </button>
+                  <a [routerLink]="['/users/edit', user.id]" class="btn btn-sm btn-outline-primary" title="Edit">
+                    <iconify-icon icon="solar:pen-2-broken" style="font-size: 16px;"></iconify-icon>
+                  </a>
+                  <button (click)="deleteUser(user.id)" class="btn btn-sm btn-outline-danger" title="Delete">
+                    <iconify-icon icon="solar:trash-bin-minimalistic-2-broken" style="font-size: 16px;"></iconify-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>          
+        </table>
+      </div>
+
+      <div class="card-footer">
+        <ngb-pagination [collectionSize]="users.length" [(page)]="page" [pageSize]="10" class="mb-0"></ngb-pagination>
+      </div>
+    </div>
+  </div>
+</div>

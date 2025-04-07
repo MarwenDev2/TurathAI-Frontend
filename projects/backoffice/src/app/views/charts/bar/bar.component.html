@@ -1,0 +1,256 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor" id="overview">
+            Overview
+          </h5>
+          <p class="mb-0"><span class="fw-medium">Find the JS file for the following chart at:</span>
+            <code> ../src/assets/js/components/apexchart-bar.js</code></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor" id="basic">
+            Basic Bar Chart<a class="anchor-link" href="#basic">#</a>
+          </h5>
+
+          <div id="basic-bar" class="apex-charts">
+            <apx-chart [chart]="barChart.chart!" [plotOptions]="barChart.plotOptions!"
+              [dataLabels]="barChart.dataLabels!" [series]="barChart.series!" [colors]="barChart.colors!"
+              [xaxis]="barChart.xaxis!" [grid]="barChart.grid!">
+            </apx-chart>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor" id="grouped">
+            Grouped Bar Chart<a class="anchor-link" href="#grouped">#</a>
+          </h5>
+
+          <div id="grouped-bar" class="apex-charts text-white">
+            <apx-chart
+            [chart]="groupedChart.chart!"
+            [plotOptions]="groupedChart.plotOptions!"
+            [dataLabels]="groupedChart.dataLabels!"
+            [colors]="groupedChart.colors!"
+            [stroke]="groupedChart.stroke!"
+            [series]="groupedChart.series!"
+            [xaxis]="groupedChart.xaxis!"
+            [legend]="groupedChart.legend!"
+            [grid]="groupedChart.grid!"
+          />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor" id="stacked">
+            Stacked Bar Chart<a class="anchor-link" href="#stacked">#</a>
+          </h5>
+
+          <div id="stacked-bar" class="apex-charts" dir="ltr">
+            <apx-chart
+            [chart]="stackedChart.chart!"
+            [plotOptions]="stackedChart.plotOptions!"
+            [stroke]="stackedChart.stroke!"
+            [series]="stackedChart.series!"
+            [xaxis]="stackedChart.xaxis!"
+            [yaxis]="stackedChart.yaxis!"
+            [colors]="stackedChart.colors!"
+            [tooltip]="stackedChart.tooltip!"
+            [fill]="stackedChart.fill!"
+            [legend]="stackedChart.legend!"
+            [grid]="stackedChart.grid!"
+          />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor" id="full-stacked">
+            100% Stacked Bar Chart<a class="anchor-link" href="#full-stacked">#</a>
+          </h5>
+
+          <div id="full-stacked-bar" class="apex-charts">
+            <apx-chart
+            [chart]="fullstackedChart.chart!"
+            [plotOptions]="fullstackedChart.plotOptions!"
+            [stroke]="fullstackedChart.stroke!"
+            [series]="fullstackedChart.series!"
+            [xaxis]="fullstackedChart.xaxis!"
+            [colors]="fullstackedChart.colors!"
+            [tooltip]="fullstackedChart.tooltip!"
+            [fill]="fullstackedChart.fill!"
+            [legend]="fullstackedChart.legend!"
+            [grid]="fullstackedChart.grid!"
+         />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor" id="negative">
+            Bar with Negative Values<a class="anchor-link" href="#negative">#</a>
+          </h5>
+
+          <div id="negative-bar" class="apex-charts">
+            <apx-chart
+            [chart]="negativeChart.chart!"
+            [colors]="negativeChart.colors!"
+            [plotOptions]="negativeChart.plotOptions!"
+            [dataLabels]="negativeChart.dataLabels!"
+            [stroke]="negativeChart.stroke!"
+            [series]="negativeChart.series!"
+            [grid]="negativeChart.grid!"
+            [yaxis]="negativeChart.yaxis!"
+            [tooltip]="negativeChart.tooltip!"
+            [xaxis]="negativeChart.xaxis!"
+            [legend]="negativeChart.legend!"
+         />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor" id="reversed">
+            Reversed Bar Chart<a class="anchor-link" href="#reversed">#</a>
+          </h5>
+
+          <div id="reversed-bar" class="apex-charts">
+            <apx-chart
+            [series]="reversedChart.series!"
+            [chart]="reversedChart.chart!"
+            [annotations]="reversedChart.annotations!"
+            [plotOptions]="reversedChart.plotOptions!"
+            [dataLabels]="reversedChart.dataLabels!"
+            [xaxis]="reversedChart.xaxis!"
+            [colors]="reversedChart.colors!"
+            [grid]="reversedChart.grid!"
+            [yaxis]="reversedChart.yaxis!"
+         />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor" id="image-fill">
+            Bar with Image Fill<a class="anchor-link" href="#image-fill">#</a>
+          </h5>
+
+          <div id="image-fill-bar" class="apex-charts">
+            <apx-chart
+            [series]="imagefillChart.series!"
+            [chart]="imagefillChart.chart!"
+            [plotOptions]="imagefillChart.plotOptions!"
+            [dataLabels]="imagefillChart.dataLabels!"
+            [stroke]="imagefillChart.stroke!"
+            [xaxis]="imagefillChart.xaxis!"
+            [fill]="imagefillChart.fill!"
+            [grid]="imagefillChart.grid!"
+            [yaxis]="imagefillChart.yaxis!"
+         />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor" id="datalables">
+            Custom DataLabels Bar<a class="anchor-link" href="#datalables">#</a>
+          </h5>
+
+          <div id="datalables-bar" class="apex-charts">
+            <apx-chart
+            [chart]="datalablesChart.chart!"
+            [plotOptions]="datalablesChart.plotOptions!"
+            [colors]="datalablesChart.colors!"
+            [dataLabels]="datalablesChart.dataLabels!"
+            [series]="datalablesChart.series!"
+            [stroke]="datalablesChart.stroke!"
+            [xaxis]="datalablesChart.xaxis!"
+            [yaxis]="datalablesChart.yaxis!"
+            [grid]="datalablesChart.grid!"
+            [tooltip]="datalablesChart.tooltip!"
+          />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor" id="pattern">
+            Patterned Bar Chart<a class="anchor-link" href="#pattern">#</a>
+          </h5>
+
+          <div id="pattern-bar" class="apex-charts">
+            <apx-chart
+            [chart]="patternChart.chart!"
+            [plotOptions]="patternChart.plotOptions!"
+            [dataLabels]="patternChart.dataLabels!"
+            [stroke]="patternChart.stroke!"
+            [series]="patternChart.series!"
+            [xaxis]="patternChart.xaxis!"
+            [yaxis]="patternChart.yaxis!"
+            [tooltip]="patternChart.tooltip!"
+            [colors]="patternChart.colors!"
+            [fill]="patternChart.fill!"
+            [legend]="patternChart.legend!"
+            [grid]="patternChart.grid!"
+            [responsive]="patternChart.responsive!"
+          />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor" id="markers">
+            Bar with Markers<a class="anchor-link" href="#pattern">#</a>
+          </h5>
+
+          <div id="bar-markers" class="apex-charts">
+            <apx-chart
+            [series]="markerChart.series!"
+            [chart]="markerChart.chart!"
+            [plotOptions]="markerChart.plotOptions!"
+            [colors]="markerChart.colors!"
+            [dataLabels]="markerChart.dataLabels!"
+            [legend]="markerChart.legend!"
+            [xaxis]="markerChart.xaxis!"
+          />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3">
+      <ui-examples-list
+      [linkList]="[
+        { label: 'Overview', link: '#overview' },
+        { label: 'Basic Bar Chart', link: '#basic' },
+        { label: 'Grouped Bar Chart', link: '#grouped' },
+        { label: 'Stacked Bar Chart', link: '#stacked' },
+        { label: '100% Stacked Bar Chart', link: '#full-stacked' },
+        { label: 'Bar with Negative Values', link: '#negative' },
+        { label: 'Reversed Bar Chart', link: '#reversed' },
+        { label: 'Bar with Image Fill', link: '#image-fill' },
+        { label: 'Custom DataLabels Bar', link: '#datalables' },
+        { label: 'Patterned Bar Chart', link: '#pattern' },
+        { label: 'Bar with Markers', link: '#markers' }
+      ]"
+    />
+    </div>
+  </div>
+
+</div>

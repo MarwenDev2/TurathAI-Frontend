@@ -1,0 +1,400 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="overview">
+            Overview
+            <a
+              class="btn btn-sm btn-outline-success rounded-2 float-end"
+              href="https://www.npmjs.com/package/angularx-flatpickr"
+              target="_blank"
+            >
+              Official Website
+            </a>
+          </h5>
+          <p class="text-muted mb-3">
+            angularx-flatpickr is a lightweight and powerful datetime picker.
+          </p>
+  
+          <h5 class="mt-2">Usage</h5>
+          <p class="mb-0">
+            To use angularx-flatpickr, follow the instructions from its
+            documentation over
+            <a
+              href="https://www.npmjs.com/package/angularx-flatpickr"
+              class="text-primary"
+            >
+              here</a
+            >
+          </p>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="basic">
+            Basic<a class="anchor-link" href="#basic">#</a>
+          </h5>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  mwlFlatpickr
+                  id="basic-datepicker"
+                  class="form-control"
+                  placeholder="Basic datepicker"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="datetime">
+            DateTime<a class="anchor-link" href="#datetime">#</a>
+          </h5>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  mwlFlatpickr
+                  [flatpickrOptions]="{
+                    noCalendar: false,
+                    dateFormat: 'Y-M-D H:i',
+                    time_24hr: true,
+                    enableTime: true,
+                    mode: 'multiple'
+                  }"
+                  id="datetime-datepicker"
+                  class="form-control"
+                  placeholder="Date and Time"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="human-friendly-dates">
+            Human-friendly Dates<a
+              class="anchor-link"
+              href="#human-friendly-dates"
+              >#</a
+            >
+          </h5>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  mwlFlatpickr
+                  [flatpickrOptions]="{ dateFormat: 'M d, Y' }"
+                  id=" humanfd-datepicker"
+                  class="form-control"
+                  placeholder="October 9, 2018"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="minmax">
+            MinDate and MaxDate<a class="anchor-link" href="#minmax">#</a>
+          </h5>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  mwlFlatpickr
+                  [flatpickrOptions]="{
+                    altInput: true,
+                    minDate: '25-01-{{currentYear}}',
+                    maxDate: '29-06-{{currentYear}}'
+                  }"
+                  id="minmax-datepicker"
+                  class="form-control"
+                  placeholder="mindate - maxdate"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="multiple">
+            Disabling dates<a class="anchor-link" href="#disable">#</a>
+          </h5>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  mwlFlatpickr
+                  id="disable-datepicker"
+                  class="form-control"
+                  placeholder="Disabling dates"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="multiple">
+            Selecting multiple dates<a class="anchor-link" href="#multiple">#</a>
+          </h5>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  mwlFlatpickr
+                  [flatpickrOptions]="{ dateFormat: 'd M, Y', mode: 'multiple' }"
+                  id="multiple-datepicker"
+                  class="form-control"
+                  placeholder="Multiple dates"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="conjunction">
+            Selecting multiple dates - Conjunction<a
+              class="anchor-link"
+              href="#conjunction"
+              >#</a
+            >
+          </h5>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  mwlFlatpickr
+                  [flatpickrOptions]="{ dateFormat: 'd M, Y', mode: 'multiple' }"
+                  id="conjunction-datepicker"
+                  class="form-control"
+                  placeholder="2018-10-10 :: 2018-10-11"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="range-calendar">
+            Range Calendar<a class="anchor-link" href="#range-calendar">#</a>
+          </h5>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  mwlFlatpickr
+                  [flatpickrOptions]="{ dateFormat: 'd M, Y', mode: 'range' }"
+                  id="range-datepicker"
+                  class="form-control"
+                  placeholder="2018-10-03 to 2018-10-10"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="inline-calendar">
+            Inline Calendar<a class="anchor-link" href="#inline-calendar">#</a>
+          </h5>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  mwlFlatpickr
+                  [flatpickrOptions]="{ inline: true, dateFormat: 'd M, Y' }"
+                  id=" inline-datepicker"
+                  class="form-control"
+                  placeholder="Inline calendar"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="timepicker-basic">
+            Basic Timepicker<a class="anchor-link" href="#timepicker-basic">#</a>
+          </h5>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  mwlFlatpickr
+                  [flatpickrOptions]="{
+                    noCalendar: true,
+                    dateFormat: 'H:i',
+                    defaultHour: 1.4,
+                    time_24hr: false,
+                    enableTime: true
+                  }"
+                  id="basic-timepicker"
+                  class="form-control"
+                  placeholder="Basic timepicker"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="24hours">
+            24-hour Time Picker<a class="anchor-link" href="#24hours">#</a>
+          </h5>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  mwlFlatpickr
+                  [flatpickrOptions]="{
+                    noCalendar: true,
+                    dateFormat: 'H:i',
+                    defaultHour: 1.4,
+                    time_24hr: true,
+                    enableTime: true,
+                    mode: 'multiple'
+                  }"
+                  id="24hours-timepicker"
+                  class="form-control"
+                  placeholder="16:21"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="timepicker-minmax">
+            Time Picker w/ Limits<a class="anchor-link" href="#timepicker-minmax"
+              >#</a
+            >
+          </h5>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  mwlFlatpickr
+                  [flatpickrOptions]="{
+                    noCalendar: true,
+                    dateFormat: 'H:i',
+                    defaultHour: 1.4,
+                    time_24hr: true,
+                    enableTime: true,
+                    mode: 'multiple'
+                  }"
+                  id="minmax-timepicker"
+                  class="form-control"
+                  placeholder="Limits"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="preloading-time">
+            Preloading Time<a class="anchor-link" href="#preloading-time">#</a>
+          </h5>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <input
+                  type="text"
+                  mwlFlatpickr
+                  [flatpickrOptions]="{
+                    noCalendar: true,
+                    dateFormat: 'H:i',
+                    time_24hr: false,
+                    enableTime: true,
+                    mode: 'multiple'
+                  }"
+                  id="preloading-timepicker"
+                  class="form-control"
+                  placeholder="Pick a time"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-xl-3">
+      <ui-examples-list
+        [linkList]="[
+          { label: 'Overview', link: '#overview' },
+          { label: 'Basic', link: '#basic' },
+          { label: 'DateTime', link: '#datetime' },
+          { label: 'Human-friendly Dates', link: '#human-friendly-dates' },
+          { label: 'MinDate and MaxDate', link: '#minmax' },
+          { label: 'Disabling dates', link: '#disable' },
+          { label: 'Selecting multiple dates', link: '#multiple' },
+          {
+            label: 'Selecting multiple dates - Conjunction',
+            link: '#conjunction'
+          },
+          { label: 'Range Calendar', link: '#range-calendar' },
+          { label: 'Inline Calendar', link: '#inline-calendar' },
+          { label: 'Basic Timepicker', link: '#timepicker-basic' },
+          { label: '24-hour Time Picker', link: '#24hours' },
+          { label: 'Time Picker w/ Limits', link: '#timepicker-minmax' },
+          { label: 'Preloading Time', link: '#preloading-time' }
+        ]"
+      />
+    </div>
+  </div>
+</div>

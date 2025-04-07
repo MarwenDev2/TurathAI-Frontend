@@ -1,0 +1,124 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="how-works">
+            How it works<a class="anchor-link" href="#how-works">#</a>
+          </h5>
+          <p class="text-muted">
+            A progress bar can be used to show a user how far along he/she is in a process.
+          </p>
+  
+          <div class="mb-3">
+            <ngb-progressbar class="mb-2" [value]="0" />
+            <ngb-progressbar class="mb-2" [value]="35" />
+            <ngb-progressbar class="mb-2" [value]="50" />
+            <ngb-progressbar class="mb-2" [value]="75" />
+            <ngb-progressbar class="mb-2" [value]="25" [showValue]="true" />
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="backgrounds-color">
+            Backgrounds Color <a class="anchor-link" href="#backgrounds-color">#</a>
+          </h5>
+          <p class="text-muted"> Use background utility classes to change the appearance of individual progress bars.</p>
+  
+          <div class="mb-3">
+            <ngb-progressbar class="mb-2" [value]="25" />
+            <ngb-progressbar class="mb-2" [type]="'secondary'" [value]="50" />
+            <ngb-progressbar class="mb-2" [type]="'success'" [value]="75" />
+            <ngb-progressbar class="mb-2" [type]="'info'" [value]="100" />
+            <ngb-progressbar-stacked>
+              <ngb-progressbar type="primary" [value]="15" />
+              <ngb-progressbar type="secondary" [value]="30" />
+              <ngb-progressbar type="success" [value]="20" />
+            </ngb-progressbar-stacked>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="progress-bar">
+            Striped Progress Bar <a class="anchor-link" href="#progress-bar">#</a>
+          </h5>
+          <p class="text-muted">Add <code>[striped]="true"</code> to any <code>ngb-progressbar</code> to apply a stripe
+            via CSS gradient
+            over the progress bar’s background color.</p>
+  
+          <div class="mb-3">
+            <ngb-progressbar class="mb-2" type="primary" [value]="25" [striped]="true" />
+            <ngb-progressbar class="mb-2" type="secondary" [value]="50" [striped]="true" />
+            <ngb-progressbar class="mb-2" type="success" [value]="75" [striped]="true" />
+            <ngb-progressbar class="mb-2" type="info" [value]="65" [striped]="true" [animated]="true" />
+            <ngb-progressbar class="mb-2" type="warning" [value]="100" [striped]="true" [animated]="true" />
+          </div>
+  
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="height">
+            Height <a class="anchor-link" href="#height">#</a>
+          </h5>
+          <p class="text-muted"> We only set a height value on the <code>.progress</code>, so if you change that value the
+            inner
+            <code>.progress-bar</code> will automatically resize accordingly. Use <code>.progress-xs</code>,
+            <code>.progress-sm</code>,
+            <code>.progress-md</code>, <code>.progress-lg</code> or <code>.progress-xl</code> classes.
+          </p>
+  
+          <div class="mb-3">
+            <ngb-progressbar
+            class="mb-2"
+            type="primary"
+            [value]="25"
+            [height]="'1px'"
+          />
+          <ngb-progressbar
+            class="mb-2"
+            type="secondary"
+            [value]="50"
+            [height]="'5px'"
+          />
+          <ngb-progressbar
+            class="mb-2"
+            type="success"
+            [value]="75"
+            [height]="'8px'"
+          />
+          <ngb-progressbar
+            class="mb-2"
+            type="info"
+            [value]="35"
+            [height]="'12px'"
+          />
+          <ngb-progressbar
+            class="mb-0"
+            type="warning"
+            [value]="60"
+            [height]="'15px'"
+          />
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-xl-3">
+      <ui-examples-list
+      [linkList]="[
+        { label: 'How it works', link: '#how-works' },
+        { label: 'Backgrounds Color', link: '#backgrounds-color' },
+        { label: 'Progress Bar', link: '#progress-bar' },
+        { label: 'Height', link: '#height' }
+      ]"
+    />
+    </div>
+  </div>
+</div>

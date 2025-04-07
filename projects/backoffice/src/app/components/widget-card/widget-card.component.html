@@ -1,0 +1,24 @@
+<div class="card overflow-hidden">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-6">
+        <div class="avatar-md bg-soft-primary rounded">
+          <iconify-icon [icon]="item.icon" class="avatar-title fs-24 text-primary"></iconify-icon>
+        </div>
+      </div> 
+      <div class="col-6 text-end">
+        <p class="text-muted mb-0 text-truncate">{{item.title}}</p>
+        <h3 class="text-dark mt-1 mb-0">{{item.value}}</h3>
+      </div> 
+    </div> 
+  </div> 
+  <div class="card-footer py-2 bg-light bg-opacity-50">
+    <div class="d-flex align-items-center justify-content-between">
+      <div>
+        <span class="text-{{item.change_type}}"> <i class="bx fs-12" [ngClass]="item.change_type == 'success'?'bxs-up-arrow':'bxs-down-arrow'" ></i> {{item.change}}</span>
+        <span class="text-muted ms-1 fs-12"> {{item.period}}</span>
+      </div>
+      <a href="#!" class="text-reset fw-semibold fs-12">View More</a>
+    </div>
+  </div> 
+</div> 

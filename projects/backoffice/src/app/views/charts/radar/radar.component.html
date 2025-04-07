@@ -1,0 +1,100 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor mb-1" id="overview">Overview</h5>
+  
+          <p class="mb-0">
+            <span class="fw-medium"
+              >Find the JS file for the following chart at:</span
+            >
+            <code> src/app/views/charts/radar.component.ts</code>
+          </p>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-3 anchor" id="basic">Basic Radar Chart</h4>
+          <div dir="ltr">
+            <div id="basic-radar" class="apex-charts">
+              <apx-chart
+                [series]="radarChart.series!"
+                [chart]="radarChart.chart!"
+                [labels]="radarChart.labels!"
+                [colors]="radarChart.colors!"
+              >
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-3 anchor" id="polygon">
+            Radar with Polygon-fill
+          </h4>
+          <div dir="ltr">
+            <div id="radar-polygon" class="apex-charts">
+              <apx-chart
+                [series]="polygonradarChart.series!"
+                [chart]="polygonradarChart.chart!"
+                [labels]="polygonradarChart.labels!"
+                [colors]="polygonradarChart.colors!"
+                [plotOptions]="polygonradarChart.plotOptions!"
+                [markers]="polygonradarChart.markers!"
+                [yaxis]="polygonradarChart.yaxis!"
+              >
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-3 anchor" id="multiple-series">
+            Radar – Multiple Series
+          </h4>
+          <div dir="ltr">
+            <div id="radar-multiple-series" class="apex-charts">
+              <apx-chart
+                [series]="multipleradarChart.series!"
+                [chart]="multipleradarChart.chart!"
+                [stroke]="multipleradarChart.stroke!"
+                [fill]="multipleradarChart.fill!"
+                [markers]="multipleradarChart.markers!"
+                [legend]="multipleradarChart.legend!"
+                [colors]="multipleradarChart.colors!"
+                [labels]="multipleradarChart.labels!"
+              >
+              </apx-chart>
+            </div>
+            <div class="text-center mt-2">
+              <button (click)="changeTraffic()" class="btn btn-sm btn-primary">
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  
+    <div class="col-xl-3">
+      <ui-examples-list
+        [linkList]="[
+          { label: 'Overview', link: '#overview' },
+          { label: 'Basic Radar Chart', link: '#basic' },
+          { label: 'Radar with Polygon-fill', link: '#polygon' },
+          { label: 'Radar – Multiple Series', link: '#multiple-series' }
+        ]"
+      />
+    </div>
+  </div>
+</div>
+

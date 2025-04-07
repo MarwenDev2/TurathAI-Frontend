@@ -1,0 +1,32 @@
+@for(item of reviewList;track $index){
+  <div class="card">
+    <div class="card-body">
+         <div class="d-flex align-items-center gap-2">
+              <img [src]="item.avatar" alt="" class="avatar-md rounded-circle border border-light border-3">
+              <div>
+                   <h4 class="mb-1">{{item.name}} , <span class="fs-13 text-muted fw-medium ms-1">{{item.role}} . {{item.date}}</span></h4>
+                   <p class="mb-0">Asked a question 
+                    @for(tag of item.tags;track $index){
+                      <a href="javascript:void(0);" class="text-primary ms-1">{{tag}}</a>
+                    }
+                  </p>
+              </div>
+         </div>
+         <h4 class="mt-3">{{item.title}}</h4>
+         <p class="mb-0">{{item.description}}<a href="javascript:void(0);" class="link-primary"> See more</a></p>
+    </div>
+    <div class="card-footer border-top">
+         <div class="row">
+              <div class="col-lg-2 col-4">
+                   <a href="javascript:void(0);" class="text-primary d-inline-flex gap-1 align-items-center fs-14"><iconify-icon icon="solar:pen-new-square-broken" class="fs-16"></iconify-icon> Answer</a>
+              </div>
+              <div class="col-lg-2 col-4">
+                   <a href="javascript:void(0);" class="text-dark d-inline-flex gap-1 align-items-center fs-14"><iconify-icon icon="solar:hand-shake-broken" class="fs-16"></iconify-icon> Thanks</a>
+              </div>
+              <div class="col-lg-2 col-4">
+                   <a href="javascript:void(0);" class="text-dark d-inline-flex gap-1 align-items-center fs-14"><iconify-icon icon="solar:lightbulb-minimalistic-broken" class="fs-16"></iconify-icon> Insightful</a>
+              </div>
+         </div>
+    </div>
+  </div>
+}

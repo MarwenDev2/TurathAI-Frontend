@@ -1,0 +1,33 @@
+<div class="p-3">
+  <h5 class="card-title">Conversions</h5>
+  <div id="conversions" class="apex-charts mb-2 mt-n2">
+    <apx-chart
+      [chart]="conversationChart.chart!"
+      [plotOptions]="conversationChart.plotOptions!"
+      [fill]="conversationChart.fill!"
+      [series]="conversationChart.series!"
+      [stroke]="conversationChart.stroke!"
+      [colors]="conversationChart.colors!"
+      [labels]="conversationChart.labels!"
+      [grid]="conversationChart.grid!"
+      [responsive]="conversationChart.responsive!"
+    ></apx-chart>
+  </div>
+  <div class="row text-center">
+    <div class="col-6">
+      <p class="text-muted mb-2">This Week</p>
+      <h3 class="text-dark mb-3">23.5k</h3>
+    </div>
+
+    <div class="col-6">
+      <p class="text-muted mb-2">Last Week</p>
+      <h3 class="text-dark mb-3">41.05k</h3>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <button type="button" class="btn btn-light shadow-none w-100">
+      View Details
+    </button>
+  </div>
+</div>

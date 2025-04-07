@@ -1,0 +1,255 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="basic_examples">
+            Basic Examples<a class="anchor-link" href="#basic_examples">#</a>
+          </h5>
+          <p class="text-muted">
+            Toasts are as flexible as you need and have very little required markup. At a minimum, we require a
+            single element to contain your “toasted” content and strongly encourage a dismiss button.
+          </p>
+  
+          <div class="mb-3">
+  
+            <ngb-toast [autohide]="false" class="fade d-block opacity-100" role="alert" aria-live="assertive" aria-atomic="true">
+              <ng-template ngbToastHeader class="d-block">
+                <div class="auth-logo">
+                  <img class="logo-dark" src="assets/images/logo-dark.png" alt="logo-dark" height="18" />
+                  <img class="logo-light" src="assets/images/logo-light.png" alt="logo-light" height="18" />
+                </div>
+                <div class="ms-auto">
+                  <small>11 mins ago</small>
+                </div>
+              </ng-template>
+              Hello, world! This is a toast message.
+            </ngb-toast>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="live_example">
+            Live example<a class="anchor-link" href="#live_example">#</a>
+          </h5>
+          <p class="text-muted">Click the button below to show a toast (positioned with our utilities in the lower right
+            corner) that has been hidden by default.</p>
+  
+          <div class="mb-3">
+            <button (click)="liveToast = true" type="button" class="btn btn-primary" id="liveToastDefaultBtn">Show live
+              toast</button>
+  
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+              @if (liveToast) {
+              <ngb-toast class="fade d-block opacity-100" role="alert" aria-live="assertive" aria-atomic="true">
+                <ng-template ngbToastHeader class="d-block">
+                  <div class="auth-logo">
+                    <img class="logo-dark" src="assets/images/logo-dark.png" alt="logo-dark" height="18" />
+                    <img class="logo-light" src="assets/images/logo-light.png" alt="logo-light" height="18" />
+                  </div>
+                  <div class="ms-auto">
+                    <small>11 mins ago</small>
+                  </div>
+                </ng-template>
+                Hello, world! This is a toast message.
+              </ngb-toast>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+  
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="default_buttons">
+            Default Buttons<a class="anchor-link" href="#default_buttons">#</a>
+          </h5>
+          <p class="text-muted">
+            Toasts are as flexible as you need and have very little required markup. At a minimum, we require a
+            single element to contain your “toasted” content and strongly encourage a dismiss button.
+          </p>
+  
+          <div class="mb-3">
+            <button type="button" (click)="showStandard()" class="btn btn-primary me-1" id="liveToastBtn">Show live
+              toast</button>
+            <button type="button" (click)="showStandard2()" class="btn btn-primary" id="liveToastBtn2">Show live toast</button>
+            <app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="custom_content">
+            Custom Content<a class="anchor-link" href="#custom_content">#</a>
+          </h5>
+          <p class="text-muted">
+            Alternatively, you can also add additional controls and components to toasts.
+          </p>
+  
+  
+          <div class="mb-3">
+            <div class="row">
+              <div class="col-md-6">
+                @if (show) {
+                <ngb-toast [autohide]="false" class="toast fade show align-items-center mb-3" role="alert" aria-live="assertive" aria-atomic="true">
+                  <div class="d-flex">
+                    Hello, world! This is a toast message.
+                    <button (click)="close()" type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                  </div>
+                </ngb-toast>
+                }
+              </div>
+              <div class="col-md-6">
+                @if (show1) {
+                <ngb-toast [autohide]="false" class="toast show align-items-center text-white bg-primary border-0 mb-4" role="alert" aria-live="assertive" aria-atomic="true">
+                  <div class="d-flex">
+                    Hello, world! This is a toast message.
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close" (click)="show1 = false"></button>
+                  </div>
+                </ngb-toast>
+                }
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="col-md-6">
+                @if (show2) {
+                <ngb-toast [autohide]="false" class="toast fade show mb-3 mb-md-0" role="alert" aria-live="assertive" aria-atomic="true">
+                  Hello, world! This is a toast message.
+                  <div class="mt-2 pt-2 border-top">
+                    <button type="button" class="btn btn-primary btn-sm">
+                      Take action
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm ms-1" data-bs-dismiss="toast" (click)="show2 = false">
+                      Close
+                    </button>
+                  </div>
+                </ngb-toast>
+                }
+              </div>
+              <div class="col-md-6">
+                @if (show3) {
+                <ngb-toast [autohide]="false" class="toast fade show bg-primary" role="alert" aria-live="assertive" aria-atomic="true">
+                  <div class="text-white">
+                    Hello, world! This is a toast message.
+                    <div class="mt-2 pt-2 border-top">
+                      <button type="button" class="btn btn-light btn-sm me-1">
+                        Take action
+                      </button>
+                      <button (click)="show3 = false" type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </ngb-toast>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="pranscluentPlacement">
+            Transcluent<a class="anchor-link" href="#pranscluentPlacement">#</a>
+          </h5>
+          <p class="text-muted">
+            Toasts are slightly translucent, too, so they blend over whatever they might appear over.
+            For browsers that support the backdrop-filter CSS property, we’ll also attempt to blur the elements under a
+            toast.
+          </p>
+  
+  
+          <div class="mb-3">
+            <div class="p-3 bg-light">
+              @if (translucent) {
+              <ngb-toast [autohide]="false" (hidden)="translucent = false" class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true">
+                <ng-template ngbToastHeader class="d-block">
+                  <div class="auth-logo">
+                    <img class="logo-dark me-1" src="assets/images/logo-dark.png" alt="logo-dark" height="18" />
+                    <img class="logo-light" src="assets/images/logo-light.png" alt="logo-light" height="18" />
+                  </div>
+                  <div class="ms-auto">
+                    <small>11 mins ago</small>
+                  </div>
+                </ng-template>
+                Hello, world! This is a toast message.
+              </ngb-toast>
+              }
+            </div>
+          </div>
+        </div>
+  
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="placement">
+            Placement<a class="anchor-link" href="#placement">#</a>
+          </h5>
+          <p class="text-muted">
+            Place toasts with custom CSS as you need them. The top right is often used for notifications,
+            as is the top middle. If you’re only ever going to show one toast at a time, put the positioning styles
+            right on the <code>.toast.</code>
+          </p>
+  
+  
+          <div class="mb-3">
+  
+            <div aria-live="polite" aria-atomic="true" class=" bg-light position-relative" style="min-height: 350px;">
+              
+              @if (placement) {
+              <ngb-toast [autohide]="false" (hidden)="placement = false" class="position-absolute m-3 {{ toastPlacement }}">
+                <ng-template ngbToastHeader class="d-block">
+                  <div class="auth-logo">
+                    <img class="logo-dark me-1" src="assets/images/logo-dark.png" alt="logo-dark" height="18" />
+                    <img class="logo-light" src="assets/images/logo-light.png" alt="logo-light" height="18" />
+                  </div>
+                  <div class="ms-auto">
+                    <small>11 mins ago</small>
+                  </div>
+                </ng-template>
+                Hello, world! This is a toast message.
+              </ngb-toast>
+              }
+              
+            </div>
+  
+            <div class="my-3">
+              <label for="selectToastPlacement" class="form-label">Toast placement</label>
+              <select [(ngModel)]="toastPlacement" class="form-select mt-2" data-choices id="selectToastPlacement">
+                <option value="" selected>Select a position...</option>
+                <option value="top-0 start-0">Top left (<code class="text-danger">.top-0 .start-0</code>)</option>
+                <option value="top-0 start-50 translate-middle-x">Top center</option>
+                <option value="top-0 end-0">Top right</option>
+                <option value="top-50 start-0 translate-middle-y">Middle left</option>
+                <option value="top-50 start-50 translate-middle">Middle center</option>
+                <option value="top-50 end-0 translate-middle-y">Middle right</option>
+                <option value="bottom-0 start-0">Bottom left</option>
+                <option value="bottom-0 start-50 translate-middle-x">Bottom center</option>
+                <option value="bottom-0 end-0">Bottom right</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-xl-3">
+      <ui-examples-list [linkList]="[
+        { label: 'Basic Examples', link: '#basic_examples' },
+        { label: 'Live example', link: '#live_example' },
+        { label: 'Default Buttons', link: '#default_buttons' },
+        { label: 'Custom Content', link: '#custom_content' },
+        { label: 'Transcluent', link: '#pranscluentPlacement' },
+        { label: 'Placement', link: '#placement' },
+      ]" />
+    </div>
+  </div>
+</div>

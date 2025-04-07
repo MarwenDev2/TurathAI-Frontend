@@ -1,0 +1,276 @@
+<div class="card position-relative overflow-hidden" id="chatArea">
+  <div class="card-header d-flex align-items-center mh-100">
+    <button class="btn btn-light d-xxl-none d-flex align-items-center px-2 me-2" type="button" (click)="openContactMenu()" data-bs-target="#Contactoffcanvas" aria-controls="Contactoffcanvas">
+      <i class="bx bx-menu fs-18"></i>
+    </button>
+
+    <div class="d-flex align-items-center">
+      @if (getProfileImage()) {
+      <img [src]="getProfileImage()" class="me-2 rounded" height="36" alt="avatar-4" />
+      } @else {
+      <a href="javascript:void(0);" class="me-2 rounded bg-soft-primary text-primary avatar d-flex align-items-center justify-content-center fs-18">
+        {{ profileDetail.name.charAt(0) }}</a>
+      }
+      <div class="d-none d-md-flex flex-column">
+        <h5 class="my-0 fs-16 fw-semibold">
+          <a (click)="openProfile()" href="javascript:void(0);" class="text-dark">
+            {{ profileDetail.name }}
+          </a>
+        </h5>
+        <p class="mb-0 text-success fw-semibold fst-italic">typing...</p>
+      </div>
+    </div>
+
+    <div class="flex-grow-1">
+      <ul class="list-inline float-end d-flex gap-3 mb-0">
+        <li class="list-inline-item fs-20 dropdown">
+          <a href="javascript: void(0);" class="text-dark" (click)="open(videocall)">
+            <i class="bx bx-video"></i>
+          </a>
+        </li>
+
+        <li class="list-inline-item fs-20 dropdown">
+          <a href="javascript: void(0);" class="text-dark" (click)="open(voicecall)">
+            <i class="bx bx-phone-call"></i>
+          </a>
+        </li>
+
+        <li class="list-inline-item fs-20 dropdown">
+          <a (click)="openProfile()" href="javascript:void(0);" class="text-dark">
+            <i class="bx bx-user"></i>
+          </a>
+        </li>
+
+        <li ngbDropdown class="list-inline-item fs-20 dropdown d-none d-md-flex">
+          <a ngbDropdownToggle href="javascript:void(0);" class="dropdown-toggle arrow-none text-dark">
+            <i class="bx bx-dots-vertical-rounded"></i>
+          </a>
+          <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="javascript: void(0);"><i class="bx bx-user-circle me-2"></i>View Profile</a>
+            <a class="dropdown-item" href="javascript: void(0);"><i class="bx bx-music me-2"></i>Media, Links and Docs</a>
+            <a class="dropdown-item" href="javascript: void(0);"><i class="bx bx-search me-2"></i>Search</a>
+            <a class="dropdown-item" href="javascript: void(0);"><i class="bx bx-image me-2"></i>Wallpaper</a>
+            <a class="dropdown-item" href="javascript: void(0);"><i class="bx bx-right-arrow-circle me-2"></i>More</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chat-box">
+    <ngx-simplebar class="chat-conversation-list p-3 chatbox-height" #scrollRef>
+      @for (chat of messagesList; track $index) {
+      <li class="clearfix odd" [ngClass]="{ odd: chat.isSender }">
+        @for (msg of chat.msg; track msg) {
+        <div class="chat-conversation-text mb-0" [ngClass]="{ 'ms-0': chat.isSender }">
+          @if (chat.isSender) {
+          <div class="d-flex justify-content-end">
+            <div ngbDropdown placement="left-top" container="body" class="chat-conversation-actions dropdown dropstart">
+              <a ngbDropdownToggle class="pe-1 arrow-none"><i class="bx bx-dots-vertical-rounded fs-18"></i></a>
+              <div ngbDropdownMenu class="dropdown-menu">
+                <a class="dropdown-item" href="javascript: void(0);">
+                  <i class="bx bx-share me-2"></i>Reply
+                </a>
+                <a class="dropdown-item" href="javascript: void(0);">
+                  <i class="bx bx-share-alt me-2"></i>Forward
+                </a>
+                <a class="dropdown-item" href="javascript: void(0);">
+                  <i class="bx bx-copy me-2"></i>Copy
+                </a>
+                <a class="dropdown-item" href="javascript: void(0);">
+                  <i class="bx bx-bookmark me-2"></i>Bookmark
+                </a>
+                <a class="dropdown-item" href="javascript: void(0);">
+                  <i class="bx bx-star me-2"></i>Starred
+                </a>
+                <a class="dropdown-item" href="javascript: void(0);">
+                  <i class="bx bx-info-square me-2"></i>Mark as Unread
+                </a>
+                <a class="dropdown-item" href="javascript: void(0);">
+                  <i class="bx bx-trash me-2"></i>Delete
+                </a>
+              </div>
+            </div>
+            <div class="chat-ctext-wrap" [ngClass]="{ 'text-start': msg.isMedia }">
+              @if (msg.isMedia && msg.mediaContend) {
+              <div class="d-flex align-items-center justify-content-center">
+                <div class="flex-shrink-0">
+                  <i class="bx {{ msg.mediaContend.type }} fs-24 me-1"></i>
+                </div>
+                <div class="flex-grow-1">
+                  <a href="javascript:void(0);" class="text-white">{{
+                    msg.mediaContend.title
+                    }}</a>
+                  <p class="mb-0">
+                    {{ msg.mediaContend.size }}
+                  </p>
+                </div>
+              </div>
+              } @else {
+              <p>{{ msg.text }}</p>
+              }
+            </div>
+          </div>
+          } @else {
+          <div class="d-flex">
+            <div class="chat-ctext-wrap" [ngClass]="{ 'text-start': msg.isMedia }">
+              @if (msg.isMedia && msg.mediaContend) {
+              <div class="d-flex align-items-center justify-content-center">
+                <div class="flex-shrink-0">
+                  <i class="bx {{ msg.mediaContend.type }} fs-24 me-1"></i>
+                </div>
+                <div class="flex-grow-1">
+                  <a href="javascript:void(0);" class="text-white">{{
+                    msg.mediaContend.title
+                    }}</a>
+                  <p class="mb-0">
+                    {{ msg.mediaContend.size }}
+                  </p>
+                </div>
+              </div>
+              } @else if (msg.img) {
+              @for (img of msg.img; track $index) {
+              <a href="javascript:void(0);">
+                <img [src]="img" alt="attachment" style="height: 84px" class="img-thumbnail me-1" />
+              </a>
+              }
+              } @else {
+              <p>{{ msg.text }}</p>
+              }
+            </div>
+            <div ngbDropdown placement="right-top" container="body" class="chat-conversation-actions dropdown dropend">
+              <a ngbDropdownToggle class="ps-1 arrow-none"><i class="bx bx-dots-vertical-rounded fs-18"></i></a>
+              <div ngbDropdownMenu class="dropdown-menu">
+                <a class="dropdown-item" href="javascript: void(0);">
+                  <i class="bx bx-share me-2"></i>Reply
+                </a>
+                <a class="dropdown-item" href="javascript: void(0);">
+                  <i class="bx bx-share-alt me-2"></i>Forward
+                </a>
+                <a class="dropdown-item" href="javascript: void(0);">
+                  <i class="bx bx-copy me-2"></i>Copy
+                </a>
+                <a class="dropdown-item" href="javascript: void(0);">
+                  <i class="bx bx-bookmark me-2"></i>Bookmark
+                </a>
+                <a class="dropdown-item" href="javascript: void(0);">
+                  <i class="bx bx-star me-2"></i>Starred
+                </a>
+                <a class="dropdown-item" href="javascript: void(0);">
+                  <i class="bx bx-info-square me-2"></i>Mark as Unread
+                </a>
+                <a class="dropdown-item" href="javascript: void(0);">
+                  <i class="bx bx-trash me-2"></i>Delete
+                </a>
+              </div>
+            </div>
+          </div>
+          }
+          <p class="text-muted fs-12 mb-0 mt-1" [ngClass]="{ 'ms-2': !chat.isSender }">
+            @if (chat.timeStamp && chat.msg.length - 1 === $index) {
+            {{ chat.timeStamp }}@if (chat.isRead) {<i class="bx bx-check-double ms-1 text-primary"></i>}
+            }
+          </p>
+        </div>
+        }
+      </li>
+      }
+    </ngx-simplebar>
+
+    <div class="bg-light bg-opacity-50 p-2">
+      <form [formGroup]="formData" (ngSubmit)="messageSend()" class="needs-validation" name="chat-form" id="chat-form">
+        <div class="row align-items-center">
+          <div class="col mb-2 mb-sm-0 d-flex">
+            <div class="input-group">
+              <a href="javascript: void(0);" (click)="toggleEmojiPicker()" class="btn btn-sm btn-light d-flex align-items-center input-group-text">
+                <i class="bx bx-smile fs-18"></i></a>
+              <!-- @if (showEmojiPicker) {
+              <emoji-mart class="emoji-mart" (emojiSelect)="addEmoji($event)" tooltip="Pick your emoji…"></emoji-mart>
+              } -->
+              <input type="text" formControlName="message" class="form-control border-0" [(ngModel)]="emoji" [ngClass]="{'is-invalid': submitted && form['message'].errors}" placeholder="Enter your message" />
+            </div>
+          </div>
+          <div class="col-sm-auto">
+            <div class="">
+              <div class="btn-group btn-toolbar">
+                <a href="javascript: void(0);" class="btn btn-sm btn-light"><i class="bx bx-paperclip fs-18"></i></a>
+                <a href="javascript: void(0);" class="btn btn-sm btn-light"><i class="bx bx-video fs-18"></i></a>
+                <button type="submit" class="btn btn-sm btn-primary chat-send">
+                  <i class="bx bx-send fs-18"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <ng-template #videocall let-modal>
+    <div class="modal-dialog-centered modal-sm border-0">
+      <div class="modal-content video-call">
+        <div class="modal-header border-0 mb-5 justify-content-end">
+          <div class="video-call-head">
+            <img src="assets/images/users/avatar-4.jpg" class="rounded" alt="avatar-4" />
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="video-call-action text-center pt-4 pb-2">
+            <ul class="list-inline">
+              <li class="list-inline-item avatar-sm fw-bold me-2">
+                <a href="javascript: void(0);" class="avatar-title rounded-circle bg-soft-light text-white fs-16">
+                  <i class="bx bx-microphone-off"></i>
+                </a>
+              </li>
+              <li class="list-inline-item avatar fw-bold me-2" (click)="modal.dismiss()">
+                <a href="javascript: void(0);" class="avatar-title rounded-circle bg-danger text-white fs-18">
+                  <i class="bx bx-video-off"></i>
+                </a>
+              </li>
+              <li class="list-inline-item avatar-sm fw-bold me-2">
+                <a href="javascript: void(0);" class="avatar-title rounded-circle bg-soft-light text-white fs-16">
+                  <i class="bx bx-volume-full"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #voicecall let-modal>
+    <div class="modal-content voice-call">
+      <div class="modal-header border-0 mt-5 justify-content-center">
+        <div class="voice-call-head">
+          <img src="assets/images/users/avatar-4.jpg" class="rounded-circle" alt="avatar-4" />
+        </div>
+      </div>
+
+      <div class="modal-body pt-0 text-center">
+        <h5>Gaston Lapierre</h5>
+        <p class="mb-5">Calling...</p>
+        <div class="voice-call-action pt-4 pb-2">
+          <ul class="list-inline">
+            <li class="list-inline-item avatar-sm fw-bold me-2">
+              <a href="javascript: void(0);" class="avatar-title rounded-circle bg-soft-secondary text-dark fs-16">
+                <i class="bx bx-microphone-off"></i>
+              </a>
+            </li>
+            <li class="list-inline-item avatar fw-bold me-2" (click)="modal.dismiss()">
+              <a href="javascript: void(0);" class="avatar-title rounded-circle bg-danger text-white fs-18">
+                <i class="bx bx-phone-off"></i>
+              </a>
+            </li>
+            <li class="list-inline-item avatar-sm fw-bold">
+              <a href="javascript: void(0);" class="avatar-title rounded-circle bg-soft-secondary text-dark fs-16">
+                <i class="bx bx-volume-full"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

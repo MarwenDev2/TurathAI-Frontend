@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="card-title">Performance</h4>
+      <div>
+        <button type="button" class="btn btn-sm btn-outline-light">ALL</button>
+        <button type="button" class="btn btn-sm btn-outline-light ms-1">1M</button>
+        <button type="button" class="btn btn-sm btn-outline-light ms-1">6M</button>
+        <button type="button" class="btn btn-sm btn-outline-light active ms-1">1Y</button>
+      </div>
+    </div> 
+
+    <div dir="ltr">
+      <div id="dash-performance-chart" class="apex-charts">
+        <apx-chart [series]="performanceChart.series!" [chart]="performanceChart.chart!" [stroke]="performanceChart.stroke!" [fill]="performanceChart.fill!" [markers]="performanceChart.markers!" [xaxis]="performanceChart.xaxis!" [yaxis]="performanceChart.yaxis!" [grid]="performanceChart.grid!" [legend]="performanceChart.legend!" [plotOptions]="performanceChart.plotOptions!" [colors]="performanceChart.colors!" [tooltip]="performanceChart.tooltip!"></apx-chart>
+      </div>
+    </div>
+  </div> 
+</div> 

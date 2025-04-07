@@ -1,0 +1,37 @@
+<div class="card">
+  <div class="card-body">
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+      <ngb-carousel #carousel="ngbCarousel" [interval]="5000" (slide)="onSlideChange($event)" [showNavigationIndicators]="false" fade>
+        @for(slide of slides;track $index){
+        <ng-template ngbSlide [id]="$index.toString()">
+          <img [src]="slide.img" alt="Slide {{$index + 1}}" class="img-fluid bg-light rounded">
+        </ng-template>
+        }
+      </ngb-carousel>
+
+      <div class="carousel-indicators m-0 mt-2 d-lg-flex d-none position-static h-100">
+        @for(slide of slides;track $index){
+        <button type="button" data-bs-target="#carouselExampleFade" (click)="carousel.select($index.toString())" class="w-auto h-auto rounded bg-light" [ngClass]="{'active':$index == activeSlide}" [attr.data-bs-slide-to]="$index" [attr.aria-label]="'slide'+ $index" [attr.aria-current]="$index === activeSlide">
+          <img [src]="slide.thumb" class="d-block avatar-xl" alt="swiper-indicator-img">
+        </button>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="card-footer border-top">
+    <div class="row g-2">
+      <div class="col-lg-5">
+        <a href="javascript:void(0);" class="btn btn-primary d-flex align-items-center justify-content-center gap-2 w-100"><i class="bx bx-cart fs-18"></i> Add To Cart</a>
+      </div>
+      <div class="col-lg-5">
+        <a href="javascript:void(0);" class="btn btn-light d-flex align-items-center justify-content-center gap-2 w-100"><i class="bx bx-shopping-bag fs-18"></i> Buy Now</a>
+      </div>
+      <div class="col-lg-2">
+        <button type="button" class="btn btn-soft-danger d-inline-flex align-items-center justify-content-center fs-20 rounded w-100">
+          <iconify-icon icon="solar:heart-broken"></iconify-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

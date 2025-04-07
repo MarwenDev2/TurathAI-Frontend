@@ -1,0 +1,190 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor mb-1" id="overview">Overview</h5>
+  
+          <p class="mb-0">
+            <span class="fw-medium"
+              >Find the JS file for the following chart at:</span
+            >
+            <code> src/app/views/charts/radial-bar.component.ts</code>
+          </p>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4 anchor" id="basic">Basic RadialBar Chart</h4>
+          <div dir="ltr">
+            <div id="basic-radialbar" class="apex-charts">
+              <apx-chart
+                [series]="radialbarChart.series!"
+                [stroke]="radialbarChart.stroke!"
+                [chart]="radialbarChart.chart!"
+                [labels]="radialbarChart.labels!"
+                [colors]="radialbarChart.colors!"
+                [plotOptions]="radialbarChart.plotOptions!"
+              >
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4 anchor" id="multiple">
+            Multiple RadialBars
+          </h4>
+          <div dir="ltr">
+            <div id="multiple-radialbar" class="apex-charts">
+              <apx-chart
+                [series]="multipleradialbarChart.series!"
+                [responsive]="multipleradialbarChart.responsive!"
+                [chart]="multipleradialbarChart.chart!"
+                [labels]="multipleradialbarChart.labels!"
+                [colors]="multipleradialbarChart.colors!"
+                [plotOptions]="multipleradialbarChart.plotOptions!"
+              >
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4 anchor" id="circle-angle">
+            Circle Chart - Custom Angle
+          </h4>
+          <div class="text-center" dir="ltr">
+            <div id="circle-angle-radial" class="apex-charts">
+              <apx-chart
+                [series]="circleradialbarChart.series!"
+                [responsive]="circleradialbarChart.responsive!"
+                [chart]="circleradialbarChart.chart!"
+                [labels]="circleradialbarChart.labels!"
+                [colors]="circleradialbarChart.colors!"
+                [plotOptions]="circleradialbarChart.plotOptions!"
+                [legend]="circleradialbarChart.legend!"
+              >
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4 anchor" id="image">
+            Circle Chart with Image
+          </h4>
+          <div dir="ltr">
+            <div id="image-radial" class="apex-charts">
+              <apx-chart
+                [series]="imageradialbarChart.series!"
+                [responsive]="imageradialbarChart.responsive!"
+                [chart]="imageradialbarChart.chart!"
+                [labels]="imageradialbarChart.labels!"
+                [colors]="imageradialbarChart.colors!"
+                [plotOptions]="imageradialbarChart.plotOptions!"
+                [stroke]="imageradialbarChart.stroke!"
+                [fill]="imageradialbarChart.fill!"
+              >
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4 anchor" id="stroked-guage">
+            Stroked Circular Gauge
+          </h4>
+          <div dir="ltr">
+            <div id="stroked-guage-radial" class="apex-charts">
+              <apx-chart
+                [series]="guageradialbarChart.series!"
+                [responsive]="guageradialbarChart.responsive!"
+                [chart]="guageradialbarChart.chart!"
+                [labels]="guageradialbarChart.labels!"
+                [colors]="guageradialbarChart.colors!"
+                [plotOptions]="guageradialbarChart.plotOptions!"
+                [stroke]="guageradialbarChart.stroke!"
+                [fill]="guageradialbarChart.fill!"
+              >
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4 anchor" id="gradient">
+            Gradient Circular Chart
+          </h4>
+          <div dir="ltr">
+            <div id="gradient-chart" class="apex-charts">
+              <apx-chart
+                [series]="gradientradialbarChart.series!"
+                [chart]="gradientradialbarChart.chart!"
+                [labels]="gradientradialbarChart.labels!"
+                [plotOptions]="gradientradialbarChart.plotOptions!"
+                [stroke]="gradientradialbarChart.stroke!"
+                [fill]="gradientradialbarChart.fill!"
+              >
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4 anchor" id="semi-circle">
+            Semi Circle Gauge
+          </h4>
+          <div dir="ltr">
+            <div id="semi-circle-gauge" class="apex-charts">
+              <apx-chart
+                [series]="semicircleQuageChart.series!"
+                [chart]="semicircleQuageChart.chart!"
+                [labels]="semicircleQuageChart.labels!"
+                [plotOptions]="semicircleQuageChart.plotOptions!"
+                [grid]="semicircleQuageChart.grid!"
+                [colors]="semicircleQuageChart.colors!"
+              >
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  
+    <div class="col-xl-3">
+      <ui-examples-list
+        [linkList]="[
+          { label: 'Overview', link: '#overview' },
+          { label: 'Basic RadialBar Chart', link: '#basic' },
+          { label: 'Multiple RadialBars', link: '#multiple' },
+          { label: 'Circle Chart - Custom Angle', link: '#circle-angle' },
+          { label: 'Circle Chart with Image', link: '#image' },
+          { label: 'Stroked Circular Gauge', link: '#stroked-guage' },
+          { label: 'Gradient Circular Chart', link: '#gradient' },
+          { label: 'Semi Circle Gauge', link: '#semi-circle' }
+        ]"
+      />
+    </div>
+  </div>
+</div>

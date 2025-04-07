@@ -1,0 +1,112 @@
+<div class="main-nav">
+  
+  <app-logo-box className="logo-box" [size]="true" />
+
+  
+  <button type="button" class="button-sm-hover" (click)="changeSidebarSize()" aria-label="Show Full Sidebar">
+    <iconify-icon icon="solar:double-alt-arrow-right-bold-duotone" class="button-sm-hover-icon"></iconify-icon>
+  </button>
+
+  <ngx-simplebar class="scrollbar" id="leftside-menu-container" data-simplebar>
+    <ul class="navbar-nav" id="navbar-nav">
+      @for (item of menuItems; track item.label;let first = $first) {
+      @if (item.isTitle) {
+      <li class="menu-title" [ngClass]="{'mt-2':!first}">{{ item.label }}</li>
+      } @else {
+      @if (hasSubmenu(item)) {
+      <ng-container *ngTemplateOutlet="
+                MenuItemWithChildren;
+                context: {
+                  menu: item,
+                  linkClassName: 'nav-link menu-arrow',
+                  subMenuClassNames: 'nav sub-navbar-nav',
+                  itemClassName: 'nav-item'
+                }
+              ">
+      </ng-container>
+      } @else {
+      <ng-container *ngTemplateOutlet="
+                MenuItem;
+                context: {
+                  menu: item,
+                  linkClassName: 'nav-link nav-link-ref',
+                  itemClassName: 'nav-item'
+                }
+              ">
+      </ng-container>
+      }
+      }
+      }
+    </ul>
+  </ngx-simplebar>
+
+</div>
+
+<ng-template #MenuItemWithChildren let-menu="menu" let-itemClassName="itemClassName" let-linkClassName="linkClassName" let-subMenuClassNames="subMenuClassNames">
+  <li [class]="itemClassName">
+    <a [class]="linkClassName" [ngClass]="{ active: activeMenuItems.includes(menu.key) }" (click)="toggleMenuItem(menu, collapse)" role="button" [attr.aria-expanded]="!menu.collapsed" aria-controls="sidebarDashboards" [attr.aria-controls]="menu.key">
+      @if (menu.icon) {
+      <span class="nav-icon">
+        <iconify-icon [icon]="menu.icon"></iconify-icon>
+      </span>
+      }
+      <span class="nav-text"> {{ menu.label }} </span>
+    </a>
+    <div #collapse="ngbCollapse" [(ngbCollapse)]="menu.collapsed" class="collapse" id="sidebarDashboards">
+      <ul [class]="subMenuClassNames">
+        @for (child of menu.subMenu; track child.label) {
+        @if (hasSubmenu(child)) {
+        <ng-container *ngTemplateOutlet="
+                MenuItemWithChildren;
+                context: {
+                  menu: child,
+                  linkClassName: 'sub-nav-link menu-arrow',
+                  itemClassName: 'sub-nav-item',
+                  subMenuClassNames: 'nav sub-navbar-nav'
+                }
+              ">
+        </ng-container>
+        } @else {
+        <ng-container *ngTemplateOutlet="
+                MenuItem;
+                context: {
+                  menu: child,
+                  linkClassName: 'sub-nav-link nav-link-ref',
+                  itemClassName: 'sub-nav-item'
+                }
+              ">
+        </ng-container>
+        }
+        }
+      </ul>
+    </div>
+  </li>
+</ng-template>
+
+<ng-template #MenuItem let-menu="menu" let-linkClassName="linkClassName" let-itemClassName="itemClassName">
+  <li [class]="itemClassName" [ngClass]="{ active: activeMenuItems.includes(menu.key) }">
+    <ng-container *ngTemplateOutlet="
+        MenuItemLink;
+        context: { menu: menu, className: linkClassName }
+      ">
+    </ng-container>
+  </li>
+</ng-template>
+
+<ng-template #MenuItemLink let-menu="menu" let-className="className">
+  <a [routerLink]="menu.link" [class]="className" [ngClass]="{ active: activeMenuItems.includes(menu.key) }" [attr.aria-controls]="menu.key">
+    @if (menu.icon) {
+    <span class="nav-icon">
+      <iconify-icon [icon]="menu.icon"></iconify-icon>
+    </span>
+    <span class="nav-text">{{ menu.label }}</span>
+    } @else {
+    {{ menu.label }}
+    }
+    @if (menu.badge) {
+    <span class="badge badge-pill text-end bg-{{ menu.badge.variant }}">{{
+      menu.badge.text
+      }}</span>
+    }
+  </a>
+</ng-template>

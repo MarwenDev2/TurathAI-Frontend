@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="overview">
+            Overview
+            <a
+              class="btn btn-sm btn-outline-success rounded-2 float-end"
+              href="https://www.npmjs.com/package/ngx-quill"
+              target="_blank"
+            >
+              Official Website
+            </a>
+          </h5>
+          <p class="text-muted mb-3">
+            ngx-quill is an open source Angular module for the quill cross-browser
+            Rich Text editor.
+          </p>
+  
+          <h5 class="mt-2">Usage</h5>
+          <p>
+            To use Ngx Quill, follow the instructions from its documentation over
+            <a
+              href="https://www.npmjs.com/package/ngx-quill"
+              class="text-primary"
+            >
+              here</a
+            >
+          </p>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="quill-snow-editor">
+            Snow Editor<a class="anchor-link" href="#quill-snow-editor">#</a>
+          </h5>
+          <p class="text-muted">
+            Use <code>snow-editor</code> id to set snow editor.
+          </p>
+          <div class="mb-3">
+            <quill-editor
+              #quillEditor
+              [(ngModel)]="content"
+              theme="snow"
+              [modules]="editorConfig"
+              style="height: 300px"
+              class="w-100"
+            ></quill-editor>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="quill-bubble-editor">
+            Bubble Editor<a class="anchor-link" href="#quill-bubble-editor">#</a>
+          </h5>
+          <p class="text-muted">
+            Use <code>bubble-editor</code> id to set bubble editor.
+          </p>
+          <div class="mb-3">
+            <quill-editor
+              #quillEditor
+              [(ngModel)]="content1"
+              theme="bubble"
+              [modules]="editorConfigBubble"
+              style="height: 300px"
+              class="w-100"
+            ></quill-editor>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
