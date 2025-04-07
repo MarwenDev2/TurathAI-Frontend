@@ -64,6 +64,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+            "browserTarget": "frontoffice:build",
+            "port": 4200,
             "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
@@ -164,6 +166,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+            "browserTarget": "backoffice:build",
+            "port": 4300,
             "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
