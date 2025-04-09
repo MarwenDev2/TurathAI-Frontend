@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { topPages } from '@views/dashboard/data'
+import { topPages } from '../../data';
 
 @Component({
   selector: 'dashboard-top-pages',

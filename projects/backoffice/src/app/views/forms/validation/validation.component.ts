@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, Validators, type UntypedFormGroup } from '@angular/forms';
-import { UIExamplesListComponent } from '@component/ui-examples-list/ui-examples-list.component';
+import { UIExamplesListComponent } from '../../../components/ui-examples-list/ui-examples-list.component';
 
 @Component({
   selector: 'app-validation',

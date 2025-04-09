@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { FileUploaderComponent } from '@component/file-uploader/file-uploader.component';
-import { UIExamplesListComponent } from '@component/ui-examples-list/ui-examples-list.component';
+import { FileUploaderComponent } from '../../../components/file-uploader/file-uploader.component';
 
 @Component({
   selector: 'app-fileuploads',
   standalone: true,
-  imports: [UIExamplesListComponent,FileUploaderComponent],
+  imports: [FileUploaderComponent],
   templateUrl: './fileuploads.component.html',
   styles: ``
 })

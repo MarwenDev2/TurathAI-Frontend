@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { UIExamplesListComponent } from '@component/ui-examples-list/ui-examples-list.component';
 import { ToastrService } from 'ngx-toastr'
+import { UIExamplesListComponent } from '../../../components/ui-examples-list/ui-examples-list.component';
 
 @Component({
   selector: 'app-toastify',

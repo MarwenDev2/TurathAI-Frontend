@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core'
 import { Observable, of } from 'rxjs'
 
-import { defaultEvents } from '@/app/store/calendar/data'
 import type { EventInput } from '@fullcalendar/core'
+import { defaultEvents } from '../../store/calendar/data'
 
 @Injectable({ providedIn: 'root' })
 export class CrudService {

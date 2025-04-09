@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import type { ChartOptions } from '@common/apexchart.model';
 import { NgApexchartsModule } from 'ng-apexcharts'
+import { ChartOptions } from 'projects/backoffice/src/app/common/apexchart.model';
 
 @Component({
   selector: 'dashboard-conversions',

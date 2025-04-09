@@ -1,20 +1,9 @@
 import { Component, inject, type OnInit } from '@angular/core';
 import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
-import {
-  changemenucolor,
-  changesidebarsize,
-  changetheme,
-  changetopbarcolor,
-  resetState,
-} from '@store/layout/layout-action';
-import {
-  getLayoutColor,
-  getMenucolor,
-  getSidebarsize,
-  getTopbarcolor,
-} from '@store/layout/layout-selector';
 import { SimplebarAngularModule } from 'simplebar-angular'
+import { changemenucolor, changesidebarsize, changetheme, changetopbarcolor, resetState } from '../../store/layout/layout-action';
+import { getLayoutColor, getTopbarcolor, getMenucolor, getSidebarsize } from '../../store/layout/layout-selector';
 
 @Component({
   selector: 'app-rightsidebar',

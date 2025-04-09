@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { UIExamplesListComponent } from '@component/ui-examples-list/ui-examples-list.component';
 import { ClipboardModule, ClipboardService } from 'ngx-clipboard'
 import { Subscription, take } from 'rxjs'
+import { UIExamplesListComponent } from '../../../components/ui-examples-list/ui-examples-list.component';
 
 @Component({
   selector: 'app-clipboard',

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
-import { activityStreamData } from '@layouts/topbar/data';
 import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { SimplebarAngularModule } from 'simplebar-angular';
+import { activityStreamData } from '../../data';
 
 @Component({
   selector: 'app-activiti-strem',

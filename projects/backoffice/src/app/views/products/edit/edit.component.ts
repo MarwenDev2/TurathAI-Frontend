@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ProductDetailComponent } from './component/product-detail/product-detail.component';
 import { ProductInfoComponent } from './component/product-info/product-info.component';
 import { ProductPricingComponent } from './component/product-pricing/product-pricing.component';
-import { FileUploaderComponent } from '@component/file-uploader/file-uploader.component'
+import { FileUploaderComponent } from '../../../components/file-uploader/file-uploader.component';
 
 @Component({
   selector: 'app-edit',

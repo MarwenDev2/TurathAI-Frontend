@@ -64,16 +64,16 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "frontoffice:build",
+            "buildTarget": "frontoffice:build",
             "port": 4300,
             "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "frontoffice:build:production"
+              "buildTarget": "frontoffice:build:production"
             },
             "development": {
-              "browserTarget": "frontoffice:build:development"
+              "buildTarget": "frontoffice:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -81,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "frontoffice:build"
+            "buildTarget": "frontoffice:build"
           }
         },
         "test": {
@@ -166,16 +166,16 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "backoffice:build",
+            "buildTarget": "backoffice:build",
             "port": 4200,
             "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "backoffice:build:production"
+              "buildTarget": "backoffice:build:production"
             },
             "development": {
-              "browserTarget": "backoffice:build:development"
+              "buildTarget": "backoffice:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -183,7 +183,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "backoffice:build"
+            "buildTarget": "backoffice:build"
           }
         },
         "test": {

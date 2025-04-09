@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, Validators, type UntypedFormGroup } from '@angular/forms';
 import { RouterLink } from '@angular/router'
-import { LogoBoxComponent } from '@component/logo-box.component'
 import { Store } from '@ngrx/store';
-import { login } from '@store/authentication/authentication.actions';
+import { LogoBoxComponent } from '../../../components/logo-box.component';
+import { login } from '../../../store/authentication/authentication.actions';
 
 @Component({
   selector: 'app-signin',

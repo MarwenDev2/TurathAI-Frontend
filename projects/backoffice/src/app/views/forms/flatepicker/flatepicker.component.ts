@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { currentYear } from '@common/constants';
-import { UIExamplesListComponent } from '@component/ui-examples-list/ui-examples-list.component';
-import { FlatpickrDirective } from '@core/directive/flatpickr.directive';
+import { currentYear } from '../../../common/constants';
+import { UIExamplesListComponent } from '../../../components/ui-examples-list/ui-examples-list.component';
+import { FlatpickrDirective } from '../../../core/directive/flatpickr.directive';
 
 @Component({
   selector: 'app-flatepicker',

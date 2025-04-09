@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { currency } from '@common/constants';
+import { currency } from 'projects/backoffice/src/app/common/constants';
 
 @Component({
   selector: 'add-detail',

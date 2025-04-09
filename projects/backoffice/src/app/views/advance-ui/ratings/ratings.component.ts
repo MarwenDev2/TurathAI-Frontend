@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UIExamplesListComponent } from '@component/ui-examples-list/ui-examples-list.component';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+import { UIExamplesListComponent } from '../../../components/ui-examples-list/ui-examples-list.component';
 
 @Component({
   selector: 'app-ratings',

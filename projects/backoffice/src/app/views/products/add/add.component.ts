@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { FileUploaderComponent } from '@component/file-uploader/file-uploader.component'
 import { DetailComponent } from './components/detail/detail.component'
 import { InfoComponent } from './components/info/info.component'
 import { PricingComponent } from './components/pricing/pricing.component'
+import { FileUploaderComponent } from '../../../components/file-uploader/file-uploader.component';
 
 @Component({
   selector: 'app-add',

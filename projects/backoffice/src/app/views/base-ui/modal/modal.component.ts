@@ -1,6 +1,6 @@
 import { Component, inject, type TemplateRef } from '@angular/core';
-import { UIExamplesListComponent } from '@component/ui-examples-list/ui-examples-list.component';
 import { NgbModal, NgbModalModule, type NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { UIExamplesListComponent } from '../../../components/ui-examples-list/ui-examples-list.component';
 
 @Component({
   selector: 'app-modal',

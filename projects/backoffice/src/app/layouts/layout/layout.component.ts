@@ -6,8 +6,8 @@ import { RightSidebarComponent } from '../rightsidebar/rightsidebar.component';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { NgbActiveOffcanvas, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
-import { getSidebarsize } from '@store/layout/layout-selector';
-import { changesidebarsize } from '@store/layout/layout-action';
+import { changesidebarsize } from '../../store/layout/layout-action';
+import { getSidebarsize } from '../../store/layout/layout-selector';
 
 @Component({
   selector: 'app-layout',
@@ -16,9 +16,8 @@ import { changesidebarsize } from '@store/layout/layout-action';
     SidebarComponent,
     TopbarComponent,
     FooterComponent,
-    RightSidebarComponent,
-    RouterModule,
-  ],
+    RouterModule
+],
   templateUrl: './layout.component.html',
   styles: ``,
   providers: [NgbActiveOffcanvas],

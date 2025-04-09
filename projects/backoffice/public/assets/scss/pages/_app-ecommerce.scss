@@ -1,0 +1,207 @@
+//
+// app-ecommerce.scss
+//
+
+
+.ecom-wrapper {
+     display: flex;
+
+     .ecom-filter {
+          width: 300px;
+
+          .scroll-block {
+               height: calc(100vh - 120px);
+          }
+
+          .card {
+               @include media-breakpoint-down(xxl) {
+                    box-shadow: none;
+               }
+          }
+     }
+
+     .ecom-offcanvas {
+          --bs-offcanvas-width: 301px;
+
+          .sticky-xxl-top {
+               top: 100px;
+          }
+
+          &:not(.show) {
+               .btn-link-danger.btn-pc-default {
+                    display: none;
+               }
+          }
+
+          &.show {
+               .collapse-horizontal.collapse:not(.show) {
+                    display: block;
+               }
+
+               .ecom-filter {
+                    margin-right: 0;
+
+                    .scroll-block {
+                         height: calc(100vh - 120px);
+                    }
+               }
+          }
+     }
+}
+
+.product-card {
+     transition: all 0.3s ease-in-out;
+
+     .card-img-top {
+          position: relative;
+          padding: 8px 8px 0;
+          width: 100%;
+          overflow: hidden;
+
+          .img-prod {
+               border-radius: var(--bs-border-radius);
+          }
+     }
+
+     .prod-content {
+          -webkit-line-clamp: 2;
+          display: block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+     }
+
+     .badge-prod-card {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          padding: 0;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+     }
+
+     .btn-prod-card {
+          background: var(--bs-card-bg);
+          border: 1px solid rgba(0, 0, 0, 0.1);
+
+          &:hover,
+          &:focus,
+          &:active {
+               background: var(--bs-primary);
+               color: #fff;
+               border-color: var(--bs-primary);
+          }
+     }
+
+     // &:hover {
+     //      box-shadow: 0px 8px 24px rgba(27, 46, 94, 0.12);
+     // }
+}
+
+.product-sticky {
+     top: 85px;
+
+     .prod-likes {
+          z-index: 5;
+     }
+}
+
+// horizontal progress
+.progressbar {
+     counter-reset: step;
+
+     li {
+          list-style-type: none;
+          width: 25%;
+          float: left;
+          font-size: 12px;
+          position: relative;
+          font-weight: $font-weight-semibold;
+          text-align: center;
+          text-transform: uppercase;
+          color: var(--#{$prefix}body-color);
+
+          &::before {
+               width: 30px;
+               height: 30px;
+               content: counter(step);
+               counter-increment: step;
+               line-height: 25px;
+               border: 2px solid var(--#{$prefix}border-color);
+               display: block;
+               text-align: center;
+               margin: 0 auto 10px auto;
+               border-radius: 50%;
+               background-color: $card-bg;
+               color: var(--#{$prefix}body-color);
+          }
+
+          &::after {
+               width: 100%;
+               height: 2px;
+               content: "";
+               position: absolute;
+               background-color: var(--#{$prefix}border-color);
+               top: 15px;
+               left: -50%;
+               z-index: -1;
+          }
+
+          &:first-child::after {
+               content: none;
+          }
+
+          &.active {
+               color: $primary;
+
+               &::before {
+                    border-color: $primary;
+                    background-color: $primary;
+                    color: $white;
+               }
+
+               + {
+                    li {
+                         &::after {
+                              background-color: $primary;
+                         }
+
+                         // &::before {
+                         //      border-color: $primary;
+                         //      background-color: $primary;
+                         //      color: $white;
+                         //      // animation-name: animation-steps-current;
+                         //      // animation-duration: 2s;
+                         //      // animation-iteration-count: infinite;
+                         //      // animation-timing-function: ease-out;
+                         // }
+                         // &::cue() {
+                         //      content: "";
+                         //      position: absolute;
+                         //      top: 0;
+                         //      left: 0;
+                         //      border: $border-width solid $primary;
+                         //      height: 20px;
+                         //      width: 20px;
+                         //      animation-name: animation-steps-current;
+                         //      animation-duration: 2s;
+                         //      animation-iteration-count: infinite;
+                         //      animation-timing-function: ease-out;
+                         // }
+                    }
+               }
+          }
+     }
+}
+
+@keyframes animation-steps-current {
+     from {
+          transform: translate(-50%, -50%) scale(0);
+          opacity: 1;
+     }
+
+     to {
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 0.7;
+     }
+}

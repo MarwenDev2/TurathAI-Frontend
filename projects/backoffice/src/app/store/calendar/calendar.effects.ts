@@ -18,7 +18,7 @@ import {
   updateCalendarFailure,
   updateCalendarSuccess,
 } from './calendar.actions'
-import { CrudService } from '@core/services/crud.service'
+import { CrudService } from '../../core/services/crud.service'
 
 @Injectable()
 export class CalendarEffects {

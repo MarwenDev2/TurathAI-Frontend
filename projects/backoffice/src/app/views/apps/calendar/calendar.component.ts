@@ -3,9 +3,6 @@ import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, Validators, type 
 import type { CalendarOptions,EventClickArg, EventInput } from '@fullcalendar/core/index.js'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { Store } from '@ngrx/store'
-import { addCalendar, deleteCalendar, fetchCalendar, updateCalendar } from '@store/calendar/calendar.actions'
-import { getEvents } from '@store/calendar/calendar.selectors'
-import { externalEvents, type externalModel } from '@store/calendar/data'
 
 import { FullCalendarModule } from '@fullcalendar/angular'
 import interactionPlugin, {
@@ -17,6 +14,9 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import bootstrapPlugin from '@fullcalendar/bootstrap'
 import listPlugin from '@fullcalendar/list'
 import Swal from 'sweetalert2'
+import { fetchCalendar, addCalendar, updateCalendar, deleteCalendar } from '../../../store/calendar/calendar.actions';
+import { getEvents } from '../../../store/calendar/calendar.selectors';
+import { externalModel, externalEvents } from '../../../store/calendar/data';
 
 export type CalendarEvent = {
   id: string;

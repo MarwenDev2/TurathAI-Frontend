@@ -1,6 +1,7 @@
-import type { ChartOptions } from '@/app/common/apexchart.model'
+
 import { Component } from '@angular/core'
 import { NgApexchartsModule } from 'ng-apexcharts'
+import { ChartOptions } from 'projects/backoffice/src/app/common/apexchart.model'
 
 @Component({
   selector: 'widget-conversation',

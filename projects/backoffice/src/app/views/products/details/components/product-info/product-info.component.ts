@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { currency } from '@common/constants';
-import { QuantityControlDirective } from '@core/directive/quantity-control.directive'
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap'
+import { currency } from 'projects/backoffice/src/app/common/constants';
+import { QuantityControlDirective } from 'projects/backoffice/src/app/core/directive/quantity-control.directive';
 
 @Component({
   selector: 'detail-product-info',

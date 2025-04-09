@@ -1,4 +1,4 @@
-import type { StateType } from '@component/state-card/state-card.component'
+import { StateType } from "../../../components/state-card/state-card.component";
 
 type ReceivedOrderType = {
   order_id: string;

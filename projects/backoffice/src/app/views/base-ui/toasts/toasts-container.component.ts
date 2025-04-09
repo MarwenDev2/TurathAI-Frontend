@@ -4,8 +4,8 @@ import {
   TemplateRef,
   inject,
 } from '@angular/core'
-import { ToastService } from '@core/services/toast-service'
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap'
+import { ToastService } from '../../../core/services/toast-service'
 
 @Component({
   selector: 'app-toasts',

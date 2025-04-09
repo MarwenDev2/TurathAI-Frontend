@@ -17,13 +17,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { provideEffects } from '@ngrx/effects'
 import { provideStore } from '@ngrx/store'
 import { provideStoreDevtools } from '@ngrx/store-devtools'
-import { CalendarEffects } from '@store/calendar/calendar.effects'
-import { localStorageSyncReducer } from '@store/layout/layout-reducers'
 import { provideToastr } from 'ngx-toastr'
 import { routes } from './app.routes'
 import { FakeBackendProvider } from './helper/fake-backend'
 import { rootReducer } from './store'
-import { AuthenticationEffects } from '@store/authentication/authentication.effects'
+import { AuthenticationEffects } from './store/authentication/authentication.effects'
+import { localStorageSyncReducer } from './store/layout/layout-reducers'
+import { CalendarEffects } from './store/calendar/calendar.effects'
 
 export const appConfig: ApplicationConfig = {
   providers: [

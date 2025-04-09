@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { UIExamplesListComponent } from '@component/ui-examples-list/ui-examples-list.component';
-import { SelectFormInputDirective } from '@core/directive/select-form-input.directive';
+import { SelectFormInputDirective } from '../../../core/directive/select-form-input.directive';
+import { UIExamplesListComponent } from '../../../components/ui-examples-list/ui-examples-list.component';
 
 @Component({
   selector: 'app-choices',

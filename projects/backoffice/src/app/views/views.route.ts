@@ -44,11 +44,6 @@ export const VIEW_ROUTES: Route[] = [
       import('./advance-ui/advance-ui.route').then((mod) => mod.ADVANCED_ROUTES),
   },
   {
-    path: 'charts',
-    loadChildren: () =>
-      import('./charts/charts.route').then((mod) => mod.CHART_ROUTES),
-  },
-  {
     path: 'forms',
     loadChildren: () =>
       import('./forms/forms.route').then((mod) => mod.FORMS_ROUTES),

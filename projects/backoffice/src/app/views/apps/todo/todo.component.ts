@@ -4,7 +4,7 @@ import { TodoData, type TodoType } from './data';
 import { CommonModule } from '@angular/common';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { TableService } from '@core/services/table.service';
+import { TableService } from '../../../core/services/table.service';
 
 @Component({
   selector: 'app-todo',

@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { StateCardComponent } from '@component/state-card/state-card.component';
 import { orderState } from '../../data';
+import { StateCardComponent } from 'projects/backoffice/src/app/components/state-card/state-card.component';
 
 @Component({
   selector: 'received-order-state',

@@ -1,5 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { currency } from '@common/constants';
+import { currency } from 'projects/backoffice/src/app/common/constants';
 
 @Component({
   selector: 'detail-feature',

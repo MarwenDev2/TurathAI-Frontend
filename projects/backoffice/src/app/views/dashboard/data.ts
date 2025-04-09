@@ -1,4 +1,5 @@
-import { currency } from "@common/constants";
+import { currency } from "../../common/constants";
+
 
 type StateType = {
   title: string;

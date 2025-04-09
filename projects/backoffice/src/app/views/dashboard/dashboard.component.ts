@@ -1,6 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { StateComponent } from './components/state/state.component';
-import { PerformanceComponent } from './components/performance/performance.component';
 import { ConversionsComponent } from './components/conversions/conversions.component';
 import { SessionsCountryComponent } from './components/sessions-country/sessions-country.component';
 import { TopPagesComponent } from './components/top-pages/top-pages.component';
@@ -12,12 +11,10 @@ import { ReceivedOrdersComponent } from "../inventory/received-orders/received-o
   standalone: true,
   imports: [
     StateComponent,
-    PerformanceComponent,
     ConversionsComponent,
     SessionsCountryComponent,
     TopPagesComponent,
-    RecentOrderComponent,
-    ReceivedOrdersComponent
+    RecentOrderComponent
 ],
   templateUrl: './dashboard.component.html',
   styles: ``,

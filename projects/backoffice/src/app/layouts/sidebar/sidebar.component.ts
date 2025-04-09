@@ -1,18 +1,19 @@
-import { findAllParent, findMenuItem } from '@/app/helper/utils';
+
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
-import { basePath } from '@common/constants';
-import { MENU, type MenuItem } from '@common/menu-meta';
-import { LogoBoxComponent } from '@component/logo-box.component';
 import {
   NgbCollapseModule,
   type NgbCollapse,
 } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
-import { changesidebarsize } from '@store/layout/layout-action';
-import { getSidebarsize } from '@store/layout/layout-selector';
 import { SimplebarAngularModule } from 'simplebar-angular';
+import { basePath } from '../../common/constants';
+import { MenuItem, MENU } from '../../common/menu-meta';
+import { LogoBoxComponent } from '../../components/logo-box.component';
+import { findMenuItem, findAllParent } from '../../helper/utils';
+import { changesidebarsize } from '../../store/layout/layout-action';
+import { getSidebarsize } from '../../store/layout/layout-selector';
 
 @Component({
   selector: 'app-sidebar',

@@ -9,8 +9,8 @@ import { WidgetTransactionComponent } from './components/widget-transaction/widg
 import { RecentProjectComponent } from './components/recent-project/recent-project.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { WidgetStateComponent } from './components/widget-state/widget-state.component';
-import { stateData } from '@views/dashboard/data';
-import { WidgetCardComponent } from '@component/widget-card/widget-card.component';
+import { WidgetCardComponent } from '../../../components/widget-card/widget-card.component';
+import { stateData } from '../../dashboard/data';
 
 @Component({
   selector: 'app-widgets',

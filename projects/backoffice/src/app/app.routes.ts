@@ -1,8 +1,8 @@
 import { Routes, Router, type UrlTree, RedirectCommand } from '@angular/router'
 import { LayoutComponent } from './layouts/layout/layout.component'
-import { AuthLayoutComponent } from '@layouts/auth-layout/auth-layout.component'
 import { AuthenticationService } from './core/services/auth.service'
 import { inject } from '@angular/core'
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component'
 
 export const routes: Routes = [
   {

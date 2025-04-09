@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { UIExamplesListComponent } from '@component/ui-examples-list/ui-examples-list.component';
 import { QuillEditorComponent } from 'ngx-quill';
 import type Editor from 'quill/core/editor';
 
 @Component({
   selector: 'app-editors',
   standalone: true,
-  imports: [UIExamplesListComponent,QuillEditorComponent,FormsModule],
+  imports: [QuillEditorComponent, FormsModule],
   templateUrl: './editors.component.html',
   styles: ``
 })

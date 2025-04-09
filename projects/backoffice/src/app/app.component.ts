@@ -8,12 +8,12 @@ import {
   RouterOutlet,
   type Event,
 } from '@angular/router'
-import { TitleService } from '@core/services/title.service'
 import {
   NgProgressComponent,
   NgProgressModule,
   type NgProgressRef,
 } from 'ngx-progressbar'
+import { TitleService } from './core/services/title.service'
 
 @Component({
   selector: 'app-root',
@@ -23,6 +23,7 @@ import {
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
+  [x: string]: any
   progressRef!: NgProgressRef
   @ViewChild(NgProgressComponent) progressBar!: NgProgressComponent
 

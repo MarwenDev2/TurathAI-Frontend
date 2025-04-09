@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, Input } from '@angular/core'
+import "~bootstrap/scss/functions";
 import Gumshoe from 'gumshoejs'
 
 @Component({

@@ -11,8 +11,8 @@ import {
 } from 'swiper/modules'
 import { register } from 'swiper/element'
 import { SwiperOptions } from 'swiper/types';
-import { SwiperDirective } from "@/app/core/directive/swiper-directive.component";
-import { UIExamplesListComponent } from '@component/ui-examples-list/ui-examples-list.component';
+import { UIExamplesListComponent } from '../../../components/ui-examples-list/ui-examples-list.component';
+import { SwiperDirective } from '../../../core/directive/swiper-directive.component';
 
 register()
 

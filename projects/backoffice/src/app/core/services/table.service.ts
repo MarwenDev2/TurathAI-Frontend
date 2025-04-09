@@ -1,9 +1,9 @@
 
 import { DecimalPipe } from '@angular/common'
 import { inject, Injectable, PipeTransform } from '@angular/core'
-import type { SortDirection } from '@core/directive/sortable.directive'
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs'
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators'
+import { SortDirection } from '../directive/sortable.directive'
 
 interface SearchResult<T> {
   items: T[]

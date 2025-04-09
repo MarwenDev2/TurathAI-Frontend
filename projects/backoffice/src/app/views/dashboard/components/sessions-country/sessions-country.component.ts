@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { WorldVectorMapComponent } from '@component/vector-maps/world-vector-map.component';
 import 'jsvectormap'
 import 'jsvectormap/dist/maps/world.js'
+import { WorldVectorMapComponent } from 'projects/backoffice/src/app/components/vector-maps/world-vector-map.component';
 
 @Component({
   selector: 'dashboard-sessions-country',

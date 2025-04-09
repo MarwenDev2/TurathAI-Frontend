@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { WidgetCardComponent } from '@component/widget-card/widget-card.component'
-import { stateData } from '@views/dashboard/data';
+import { WidgetCardComponent } from 'projects/backoffice/src/app/components/widget-card/widget-card.component';
+import { stateData } from '../../data';
 
 @Component({
   selector: 'dashboard-state',

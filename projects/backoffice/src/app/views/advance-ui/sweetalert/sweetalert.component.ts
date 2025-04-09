@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { UIExamplesListComponent } from '@component/ui-examples-list/ui-examples-list.component';
 import Swal from 'sweetalert2'
+import { UIExamplesListComponent } from '../../../components/ui-examples-list/ui-examples-list.component';
 
 @Component({
   selector: 'app-sweetalert',

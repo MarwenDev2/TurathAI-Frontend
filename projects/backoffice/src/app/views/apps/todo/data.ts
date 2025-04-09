@@ -1,4 +1,5 @@
-import { currentYear } from '@/app/common/constants'
+import { currentYear } from "../../../common/constants"
+
 
 export type UserType = {
   name: string

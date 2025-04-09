@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { currentYear } from '@common/constants';
-import { UIExamplesListComponent } from '@component/ui-examples-list/ui-examples-list.component';
+import { UIExamplesListComponent } from '../../../components/ui-examples-list/ui-examples-list.component';
+import { currentYear } from '../../../common/constants';
+
 
 @Component({
   selector: 'app-basic',

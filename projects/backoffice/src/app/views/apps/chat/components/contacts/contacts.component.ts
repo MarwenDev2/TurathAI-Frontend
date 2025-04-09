@@ -22,8 +22,8 @@ import { NgbNavModule, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap'
 import { SimplebarAngularModule } from 'simplebar-angular'
 import { SettingComponent } from '../setting/setting.component'
 import { FormsModule } from '@angular/forms'
-import { SwiperDirective } from '@core/directive/swiper-directive.component'
 import { CommonModule } from '@angular/common'
+import { SwiperDirective } from 'projects/backoffice/src/app/core/directive/swiper-directive.component'
 register()
 
 @Component({

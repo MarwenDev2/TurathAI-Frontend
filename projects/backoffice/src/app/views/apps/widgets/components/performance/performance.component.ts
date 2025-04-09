@@ -1,6 +1,7 @@
-import type { ChartOptions } from '@/app/common/apexchart.model'
+
 import { Component } from '@angular/core'
 import { NgApexchartsModule } from 'ng-apexcharts'
+import { ChartOptions } from 'projects/backoffice/src/app/common/apexchart.model'
 
 @Component({
   selector: 'widget-performance',
@@ -106,11 +107,6 @@ export class PerformanceComponent {
       horizontalAlign: 'center',
       offsetX: 0,
       offsetY: 5,
-      markers: {
-        width: 9,
-        height: 9,
-        radius: 6,
-      },
       itemMargin: {
         horizontal: 10,
         vertical: 0,
@@ -128,7 +124,7 @@ export class PerformanceComponent {
       shared: true,
       y: [
         {
-          formatter: function (y) {
+          formatter: function (y: number) {
             if (typeof y !== 'undefined') {
               return y.toFixed(1) + 'k'
             }
@@ -136,7 +132,7 @@ export class PerformanceComponent {
           },
         },
         {
-          formatter: function (y) {
+          formatter: function (y: number) {
             if (typeof y !== 'undefined') {
               return y.toFixed(1) + 'k'
             }

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { currency } from '@common/constants';
 import {
   NgbAccordionModule,
   NgbCollapseModule,
 } from '@ng-bootstrap/ng-bootstrap';
+import { currency } from 'projects/backoffice/src/app/common/constants';
 
 @Component({
   selector: 'grid-filter',

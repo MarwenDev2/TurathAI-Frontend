@@ -15,12 +15,12 @@ import {
   NgbOffcanvasModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
-import { changetheme } from '@store/layout/layout-action';
-import { getLayoutColor } from '@store/layout/layout-selector';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { ActivitiStremComponent } from './component/activiti-strem/activiti-strem.component';
 import { notificationsData } from './data';
-import { logout } from '@store/authentication/authentication.actions';
+import { logout } from '../../store/authentication/authentication.actions';
+import { changetheme } from '../../store/layout/layout-action';
+import { getLayoutColor } from '../../store/layout/layout-selector';
 
 @Component({
   selector: 'app-topbar',

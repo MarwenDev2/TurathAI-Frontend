@@ -1,5 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { credits, currentYear } from '@common/constants';
+import { credits, currentYear } from '../../common/constants';
 
 @Component({
   selector: 'app-footer',

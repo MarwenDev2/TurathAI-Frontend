@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { map } from 'rxjs/operators'
 
 import { CookieService } from 'ngx-cookie-service'
-import type { User } from '@/app/helper/fake-backend'
+import { User } from '../Models/user'
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -18,10 +18,10 @@ export class AuthenticationService {
     return this.http.post<User>(`/api/login`, { email, password }).pipe(
       map((user) => {
         // login successful if there's a jwt token in the response
-        if (user && user.token) {
+        if (user) {
           this.user = user
-          // store user details and jwt in session
-          this.saveSession(user.token)
+          // // store user details and jwt in session
+          // this.saveSession(user.token)
         }
         return user
       })

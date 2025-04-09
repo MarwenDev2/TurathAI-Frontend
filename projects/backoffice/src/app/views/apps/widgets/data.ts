@@ -1,4 +1,5 @@
-import { currency, currentYear } from '@/app/common/constants'
+import { currency, currentYear } from "../../../common/constants"
+
 
 export type ProjectType = {
   project: string

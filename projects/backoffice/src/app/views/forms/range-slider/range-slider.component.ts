@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { UIExamplesListComponent } from '@component/ui-examples-list/ui-examples-list.component';
 import { NouisliderModule } from 'ng2-nouislider'
+import { UIExamplesListComponent } from '../../../components/ui-examples-list/ui-examples-list.component';
 
 @Component({
   selector: 'app-range-slider',

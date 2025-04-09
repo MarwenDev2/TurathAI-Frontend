@@ -1,5 +1,3 @@
-import { UIExamplesListComponent } from '@/app/components/ui-examples-list/ui-examples-list.component'
-import { TableService } from '@/app/core/services/table.service'
 
 import { CommonModule, DecimalPipe } from '@angular/common'
 import {
@@ -18,7 +16,9 @@ import { FormsModule } from '@angular/forms'
 import { NgbHighlight, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap'
 import { Observable } from 'rxjs'
 import { DataTableItems, paginateData, type DataTableItemsType } from '../data'
-import { NgbdSortableHeader } from '@core/directive/sortable.directive'
+import { NgbdSortableHeader } from '../../../core/directive/sortable.directive'
+import { UIExamplesListComponent } from '../../../components/ui-examples-list/ui-examples-list.component'
+import { TableService } from '../../../core/services/table.service'
 
 export type SortColumn = keyof DataTableItemsType | ''
 export type SortDirection = 'asc' | 'desc' | ''

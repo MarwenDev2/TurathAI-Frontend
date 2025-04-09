@@ -10,8 +10,7 @@ import {
   logout,
   logoutSuccess,
 } from './authentication.actions'
-import { AuthenticationService } from '@/app/core/services/auth.service'
-
+import { AuthenticationService } from '../../core/services/auth.service'
 @Injectable()
 export class AuthenticationEffects {
   login$ = createEffect(() =>

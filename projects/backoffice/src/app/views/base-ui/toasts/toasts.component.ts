@@ -1,9 +1,9 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, type TemplateRef } from '@angular/core';
-import { UIExamplesListComponent } from '@component/ui-examples-list/ui-examples-list.component';
-import { ToastService } from '@core/services/toast-service';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastsContainer } from "./toasts-container.component";
 import { FormsModule } from '@angular/forms';
+import { UIExamplesListComponent } from '../../../components/ui-examples-list/ui-examples-list.component';
+import { ToastService } from '../../../core/services/toast-service';
 
 @Component({
   selector: 'app-toastss',

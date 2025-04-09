@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
-import { orderList } from '@views/dashboard/data';
+import { orderList } from '../../data';
 
 @Component({
   selector: 'dashboard-recent-order',
