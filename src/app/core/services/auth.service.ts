@@ -173,7 +173,7 @@ export class AuthService {
     const user = this.currentUser;
     if (!user) return '/dashboard';
     
-    return user.role === 'ADMIN' ? '/admin/dashboard' : '/dashboard';
+    return user.role === 'ADMIN' ? '/dashboard' : '/frontoffice';
   }
 
   setRedirectUrl(url: string): void {
