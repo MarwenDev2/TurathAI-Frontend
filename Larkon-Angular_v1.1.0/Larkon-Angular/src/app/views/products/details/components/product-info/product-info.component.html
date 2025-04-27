@@ -1,0 +1,98 @@
+<div class="card">
+  <div class="card-body">
+    <!-- Badge for New Arrival (can be used for special features like 'New Heritage Site') -->
+    <h4 class="badge bg-success text-light fs-14 py-1 px-2">New Heritage Site</h4>
+
+    <!-- Heritage Site Name -->
+    <p class="mb-1">
+      <a href="javascript:void(0);" class="fs-24 text-dark fw-medium">Ancient Roman Amphitheater</a>
+    </p>
+
+    <!-- Heritage Site Rating -->
+    <div class="d-flex gap-2 align-items-center">
+      <ul class="d-flex text-warning m-0 fs-20  list-unstyled">
+        <ng-template #t let-fill="fill">
+          <i class="bx bx-star text-warning fs-20">
+            @if (fill > 0) {
+            <i class="bx bxs-star text-warning fs-20 filled" [style.width.%]="fill"></i>
+            }
+          </i>
+        </ng-template>
+
+        <ngb-rating [rate]="4.5" [starTemplate]="t" [readonly]="true" [max]="5" />
+      </ul>
+      <p class="mb-0 fw-medium fs-18 text-dark">4.5 <span class="text-muted fs-13">(120 Reviews)</span></p>
+    </div>
+
+    <!-- Heritage Site Description -->
+    <h2 class="fw-medium my-3">Explore the Ancient Roman Amphitheater</h2>
+    <p class="text-muted">Experience the rich history of this historical landmark that once hosted gladiatorial combat and other public spectacles. A great place for history enthusiasts and culture lovers.</p>
+
+    <!-- Heritage Site Details -->
+    <div class="row align-items-center g-2 mt-3">
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <h5 class="text-dark fw-medium">Location</h5>
+          <p class="text-muted">Tunisia, El Djem</p>
+        </div>
+      </div>
+
+      <!-- Heritage Site Opening Hours -->
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <h5 class="text-dark fw-medium">Opening Hours</h5>
+          <p class="text-muted">Monday - Sunday: 8:00 AM - 6:00 PM</p>
+        </div>
+      </div>
+
+      <!-- Heritage Site Admission Fee -->
+      <div class="col-lg-3">
+        <div class="mb-3">
+          <h5 class="text-dark fw-medium">Admission Fee</h5>
+          <h4 class="fw-semibold text-dark mt-2 d-flex align-items-center gap-2">
+            <span class="text-muted text-decoration-line-through">{{currency}}15</span> {{currency}}10
+            <small class="text-danger ms-2">(30% Off)</small>
+          </h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- Available Tours Section -->
+    <div class="mt-3">
+      <h5 class="text-dark fw-medium">Available Tours</h5>
+      <div class="d-flex flex-wrap gap-2" role="group" aria-label="Basic checkbox toggle button group">
+        <input type="checkbox" class="btn-check" id="tour-guide" checked>
+        <label class="btn btn-light avatar-sm rounded d-flex justify-content-center align-items-center" for="tour-guide">Guided Tour</label>
+
+        <input type="checkbox" class="btn-check" id="audio-guide">
+        <label class="btn btn-light avatar-sm rounded d-flex justify-content-center align-items-center" for="audio-guide">Audio Guide</label>
+
+        <input type="checkbox" class="btn-check" id="virtual-tour">
+        <label class="btn btn-light avatar-sm rounded d-flex justify-content-center align-items-center" for="virtual-tour">Virtual Tour</label>
+      </div>
+    </div>
+
+    <!-- Visitor Info Section -->
+    <div class="mt-3">
+      <h5 class="text-dark fw-medium">Visitor Information</h5>
+      <ul class="d-flex flex-column gap-2 list-unstyled fs-15 my-3">
+        <li>
+          <i class='bx bx-check text-success'></i> Wheelchair accessible
+        </li>
+        <li>
+          <i class='bx bx-check text-success'></i> Free parking available
+        </li>
+        <li>
+          <i class='bx bx-check text-success'></i> Guided tours in multiple languages
+        </li>
+      </ul>
+    </div>
+
+    <!-- Description Section -->
+    <h4 class="text-dark fw-medium">Description:</h4>
+    <p class="text-muted">The Roman Amphitheater at El Djem is one of the largest and best-preserved of its kind in the world. Visitors can explore the colosseum-like structure that once housed 35,000 spectators. The site offers stunning views and an incredible historical experience. <a href="javascript:void(0);" class="link-primary">Read more</a></p>
+
+    <!-- Available Offers Section -->
+    
+  </div>
+</div>

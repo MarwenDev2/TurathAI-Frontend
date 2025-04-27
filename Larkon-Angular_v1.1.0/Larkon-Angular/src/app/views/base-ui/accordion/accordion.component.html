@@ -1,0 +1,247 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="default">
+            Basic Example <a class="anchor-link" href="#default">#</a>
+          </h5>
+          <p class="text-muted">
+            Using the card component, you can extend the default collapse behavior to create an accordion.
+            To properly achieve the accordion style, be sure to use <code>.accordion</code> as a wrapper.
+          </p>
+
+          <div class="mb-3">
+            <div ngbAccordion [closeOthers]="true" class="accordion" id="accordionExample">
+              <div ngbAccordionItem [collapsed]="false">
+                <h2 ngbAccordionHeader id="headingOne">
+                  <button ngbAccordionButton class="fw-medium" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Accordion Item #1
+                  </button>
+                </h2>
+                <div ngbAccordionCollapse id="collapseOne" class="accordion-collapse collapse show"
+                  aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                  <div ngbAccordionBody class="accordion-body">
+                    <strong>This is the first item's accordion body.</strong> It is shown by default, until the
+                    collapse
+                    plugin adds the appropriate classes that we use to style each element. These classes control
+                    the overall
+                    appearance, as well as the showing and hiding via CSS transitions. You can modify any of
+                    this with
+                    custom CSS or overriding our default variables. It's also worth noting that just about any
+                    HTML can go
+                    within the <code>.accordion-body</code>, though the transition does limit overflow.
+                  </div>
+                </div>
+              </div>
+              <div ngbAccordionItem>
+                <h2 ngbAccordionHeader id="headingTwo">
+                  <button ngbAccordionButton class="fw-medium" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Accordion Item #2
+                  </button>
+                </h2>
+                <div ngbAccordionCollapse id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                  data-bs-parent="#accordionExample">
+                  <div ngbAccordionBody class="accordion-body">
+                    <strong>This is the second item's accordion body.</strong> It is hidden by default, until
+                    the collapse
+                    plugin adds the appropriate classes that we use to style each element. These classes control
+                    the overall
+                    appearance, as well as the showing and hiding via CSS transitions. You can modify any of
+                    this with
+                    custom CSS or overriding our default variables. It's also worth noting that just about any
+                    HTML can go
+                    within the <code>.accordion-body</code>, though the transition does limit overflow.
+                  </div>
+                </div>
+              </div>
+              <div ngbAccordionItem>
+                <h2 ngbAccordionHeader id="headingThree">
+                  <button ngbAccordionButton class="fw-medium" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Accordion Item #3
+                  </button>
+                </h2>
+                <div ngbAccordionCollapse id="collapseThree" class="accordion-collapse collapse"
+                  aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                  <div ngbAccordionBody class="accordion-body">
+                    <strong>This is the third item's accordion body.</strong> It is hidden by default, until the
+                    collapse
+                    plugin adds the appropriate classes that we use to style each element. These classes control
+                    the overall
+                    appearance, as well as the showing and hiding via CSS transitions. You can modify any of
+                    this with
+                    custom CSS or overriding our default variables. It's also worth noting that just about any
+                    HTML can go
+                    within the <code>.accordion-body</code>, though the transition does limit overflow.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="flush">
+            Flush Accordion <a class="anchor-link" href="#flush">#</a>
+          </h5>
+          <p class="text-muted">Add <code>.accordion-flush</code> to remove the default <code>background-color</code>,
+            some borders, and some rounded corners to render accordions edge-to-edge with their parent container.</p>
+
+          <div class="mb-3">
+            <div ngbAccordion [closeOthers]="true" class="accordion-flush" id="accordionFlushExample">
+              <div ngbAccordionItem [collapsed]="false" ngbAccordionItem="">
+                <h2 ngbAccordionHeader id="flush-headingOne">
+                  <button ngbAccordionButton type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                    aria-expanded="false" aria-controls="flush-collapseOne">
+                    Accordion Item #1
+                  </button>
+                </h2>
+                <div id="flush-collapseOne" ngbAccordionCollapse class="collapse" aria-labelledby="flush-headingOne"
+                  data-bs-parent="#accordionFlushExample">
+                  <div ngbAccordionBody class="accordion-body">Placeholder content for this accordion, which is intended
+                    to demonstrate the
+                    <code>.accordion-flush</code> class. This is the first item's accordion body.
+                  </div>
+                </div>
+              </div>
+              <div ngbAccordionItem>
+                <h2 ngbAccordionHeader id="flush-headingTwo">
+                  <button ngbAccordionButton type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false" aria-controls="flush-collapseTwo">
+                    Accordion Item #2
+                  </button>
+                </h2>
+                <div id="flush-collapseTwo" ngbAccordionCollapse class="collapse" aria-labelledby="flush-headingTwo"
+                  data-bs-parent="#accordionFlushExample">
+                  <div ngbAccordionBody class="accordion-body">Placeholder content for this accordion, which is intended
+                    to demonstrate the
+                    <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this
+                    being
+                    filled with some actual content.
+                  </div>
+                </div>
+              </div>
+              <div ngbAccordionItem>
+                <h2 ngbAccordionHeader id="flush-headingThree">
+                  <button ngbAccordionButton type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    Accordion Item #3
+                  </button>
+                </h2>
+                <div id="flush-collapseThree" ngbAccordionCollapse class="collapse" aria-labelledby="flush-headingThree"
+                  data-bs-parent="#accordionFlushExample">
+                  <div ngbAccordionBody class="accordion-body">Placeholder content for this accordion, which is intended
+                    to demonstrate the
+                    <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting
+                    happening here in terms of content, but just filling up the space to make it look, at least at first
+                    glance, a bit more representative of how this would look in a real-world application.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="always-open">
+            Always Open Accordion <a class="anchor-link" href="#always-open">#</a>
+          </h5>
+          <p class="text-muted">Omit the <code>data-bs-parent</code> attribute on each <code>.accordion-collapse</code>
+            to
+            make accordion items stay open when another item is opened.</p>
+
+          <div class="mb-3">
+            <div ngbAccordion id="accordionPanelsStayOpenExample">
+              <div ngbAccordionItem [collapsed]="false">
+                <h2 ngbAccordionHeader id="panelsStayOpen-headingOne">
+                  <button ngbAccordionButton type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                    aria-controls="panelsStayOpen-collapseOne">
+                    Accordion Item #1
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" ngbAccordionCollapse class="collapse show"
+                  aria-labelledby="panelsStayOpen-headingOne">
+                  <div ngbAccordionBody>
+                    <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse
+                    plugin adds the appropriate classes that we use to style each element. These classes control the
+                    overall
+                    appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with
+                    custom CSS or overriding our default variables. It's also worth noting that just about any HTML can
+                    go
+                    within the <code>.accordion-body</code>, though the transition does limit overflow.
+                  </div>
+                </div>
+              </div>
+              <div ngbAccordionItem="">
+                <h2 ngbAccordionHeader id="panelsStayOpen-headingTwo">
+                  <button ngbAccordionButton type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                    aria-controls="panelsStayOpen-collapseTwo">
+                    Accordion Item #2
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" ngbAccordionCollapse class="collapse"
+                  aria-labelledby="panelsStayOpen-headingTwo">
+                  <div ngbAccordionBody>
+                    <strong>This is the second item's accordion body.</strong> It is hidden by default, until the
+                    collapse
+                    plugin adds the appropriate classes that we use to style each element. These classes control the
+                    overall
+                    appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with
+                    custom CSS or overriding our default variables. It's also worth noting that just about any HTML can
+                    go
+                    within the <code>.accordion-body</code>, though the transition does limit overflow.
+                  </div>
+                </div>
+              </div>
+              <div ngbAccordionItem="">
+                <h2 ngbAccordionHeader id="panelsStayOpen-headingThree">
+                  <button ngbAccordionButton type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                    aria-controls="panelsStayOpen-collapseThree">
+                    Accordion Item #3
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree" ngbAccordionCollapse class="collapse"
+                  aria-labelledby="panelsStayOpen-headingThree">
+                  <div ngbAccordionBody>
+                    <strong>This is the third item's accordion body.</strong> It is hidden by default, until the
+                    collapse
+                    plugin adds the appropriate classes that we use to style each element. These classes control the
+                    overall
+                    appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with
+                    custom CSS or overriding our default variables. It's also worth noting that just about any HTML can
+                    go
+                    within the <code>.accordion-body</code>, though the transition does limit overflow.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div> 
+
+    <div class="col-xl-3">
+      <ui-examples-list [linkList]="
+      [
+        { label: 'Default Example', link: '#default' },
+        { label: 'Flush Accordian', link: '#flush' },
+        { label: 'Always Open', link: '#always-open' }
+      ]" />
+    </div>
+  </div>
+</div>

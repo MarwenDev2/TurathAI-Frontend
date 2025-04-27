@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+  <div class="col-lg-12">
+    <div class="card overflow-hidden" style="background: url('assets/images/small/img-2.jpg'); ">
+      <div class="position-absolute top-0 end-0 bottom-0 start-0 bg-dark opacity-75"></div>
+      <div class="card-body">
+        <div class="row justify-content-center">
+          <div class="col-lg-7 text-center">
+            <h3 class="text-white">Frequently Asked Questions</h3>
+            <p class="text-white-50">We're here to help with any questions you have about plans, pricing, and supported features.</p>
+
+            <div class="search-bar">
+              <span><i class="bx bx-search-alt"></i></span>
+              <input type="search" class="form-control rounded-pill bg- border-0" id="search" placeholder="Search ...">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col">
+    <div class="card">
+      <div class="card-body p-4">
+        <div class="row g-xl-4">
+          @for(item of faqList;track $index){
+          <div class="col-xl-6">
+
+            <h4 class="mb-3 fw-semibold fs-16">{{item.title}}</h4>
+            <div ngbAccordion>
+              @for(faq of item.faqs;track faq;let first = $first){
+              <div ngbAccordionItem [collapsed]="first?false:true">
+                <h2 ngbAccordionHeader>
+                  <button ngbAccordionButton class="fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">
+                    {{faq.question}}
+                  </button>
+                </h2>
+                <div ngbAccordionCollapse id="faq1" aria-labelledby="faq1">
+                  <div ngbAccordionBody>
+                    {{faq.answer}}
+                  </div>
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+          }
+        </div> 
+
+        <div class="row my-5">
+          <div class="col-12 text-center">
+            <h4>Can't find a questions?</h4>
+            <button type="button" class="btn btn-success mt-2"><i class="bx bx-envelope me-1"></i> Email us your question</button>
+            <button type="button" class="btn btn-info mt-2 ms-1"><i class="bx bxl-twitter me-1"></i> Send us a tweet</button>
+          </div>
+        </div>
+
+      </div> 
+    </div> 
+  </div> 
+</div>

@@ -1,0 +1,49 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">Product</h4>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-middle mb-0 table-hover table-centered">
+        <thead class="bg-light-subtle border-bottom">
+          <tr>
+            <th>Product Name & Size</th>
+            <th>Status</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Text</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(item of productList;track $index){
+          <tr>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+                  <img [src]="item.image" alt="" class="avatar-md">
+                </div>
+                <div>
+                  <a href="javascript:void(0);" class="text-dark fw-medium fs-15">{{item.name}}</a>
+                  <p class="text-muted mb-0 mt-1 fs-13"><span>Size : </span>{{item.size}}</p>
+                </div>
+              </div>
+
+            </td>
+
+            <td>
+              <span class="badge px-2 py-1 fs-13" [ngClass]="{'bg-success-subtle text-success':item.status == 'Ready','bg-light text-dark':item.status == 'Packaging'}" >{{item.status}}</span>
+            </td>
+            <td> {{item.quantity}}</td>
+            <td>${{item.price | number:'2.2'}}</td>
+            <td> ${{item.tax | number:'1.2'}}</td>
+            <td>
+              ${{item.total | number:'1.2'}}
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

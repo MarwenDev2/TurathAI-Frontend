@@ -1,0 +1,78 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">Seller Information</h4>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-lg-6">
+        <form>
+          <div class="mb-3">
+            <label for="brand-title" class="form-label">Brand Title</label>
+            <input type="text" id="brand-title" class="form-control" placeholder="Enter Title">
+          </div>
+        </form>
+      </div>
+
+      <div class="col-lg-6">
+        <form>
+          <label for="product-categories" class="form-label">Product Categories</label>
+          <select selectFormInput class="form-control" id="product-categories" data-choices data-choices-groups data-placeholder="Select Categories" name="choices-single-groups">
+            <option value="">Choose a categories</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Footwear">Footwear</option>
+            <option value="Sportswear">Sportswear</option>
+            <option value="Watches">Watches</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Appliances">Appliances</option>
+            <option value="Headphones">Headphones</option>
+            <option value="Other Accessories">Other Accessories</option>
+          </select>
+        </form>
+      </div>
+      <div class="col-lg-6">
+        <form>
+          <div class="mb-3">
+            <label for="brand-link" class="form-label">Brand Link</label>
+            <input type="text" id="brand-link" class="form-control" placeholder="www.****">
+          </div>
+
+        </form>
+      </div>
+      <div class="col-lg-6">
+        <form>
+          <label for="seller-location" class="form-label">Location</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text fs-20"><iconify-icon icon="solar:point-on-map-bold-duotone" class="fs-18"></iconify-icon></span>
+            <input type="text" id="seller-location" class="form-control" placeholder="Add Address">
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-6">
+        <form>
+          <label for="seller-email" class="form-label">Email</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text fs-20"><iconify-icon icon="solar:letter-bold-duotone" class="fs-18"></iconify-icon></span>
+            <input type="email" id="seller-email" class="form-control" placeholder="Add Email">
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-6">
+        <form>
+          <label for="seller-number" class="form-label">Phone Number</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text fs-20"><iconify-icon icon="solar:outgoing-call-rounded-bold-duotone" class="fs-20"></iconify-icon></span>
+            <input type="number" id="seller-number" class="form-control" placeholder="Phone number">
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-12">
+        <label for="customRange1" class="form-label">Yearly Revenue</label>
+        <nouislider [connect]="true" [behaviour]="'tap-drag'" [step]="1" [min]="0" [max]="1500" [(ngModel)]="someRange" class="mt-0"></nouislider>
+        <div class="formCost d-flex gap-2 align-items-center mt-2">
+          <input class="form-control form-control-sm text-center w-50" type="text" id="maxCost" value="$500">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

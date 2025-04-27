@@ -1,0 +1,37 @@
+<div class="card">
+  <div class="card-header border-bottom border-dashed">
+    <div class="d-flex align-items-center gap-2">
+      <div class="d-block">
+        <h4 class="card-title mb-1">Latest Invoice</h4>
+        <p class="mb-0 text-muted">Total 234 file, 2.5GB space used</p>
+      </div>
+      <div class="ms-auto">
+        <a href="javascript:void(0);" class="btn btn-primary btn-sm">View All</a>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    @for(item of invoiceList;track $index;let first = $first;let last=$last){
+    <div class="d-flex p-2 rounded align-items-center gap-2 bg-light-subtle" [ngClass]="{'mt-2':!first,'mb-1':last}">
+      <div class="avatar bg-primary-subtle d-flex align-items-center justify-content-center rounded-circle">
+        <iconify-icon icon="solar:file-download-bold" class="text-primary fs-3"></iconify-icon>
+      </div>
+      <div class="d-block">
+        <a href="javascript:void(0);" class="text-dark fw-medium">Invoice Id {{item.invoice_id}}</a>
+        <p class="text-muted mb-0 fs-13">{{item.date}}</p>
+      </div>
+      <div class="ms-auto text-end">
+        <div ngbDropdown class="dropdown">
+          <a ngbDropdownToggle href="javascript:void(0);" class="dropdown-toggle arrow-none card-drop p-0">
+            <i class="ti ti-dots-vertical"></i>
+          </a>
+          <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end">
+            <a href="javascript:void(0);" class="dropdown-item">Download</a>
+            <a href="javascript:void(0);" class="dropdown-item">Share</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>

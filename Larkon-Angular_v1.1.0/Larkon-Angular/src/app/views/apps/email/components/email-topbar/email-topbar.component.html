@@ -1,0 +1,62 @@
+<div class="card position-relative overflow-hidden h-100" id="detailDiv">
+  <div class="p-3">
+    <div class="d-flex flex-wrap gap-2">
+      <button class="btn btn-light d-xxl-none d-flex align-items-center px-2 me-2" type="button" (click)="openSidebar()" aria-controls="EmailSidebaroffcanvas">
+        <i class="bx bx-menu fs-18"></i>
+      </button>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-light" container="body" placement="top" ngbTooltip="Archive">
+          <i class="bx bx-archive fs-18"></i>
+        </button>
+        <button type="button" class="btn btn-light" container="body" placement="top" ngbTooltip="Mark as spam">
+          <i class="bx bx-info-square fs-18"></i>
+        </button>
+        <button type="button" class="btn btn-light" container="body" placement="top" ngbTooltip="Delete">
+          <i class="bx bx-trash fs-18"></i>
+        </button>
+      </div>
+
+      <div ngbDropdown class="btn-group">
+        <button ngbDropdownToggle type="button" class="btn btn-light dropdown-toggle" container="body" placement="top" ngbTooltip="Folder">
+          <i class="bx bx-folder fs-18"></i>
+        </button>
+        <div ngbDropdownMenu class="dropdown-menu">
+          <span class="dropdown-header">Move to</span>
+          <a class="dropdown-item" href="javascript: void(0);">Social</a>
+          <a class="dropdown-item" href="javascript: void(0);">Promotions</a>
+          <a class="dropdown-item" href="javascript: void(0);">Updates</a>
+          <a class="dropdown-item" href="javascript: void(0);">Forums</a>
+        </div>
+      </div>
+
+      <div ngbDropdown class="btn-group">
+        <button ngbDropdownToggle type="button" class="btn btn-light dropdown-toggle" container="body" placement="top" ngbTooltip="Labels" aria-expanded="false">
+          <i class="bx bx-bookmarks fs-18"></i>
+        </button>
+        <div ngbDropdownMenu class="dropdown-menu">
+          <span class="dropdown-header">Label as :</span>
+          <a class="dropdown-item" href="javascript: void(0);">Updates</a>
+          <a class="dropdown-item" href="javascript: void(0);">Social</a>
+          <a class="dropdown-item" href="javascript: void(0);">Promotions</a>
+          <a class="dropdown-item" href="javascript: void(0);">Forums</a>
+        </div>
+      </div>
+
+      <div ngbDropdown class="btn-group">
+        <button ngbDropdownToggle type="button" class="btn btn-light dropdown-toggle" container="body" placement="top" ngbTooltip="More Actions" aria-expanded="false">
+          More
+        </button>
+        <div ngbDropdownMenu class="dropdown-menu">
+          <span class="dropdown-header">More Option :</span>
+          <a class="dropdown-item" href="javascript: void(0);">Mark as Unread</a>
+          <a class="dropdown-item" href="javascript: void(0);">Add to Tasks</a>
+          <a class="dropdown-item" href="javascript: void(0);">Add Star</a>
+          <a class="dropdown-item" href="javascript: void(0);">Mute</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <email-list />
+</div>

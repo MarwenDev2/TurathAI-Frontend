@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@angular/cdk": "^19.2.11",
+    "@angular/material": "^19.2.11",
+    "angularx-qrcode": "^19.0.0"
+  }
+}

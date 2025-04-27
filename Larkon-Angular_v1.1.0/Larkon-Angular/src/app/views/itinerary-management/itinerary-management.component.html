@@ -1,0 +1,132 @@
+<div class="container-fluid">
+  <div class="row page-titles mx-0">
+    <div class="col-sm-6 p-md-0">
+      <div class="welcome-text">
+        <h4>Itinerary Management</h4>
+        <span>Manage your travel itineraries</span>
+      </div>
+    </div>
+    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+      <button class="btn btn-info mr-2" [routerLink]="['/itinerary-statistics']">
+        <i class="fa fa-chart-bar"></i> View Statistics
+      </button>
+      <button class="btn btn-primary ml-1" [routerLink]="['/itinerary/add']">
+        <i class="fa fa-plus"></i> Add New Itinerary
+      </button>
+    </div>
+  </div>
+
+  <!-- Search Form -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Search Itineraries</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="searchForm" class="form-row align-items-end">
+            <div class="col-md-2 mb-3">
+              <label>ID</label>
+              <input type="text" class="form-control" placeholder="Search by ID" formControlName="id">
+            </div>
+            <div class="col-md-2 mb-3">
+              <label>Description</label>
+              <input type="text" class="form-control" placeholder="Search by description" formControlName="description">
+            </div>
+            <div class="col-md-2 mb-3">
+              <label>Start Date (From)</label>
+              <input type="date" class="form-control" formControlName="startDate">
+            </div>
+            <div class="col-md-2 mb-3">
+              <label>End Date (To)</label>
+              <input type="date" class="form-control" formControlName="endDate">
+            </div>
+            <div class="col-md-2 mb-3">
+              <label>Min Budget</label>
+              <input type="number" class="form-control" placeholder="Minimum budget" formControlName="minBudget">
+            </div>
+            <div class="col-md-2 mb-3">
+              <label>Max Budget</label>
+              <input type="number" class="form-control" placeholder="Maximum budget" formControlName="maxBudget">
+            </div>
+            <div class="col-md-12 mb-0 text-right">
+              <button type="button" class="btn btn-secondary" (click)="resetSearch()">
+                <i class="fa fa-refresh"></i> Clear Search
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Itinerary List -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4 class="card-title">Itinerary List</h4>
+          <button class="btn btn-success" [routerLink]="['/itinerary-statistics']">
+            <i class="fa fa-chart-bar mr-1"></i> Itinerary Analytics Dashboard
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-responsive-md">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Description</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Budget</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="loading">
+                  <td colspan="6" class="text-center">Loading...</td>
+                </tr>
+                <tr *ngIf="error">
+                  <td colspan="6" class="text-center text-danger">{{ error }}</td>
+                </tr>
+                <tr *ngIf="!loading && !error && filteredItineraries.length === 0 && itineraries.length > 0">
+                  <td colspan="6" class="text-center">No itineraries match your search criteria</td>
+                </tr>
+                <tr *ngIf="!loading && !error && itineraries.length === 0">
+                  <td colspan="6" class="text-center">No itineraries found</td>
+                </tr>
+                <tr *ngFor="let itinerary of filteredItineraries">
+                  <td>{{ itinerary.id }}</td>
+                  <td>{{ itinerary.description }}</td>
+                  <td>{{ itinerary.startDate | date:'shortDate' }}</td>
+                  <td>{{ itinerary.endDate | date:'shortDate' }}</td>
+                  <td>{{ itinerary.budget | currency }}</td>
+                  <td>
+                    <div class="d-flex">
+                      <a [routerLink]="['/itinerary/edit', itinerary.id]" class="btn btn-primary shadow btn-xs sharp mr-1">
+                        <i class="fa fa-pencil"></i>
+                      </a>
+                      <a [routerLink]="['/stops', itinerary.id]" class="btn btn-info shadow btn-xs sharp mr-1" title="Manage Stops">
+                        <i class="fa fa-map-marker"></i>
+                      </a>
+                      <a [routerLink]="['/stops', itinerary.id]" class="btn btn-success mr-1" title="Manage Stops">
+                        Stops
+                      </a>
+                      <a [routerLink]="['/itinerary-statistics']" class="btn btn-warning mr-1" title="View Itinerary Analytics">
+                        <i class="fa fa-chart-bar"></i> Analytics
+                      </a>
+                      <button (click)="deleteItinerary(itinerary.id)" class="btn btn-danger mr-1" title="Delete Itinerary">
+                        <i class="fa fa-trash mr-1"></i> Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

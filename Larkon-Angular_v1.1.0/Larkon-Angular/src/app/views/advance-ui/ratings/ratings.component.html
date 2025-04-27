@@ -1,0 +1,165 @@
+<div class="row">
+  <div class="col-xl-9">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title mb-1 anchor" id="overview">
+          Overview <a class="btn btn-sm btn-outline-success rounded-2 float-end"
+            href="https://fredolss.github.io/rater-js/" target="_blank"> Official Website </a>
+        </h5>
+        <p class="text-muted mb-3">Rater js is the best star rater for the browser. No dependencies. Unlimited number of
+          stars</p>
+
+        <h5 class="mt-2">Usage</h5>
+        <p class="mb-0">Rater js's CSS and Javascript files are bundled in the <code>vender.min.css</code> and
+          <code>vendor.js</code> and globally included in all pages.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title mb-3 anchor" id="basic">
+          Basic Rater Example <a class="anchor-link" href="#basic">#</a>
+        </h5>
+
+        <div>
+          <div id="basic-rater" dir="ltr"></div>
+          <ngb-rating [(rate)]="basicRating" [starTemplate]="t" [readonly]="true" [max]="5" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title mb-3 anchor" id="step">
+          Rater with Step Example <a class="anchor-link" href="#step">#</a>
+        </h5>
+
+        <div >
+          <div id="rater-step" dir="ltr"></div>
+          <ng-template #t let-fill="fill">
+            @if (fill > 0) {
+            <i class="bx bxs-star text-warning fs-3" [style.width.%]="fill"></i>
+            } @else {
+            <i class="bx bxs-star text-muted opacity-25 fs-3"> </i>
+            }
+          </ng-template>
+          <ngb-rating [max]="5" [starTemplate]="t" [(rate)]="rating" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title mb-3 anchor" id="custom-message">
+          Custom Messages Example <a class="anchor-link" href="#custom-message">#</a>
+        </h5>
+
+        <div >
+          <ng-template #t let-fill="fill">
+            @if (fill > 0) {
+            <i class="bx bxs-star text-warning fs-3" [style.width.%]="fill"></i>
+            } @else {
+            <i class="bx bxs-star text-muted opacity-25 fs-3"> </i>
+            }
+          </ng-template>
+          <ngb-rating [(rate)]="stepRating" [starTemplate]="t" [max]="5" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title mb-3 anchor" id="readOnly">
+          ReadOnly Example <a class="anchor-link" href="#readOnly">#</a>
+        </h5>
+
+        <div >
+          <ng-template #step let-fill="fill">
+            @if (fill > 0) {
+            <i class="bx bxs-star text-warning fs-3" [style.width.%]="fill"></i>
+            } @else {
+            <i class="bx bxs-star text-muted opacity-25 fs-3"> </i>
+            }
+          </ng-template>
+          <ngb-rating [(rate)]="readonly" [readonly]="true" [starTemplate]="step" [max]="5" />
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title mb-3 anchor" id="onhover">
+          On Hover Event Example <a class="anchor-link" href="#onhover">#</a>
+        </h5>
+
+        <div >
+          <div dir="ltr">
+            <div id="rater-onhover" class="align-middle"></div>
+            <ng-template #hover let-fill="fill">
+              @if (fill > 0) {
+                <i
+                  class="bx bxs-star text-warning fs-3"
+                  [style.width.%]="fill"
+                ></i>
+              } @else {
+                <i class="bx bxs-star text-muted opacity-25 fs-3"> </i>
+              }
+            </ng-template>
+            <ngb-rating
+              [(rate)]="hoverSelected"
+              [starTemplate]="hover"
+              (hover)="hovered = $event"
+              (leave)="hovered = 0"
+              [max]="5"
+            />
+            <span class="ratingnum badge bg-info align-middle ms-2 mb-2">{{hoverSelected}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title mb-3 anchor" id="reset">
+          Clear/Reset Rater Example <a class="anchor-link link-offset-2" href="#reset">#</a>
+        </h5>
+
+        <div >
+          <div dir="ltr">
+            <div id="raterreset" class="align-middle"></div>
+            <span class="clear-rating"></span>
+            <ng-template #resetTem let-fill="fill">
+              @if (fill > 0) {
+                <i
+                  class="bx bxs-star text-warning fs-3"
+                  [style.width.%]="fill"
+                ></i>
+              } @else {
+                <i class="bx bxs-star text-muted opacity-25 fs-3"> </i>
+              }
+            </ng-template>
+            <ngb-rating [formControl]="ctrl" [starTemplate]="resetTem" [max]="5" />
+            <button (click)="ctrl.setValue(null)" id="raterreset-button" class="btn btn-light btn-sm ms-2">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-xl-3">
+    <ui-examples-list
+    [linkList]="[
+      { label: 'Overview', link: '#overview' },
+      { label: 'Basic Example', link: '#basic' },
+      { label: 'Rater with Step Example', link: '#step' },
+      { label: 'Custom Messages Example', link: '#custom-message' },
+      { label: 'ReadOnly Example', link: '#readOnly' },
+      { label: 'On Hover Event Example', link: '#onhover' },
+      { label: 'Clear/Reset Rater Example', link: '#reset' },
+    ]"
+  />
+  </div>
+</div>

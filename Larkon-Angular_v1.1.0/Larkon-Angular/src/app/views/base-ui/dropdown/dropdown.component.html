@@ -1,0 +1,629 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="single-button">
+            Single Button Dropdowns<a class="anchor-link" href="#single-button">#</a>
+          </h5>
+          <p class="text-muted">
+            Any single <code>.btn</code> can be turned into a dropdown toggle with some markup changes.
+            Here&apos;s how you can put them to work with either <code>&lt;button&gt;</code> elements.
+          </p>
+  
+          <div class="mb-3">
+            <div class="d-flex flex-wrap gap-3">
+  
+              <div ngbDropdown class="dropdown">
+                <button ngbDropdownToggle class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1">
+                  Dropdown button
+                </button>
+                <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <a ngbDropdownItem href="javascript:void(0);">Action</a>
+                  <a ngbDropdownItem href="javascript:void(0);">Another action</a>
+                  <a ngbDropdownItem href="javascript:void(0);">Something else here</a>
+                </div>
+              </div>
+  
+  
+              <div ngbDropdown class="dropdown">
+                <a ngbDropdownToggle href="javascript:void(0);" class="btn btn-secondary dropdown-toggle">
+                  Dropdown link
+                </a>
+  
+                <div ngbDropdownMenu>
+                  <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                  <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                  <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="single-button-variant">
+            Single Button Variant Dropdowns <a class="anchor-link" href="#single-button-variant">#</a>
+          </h5>
+          <p class="text-muted">
+            Any single <code>.btn</code> can be turned into a dropdown toggle with some markup changes.
+            Here&apos;s how you can put them to work with either <code>&lt;button&gt;</code> elements.
+          </p>
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <div class="dropdown" ngbDropdown>
+              <button type="button" ngbDropdownToggle class="btn btn-primary dropdown-toggle">
+                Primary
+              </button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Separated link</a>
+                </li>
+              </ul>
+            </div>
+  
+            <div class="dropdown" ngbDropdown>
+              <button type="button" ngbDropdownToggle class="btn btn-secondary dropdown-toggle">
+                Secondary
+              </button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Separated link</a>
+                </li>
+              </ul>
+            </div>
+  
+            <div class="dropdown" ngbDropdown>
+              <button type="button" ngbDropdownToggle class="btn btn-success dropdown-toggle">
+                Success
+              </button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Separated link</a>
+                </li>
+              </ul>
+            </div>
+  
+            <div class="dropdown" ngbDropdown>
+              <button type="button" ngbDropdownToggle class="btn btn-info dropdown-toggle">
+                Info
+              </button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Separated link</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="split-button">
+            Split Button Dropdowns <a class="anchor-link" href="#split-button">#</a>
+          </h5>
+          <p class="text-muted">
+            Similarly, create split button dropdowns with virtually the same markup as single button dropdowns,
+            but with the addition of <code>.dropdown-toggle-split</code> for proper spacing around the dropdown caret.
+          </p>
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <div ngbDropdown class="btn-group">
+              <button type="button" class="btn btn-primary">Primary</button>
+              <button ngbDropdownToggle type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"></button>
+              <ul ngbDropdownMenu class="dropdown-menu">
+                <li><a ngbDropdownItem href="javascript:void(0);">Action</a></li>
+                <li><a ngbDropdownItem href="javascript:void(0);">Another action</a></li>
+                <li><a ngbDropdownItem href="javascript:void(0);">Something else here</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a ngbDropdownItem href="javascript:void(0);">Separated link</a></li>
+              </ul>
+            </div>
+            <div class="btn-group" ngbDropdown>
+              <button type="button" class="btn btn-secondary">Secondary</button>
+              <button type="button" ngbDropdownToggle class="btn btn-secondary dropdown-toggle dropdown-toggle-split"></button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Separated link</a>
+                </li>
+              </ul>
+            </div>
+            <div class="btn-group" ngbDropdown>
+              <button type="button" class="btn btn-success">Success</button>
+              <button type="button" ngbDropdownToggle class="btn btn-success dropdown-toggle dropdown-toggle-split"></button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Separated link</a>
+                </li>
+              </ul>
+            </div>
+            <div class="btn-group" ngbDropdown>
+              <button type="button" class="btn btn-info">Info</button>
+              <button type="button" ngbDropdownToggle class="btn btn-info dropdown-toggle dropdown-toggle-split"></button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Separated link</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="dark-dropdown">
+            Dark Dropdowns <a class="anchor-link" href="#dark-dropdown">#</a>
+          </h5>
+          <p class="text-muted">Opt into darker dropdowns to match a dark navbar or custom style by adding
+            <code>.dropdown-menu-dark</code> onto an existing <code>.dropdown-menu</code>. No changes are required to the
+            dropdown items.
+          </p>
+  
+          <div class="mb-3">
+            <div ngbDropdown>
+              <button ngbDropdownToggle type="button" class="btn btn-primary dropdown-toggle">Dark Dropdown</button>
+              <ul ngbDropdownMenu class="dropdown-menu-dark">
+                <li><a ngbDropdownItem href="javascript:void(0);">Action</a></li>
+                <li><a ngbDropdownItem href="javascript:void(0);">Another action</a></li>
+                <li><a ngbDropdownItem href="javascript:void(0);">Something else here</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a ngbDropdownItem href="javascript:void(0);">Separated link</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="direction">
+            Dropdown Direction <a class="anchor-link" href="#direction">#</a>
+          </h5>
+          <p class="text-muted">
+            Trigger dropdown menus above elements by adding <code>placement</code>  attribute.
+          </p>
+  
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <div class="btn-group" ngbDropdown placement="bottom">
+              <button ngbDropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+                Drop Down
+              </button>
+              <ul ngbDropdownMenu class="dropdown-menu">
+                <li><a ngbDropdownItem href="javascript:void(0);">Action</a></li>
+                <li><a ngbDropdownItem href="javascript:void(0);">Another action</a></li>
+                <li><a ngbDropdownItem href="javascript:void(0);">Something else here</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a ngbDropdownItem href="javascript:void(0);">Separated link</a></li>
+              </ul>
+            </div>
+            <div class="btn-group dropup" ngbDropdown placement="top">
+              <button type="button" ngbDropdownToggle class="btn btn-secondary dropdown-toggle">
+                Drop Up
+              </button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Separated link</a>
+                </li>
+              </ul>
+            </div>
+            <div class="btn-group dropstart" ngbDropdown placement="left">
+              <button type="button" ngbDropdownToggle class="btn btn-info dropdown-toggle">
+                Drop Left
+              </button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Separated link</a>
+                </li>
+              </ul>
+            </div>
+            <div class="btn-group dropend" ngbDropdown placement="right">
+              <button type="button" ngbDropdownToggle class="btn btn-success dropdown-toggle">
+                Drop Right
+              </button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Separated link</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="menu-items">
+            Dropdown Menu Items <a class="anchor-link" href="#menu-items">#</a>
+          </h5>
+          <p class="text-muted">Add <code>.active</code> to items in the dropdown to <strong>style them as
+              active</strong>. To convey the active state to assistive technologies, use the <code>aria-current</code>
+            attribute — using the <code>page</code> value for the current page, or <code>true</code> for the current item
+            in a set.</p>
+          <p class="text-muted">Add <code>.disabled</code> to items in the dropdown to <strong>style them as
+              disabled</strong>.</p>
+  
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <ul class="dropdown-menu show block position-static">
+              <li><a class="dropdown-item" href="javascript:void(0);">Regular link</a></li>
+              <li><a class="dropdown-item active" href="javascript:void(0);" aria-current="true">Active link</a></li>
+              <li><a class="dropdown-item" href="javascript:void(0);">Another link</a></li>
+            </ul>
+  
+            <ul class="dropdown-menu show block position-static">
+              <li><a class="dropdown-item" href="javascript:void(0);">Regular link</a></li>
+              <li><a class="dropdown-item disabled" href="javascript:void(0);" aria-current="true">Active link</a></li>
+              <li><a class="dropdown-item" href="javascript:void(0);">Another link</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="dropdown-options">
+            Dropdown options <a class="anchor-link" href="#dropdown-options">#</a>
+          </h5>
+          <p class="text-muted">Use <code>data-bs-offset</code> or <code>data-bs-reference</code> to change the location
+            of the dropdown.</p>
+  
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <div class="dropdown" ngbDropdown>
+              <button type="button" ngbDropdownToggle class="btn btn-secondary dropdown-toggle" data-bs-offset="10,20">
+                Offset
+              </button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                </li>
+              </ul>
+            </div>
+  
+            <div class="btn-group" ngbDropdown>
+              <button type="button" class="btn btn-secondary">Reference</button>
+              <button type="button" ngbDropdownToggle class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-reference="parent">
+                <span class="visually-hidden">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Separated link</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="auto-close-behavior">
+            Auto close behavior <a class="anchor-link" href="#auto-close-behavior">#</a>
+          </h5>
+          <p class="text-muted">By default, the dropdown menu is closed when clicking inside or outside the dropdown menu.
+            You can use the <code>autoClose</code> option to change this behavior of the dropdown.</p>
+  
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <div class="btn-group" ngbDropdown>
+              <button class="btn btn-secondary dropdown-toggle" ngbDropdownToggle type="button" data-bs-auto-close="true" aria-expanded="false">
+                Default dropdown
+              </button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Menu item</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Menu item</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Menu item</a>
+                </li>
+              </ul>
+            </div>
+  
+            <div class="btn-group" ngbDropdown autoClose="inside">
+              <button ngbDropdownToggle class="btn btn-secondary dropdown-toggle" type="button" data-bs-auto-close="inside" aria-expanded="false">
+                Clickable outside
+              </button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Menu item</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Menu item</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Menu item</a>
+                </li>
+              </ul>
+            </div>
+  
+            <div class="btn-group" ngbDropdown autoClose="outside">
+              <button class="btn btn-secondary dropdown-toggle" ngbDropdownToggle type="button" data-bs-auto-close="outside" aria-expanded="false">
+                Clickable inside
+              </button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Menu item</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Menu item</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Menu item</a>
+                </li>
+              </ul>
+            </div>
+  
+            <div class="btn-group" ngbDropdown>
+              <button ngbDropdownToggle class="btn btn-secondary dropdown-toggle" type="button" data-bs-auto-close="false" aria-expanded="false">
+                Manual close
+              </button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Menu item</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Menu item</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Menu item</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="menu-content">
+            Menu Content <a class="anchor-link" href="#menu-content">#</a>
+          </h5>
+          <p>Add a header to label sections of actions in any dropdown menu.</p>
+          <p>Separate groups of related menu items with a divider.</p>
+          <p>Place any freeform text within a dropdown menu with text and use spacing utilities. Note that you’ll likely
+            need additional sizing styles to constrain the menu width.</p>
+          <p>Put a form within a dropdown menu, or make it into a dropdown menu, and use margin or padding utilities to
+            give it the negative space you require.</p>
+  
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <div class="dropdown" ngbDropdown>
+              <button class="btn btn-primary dropdown-toggle" ngbDropdownToggle type="button">
+                Dropdown Header
+              </button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-header">Dropdown header</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                </li>
+              </ul>
+            </div>
+            <div class="dropdown" ngbDropdown>
+              <button class="btn btn-info dropdown-toggle" ngbDropdownToggle type="button">
+                Dropdown Divider
+              </button>
+              <ul class="dropdown-menu" ngbDropdownMenu>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="javascript:void(0);">Separated link</a>
+                </li>
+              </ul>
+            </div>
+            <div class="dropdown" ngbDropdown>
+              <button class="btn btn-secondary dropdown-toggle" ngbDropdownToggle type="button">
+                Dropdown Text
+              </button>
+              <div class="dropdown-menu dropdown-lg p-3" ngbDropdownMenu>
+                <p>
+                  Some example text that's free-flowing within the dropdown menu.
+                </p>
+                <p class="mb-0">And this is more example text.</p>
+              </div>
+            </div>
+            <div class="dropdown" ngbDropdown>
+              <button ngbDropdownToggle class="btn btn-success dropdown-toggle" type="button">
+                Dropdown Menu Forms
+              </button>
+              <form class="dropdown-menu dropdown-lg p-3" ngbDropdownMenu>
+                <div class="mb-3">
+                  <label class="form-label" for="exampleDropdownFormEmail">Email address</label>
+                  <input type="email" class="form-control" id="exampleDropdownFormEmail" placeholder="email@example.com" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="exampleDropdownFormPassword">Password</label>
+                  <input type="password" class="form-control" id="exampleDropdownFormPassword" placeholder="Password" />
+                </div>
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="dropdownCheck" />
+                    <label class="form-check-label" for="dropdownCheck">Remember me</label>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign in</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-xl-3">
+      <ui-examples-list [linkList]="[
+      { label: 'Single Button Dropdowns', link: '#single-button' },
+      {
+        label: 'Single Button Variant Dropdowns',
+        link: '#single-button-variant',
+      },
+      { label: 'Split Button Dropdowns', link: '#split-button' },
+      { label: 'Dark Dropdown', link: '#dark-dropdown' },
+      { label: 'Dropdown Direction', link: '#direction' },
+      { label: 'Dropdown Menu Items', link: '#menu-items' },
+      { label: 'Dropdown Options', link: '#dropdown-options' },
+      { label: 'Auto Close Behavior', link: '#auto-close-behavior' },
+      { label: 'Menu content', link: '#menu-content' },
+    ]" />
+    </div>
+  </div>
+</div>

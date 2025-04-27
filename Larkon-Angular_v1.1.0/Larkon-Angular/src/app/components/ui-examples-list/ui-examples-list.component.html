@@ -1,0 +1,14 @@
+<div class="card docs-nav">
+  <ul class="nav bg-transparent flex-column">
+    @for (item of linkList; track $index) {
+      <li class="nav-item">
+        <a
+          href="{{ item.link }}"
+          (click)="scrollToSection($event, item.link)"
+          class="nav-link"
+          >{{ item.label }}</a
+        >
+      </li>
+    }
+  </ul>
+</div>

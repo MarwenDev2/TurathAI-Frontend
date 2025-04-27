@@ -1,0 +1,28 @@
+<div class="card">
+  <div class="card-body">
+      <h5 class="card-title mb-1 anchor" id="navigation">
+          Navigation & Pagination Swiper <a class="anchor-link" href="#navigation">#</a>
+      </h5>
+      <p class="text-muted">Use <code>data-swiper="navigation"</code> attribute to set a swiper with navigation and pagination.</p>
+      <div class="row">
+          <div class="col-lg-6 mb-3">
+              <div class="swiper rounded" data-swiper="navigation">
+                  <swiper-container [config]="swiperNavigation" init="false" >
+                      <swiper-slide class="swiper-slide">
+                          <img src="assets/images/small/img-4.jpg" alt="" />
+                      </swiper-slide>
+                      <swiper-slide class="swiper-slide">
+                          <img src="assets/images/small/img-5.jpg" alt="" />
+                      </swiper-slide>
+                      <swiper-slide class="swiper-slide">
+                          <img src="assets/images/small/img-6.jpg" alt="" />
+                      </swiper-slide>
+                  </swiper-container>
+                  <div class="swiper-button-next basic-next"></div>
+                  <div class="swiper-button-prev basic-prev"></div>
+                  <div class="swiper-pagination basic-pagination"></div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

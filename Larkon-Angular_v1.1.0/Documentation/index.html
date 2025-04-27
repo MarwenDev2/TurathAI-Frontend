@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Title Meta -->
+  <meta charset="utf-8" />
+  <title>Introduction | Larkon - Responsive Admin Dashboard Template</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+  <meta content="Techzaa" name="author" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- App favicon -->
+  <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+  <!-- Vendor css (Require in all Page) -->
+  <link href="assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
+
+  <!-- App css (Require in all Page) -->
+  <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+  <!-- Theme Config js (Require in all Page) -->
+  <script src="assets/js/config.js"></script>
+</head>
+
+<body>
+
+  <!-- START Wrapper -->
+  <div class="wrapper">
+
+    <!-- ========== App Menu Start ========== -->
+    <div class="main-nav">
+      <!-- Sidebar Logo -->
+      <div class="logo-box">
+        <a href="./index.html" class="logo-dark">
+          <img src="assets/images/logo-dark.png" class="logo-lg" alt="logo dark">
+        </a>
+
+        <a href="./index.html" class="logo-light">
+          <img src="assets/images/logo-light.png" class="logo-lg" alt="logo light">
+        </a>
+      </div>
+
+
+      <div class="scrollbar">
+
+        <ul class="navbar-nav" id="navbar-nav">
+
+          <li class="nav-item">
+            <a class="nav-link menu-link" href="./index.html">
+              <span class="nav-icon"><i class="bx bx-file"></i></span>
+              <span class="nav-text"> Getting Started </span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link menu-link" href="./introduction.html">
+              <span class="nav-icon"><i class="bx bx-book-open"></i></span>
+              <span class="nav-text"> Introduction </span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link menu-link" href="./customization.html">
+              <span class="nav-icon"><i class="bx bx-cog"></i></span>
+              <span class="nav-text"> Customization </span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link menu-link" href="./change-log.html">
+              <span class="nav-icon"><i class="bx bx-history"></i></span>
+              <span class="nav-text"> Change Log </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="swipe-open"></div>
+    </div>
+    <!-- ========== App Menu End ========== -->
+
+    <!-- ==================================================== -->
+    <!-- Start right Content here -->
+    <!-- ==================================================== -->
+    <div class="page-content">
+
+      <!-- Start Container Fluid -->
+      <div class="container">
+
+        <!-- ========== Page Title Start ========== -->
+        <div class="row">
+          <div class="col-12">
+            <div class="page-title-box">
+              <h4 class="mb-0">Introduction</h4>
+              <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);">Documentation</a></li>
+                <li class="breadcrumb-item active">Introduction</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <!-- ========== Page Title End ========== -->
+
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title anchor" id="Larkon">
+                  What is Larkon <a class="anchor-link" href="#Larkon">#</a>
+                </h5>
+                <p>
+                  Larkon is a fully featured premium admin template built on top of awesome
+                  <strong class="text-danger">Angular 19 & Bootstrap 5.3.3</strong>
+                  .
+                  It's crafted using modern web technologies
+                  <strong class="text-danger">Angular, SCSS</strong>,
+                  and
+                  <strong class="text-danger">Typescript</strong>.
+                  The theme includes beautiful dashboard & many ready to use handcrafted
+                  components, widgets, pages, etc.
+                  The components can be used very easily on any page. The theme is fully
+                  responsive and customizable.
+                </p>
+                <p>
+                  It's a powerful and super flexible, which suits best for web applications
+                  including Calendar, Chat, Ecommerce, CRM, Email, Social, Project and Base
+                  UI. It is fully responsive, which means that it looks perfect on mobiles
+                  and tablets. Also, we tried to implement this by keeping the concept of
+                  modularity in mind, this enables you to reduce the development time and
+                  cost.
+                </p>
+                <p>
+                  This documentation is guidelines for all users who can even be a beginner
+                  or experienced web developer.
+                </p>
+              </div> <!-- end card body -->
+            </div> <!-- end card -->
+
+
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title anchor" id="folder_structure">
+                  Folder Structure <a class="anchor-link" href="#folder_structure">#</a>
+                </h5>
+                <p class="mt-0">
+                  Extract the zip file you received after purchase and you would find the
+                  exact below files and folders:
+                </p>
+                <pre class="language-html">
+
+├── docs
+├── Larkon   ├── public                            // Contain assets folder
+│   ├── <strong>src/</strong>                   
+│   │   └── app          
+│   │   │   └── common                    // All common Data & Model files
+│   │   │   └── components                  // All common component
+│   │   │   └── core                      // The core module - mainly contains the common services (singleton ones)
+│   │   │   └── directive                    // All common Directives
+│   │   │   └── layouts                    // All layouts here
+│   │   │   └── store                    // The store module - containing ngrx store files
+│   │   │   └── views                    // containing implementation of all pages including, ui kits, widgets, forms, dashboards, tables, charts, etc
+│   │   │   └── app.component.html     // Contain top loading bar and back to top
+│   │   │   └── app.component.scss     // scss style files
+│   │   │   └── app.component.spec.ts    // Testing File
+│   │   │   └── app.component.ts    // Entry point component
+│   │   │   └── app.config.ts    // Main config for application
+│   │   │   └── app.routes.ts  // Router implementation
+│   │   └── globals.d.ts    
+│   │   └── index.html     // Entry point of an Angular application
+│   │   └── main.ts     // This file bootstraps (starts) the AppModule from app. module.
+│   │   └── styles.scss   // Common Scss file
+│   ├── <strong>.editorconfig</strong>   //Contain file format for defining coding styles and a collection of text editor plugins
+│   ├── <strong>.gitignore</strong>   // Contains list of files or directories which are not supposed to be included in git commit
+│   ├── <strong>.prettierrc</strong>   //Contains Prettier's configuration for code formatting. It enforces a consistent style by parsing your code and re-printing it with its own rules
+│   ├── <strong>angular.json</strong>    // Project based configuration file
+│   ├── <strong>package.json</strong>   // Package json file
+│   ├── <strong>package-lock.json</strong>    //npm Lock dependencies to a specific version number to avoid possible version mismatch.
+│   ├── <strong>README.md</strong>  // Introductory documentation
+│   ├── <strong>tsconfig.app.json</strong>   //ensuring proper compilation and execution of test code within the projec                
+│   ├── <strong>tsconfig.json</strong>   // Contains the configuration for how the typescript is supposed to work/behave for your current project                 
+│   ├── <strong>tsconfig.spec.json</strong>   //configures TypeScript settings specifically for unit test files (*.spec.ts)                
+│   ├── <strong>yarn.lock</strong>   //yarn Lock dependencies to a specific version number to avoid possible version mismatch.                
+                                                                              </pre>
+              </div> <!-- end card body -->
+            </div> <!-- end card -->
+
+
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title anchor" id="plugins">
+                  Plugins <a class="anchor-link" href="#plugins">#</a>
+                </h5>
+                <p class="mt-0">
+                  Here is the list of plugin with the official documentation. Larkon won't be
+                  easy to build without using them and we are thankful to them.
+                </p>
+                <div class="table-responsive">
+                  <table class="table mb-0">
+                      <thead>
+                      <tr>
+                          <th>Plugins</th>
+                          <th>URL</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                          <td>Bootstrap</td>
+                          <td><a href="https://www.npmjs.com/package/bootstrap" class="text-primary"
+                                 target="_blank">https://www.npmjs.com/package/bootstrap</a></td>
+                      </tr>
+                      <tr>
+                          <td>Angular Powered Bootstrap</td>
+                          <td><a href="https://ng-bootstrap.github.io/#/home" class="text-primary"
+                                 target="_blank">https://ng-bootstrap.github.io/#/home</a></td>
+                      </tr>
+                      <tr>
+                          <td>Full Calendar</td>
+                          <td><a href="https://fullcalendar.io/docs/angular" class="text-primary"
+                                 target="_blank">https://fullcalendar.io/docs/angular</a></td>
+                      </tr>
+                      <tr>
+                          <td>NGRX</td>
+                          <td><a href="https://ngrx.io/guide/store" class="text-primary" target="_blank">https://ngrx.io/guide/store</a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Flatpicker</td>
+                          <td><a href="https://www.npmjs.com/package/angularx-flatpickr"
+                                 class="text-primary" target="_blank">https://www.npmjs.com/package/angularx-flatpickr</a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Apex Charts</td>
+                          <td><a href="https://apexcharts.com/angular-chart-demos/" class="text-primary"
+                                 target="_blank">https://apexcharts.com/angular-chart-demos/</a></td>
+                      </tr>
+                      <tr>
+                          <td>Choice</td>
+                          <td><a href="https://github.com/Choices-js/Choices#readme" class="text-primary"
+                                 target="_blank">https://github.com/Choices-js/Choices#readme</a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Day Js</td>
+                          <td><a href="https://day.js.org/" class="text-primary" target="_blank">https://day.js.org/</a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Iconify Solar Icon</td>
+                          <td><a href="https://icon-sets.iconify.design/solar/" class="text-primary"
+                                 target="_blank">https://icon-sets.iconify.design/solar/</a></td>
+                      </tr>
+                      <tr>
+                          <td>Js Vectormap</td>
+                          <td><a href="https://themustafaomar.com/open-source/jsvectormap/"
+                                 class="text-primary" target="_blank">https://themustafaomar.com/open-source/jsvectormap/</a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Nouislider</td>
+                          <td><a href="https://www.npmjs.com/package/ng2-nouislider" class="text-primary"
+                                 target="_blank">https://www.npmjs.com/package/ng2-nouislider</a></td>
+                      </tr>
+                      <tr>
+                          <td>NGX Clipboard</td>
+                          <td><a href="https://www.npmjs.com/package/ngx-clipboard" class="text-primary"
+                                 target="_blank">https://www.npmjs.com/package/ngx-clipboard</a></td>
+                      </tr>
+                      <tr>
+                          <td>NGX Dropzone Wrapper</td>
+                          <td><a href="https://www.npmjs.com/package/ngx-dropzone-wrapper"
+                                 class="text-primary" target="_blank">https://www.npmjs.com/package/ngx-dropzone-wrapper</a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Gumshoe Js</td>
+                          <td><a href="https://www.npmjs.com/package/gumshoejs" class="text-primary"
+                                 target="_blank">https://www.npmjs.com/package/gumshoejs</a></td>
+                      </tr>
+                      <tr>
+                          <td>NGX Cookie Service</td>
+                          <td><a href="https://www.npmjs.com/package/ngx-cookie-service"
+                                 class="text-primary" target="_blank">https://www.npmjs.com/package/ngx-cookie-service</a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>NGX Mask</td>
+                          <td><a href="https://www.npmjs.com/package/ngx-mask" class="text-primary"
+                                 target="_blank">https://www.npmjs.com/package/ngx-mask</a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>NGX Progressbar</td>
+                          <td><a href="https://www.npmjs.com/package/ngx-progressbar" class="text-primary"
+                                 target="_blank">https://www.npmjs.com/package/ngx-progressbar</a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>NGX Quill</td>
+                          <td><a href="https://www.npmjs.com/package/ngx-quill" class="text-primary"
+                                 target="_blank">https://www.npmjs.com/package/ngx-quill</a></td>
+                      </tr>
+                      <tr>
+                          <td>NGX Toastr</td>
+                          <td><a href="https://www.javatpoint.com/ngx-toastr" class="text-primary"
+                                 target="_blank">https://www.javatpoint.com/ngx-toastr</a></td>
+                      </tr>
+                      <tr>
+                          <td>Simplebar</td>
+                          <td><a href="https://www.npmjs.com/package/simplebar-angular"
+                                 class="text-primary" target="_blank">https://www.npmjs.com/package/simplebar-angular</a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Swiper Slider</td>
+                          <td><a href="https://swiperjs.com/angular" class="text-primary" target="_blank">https://swiperjs.com/angular</a>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Sweetalert2</td>
+                          <td><a href="https://sweetalert2.github.io/" class="text-primary"
+                                 target="_blank">https://sweetalert2.github.io/</a>
+                          </td>
+                      </tr>
+
+                      </tbody>
+                  </table>
+              </div>
+              </div> <!-- end card body -->
+            </div> <!-- end card -->
+          </div> <!-- end col -->
+
+        </div> <!-- end row -->
+
+      </div>
+      <!-- End Container Fluid -->
+
+      <!-- ========== Footer Start ========== -->
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12 footer-links text-center">
+              <script>document.write(new Date().getFullYear())</script> &copy; Larkon. Crafted by <a href=""
+                class="fw-semibold" target="_blank">Techzaa</a>
+            </div>
+
+          </div>
+        </div>
+      </footer>
+      <!-- ========== Footer End ========== -->
+
+    </div>
+    <!-- ==================================================== -->
+    <!-- End Page Content -->
+    <!-- ==================================================== -->
+
+  </div>
+  <!-- END Wrapper -->
+
+  <!-- Vendor Javascript (Require in all Page) -->
+  <script src="assets/js/vendor.js"></script>
+
+  <!-- App Javascript (Require in all Page) -->
+  <script src="assets/js/app.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+//
+// _reboot.scss
+//
+
+body {
+    overflow-x: hidden;
+}
+
+.row>* {
+    position: relative;
+}
+
+.container-fluid {
+    max-width: 95%;
+}
+
+.scroll-hidden {
+    &::-webkit-scrollbar {
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    &::-webkit-scrollbar:vertical {
+        width: 0px;
+    }
+}
+
+.profile-bg {
+    background: radial-gradient(100% 100% at 100% 100%, rgba(0, 0, 0, 0) 46%, #ff8550 47% 53%, rgba(0, 0, 0, 0) 54%) 32px 32px, radial-gradient(100% 100% at 0 0, rgba(0, 0, 0, 0) 46%, #ff8550 47% 53%, rgba(0, 0, 0, 0) 54%) 32px 32px, radial-gradient(100% 100%, rgba(0, 0, 0, 0) 22%, #ff8550 23% 29%, rgba(0, 0, 0, 0) 30% 34%, #ff8550 35% 41%, rgba(0, 0, 0, 0) 42%) #ff6c2f;
+    background-size: 64px 64px;
+    padding: 142px;
+}
+
+.profile-img-file-input {
+    display: none;
+}
+
+.profile-img-file-input1 {
+    display: none;
+}

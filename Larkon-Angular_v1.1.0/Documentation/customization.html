@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <!-- Title Meta -->
+     <meta charset="utf-8" />
+     <title>Customization | Larkon - Responsive Admin Dashboard Template</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+     <meta content="Techzaa" name="author" />
+     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+     <!-- App favicon -->
+     <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+     <!-- Vendor css (Require in all Page) -->
+     <link href="assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
+
+     <!-- App css (Require in all Page) -->
+     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+     <!-- Theme Config js (Require in all Page) -->
+     <script src="assets/js/config.js"></script>
+</head>
+
+<body>
+
+     <!-- START Wrapper -->
+     <div class="wrapper">
+
+      <!-- ========== App Menu Start ========== -->
+      <div class="main-nav">
+           <!-- Sidebar Logo -->
+           <div class="logo-box">
+                <a href="./index.html" class="logo-dark">
+                     <img src="./assets/images/logo-dark.png" class="logo-lg" alt="logo dark">
+                </a>
+
+                <a href="./index.html" class="logo-light">
+                     <img src="./assets/images/logo-light.png" class="logo-lg" alt="logo light">
+                </a>
+           </div>
+
+
+
+           <div class="scrollbar">
+
+                <ul class="navbar-nav" id="navbar-nav">
+
+                    <li class="nav-item">
+                          <a class="nav-link menu-link" href="./index.html" >
+                               <span class="nav-icon"><i class="bx bx-file"></i></span>
+                               <span class="nav-text"> Getting Started </span>
+                          </a>
+                     </li>
+
+                     <li class="nav-item">
+                          <a class="nav-link menu-link" href="./introduction.html" >
+                               <span class="nav-icon"><i class="bx bx-book-open"></i></span>
+                               <span class="nav-text"> Introduction </span>
+                          </a>
+                     </li>
+
+                     <li class="nav-item">
+                          <a class="nav-link menu-link" href="./customization.html" >
+                               <span class="nav-icon"><i class="bx bx-cog"></i></span>
+                               <span class="nav-text"> Customization </span>
+                          </a>
+                     </li>
+
+                     <li class="nav-item">
+                          <a class="nav-link menu-link" href="./change-log.html" >
+                               <span class="nav-icon"><i class="bx bx-history"></i></span>
+                               <span class="nav-text"> Change Log </span>
+                          </a>
+                     </li>
+                </ul>
+           </div>
+
+           <div class="swipe-open"></div>
+      </div>
+      <!-- ========== App Menu End ========== -->
+
+      <!-- ==================================================== -->
+      <!-- Start right Content here -->
+      <!-- ==================================================== -->
+      <div class="page-content">
+
+           <!-- Start Container Fluid -->
+           <div class="container">
+
+                <!-- ========== Page Title Start ========== -->
+                <div class="row">
+                     <div class="col-12">
+                          <div class="page-title-box">
+                               <h4 class="mb-0">Customization</h4>
+                               <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Documentation</a></li>
+                                    <li class="breadcrumb-item active">Customization</li>
+                               </ol>
+                          </div>
+                     </div>
+                </div>
+                <!-- ========== Page Title End ========== -->
+
+
+                <div class="row">
+                     <div class="col-xl-12">
+                          <div class="card">
+                               <div class="card-body">
+                                    <h5 class="card-title mb-3">Customizing Color Palette</h5>
+
+                                    <p>
+                                         You can change the color palette of any demo very easily by simply changing
+                                         the few scss variables value.
+                                    </p>
+
+                                    <p>
+                                         In order to modify the light mode colors in existing themes, open the
+                                         <code>_theme-mode.scss</code> file from
+                                         <code>src/assets/scss/config/_theme-mode.scss</code> and change any variable in it.
+                                         Your changes would get reflected automatically in any bootstrap based
+                                         components or elements. Note that, this requires you to setup and run gulp
+                                         flow provided in installation steps earlier.
+                                    </p>
+
+                                    <p>
+                                         And for modify the dark mode colors in existing themes, open the
+                                         <code>variable-dark.scss</code> file from
+                                         <code>src/scss/config/variable-dark.scss</code> and change any variable in it.
+                                    </p>
+
+                               </div> <!-- end card body -->
+                          </div> <!-- end card -->
+
+                          <div class="card">
+                               <div class="card-body">
+                                    <div class="p-lg-1">
+                                         <h4 class="mb-2 mt-0">
+                                              Customizing Sidebar Color, Topbar Color and Layouts
+                                         </h4>
+                                         <p>
+                                              Larkon allows you to have customized left sidebar, overall layout width or
+                                              right sidebar. You could turn the left sidebar to different size, theme
+                                              (look) and size. You can customize it by specifying the layout class name
+                                              on body element in your html. The config object properties accept the
+                                              following values:
+                                         </p>
+
+                                         <p>
+                                              And for Customizing in existing themes, open the
+                                              <code>layout-reducer.ts</code> file from
+                                              <code>src/app/store/layout/layout-reducer.ts</code> and change in IntialState like below.
+                                         </p>
+                                         
+                                         <div class="table-responsive">
+                                              <table class="table table-bordered mb-0">
+                                                   <thead>
+                                                        <tr>
+                                                             <th>Title</th>
+                                                             <th>Type</th>
+                                                             <th>Options</th>
+                                                             <th>Description</th>
+                                                        </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                        <tr>
+                                                             <td><code class="text-nowrap">LAYOUT_THEME</code></td>
+                                                             <td>String</td>
+                                                             <td>LAYOUT_COLOR_TYPES.LIGHTMODE | LAYOUT_COLOR_TYPES.DARKMODE</td>
+                                                             <td>Changes overall color scheme to dark</td>
+                                                        </tr>
+                                                       
+                                                        <tr>
+                                                             <td>
+                                                                  <code class="text-nowrap">TOPBAR_COLOR</code>
+                                                             </td>
+                                                             <td>String</td>
+                                                             <td>TOPBAR_COLOR_TYPES.LIGHTMODE | TOPBAR_COLOR_TYPES.DARKMODE </td>
+                                                             <td>
+                                                                  Changes the color scheme of the topbar to a given
+                                                                  value
+                                                             </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                             <td>
+                                                                  <code class="text-nowrap">MENU_COLOR</code>
+                                                             </td>
+                                                             <td>String</td>
+                                                             <td>MENU_COLOR_TYPES.LIGHTMODE | MENU_COLOR_TYPES.DARKMODE </td>
+                                                             <td>
+                                                                  Changes the color scheme of the menu to a given
+                                                                  value
+                                                             </td>
+                                                        </tr>
+                                                        <tr>
+                                                             <td>
+                                                                  <code class="text-nowrap">MENU_SIZE</code>
+                                                             </td>
+                                                             <td>String</td>
+                                                             <td>
+                                                             SIDEBAR_SIZE_TYPES.DEFAULT |SIDEBAR_SIZE_TYPES.CONDENSED |SIDEBAR_SIZE_TYPES.SMHOVER |
+                                                             SIDEBAR_SIZE_TYPES.SMHOVERACTIVE |SIDEBAR_SIZE_TYPES.HIDDEN
+                                                             </td>
+                                                             <td>
+                                                                  The left sidebar size is reduced to a condensed
+                                                                  (small) size
+                                                             </td>
+                                                        </tr>
+                                                   </tbody>
+                                              </table>
+                                         </div>
+                                    </div>
+                               </div>
+                          </div>
+                     </div> <!-- end col -->
+
+
+
+                </div> <!-- end row -->
+
+           </div>
+           <!-- End Container -->
+
+           <!-- ========== Footer Start ========== -->
+           <footer class="footer ">
+                <div class="container-fluid">
+                     <div class="row">
+                          <div class="col-md-12 footer-links text-center">
+                               <script>document.write(new Date().getFullYear())</script> &copy; Larkon. Crafted by <a href="" class="fw-semibold" target="_blank">Techzaa</a>
+                          </div>
+                     </div>
+                </div>
+           </footer>
+           <!-- ========== Footer End ========== -->
+
+      </div>
+      <!-- ==================================================== -->
+      <!-- End Page Content -->
+      <!-- ==================================================== -->
+
+ </div>
+     <!-- END Wrapper -->
+
+     <!-- Vendor Javascript (Require in all Page) -->
+     <script src="assets/js/vendor.js"></script>
+
+     <!-- App Javascript (Require in all Page) -->
+     <script src="assets/js/app.js"></script>
+
+</body>
+
+</html>

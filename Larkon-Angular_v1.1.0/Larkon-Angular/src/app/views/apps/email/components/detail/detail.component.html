@@ -1,0 +1,164 @@
+<div class="offcanvas-header">
+  <div class="d-flex gap-2 align-items-center w-50">
+    <a
+      href="javascript:void(0);"
+      role="button"
+      (click)="activeOffcanvas.close()"
+      aria-label="Close"
+    >
+      <i class="bx bx-arrow-back fs-18 align-middle"></i>
+    </a>
+    <h5 class="offcanvas-title text-truncate w-50" id="email-readLabel">
+      Medium
+    </h5>
+  </div>
+
+  <div class="ms-auto">
+    <div class="btn-group">
+      <button
+        type="button"
+        class="btn btn-light"
+        placement="top"
+        ngbTooltip="Archive"
+      >
+        <i class="bx bx-archive fs-18"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-light"
+        placement="top"
+        ngbTooltip="Mark as spam"
+      >
+        <i class="bx bx-info-square fs-18"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-light"
+        placement="top"
+        ngbTooltip="Delete"
+      >
+        <i class="bx bx-trash fs-18"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="offcanvas-body p-0">
+  <ngx-simplebar class="p-0 h-100" data-simplebar>
+    <div class="px-3">
+      <div class="mt-2">
+        <h5>Hi Jorge, How are you?</h5>
+
+        <hr />
+
+        <div class="d-flex mb-4 mt-1">
+          <img
+            class="me-2 rounded-circle avatar-sm"
+            src="assets/images/users/avatar-2.jpg"
+            alt="Generic placeholder image"
+          />
+          <div class="flex-grow-1">
+            <span class="float-end">07:23 AM</span>
+            <h6 class="m-0">Jonathan Smith</h6>
+            <small class="text-muted">From: jonathan&#64;domain.com</small>
+          </div>
+        </div>
+
+        <p><b>Hi Jorge...</b></p>
+        <div class="text-muted">
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+            commodo ligula eget dolor. Aenean massa. Cum sociis natoque
+            penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+            Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+          </p>
+          <p>
+            Nulla consequat massa quis enim. Donec pede justo, fringilla vel,
+            aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut,
+            imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede
+            mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum
+            semper nisi.
+          </p>
+          <p>
+            Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
+            consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
+            viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus
+            varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies
+            nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
+            Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem
+            quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam
+            quam nunc, blandit vel, luctus pulvinar,
+          </p>
+        </div>
+
+        <hr />
+
+        <h6>
+          <i class="fa fa-paperclip mb-2"></i> Attachments <span>(3)</span>
+        </h6>
+
+        <div>
+          <a href="javascript:void(0);">
+            <img
+              src="assets/images/small/img-1.jpg"
+              alt="attachment"
+              style="height: 84px"
+              class="img-thumbnail me-1"
+            />
+          </a>
+          <a href="javascript:void(0);">
+            <img
+              src="assets/images/small/img-2.jpg"
+              alt="attachment"
+              style="height: 84px"
+              class="img-thumbnail me-1"
+            />
+          </a>
+          <a href="javascript:void(0);">
+            <img
+              src="assets/images/small/img-3.jpg"
+              alt="attachment"
+              style="height: 84px"
+              class="img-thumbnail me-1"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+  </ngx-simplebar>
+</div>
+<div class="p-3">
+  <div class="d-flex">
+    <img
+      class="me-2 rounded-circle avatar-sm"
+      src="assets/images/users/avatar-7.jpg"
+      alt="Generic placeholder image"
+    />
+    <div class="flex-grow-1">
+      <div class="mb-2">
+        <div id="snow-editor">
+          <quill-editor
+            id="snow-editor"
+            [(ngModel)]="content"
+            #quillEditor
+            theme="snow"
+            [modules]="editorConfig"
+            style="height: 200px"
+            class="w-100"
+          ></quill-editor>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="text-end">
+    <button
+      type="button"
+      class="btn btn-primary width-sm"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    >
+      Send
+    </button>
+  </div>
+</div>
