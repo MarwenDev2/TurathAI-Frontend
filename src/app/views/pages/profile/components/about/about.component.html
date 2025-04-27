@@ -1,0 +1,153 @@
+<div class="card">
+  <div class="card-header bg-transparent d-flex justify-content-between align-items-center"
+       style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+    <h4 class="card-title mb-0" style="font-size: 1.25rem; font-weight: 600;">About</h4>
+    <button class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1"
+            style="border-radius: 8px;"
+            (click)="openEditModal()">
+      <i class="bx" [class.bx-edit]="userPreferences" [class.bx-plus]="!userPreferences"></i> 
+      {{ getButtonText() }}
+    </button>
+  </div>
+  
+  <div class="card-body">
+    <!-- Loading state -->
+    <div *ngIf="isLoading" class="text-center py-4">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div *ngIf="!isLoading && !userPreferences" class="empty-state">
+      <i class="bx bx-info-circle fs-1 mb-2"></i>
+      <p>No preferences set yet. Click "Create Preferences" to get started.</p>
+    </div>
+
+    <!-- User Preferences Section -->
+    <div *ngIf="!isLoading && userPreferences">
+      <h5 class="section-title">Travel Preferences</h5>
+      
+      <!-- Budget Range -->
+      <div class="mb-3">
+        <p><strong>Budget Range:</strong> 
+          <span [class]="getBudgetRangeClass()">
+            {{userPreferences.budgetRange || 'Not specified'}}
+          </span>
+        </p>
+      </div>
+      
+      <!-- Preference Categories -->
+      <div class="mb-3" *ngIf="getPreferenceList('preferenceCategories').length > 0">
+        <p><strong>Favorite Categories:</strong></p>
+        <div>
+          <span class="preference-badge" *ngFor="let category of getPreferenceList('preferenceCategories')">
+            {{category}}
+          </span>
+        </div>
+      </div>
+      
+      <!-- Travel Styles -->
+      <div class="mb-3" *ngIf="getPreferenceList('travelStyles').length > 0">
+        <p><strong>Travel Styles:</strong></p>
+        <div>
+          <span class="preference-badge" *ngFor="let style of getPreferenceList('travelStyles')">
+            {{style}}
+          </span>
+        </div>
+      </div>
+      
+      <!-- Language Preferences -->
+      <div class="mb-3" *ngIf="getPreferenceList('languagePreferences').length > 0">
+        <p><strong>Language Preferences:</strong></p>
+        <div>
+          <span class="preference-badge" *ngFor="let lang of getPreferenceList('languagePreferences')">
+            {{lang}}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit/Create Modal -->
+<div class="modal fade" id="editPreferencesModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ userPreferences ? 'Edit' : 'Create' }} Travel Preferences</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="preferencesForm">
+          <!-- Budget Range -->
+          <div class="mb-3">
+            <label class="form-label">Budget Range *</label>
+            <select class="form-select" formControlName="budgetRange">
+              <option value="">Select budget range</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+            <div *ngIf="preferencesForm.get('budgetRange')?.invalid && 
+                        (preferencesForm.get('budgetRange')?.dirty || preferencesForm.get('budgetRange')?.touched)"
+                 class="text-danger">
+              Budget range is required
+            </div>
+          </div>
+          
+          <!-- Preference Categories -->
+          <div class="mb-3">
+            <label class="form-label">Favorite Categories (comma separated) *</label>
+            <textarea class="form-control" rows="2" 
+                      formControlName="preferenceCategories"
+                      placeholder="e.g., Archaeology, Cinema, Music"></textarea>
+            <div *ngIf="preferencesForm.get('preferenceCategories')?.invalid && 
+                        (preferencesForm.get('preferenceCategories')?.dirty || preferencesForm.get('preferenceCategories')?.touched)"
+                 class="text-danger">
+              Categories are required
+            </div>
+          </div>
+          
+          <!-- Travel Styles -->
+          <div class="mb-3">
+            <label class="form-label">Travel Styles (comma separated) *</label>
+            <textarea class="form-control" rows="2" 
+                      formControlName="travelStyles"
+                      placeholder="e.g., Guided Tours, Backpacking, Luxury"></textarea>
+            <div *ngIf="preferencesForm.get('travelStyles')?.invalid && 
+                        (preferencesForm.get('travelStyles')?.dirty || preferencesForm.get('travelStyles')?.touched)"
+                 class="text-danger">
+              Travel styles are required
+            </div>
+          </div>
+          
+          <!-- Language Preferences -->
+          <div class="mb-3">
+            <label class="form-label">Language Preferences (comma separated) *</label>
+            <textarea class="form-control" rows="2" 
+                      formControlName="languagePreferences"
+                      placeholder="e.g., Arabic, French, English"></textarea>
+            <div *ngIf="preferencesForm.get('languagePreferences')?.invalid && 
+                        (preferencesForm.get('languagePreferences')?.dirty || preferencesForm.get('languagePreferences')?.touched)"
+                 class="text-danger">
+              Language preferences are required
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" 
+                (click)="savePreferences()"
+                [disabled]="isSaving || preferencesForm.invalid">
+          <span *ngIf="!isSaving">{{ userPreferences ? 'Save Changes' : 'Create Preferences' }}</span>
+          <span *ngIf="isSaving">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            {{ userPreferences ? 'Saving...' : 'Creating...' }}
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

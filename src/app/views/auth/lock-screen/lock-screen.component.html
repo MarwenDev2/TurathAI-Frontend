@@ -1,0 +1,25 @@
+<div class="row justify-content-center h-100">
+  <div class="col-lg-6 py-lg-5">
+       <div class="d-flex flex-column h-100 justify-content-center">
+        <app-logo-box className="auth-logo mb-4" />
+
+            <h2 class="fw-bold fs-24">Hi ! Gaston</h2>
+
+            <p class="text-muted mt-1 mb-4">Enter your password to access the admin.</p>
+
+            <div class="mb-5">
+                 <form class="authentication-form">
+                      <div class="mb-3">
+                           <label class="form-label visually-hidden" for="example-password">Password</label>
+                           <input type="text" id="example-password" class="form-control" placeholder="Enter your password">
+                      </div>
+                      <div class="mb-1 text-center d-grid">
+                           <button class="btn btn-primary" type="submit">Sign In</button>
+                      </div>
+                 </form>
+            </div>
+
+            <p class="text-danger text-center">Not you? return<a routerLink="/auth/signup" class="text-dark fw-bold ms-1">Sign Up</a></p>
+       </div>
+  </div>
+</div>

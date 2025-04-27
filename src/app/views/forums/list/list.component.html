@@ -1,0 +1,110 @@
+<div class="container">
+  <h2>Liste des forums</h2>
+
+  <!-- Affichage du message de chargement -->
+  <div *ngIf="isLoading" class="loading-message">Chargement...</div>
+
+  <!-- Si aucun forum n'est disponible -->
+  <div *ngIf="forums.length === 0 && !isLoading" class="no-forums">
+    Aucun forum disponible.
+  </div>
+
+  <!-- Liste des forums -->
+  <div *ngIf="forums.length > 0" class="forums-list">
+    <div *ngFor="let forum of forums" class="forum-item">
+      
+      <!-- Titre et Description du forum -->
+      <div class="forum-content">
+        <div class="forum-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <!-- Titre du forum -->
+          <h3>{{ forum.title }}</h3>
+  
+          <!-- Conteneur pour les boutons de suppression et modification -->
+          <div class="buttons" style="display: flex; flex-direction: column; align-items: flex-end;">
+            <button (click)="confirmDelete(forum)">🗑️</button>
+            <button (click)="editForum(forum)">✏️</button>
+          </div>
+        </div>
+        <p>{{ forum.description }}</p>
+      </div>
+  
+      <!-- Image du forum -->
+      <div class="forum-image">
+        <img [src]="getImageUrl(forum)" alt="Forum Image" />
+      </div>
+  
+      <!-- Bouton pour afficher les commentaires -->
+      <div class="buttons">
+        <button (click)="forum.showComments = !forum.showComments">
+          {{ forum.showComments ? '' : '' }} 🗨️
+        </button>
+      </div>
+  
+      <!-- Zone de commentaires pour ce forum uniquement -->
+      <div *ngIf="forum.showComments" class="comments-section">
+        <div *ngIf="editingComment; else ajoutMode">
+          <p style="color: orange; font-weight: bold;">Modification du commentaire...</p>
+        </div>
+        <ng-template #ajoutMode>
+          <p style="color: green;">Ajouter un nouveau commentaire</p>
+        </ng-template>
+      
+        
+        <!-- Champ d'ajout de commentaire -->
+      <!-- <textarea [(ngModel)]="forum.newComment" placeholder="Ajouter un commentaire..."></textarea>
+        <button (click)="creerComment(forum)">{{ editingComment ? 'Modifier' : 'Envoyer' }}</button> -->
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <textarea [(ngModel)]="forum.newComment" placeholder="Ajouter un commentaire..." style="flex: 1;" class="comment-textarea"></textarea>
+          <button (click)="creerComment(forum)" class="send-button">
+            <ng-container *ngIf="editingComment; else sendIcon">
+              ✏️
+            </ng-container>
+            <ng-template #sendIcon>
+              ➤
+            </ng-template>
+          </button>
+          
+        </div>
+        <div *ngIf="errorMessage" class="error-message" style="color: red;">
+          {{ errorMessage }}
+      </div>
+       
+        <!-- Affichage des commentaires de ce forum -->
+        <div *ngFor="let comment of forum.comments" class="comment-item" (contextmenu)="openContextMenu($event, comment)">
+          <div class="comment-author">
+            <img [src]="comment.user?.image || 'assets/images/default-avatar.png'" class="user-avatar" />
+            <strong>{{ comment.user?.firstName }} {{ comment.user?.lastName }}</strong>
+          </div>
+          <p>{{ comment.content }}</p>
+        </div>
+        <div *ngIf="contextMenuVisible" class="context-menu" [style.left.px]="menuPosition.x" [style.top.px]="menuPosition.y">
+          <ul>
+            <li (click)="startEditingComment(editingComment, selectedForumm)">Modifier</li>
+            <li (click)="deleteComment(editingComment)">Supprimer</li>
+          </ul>
+        </div>
+        <!-- Menu contextuel -->
+        
+        
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="contextMenuVisible" [style.top.px]="contextMenuPosition.y" [style.left.px]="contextMenuPosition.x"
+     class="context-menu">
+  <button (click)="deleteComment(selectedComment)">Supprimer</button>
+</div>
+  
+  
+  <!-- Confirmation de suppression du forum -->
+  <div *ngIf="showConfirmationDialog" class="modal-backdrop">
+    <div class="modal-box animate-popup">
+      <h3>⚠️ Confirmation</h3>
+      <p>Es-tu sûr de vouloir <strong>supprimer ce forum</strong> ? Cette action est irréversible.</p>
+      <div class="modal-actions">
+        <button (click)="confirmDeleteAction()" class="confirm-btn">Oui</button>
+        <button (click)="cancelDelete()" class="cancel-btn">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>

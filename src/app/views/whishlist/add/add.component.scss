@@ -1,0 +1,78 @@
+/* Gradient backgrounds for card headers */
+/* Gradient backgrounds with orange-tinted harmony */
+.gradient-success {
+    background: linear-gradient(135deg, #ff944d, #cc7a2d); /* warm greenish-orange */
+  }
+  
+  .gradient-info {
+    background: linear-gradient(135deg, #ffa94d, #e78d42); /* orange blend */
+  }
+  
+  .gradient-warning {
+    background: linear-gradient(135deg, #ffc107, #fd7e14); /* gold to orange */
+  }
+  
+  .gradient-danger {
+    background: linear-gradient(135deg, #ff6b4d, #cc4125); /* red-orange tones */
+  }
+  
+  /* Card hover effect */
+  .card.transition-transform {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card.transition-transform:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  /* Button hover effect */
+  .btn.transition-transform {
+    transition: transform 0.2s ease;
+  }
+  
+  .btn.transition-transform:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Custom button color for View Profile buttons */
+  .btn-orange {
+    background-color: #fd7e14;
+    border-color: #fd7e14;
+    color: #fff;
+  }
+  
+  .btn-orange:hover {
+    background-color: #e06c00;
+    border-color: #e06c00;
+  }
+  
+  /* Input group styling */
+  .input-group-text {
+    font-weight: 500;
+  }
+  
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+  
+  /* ApexCharts styling */
+  .apex-charts {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    padding: 10px;
+  }
+  
+  /* Toast fade transition */
+  ngb-toast.fade {
+    transition: opacity 0.3s linear;
+  }
+  
+  /* Description text in card headers */
+  .card-header .description {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+  }

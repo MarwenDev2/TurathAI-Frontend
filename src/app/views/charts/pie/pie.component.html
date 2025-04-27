@@ -1,0 +1,189 @@
+<div class="container">
+
+  <div class="row">
+      <div class="col-xl-9">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title anchor mb-1" id="overview">
+                      Overview 
+                  </h5>
+                  <p>Apexcharts's CSS and Javascript files are bundled in the <code>vender.min.css</code> and <code>vendor.js</code> and globally included in all pages.</p>
+
+                  <p class="mb-0"><span class="fw-medium">Find the JS file for the following chart at:</span> <code> ../src/assets/js/components/apexchart-pie.js</code></p>
+              </div>
+          </div>
+
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title mb-3  anchor" id="simple_pie">Simple Pie Chart</h4>
+                  <div dir="ltr">
+                      <div id="simple-pie" class="apex-charts">
+                        <apx-chart
+                        [series]="pieChart.series!"
+                        [chart]="pieChart.chart!"
+                        [labels]="pieChart.labels!"
+                        [colors]="pieChart.colors!"
+                        [legend]="pieChart.legend!"
+                        [responsive]="pieChart.responsive!"
+                      >
+                      </apx-chart>
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
+
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title mb-3  anchor" id="simple_donut">Simple Donut Chart</h4>
+                  <div dir="ltr">
+                      <div id="simple-donut" class="apex-charts">
+                        <apx-chart
+                        [series]="donutChart.series!"
+                        [chart]="donutChart.chart!"
+                        [labels]="donutChart.labels!"
+                        [colors]="donutChart.colors!"
+                        [legend]="donutChart.legend!"
+                        [responsive]="donutChart.responsive!"
+                      >
+                      </apx-chart>
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title mb-3 anchor" id="monochrome">Monochrome Pie Chart</h4>
+                  <div dir="ltr">
+                      <div id="monochrome-pie" class="apex-charts">
+                        <apx-chart
+              [series]="monochromeChart.series!"
+              [theme]="monochromeChart.theme!"
+              [chart]="monochromeChart.chart!"
+              [labels]="monochromeChart.labels!"
+              [legend]="monochromeChart.legend!"
+              [responsive]="monochromeChart.responsive!"
+            />
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
+
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title mb-3 anchor" id="gradient">Gradient Donut Chart</h4>
+                  <div dir="ltr">
+                      <div id="gradient-donut" class="apex-charts">
+                        <apx-chart
+                        [series]="gradientChart.series!"
+                        [chart]="gradientChart.chart!"
+                        [legend]="gradientChart.legend!"
+                        [labels]="gradientChart.labels!"
+                        [colors]="gradientChart.colors!"
+                        [responsive]="gradientChart.responsive!"
+                        [fill]="gradientChart.fill!"
+                      >
+                      </apx-chart>
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title mb-3 anchor" id="patterned">Patterned Donut Chart</h4>
+                  <div dir="ltr">
+                      <div id="patterned-donut" class="apex-charts">
+                        <apx-chart
+              [series]="patternedChart.series!"
+              [stroke]="patternedChart.stroke!"
+              [chart]="patternedChart.chart!"
+              [labels]="patternedChart.labels!"
+              [colors]="patternedChart.colors!"
+              [dataLabels]="patternedChart.dataLabels!"
+              [fill]="patternedChart.fill!"
+              [legend]="patternedChart.legend!"
+              [responsive]="patternedChart.responsive!"
+            >
+            </apx-chart>
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
+
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title mb-3 anchor" id="image">Pie Chart with Image fill</h4>
+                  <div dir="ltr">
+                      <div id="image-pie" class="apex-charts">
+                        <apx-chart
+                        [series]="imagePieChart.series!"
+                        [stroke]="imagePieChart.stroke!"
+                        [chart]="imagePieChart.chart!"
+                        [labels]="imagePieChart.labels!"
+                        [colors]="imagePieChart.colors!"
+                        [dataLabels]="imagePieChart.dataLabels!"
+                        [fill]="imagePieChart.fill!"
+                        [legend]="imagePieChart.legend!"
+                        [responsive]="imagePieChart.responsive!"
+                      />
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
+
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title mb-3 anchor" id="update">Donut Update</h4>
+                  <div dir="ltr">
+                      <div id="update-donut" class="apex-charts">
+                        <apx-chart
+                        [chart]="updatedonutChart.chart!"
+                        [dataLabels]="updatedonutChart.dataLabels!"
+                        [series]="updatedonutChart.series!"
+                        [colors]="updatedonutChart.colors!"
+                        [legend]="updatedonutChart.legend!"
+                        [responsive]="updatedonutChart.responsive!"
+                      />
+                      </div>
+                  </div>
+
+                  <div class="text-center mt-2">
+                      <button class="btn btn-sm btn-primary" id="randomize">RANDOMIZE</button>
+                      <button class="btn btn-sm btn-primary" id="add">ADD</button>
+                      <button class="btn btn-sm btn-primary" id="remove">REMOVE</button>
+                      <button class="btn btn-sm btn-primary" id="reset">RESET</button>
+                  </div>
+
+              </div>
+              
+          </div>
+          
+      </div> 
+
+      <div class="col-xl-3">
+        <ui-examples-list
+        [linkList]="[
+          { label: 'Overview', link: '#overview' },
+          { label: 'Simple Pie Chart', link: '#simple_pie' },
+          { label: 'Simple Donut Chart', link: '#simple_donut' },
+          { label: 'Monochrome Pie Area', link: '#monochrome' },
+          { label: 'Gradient Donut Chart', link: '#gradient' },
+          { label: 'Patterned Donut Chart', link: '#patterned' },
+          { label: 'Pie Chart with Image fill', link: '#image' },
+          { label: 'Donut Update', link: '#update' }
+        ]"
+      />
+      </div>
+  </div> 
+</div> 

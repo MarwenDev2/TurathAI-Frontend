@@ -1,0 +1,499 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="overview">
+            Overview
+            <a
+              class="btn btn-sm btn-outline-success rounded-2 float-end"
+              href="https://github.com/Choices-js/Choices"
+              target="_blank"
+            >
+              Official Website
+            </a>
+          </h5>
+          <p class="text-muted mb-3">
+            Choices.js is a A vanilla, lightweight, configurable select box/text
+            input plugin. Similar to Select2 and Selectize but without the jQuery
+            dependency.
+          </p>
+  
+          <h5 class="mt-2">Usage</h5>
+          <p>
+            To use Choices.js, follow the instructions from its documentation over
+            <a href="https://github.com/Choices-js/Choices" class="text-primary">
+              here</a
+            >
+          </p>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="basic">
+            Basic Example
+            <a class="anchor-link" href="#basic">#</a>
+          </h5>
+          <p class="text-muted">
+            Set <code>selectFormInput </code> attribute to set a default single
+            select.
+          </p>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <select
+                  selectFormInput
+                  class="form-control"
+                  data-choices
+                  name="choices-single-default"
+                  id="choices-single-default"
+                >
+                  <option value="">This is a placeholder</option>
+                  <option value="Choice 1">Choice 1</option>
+                  <option value="Choice 2">Choice 2</option>
+                  <option value="Choice 3">Choice 3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="options-group">
+            Option Groups Example
+            <a class="anchor-link" href="#options-group">#</a>
+          </h5>
+          <p class="text-muted">
+            Set
+            <code>selectFormInput</code>
+            attribute to set option group
+          </p>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="choices-single-groups" class="form-label text-muted"
+                  >Option Groups</label
+                >
+                <select
+                  selectFormInput
+                  class="form-control"
+                  id="choices-single-groups"
+                  data-choices
+                  data-choices-groups
+                  data-placeholder="Select City"
+                  name="choices-single-groups"
+                >
+                  <option value="">Choose a city</option>
+                  <optgroup label="UK">
+                    <option value="London">London</option>
+                    <option value="Manchester">Manchester</option>
+                    <option value="Liverpool">Liverpool</option>
+                  </optgroup>
+                  <optgroup label="FR">
+                    <option value="Paris">Paris</option>
+                    <option value="Lyon">Lyon</option>
+                    <option value="Marseille">Marseille</option>
+                  </optgroup>
+                  <optgroup label="DE" disabled>
+                    <option value="Hamburg">Hamburg</option>
+                    <option value="Munich">Munich</option>
+                    <option value="Berlin">Berlin</option>
+                  </optgroup>
+                  <optgroup label="US">
+                    <option value="New York">New York</option>
+                    <option value="Washington" disabled>Washington</option>
+                    <option value="Michigan">Michigan</option>
+                  </optgroup>
+                  <optgroup label="SP">
+                    <option value="Madrid">Madrid</option>
+                    <option value="Barcelona">Barcelona</option>
+                    <option value="Malaga">Malaga</option>
+                  </optgroup>
+                  <optgroup label="CA">
+                    <option value="Montreal">Montreal</option>
+                    <option value="Toronto">Toronto</option>
+                    <option value="Vancouver">Vancouver</option>
+                  </optgroup>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="options-add-no-search">
+            Options added via config with no search
+            <a class="anchor-link" href="#options-add-no-search">#</a>
+          </h5>
+          <p class="text-muted">
+            Set
+            <code
+              >selectFormInput
+              [options]="&#123;searchEnabled:false,removeItemButton:true&#125;"</code
+            >
+          </p>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <select
+                  selectFormInput
+                  [options]="{ searchEnabled: false, removeItemButton: true }"
+                  class="form-control"
+                  id="choices-single-no-search"
+                  name="choices-single-no-search"
+                >
+                  <option value="Zero">Zero</option>
+                  <option value="One">One</option>
+                  <option value="Two">Two</option>
+                  <option value="Three">Three</option>
+                  <option value="Four">Four</option>
+                  <option value="Five">Five</option>
+                  <option value="Six">Six</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="options-add-no-sorting">
+            Options added via config with no sorting
+            <a class="anchor-link" href="#options-add-no-sorting">#</a>
+          </h5>
+          <p class="text-muted">
+            Set
+            <code>data-choices data-choices-sorting-false</code>
+            attribute.
+          </p>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <select
+                  selectFormInput
+                  [options]="{ shouldSortItems: false }"
+                  class="form-control"
+                  id="choices-single-no-sorting"
+                  name="choices-single-no-sorting"
+                >
+                  <option value="Madrid">Madrid</option>
+                  <option value="Toronto">Toronto</option>
+                  <option value="Vancouver">Vancouver</option>
+                  <option value="London">London</option>
+                  <option value="Manchester">Manchester</option>
+                  <option value="Liverpool">Liverpool</option>
+                  <option value="Paris">Paris</option>
+                  <option value="Malaga">Malaga</option>
+                  <option value="Washington" disabled>Washington</option>
+                  <option value="Lyon">Lyon</option>
+                  <option value="Marseille">Marseille</option>
+                  <option value="Hamburg">Hamburg</option>
+                  <option value="Munich">Munich</option>
+                  <option value="Barcelona">Barcelona</option>
+                  <option value="Berlin">Berlin</option>
+                  <option value="Montreal">Montreal</option>
+                  <option value="New York">New York</option>
+                  <option value="Michigan">Michigan</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="multiple-select">
+            Multiple select input
+            <a class="anchor-link" href="#multiple-select">#</a>
+          </h5>
+          <p class="text-muted">
+            Set
+            <code>[multiple]="true"</code>
+            attribute.
+          </p>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <select
+                  selectFormInput
+                  [options]="{ searchEnabled: false }"
+                  class="form-control"
+                  id="choices-multiple-default"
+                  data-choices
+                  name="choices-multiple-default"
+                  [multiple]="true"
+                >
+                  <option value="Choice 1" selected>Choice 1</option>
+                  <option value="Choice 2">Choice 2</option>
+                  <option value="Choice 3">Choice 3</option>
+                  <option value="Choice 4" disabled>Choice 4</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="multiple-select-remove">
+            Multiple select With remove button input
+            <a class="anchor-link" href="#multiple-select-remove">#</a>
+          </h5>
+          <p class="text-muted">
+            Set
+            <code
+              >[options]="&#123;searchEnabled:false,removeItemButton:true&#125;"
+              [multiple]="true"</code
+            >
+            attribute.
+          </p>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <select
+                  selectFormInput
+                  [options]="{ searchEnabled: false, removeItemButton: true }"
+                  [multiple]="true"
+                  class="form-control"
+                  id="choices-multiple-remove-button"
+                  data-choices
+                  data-choices-removeItem
+                  name="choices-multiple-remove-button"
+                >
+                  <option value="Choice 1" selected>Choice 1</option>
+                  <option value="Choice 2">Choice 2</option>
+                  <option value="Choice 3">Choice 3</option>
+                  <option value="Choice 4">Choice 4</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="multiple-groups">
+            Multiple select With Option groups
+            <a class="anchor-link" href="#default">#</a>
+          </h5>
+          <p class="text-muted">
+            Set
+            <code
+              >selectFormInput [options]="&#123;searchEnabled:false&#125;"
+              [multiple]="true"</code
+            >
+            attribute.
+          </p>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="choices-multiple-groups" class="form-label text-muted"
+                  >Option groups</label
+                >
+                <select
+                  selectFormInput
+                  [options]="{ searchEnabled: false }"
+                  class="form-control"
+                  id="choices-multiple-groups"
+                  name="choices-multiple-groups"
+                  data-choices
+                  data-choices-multiple-groups="true"
+                  [multiple]="true"
+                >
+                  <option>Choose a city</option>
+                  <optgroup label="UK">
+                    <option value="London">London</option>
+                    <option value="Manchester">Manchester</option>
+                    <option value="Liverpool">Liverpool</option>
+                  </optgroup>
+                  <optgroup label="FR">
+                    <option value="Paris">Paris</option>
+                    <option value="Lyon">Lyon</option>
+                    <option value="Marseille">Marseille</option>
+                  </optgroup>
+                  <optgroup label="DE" disabled>
+                    <option value="Hamburg">Hamburg</option>
+                    <option value="Munich">Munich</option>
+                    <option value="Berlin">Berlin</option>
+                  </optgroup>
+                  <optgroup label="US">
+                    <option value="New York">New York</option>
+                    <option value="Washington" disabled>Washington</option>
+                    <option value="Michigan">Michigan</option>
+                  </optgroup>
+                  <optgroup label="SP">
+                    <option value="Madrid">Madrid</option>
+                    <option value="Barcelona">Barcelona</option>
+                    <option value="Malaga">Malaga</option>
+                  </optgroup>
+                  <optgroup label="CA">
+                    <option value="Montreal">Montreal</option>
+                    <option value="Toronto">Toronto</option>
+                    <option value="Vancouver">Vancouver</option>
+                  </optgroup>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="text-input">
+            Text inputs
+            <a class="anchor-link" href="#text-input">#</a>
+          </h5>
+          <p class="text-muted">
+            Set
+            <code
+              >data-choices data-choices-limit="Required Limit"
+              data-choices-removeItem</code
+            >
+            attribute.
+          </p>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label
+                  for="choices-text-remove-button"
+                  class="form-label text-muted"
+                  >Set limit values with remove button</label
+                >
+                <input
+                  class="form-control"
+                  id="choices-text-remove-button"
+                  selectFormInput
+                  [options]="{ removeItemButton: true }"
+                  data-choices
+                  data-choices-limit="3"
+                  data-choices-removeItem
+                  type="text"
+                  value="Task-1"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="unique-values">
+            Text inputs in Unique values only, no pasting
+            <a class="anchor-link" href="#unique-values">#</a>
+          </h5>
+          <p class="text-muted">
+            Set
+            <code>[options]="&#123;uniqueItemText:''&#125;"</code>
+            attribute.
+          </p>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label
+                  for="choices-text-unique-values"
+                  class="form-label text-muted"
+                  >Unique values only, no pasting</label
+                >
+                <input
+                  class="form-control"
+                  selectFormInput
+                  [options]="{ uniqueItemText: '' }"
+                  id="choices-text-unique-values"
+                  data-choices
+                  data-choices-text-unique-true
+                  type="text"
+                  value="Project-A, Project-B"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="disabled">
+            Disabled Text Inputs
+            <a class="anchor-link" href="#disabled">#</a>
+          </h5>
+          <p class="text-muted">
+            Set
+            <code> [disabled]="true"</code>
+            attribute.ta-ch
+          </p>
+  
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="choices-text-disabled" class="form-label text-muted"
+                  >Disabled</label
+                >
+                <input
+                  class="form-control"
+                  selectFormInput
+                  [disabled]="true"
+                  id="choices-text-disabled"
+                  type="text"
+                  value="josh&#64;joshuajohnson.co.uk, joe&#64;bloggs.co.uk"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-xl-3">
+      <ui-examples-list
+        [linkList]="[
+          { label: 'Overview', link: '#overview' },
+          { label: 'Basic Example', link: '#basic' },
+          { label: 'Option Groups Example', link: '#options-group' },
+          {
+            label: 'Options added via config with no search',
+            link: '#options-add-no-search'
+          },
+          {
+            label: 'Options added via config with no sorting',
+            link: '#options-add-no-sorting'
+          },
+          { label: 'Multiple select input', link: '#multiple-select' },
+          {
+            label: 'Multiple select With remove button input',
+            link: '#multiple-select-remove'
+          },
+          {
+            label: 'Multiple select With Option groups',
+            link: '#multiple-groups'
+          },
+          { label: 'Text inputs', link: '#text-input' },
+          {
+            label: 'Text inputs in Unique values only, no pasting',
+            link: '#unique-values'
+          },
+          { label: 'Disabled Text Inputs', link: '#disabled' }
+        ]"
+      />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,120 @@
+<!-- list.component.html -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+/>
+
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card shadow-sm">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="card-title mb-0">All Users</h4>
+        <div class="d-flex align-items-center gap-2">
+          <a routerLink="/users/add" class="btn btn-sm btn-primary">
+            <i class="bi bi-plus-circle"></i> Add User
+          </a>
+          <div ngbDropdown class="dropdown">
+            <button ngbDropdownToggle class="btn btn-outline-secondary btn-sm">
+              <i class="bi bi-funnel"></i> Filter by Country
+            </button>
+            <div ngbDropdownMenu>
+              <button class="dropdown-item" (click)="selectedCountry = null">All Countries</button>
+              <button
+                class="dropdown-item"
+                *ngFor="let country of uniqueCountries"
+                (click)="selectedCountry = country"
+              >
+                <img [src]="countryFlagMap[country]" *ngIf="countryFlagMap[country]" class="me-1" height="12">
+                {{ country }}
+              </button>
+            </div>
+          </div>          
+        </div>
+      </div>
+      
+      <div *ngIf="isLoading" class="text-center py-4">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading">
+        <div *ngIf="selectedCountry" class="mb-2 p-3 bg-light">
+          <span class="badge bg-info text-dark">
+            <img [src]="countryFlagMap[selectedCountry]" *ngIf="countryFlagMap[selectedCountry]" class="me-1" height="12">
+            Showing users from {{ selectedCountry }}
+            <button class="btn btn-sm btn-close ms-2" (click)="selectedCountry = null"></button>
+          </span>
+        </div>      
+        
+        <div class="table-responsive">
+          <table class="table align-middle table-striped mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>#</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Country</th>
+                <th>Role</th>
+                <th>Created</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of filteredUsers() | slice: (page-1) * pageSize : page * pageSize; let i = index">
+                <td>{{ (page - 1) * pageSize + i + 1 }}</td>
+                <td>{{ user.firstName }} {{ user.lastName }}</td>
+                <td class="text-truncate" style="max-width: 200px">{{ user.email }}</td>
+                <td>
+                  <img [src]="countryFlagMap[user.originCountry]" 
+                       *ngIf="countryFlagMap[user.originCountry]" 
+                       class="me-1" height="12">
+                  {{ user.originCountry }}
+                </td>
+                <td>
+                  <span class="badge" 
+                        [ngClass]="{
+                          'bg-primary': user.role === 'ADMIN',
+                          'bg-success': user.role === 'USER'
+                        }">
+                    {{ user.role }}
+                  </span>
+                </td>
+                <td>{{ user.createdAt | date: 'shortDate' }}</td>
+                <td class="text-end">
+                  <div class="btn-group btn-group-sm">
+                    <button class="btn btn-light" title="View" (click)="viewUserDetails(user)">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                    <a [routerLink]="['/user/edit', user.id]" class="btn btn-outline-primary" title="Edit">
+                      <i class="bi bi-pencil"></i>
+                    </a>
+                    <button (click)="deleteUser(user.id)" class="btn btn-outline-danger" title="Delete">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>          
+          </table>
+        </div>
+
+        <div *ngIf="filteredUsers().length === 0" class="text-center py-4">
+          <p class="text-muted">No users found</p>
+        </div>
+      </div>
+
+      <div class="card-footer" *ngIf="filteredUsers().length > 0">
+        <ngb-pagination 
+          [collectionSize]="filteredUsers().length" 
+          [(page)]="page" 
+          [pageSize]="pageSize"
+          [maxSize]="5"
+          [rotate]="true"
+          [ellipses]="false"
+          class="mb-0">
+        </ngb-pagination>
+      </div>
+    </div>
+  </div>
+</div>

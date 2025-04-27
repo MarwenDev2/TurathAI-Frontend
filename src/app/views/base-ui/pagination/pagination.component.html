@@ -1,0 +1,125 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="default-buttons">
+            Default Buttons<a class="anchor-link" href="#default-buttons">#</a>
+          </h5>
+          <p class="text-muted">
+            Use the button classes on an <code>&lt;a&gt;</code>, <code>&lt;button&gt;</code> or <code>&lt;input&gt;</code>
+            element.
+          </p>
+          <div class="mb-3">
+            <nav aria-label="Page navigation example ">
+              <ngb-pagination  [collectionSize]="30" class="mb-2 pagination">
+                <ng-template ngbPaginationPrevious>Previous</ng-template>
+                <ng-template ngbPaginationNext>Next</ng-template>
+              </ngb-pagination>
+            </nav>
+            <nav aria-label="Page navigation example">
+              <ngb-pagination [collectionSize]="30" class="pagination mb-0" />
+            </nav>
+          </div>
+  
+  
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="rounded-pagination">
+            Rounded Pagination <a class="anchor-link" href="#rounded-pagination">#</a>
+          </h5>
+          <p class="text-muted">
+            Simple pagination inspired by Rdio, great for apps and search results.
+          </p>
+          <div class="mb-3">
+            <nav aria-label="Page navigation example">
+              <ngb-pagination [collectionSize]="30" class="mb-2 pagination pagination-rounded">
+                <ng-template ngbPaginationPrevious>Previous</ng-template>
+                <ng-template ngbPaginationNext>Next</ng-template>
+              </ngb-pagination>
+            </nav>
+            <nav aria-label="Page navigation example">
+              <ngb-pagination [collectionSize]="30" class="pagination pagination-rounded mb-0">
+              </ngb-pagination>
+            </nav>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="alignment">
+            Alignment <a class="anchor-link" href="#alignment">#</a>
+          </h5>
+          <p class="text-muted">
+            Change the alignment of pagination components with flexbox utilitie
+          </p>
+          <div class="mb-3">
+            <nav aria-label="Page navigation example">
+              <ngb-pagination [collectionSize]="30" class="mb-2 pagination justify-content-center">
+                <ng-template ngbPaginationPrevious>Previous</ng-template>
+                <ng-template ngbPaginationNext>Next</ng-template>
+              </ngb-pagination>
+            </nav>
+  
+            <nav aria-label="Page navigation example">
+              <ngb-pagination [collectionSize]="30" class="pagination justify-content-end mb-0">
+                <ng-template ngbPaginationPrevious>Previous</ng-template>
+                <ng-template ngbPaginationNext>Next</ng-template>
+              </ngb-pagination>
+            </nav>
+          </div>
+  
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="sizing">
+            Sizing <a class="anchor-link" href="#sizing">#</a>
+          </h5>
+          <p class="text-muted">
+            Add <code>[size]</code> for additional sizes.
+          </p>
+  
+          <div class="mb-3">
+            <nav aria-label="...">
+              <ngb-pagination  class="pagination mb-2" [collectionSize]="30" [directionLinks]="false"
+                [size]="'lg'" />
+            </nav>
+            <nav aria-label="...">
+              <ngb-pagination
+                [collectionSize]="30"
+                class="pagination mb-2"
+                [directionLinks]="false"
+                size='md'
+              />
+            </nav>
+            <nav aria-label="...">
+              <ngb-pagination
+                [collectionSize]="30"
+                class="pagination"
+                [directionLinks]="false"
+                [size]="'sm'"
+              />
+            </nav>
+          </div>
+        </div>
+      </div> 
+    </div> 
+  
+    <div class="col-xl-3">
+      <ui-examples-list
+      [linkList]="[
+        { label: 'Default Buttons', link: '#default-buttons' },
+        { label: 'Rounded Pagination', link: '#rounded-pagination' },
+        { label: 'Alignment', link: '#alignment' },
+        { label: 'Sizing', link: '#sizing' }
+      ]"
+    />
+    </div>
+  </div>
+</div>

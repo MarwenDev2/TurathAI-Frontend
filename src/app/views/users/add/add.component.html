@@ -1,0 +1,238 @@
+<div class="admin-container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Create New User</h2>
+          </div>
+          
+          <div class="card-body">
+            <form [formGroup]="userForm" (ngSubmit)="createUser()" class="admin-form">
+              <!-- Two Column Layout for Basic Info -->
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- First Name -->
+                  <div class="mb-3">
+                    <label class="form-label">First Name <span class="text-danger">*</span></label>
+                    <input formControlName="firstName" type="text" class="form-control" 
+                          placeholder="Enter first name">
+                    <div *ngIf="userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched" 
+                        class="text-danger small mt-1">
+                      <div *ngIf="userForm.get('firstName')?.errors?.['required']">
+                        First name is required
+                      </div>
+                      <div *ngIf="userForm.get('firstName')?.errors?.['maxlength']">
+                        Maximum 50 characters allowed
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <!-- Last Name -->
+                  <div class="mb-3">
+                    <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                    <input formControlName="lastName" type="text" class="form-control" 
+                          placeholder="Enter last name">
+                    <div *ngIf="userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched" 
+                        class="text-danger small mt-1">
+                      <div *ngIf="userForm.get('lastName')?.errors?.['required']">
+                        Last name is required
+                      </div>
+                      <div *ngIf="userForm.get('lastName')?.errors?.['maxlength']">
+                        Maximum 50 characters allowed
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Email -->
+              <div class="mb-3">
+                <label class="form-label">Email <span class="text-danger">*</span></label>
+                <input formControlName="email" type="email" class="form-control" 
+                      placeholder="Enter email">
+                <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" 
+                    class="text-danger small mt-1">
+                  <div *ngIf="userForm.get('email')?.errors?.['required']">
+                    Email is required
+                  </div>
+                  <div *ngIf="userForm.get('email')?.errors?.['email']">
+                    Please enter a valid email
+                  </div>
+                  <div *ngIf="userForm.get('email')?.errors?.['maxlength']">
+                    Maximum 100 characters allowed
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Password -->
+              <div class="mb-3">
+                <label class="form-label">Password <span class="text-danger">*</span></label>
+                <input formControlName="password" type="password" class="form-control" 
+                      placeholder="Enter password">
+                <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" 
+                    class="text-danger small mt-1">
+                  <div *ngIf="userForm.get('password')?.errors?.['required']">
+                    Password is required
+                  </div>
+                  <div *ngIf="userForm.get('password')?.errors?.['minlength']">
+                    Password must be at least 6 characters
+                  </div>
+                  <div *ngIf="userForm.get('password')?.errors?.['maxlength']">
+                    Maximum 50 characters allowed
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Role Selection -->
+              <div class="mb-3">
+                <label class="form-label">Role <span class="text-danger">*</span></label>
+                <select formControlName="role" class="form-select">
+                  <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+                </select>
+                <div *ngIf="userForm.get('role')?.invalid && userForm.get('role')?.touched" 
+                    class="text-danger small mt-1">
+                  Please select a role
+                </div>
+              </div>
+  
+              <!-- Country Dropdown -->
+              <div class="mb-3">
+                <label class="form-label">Country <span class="text-danger">*</span></label>
+                <div class="dropdown" [class.show]="showCountryDropdown">
+                  <button class="form-control text-start dropdown-toggle d-flex align-items-center" 
+                          type="button" (click)="showCountryDropdown = !showCountryDropdown">
+                    <span *ngIf="userForm.get('originCountry')?.value; else selectCountryTpl">
+                      <img [src]="'assets/flags/' + userForm.get('originCountry')?.value + '.svg'" 
+                          width="20" class="me-2">
+                      {{ getCountryName(userForm.get('originCountry')?.value || '') }}
+                    </span>
+                    <ng-template #selectCountryTpl>Select country</ng-template>
+                  </button>
+                  <div class="dropdown-menu w-100" [class.show]="showCountryDropdown">
+                    <div class="px-2 py-1">
+                      <input type="text" class="form-control mb-2" placeholder="Search countries..."
+                            (input)="filterCountries($event)">
+                    </div>
+                    <div class="dropdown-list">
+                      <a *ngFor="let country of filteredCountries" class="dropdown-item" 
+                          (click)="selectCountry(country.code); showCountryDropdown = false">
+                        <img [src]="'assets/flags/' + country.code + '.png'" width="20" class="me-2">
+                        {{ country.name }}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="userForm.get('originCountry')?.invalid && userForm.get('originCountry')?.touched" 
+                    class="text-danger small mt-1">
+                  Please select country
+                </div>
+              </div>
+  
+              <!-- Spoken Languages -->
+              <div class="mb-3">
+                <label class="form-label">Spoken Languages <span class="text-danger">*</span></label>
+                <div class="dropdown" [class.show]="showLanguageDropdown">
+                  <button class="form-control text-start dropdown-toggle" 
+                          type="button" (click)="showLanguageDropdown = !showLanguageDropdown">
+                    <span *ngIf="(userForm.get('spokenLanguages')?.value || []).length > 0; else selectLanguages">
+                      {{ getLanguageNames(userForm.get('spokenLanguages')?.value || []) }}
+                    </span>
+                    <ng-template #selectLanguages>Select languages</ng-template>
+                  </button>
+                  <div class="dropdown-menu w-100" [class.show]="showLanguageDropdown">
+                    <div class="px-2 py-1">
+                      <input type="text" class="form-control mb-2" placeholder="Search languages..."
+                            [(ngModel)]="languageSearchTerm" (ngModelChange)="filterLanguages()"
+                            [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <div class="dropdown-list">
+                      <a *ngFor="let language of filteredLanguages" class="dropdown-item" 
+                          (click)="toggleLanguage(language.code)">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" 
+                                [checked]="isLanguageSelected(language.code)"
+                                (click)="$event.stopPropagation()">
+                          <label class="form-check-label">
+                            <img [src]="'assets/flags/' + language.code + '.png'" width="20" class="me-2">
+                            {{ language.name }}
+                          </label>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="userForm.get('spokenLanguages')?.invalid && userForm.get('spokenLanguages')?.touched" 
+                    class="text-danger small mt-1">
+                  Please select at least one language
+                </div>
+              </div>
+  
+              <!-- Interests -->
+              <div class="mb-3">
+                <label class="form-label">Interests <span class="text-danger">*</span></label>
+                <textarea formControlName="interests" class="form-control" rows="3"
+                          placeholder="Enter interests"></textarea>
+                <div *ngIf="userForm.get('interests')?.invalid && userForm.get('interests')?.touched" 
+                    class="text-danger small mt-1">
+                  <div *ngIf="userForm.get('interests')?.errors?.['required']">
+                    Interests are required
+                  </div>
+                  <div *ngIf="userForm.get('interests')?.errors?.['maxlength']">
+                    Maximum 200 characters allowed
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Profile Image -->
+              <div class="mb-3">
+                <label class="form-label">Profile Image</label>
+                <div class="d-flex align-items-center">
+                  <div class="image-upload-container me-3">
+                    <div class="image-preview" *ngIf="selectedImage; else uploadPlaceholder">
+                      <img [src]="selectedImage" alt="Profile preview" class="img-thumbnail">
+                    </div>
+                    <ng-template #uploadPlaceholder>
+                      <div class="upload-placeholder">
+                        <i class="bi bi-person-circle fs-1"></i>
+                      </div>
+                    </ng-template>
+                    <input type="file" class="form-control d-none" id="profileImage" 
+                          accept="image/*" (change)="onImageUpload($event)">
+                    <label for="profileImage" class="upload-btn btn btn-sm btn-outline-primary mt-2">
+                      <i class="bi bi-upload me-1"></i> Upload Image
+                    </label>
+                  </div>
+                  <div class="image-upload-hint text-muted small">
+                    Recommended size: 200x200 pixels (JPG, PNG)
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Messages -->
+              <div *ngIf="errorMessage" class="alert alert-danger mb-3">
+                <i class="bi bi-exclamation-circle me-2"></i> {{ errorMessage }}
+              </div>
+              <div *ngIf="successMessage" class="alert alert-success mb-3">
+                <i class="bi bi-check-circle me-2"></i> {{ successMessage }}
+              </div>
+  
+              <!-- Submit Button -->
+              <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary" (click)="navigateToUsers()">
+                  <i class="bi bi-arrow-left me-1"></i> Back to Users
+                </button>
+                <button class="btn btn-primary" type="submit" [disabled]="isLoading">
+                  <span *ngIf="!isLoading">Create User</span>
+                  <span *ngIf="isLoading">
+                    <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                    Creating...
+                  </span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

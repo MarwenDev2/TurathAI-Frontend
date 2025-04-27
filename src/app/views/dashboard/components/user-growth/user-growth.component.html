@@ -1,0 +1,18 @@
+<div class="card">
+    <div class="card-header">
+      <h4 class="card-title">User Growth</h4>
+    </div>
+    <div class="card-body">
+      <div id="user-growth-chart">
+        <apx-chart 
+          [series]="growthChart.series"
+          [chart]="growthChart.chart"
+          [stroke]="growthChart.stroke"
+          [xaxis]="growthChart.xaxis"
+          [colors]="growthChart.colors"
+          [markers]="growthChart.markers"
+          [tooltip]="growthChart.tooltip">
+        </apx-chart>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,12 @@
+<div class="row g-1">
+  <div class="col-xxl-3">
+    <div
+      class="offcanvas-xxl offcanvas-start h-100">
+      <chat-contacts (profileDetail)="receiveDataFromChild($event)" />
+    </div>
+  </div>
+
+  <div class="col-xxl-9">
+    <chat-list [profileDetail]="profileDetail" />
+  </div>
+</div>

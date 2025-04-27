@@ -1,0 +1,53 @@
+/* add.component.scss */
+.dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  width: 100%;
+  position: absolute;
+  z-index: 1000;
+  background-color: #fff;
+}
+
+.dropdown-item {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+.text-danger {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.input-group {
+  position: relative;
+}
+
+.form-control {
+  border-radius: 0.25rem;
+}
+
+.ngb-progressbar {
+  height: 1rem; /* Taller for better visibility */
+  border-radius: 0.5rem;
+  background-color: #e9ecef; /* Light background */
+}
+
+.progress-bar {
+  background-color: #007bff; /* Match btn-primary */
+  transition: width 0.2s ease-in-out; /* Smooth animation */
+}
+
+.ratingnum {
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.bx.bxs-star {
+  margin-right: 0.25rem;
+}

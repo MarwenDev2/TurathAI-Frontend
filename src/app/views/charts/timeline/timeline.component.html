@@ -1,0 +1,139 @@
+<div class="container">
+
+  <div class="row">
+      <div class="col-xl-9">
+         <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title anchor mb-1" id="overview">
+                      Overview 
+                  </h5>
+                  
+                  <p class="mb-0"><span class="fw-medium">Find the JS file for the following chart at:</span> <code> ../src/assets/js/components/apexchart-timeline.js</code></p>
+              </div>
+          </div>
+
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title mb-3 anchor" id="basic">Basic Timeline</h4>
+                  <div dir="ltr">
+                      <div id="basic-timeline" class="apex-charts">
+                        <apx-chart
+              [series]="timelineChart.series!"
+              [chart]="timelineChart.chart!"
+              [colors]="timelineChart.colors!"
+              [plotOptions]="timelineChart.plotOptions!"
+              [xaxis]="timelineChart.xaxis!"
+            >
+            </apx-chart>
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
+
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title mb-3 anchor" id="distributed">Distributed Timeline </h4>
+                  <div dir="ltr">
+                      <div id="distributed-timeline" class="apex-charts">
+                        <apx-chart
+                        [series]="distributedChart.series!"
+                        [chart]="distributedChart.chart!"
+                        [plotOptions]="distributedChart.plotOptions!"
+                        [dataLabels]="distributedChart.dataLabels!"
+                        [yaxis]="distributedChart.yaxis!"
+                        [xaxis]="distributedChart.xaxis!"
+                      />
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
+
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title mb-3 anchor" id="multi-series">Multi Series Timeline</h4>
+
+                  <div dir="ltr">
+                      <div id="multi-series-timeline" class="apex-charts">
+                        <apx-chart
+                        [series]="multitimelineChart.series!"
+                        [chart]="multitimelineChart.chart!"
+                        [plotOptions]="multitimelineChart.plotOptions!"
+                        [dataLabels]="multitimelineChart.dataLabels!"
+                        [fill]="multitimelineChart.fill!"
+                        [colors]="multitimelineChart.colors!"
+                        [xaxis]="multitimelineChart.xaxis!"
+                        [legend]="multitimelineChart.legend!"
+                      >
+                      </apx-chart>
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
+
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title mb-3 anchor" id="advanced">Advanced Timeline</h4>
+                  <div dir="ltr">
+                      <div id="advanced-timeline" class="apex-charts">
+                        <apx-chart
+              [series]="advancedtimelineChart.series!"
+              [chart]="advancedtimelineChart.chart!"
+              [plotOptions]="advancedtimelineChart.plotOptions!"
+              [dataLabels]="advancedtimelineChart.dataLabels!"
+              [xaxis]="advancedtimelineChart.xaxis!"
+              [stroke]="advancedtimelineChart.stroke!"
+              [colors]="advancedtimelineChart.colors!"
+              [fill]="advancedtimelineChart.fill!"
+              [legend]="advancedtimelineChart.legend!"
+            >
+            </apx-chart>
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
+
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title mb-3 anchor" id="group-rows">Multiple Series - Group Rows</h4>
+                  <div dir="ltr">
+                      <div id="group-rows-timeline" class="apex-charts">
+                        <apx-chart
+                        [series]="grouptimelineChart.series!"
+                        [chart]="grouptimelineChart.chart!"
+                        [plotOptions]="grouptimelineChart.plotOptions!"
+                        [colors]="grouptimelineChart.colors!"
+                        [xaxis]="grouptimelineChart.xaxis!"
+                        [fill]="grouptimelineChart.fill!"
+                        [legend]="grouptimelineChart.legend!"
+                      >
+                      </apx-chart>
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
+      </div> 
+
+      <div class="col-xl-3">
+        <ui-examples-list
+        [linkList]="[
+          { label: 'Basic Timeline', link: '#basic' },
+          { label: 'Distributed Timeline', link: '#distributed' },
+          { label: 'Multi Series Timeline', link: '#multi-series' },
+          { label: 'Advanced Timeline', link: '#advanced' },
+          { label: 'Multiple Series - Group Rows', link: '#group-rows' }
+        ]"
+      />
+      </div>
+  </div> 
+
+</div>

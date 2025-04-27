@@ -1,0 +1,138 @@
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="d-flex align-items-center justify-content-between">
+          <h2 class="mb-0">Business Details</h2>
+          <div>
+            <a [routerLink]="['/businesses/edit', business?.id]" class="btn btn-primary btn-sm me-2">
+              Edit
+            </a>
+            <a [routerLink]="['/businesses/list']" class="btn btn-outline-secondary btn-sm">
+              Back
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  
+    <!-- Business Content -->
+    <div class="row" *ngIf="business && !isLoading">
+      <!-- Main Content Column -->
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <!-- Business Title -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h3 class="mb-0">{{ business.name }}</h3>
+              <span class="badge bg-info">{{ business.type }}</span>
+            </div>
+  
+            <!-- Business Details -->
+            <div class="mb-4">
+              <div class="mb-2">
+                <strong>Contact</strong>
+                <p class="mb-0">{{ business.contact }}</p>
+              </div>
+              <div class="mb-2">
+                <strong>Location</strong>
+                <p class="mb-0">Latitude: {{ business.latitude }}, Longitude: {{ business.longitude }}</p>
+              </div>
+              <div>
+                <strong>Heritage Site</strong>
+                <p class="mb-0">
+                  <a *ngIf="business.heritageSite" [routerLink]="['/sites/details', business.heritageSite.id]" class="text-primary">
+                    {{ business.heritageSite.name }}
+                  </a>
+                  <span *ngIf="!business.heritageSite" class="text-muted">Not linked to any heritage site</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Images Column -->
+      <div class="col-lg-4">
+        <!-- Image Carousel -->
+        <div class="card mb-4" *ngIf="imageUrls.length > 0">
+          <div class="card-body">
+            <h5 class="card-title">Business Images</h5>
+            <ngb-carousel *ngIf="imageUrls.length > 1">
+              <ng-template ngbSlide *ngFor="let imageUrl of imageUrls; let i = index">
+                <div class="carousel-img-container">
+                  <img [src]="imageUrl" 
+                        (error)="handleImageError($event)"
+                        alt="Business image"
+                        class="d-block w-100"
+                        (click)="openLightbox(i)">
+                </div>
+              </ng-template>
+            </ngb-carousel>
+            
+            <div *ngIf="imageUrls.length === 1" class="text-center">
+              <img [src]="imageUrls[0]" 
+                    (error)="handleImageError($event)"
+                    alt="Business image"
+                    class="img-fluid rounded"
+                    (click)="openLightbox(0)">
+            </div>
+          </div>
+        </div>
+  
+        <!-- Image Thumbnails -->
+        <div class="card" *ngIf="imageUrls.length > 1">
+          <div class="card-body">
+            <div class="row g-2">
+              <div class="col-4 col-md-3 col-lg-6" 
+                   *ngFor="let imageUrl of imageUrls; let i = index">
+                <img [src]="imageUrl" 
+                     (error)="handleImageError($event)"
+                     alt="Business image"
+                     class="img-thumbnail cursor-pointer"
+                     (click)="openLightbox(i)">
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- No Images Placeholder -->
+        <div class="card" *ngIf="imageUrls.length === 0">
+          <div class="card-body text-center py-4">
+            <p class="text-muted mb-0">No images available for this business</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Lightbox Modal -->
+  <div class="modal fade" id="imageLightbox" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Business Image</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img [src]="selectedImageUrl" 
+               class="img-fluid" 
+               alt="Business image"
+               *ngIf="selectedImageUrl">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a [href]="selectedImageUrl" download class="btn btn-primary">
+            Download
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>

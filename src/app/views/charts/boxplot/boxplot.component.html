@@ -1,0 +1,68 @@
+<div class="container">
+
+  <div class="row">
+      <div class="col-xl-9">
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title anchor" id="overview">
+                      Overview
+                  </h5>
+
+                  <p class="mb-0"><span class="fw-medium">Find the JS file for the following chart at:</span> <code> ../src/assets/js/components/apexchart-boxplot.js</code></p>
+              </div>
+          </div>
+
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title mb-3 anchor" id="basic">Basic Boxplot</h4>
+                  <div dir="ltr">
+                      <div id="basic-boxplot" class="apex-charts">
+                        <apx-chart
+                        [series]="boxplotChart.series!"
+                        [chart]="boxplotChart.chart!"
+                        [plotOptions]="boxplotChart.plotOptions!"
+                        [stroke]="boxplotChart.stroke!"
+                      />
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
+
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title mb-3 anchor" id="scatter">Scatter Boxplot </h4>
+                  <div dir="ltr">
+                      <div id="scatter-boxplot" class="apex-charts">
+                        <apx-chart
+                        [series]="scatterChart.series!"
+                        [chart]="scatterChart.chart!"
+                        [plotOptions]="scatterChart.plotOptions!"
+                        [stroke]="scatterChart.stroke!"
+                        [legend]="scatterChart.legend!"
+                        [xaxis]="scatterChart.xaxis!"
+                        [grid]="scatterChart.grid!"
+                        [tooltip]="scatterChart.tooltip!"
+                        [plotOptions]="scatterChart.plotOptions!"
+                      >
+                      </apx-chart>
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
+      </div> 
+
+      <div class="col-xl-3">
+        <ui-examples-list
+        [linkList]="[
+          { label: 'Overview', link: '#overview' },
+          { label: 'Basic Boxplot', link: '#basic' },
+          { label: 'Scatter Boxplot', link: '#scatter' }
+        ]"
+      />
+      </div>
+  </div> 
+</div> 

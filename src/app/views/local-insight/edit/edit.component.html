@@ -1,0 +1,136 @@
+<div class="row">
+  <div class="col-xl-9 col-lg-8">
+    <!-- Local Insight Edit Form -->
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Modifier un Local Insight</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="localInsightForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mb-3">
+                <label for="title" class="form-label">Titre *</label>
+                <input
+                  type="text"
+                  id="title"
+                  class="form-control"
+                  formControlName="title"
+                  placeholder="Titre du Local Insight"
+                  [class.is-invalid]="localInsightForm.get('title')?.invalid && localInsightForm.get('title')?.touched"
+                />
+                @if (localInsightForm.get('title')?.invalid && localInsightForm.get('title')?.touched) {
+                  <div class="invalid-feedback">Titre requis (lettres et espaces uniquement)</div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mb-3">
+                <label for="description" class="form-label">Description *</label>
+                <textarea
+                  class="form-control"
+                  id="description"
+                  rows="4"
+                  formControlName="description"
+                  placeholder="Description détaillée"
+                  [class.is-invalid]="localInsightForm.get('description')?.invalid && localInsightForm.get('description')?.touched"
+                ></textarea>
+                @if (localInsightForm.get('description')?.invalid && localInsightForm.get('description')?.touched) {
+                  <div class="invalid-feedback">Description requise</div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="type" class="form-label">Type *</label>
+                <select
+                  class="form-control"
+                  id="type"
+                  formControlName="type"
+                  [class.is-invalid]="localInsightForm.get('type')?.invalid && localInsightForm.get('type')?.touched"
+                >
+                  <option value="" disabled>Choisir un type</option>
+                  <option value="culturel">Culturel</option>
+                  <option value="historique">Historique</option>
+                  <option value="naturel">Naturel</option>
+                </select>
+                @if (localInsightForm.get('type')?.invalid && localInsightForm.get('type')?.touched) {
+                  <div class="invalid-feedback">Type requis</div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="videoURL" class="form-label">Lien vidéo (optionnel)</label>
+                <input
+                  type="text"
+                  id="videoURL"
+                  class="form-control"
+                  formControlName="videoURL"
+                  placeholder="URL de la vidéo"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="audioURL" class="form-label">Lien audio (optionnel)</label>
+                <input
+                  type="text"
+                  id="audioURL"
+                  class="form-control"
+                  formControlName="audioURL"
+                  placeholder="URL de l'audio"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Messages -->
+          @if (errorMessage) {
+            <div class="alert alert-danger mb-3">
+              {{ errorMessage }}
+            </div>
+          }
+          @if (successMessage) {
+            <div class="alert alert-success mb-3">
+              {{ successMessage }}
+            </div>
+          }
+
+          <div class="row mt-4">
+            <div class="col-lg-12 d-flex justify-content-between">
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                (click)="onCancel()"
+              >
+                Annuler
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="localInsightForm.invalid || isLoading"
+              >
+                @if (isLoading) {
+                  <span class="spinner-border spinner-border-sm me-1"></span>
+                  Enregistrement...
+                } @else {
+                  Enregistrer les modifications
+                }
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-xl-3 col-lg-4">
+  </div>
+  <div class="card">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">General Information</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <!-- Remove the outer form tag and keep only the reactive form -->
+          <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="category-name" class="form-label">Category Name</label>
+                <input type="text" formControlName="name" id="category-name" class="form-control" placeholder="Enter name"
+                  [class.is-invalid]="categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched" />
+                @if (categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched) {
+                <div class="invalid-feedback">
+                  Category name is required 
+                </div>
+                }
+              </div>
+            </div>
+
+            <div class="p-3 bg-light mb-3 rounded">
+              <div class="row justify-content-end g-2">
+                <div class="col-lg-2">
+                  <button type="submit"
+                    class="btn btn-outline-secondary w-100"
+                    [disabled]="categoryForm.invalid || isLoading">
+                  
+                    @if (isLoading) {
+                      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                      Adding...
+                    } @else {
+                      Save Change
+                    }
+                  </button>
+                </div>
+                <div class="col-lg-2">
+                  <a href="" class="btn btn-primary w-100">Cancel</a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

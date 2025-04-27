@@ -1,0 +1,141 @@
+<div class="row">
+  <div class="col-xl-9 col-lg-8">
+    <!-- Image Upload Section -->
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Add Site Photos</h4>
+      </div>
+      <div class="card-body">
+        <FileUploader (imageIdsChange)="onImageIdsChange($event)" />
+      </div>
+    </div>
+
+    <!-- Site Info Form -->
+    <div class="card mt-4">
+      <div class="card-header">
+        <h4 class="card-title">Heritage Site Information</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="siteForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="site-name" class="form-label">Site Name *</label>
+                <input
+                  type="text"
+                  id="site-name"
+                  class="form-control"
+                  formControlName="name"
+                  placeholder="Heritage Site Name"
+                  [class.is-invalid]="siteForm.get('name')?.invalid && siteForm.get('name')?.touched"
+                />
+                @if (siteForm.get('name')?.invalid && siteForm.get('name')?.touched) {
+                  <div class="invalid-feedback">Site name is required</div>
+                }
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="site-categories" class="form-label">Category *</label>
+                <select 
+                  class="form-control" 
+                  id="site-categories" 
+                  formControlName="categoryId"
+                  [class.is-invalid]="siteForm.get('categoryId')?.invalid && siteForm.get('categoryId')?.touched"
+                >
+                  <option value="">Choose a category</option>
+                  <option *ngFor="let category of categories" [value]="category.id">
+                    {{ category.name }}
+                  </option>
+                </select>
+                @if (siteForm.get('categoryId')?.invalid && siteForm.get('categoryId')?.touched) {
+                  <div class="invalid-feedback">Category is required</div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mb-3">
+                <label for="location" class="form-label">Location *</label>
+                <input
+                  type="text"
+                  id="location"
+                  class="form-control"
+                  formControlName="location"
+                  placeholder="Location"
+                  [class.is-invalid]="siteForm.get('location')?.invalid && siteForm.get('location')?.touched"
+                />
+                @if (siteForm.get('location')?.invalid && siteForm.get('location')?.touched) {
+                  <div class="invalid-feedback">Location is required</div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="historical-significance" class="form-label">Historical Significance</label>
+                <input
+                  type="text"
+                  id="historical-significance"
+                  class="form-control"
+                  formControlName="historicalSignificance"
+                  placeholder="Historical Importance"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="popularity-score" class="form-label">Popularity Score</label>
+                <input
+                  type="number"
+                  id="popularity-score"
+                  class="form-control"
+                  formControlName="popularityScore"
+                  placeholder="Popularity Score"
+                  min="0"
+                  max="100"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea
+                  class="form-control"
+                  id="description"
+                  rows="4"
+                  formControlName="description"
+                  placeholder="Site description"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <button 
+                type="submit" 
+                class="btn btn-primary"
+                [disabled]="siteForm.invalid || imageIds.length === 0 || isLoading"
+              >
+                @if (isLoading) {
+                  <span class="spinner-border spinner-border-sm me-1"></span>
+                  Adding...
+                } @else {
+                  Add Heritage Site
+                }
+              </button>
+                          </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

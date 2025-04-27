@@ -1,0 +1,158 @@
+<div class="row">
+  <div class="col-xl-9 col-lg-8">
+    <!-- Image Upload Section -->
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Add Event Photos</h4>
+      </div>
+      <div class="card-body">
+        <FileUploader (imageIdsChange)="onImageIdsChange($event)" />
+      </div>
+    </div>
+
+    <!-- Event Info Form -->
+    <div class="card mt-4">
+      <div class="card-header">
+        <h4 class="card-title">Event Information</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="event-name" class="form-label">Event Name *</label>
+                <input
+                  type="text"
+                  id="event-name"
+                  class="form-control"
+                  formControlName="name"
+                  placeholder="Event Name"
+                  [class.is-invalid]="eventForm.get('name')?.invalid && eventForm.get('name')?.touched"
+                />
+                @if (eventForm.get('name')?.invalid && eventForm.get('name')?.touched) {
+                  <div class="invalid-feedback">Event name is required</div>
+                }
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="heritageSiteId" class="form-label">Associated Heritage Site *</label>
+                <select 
+                  class="form-control" 
+                  id="heritageSiteId" 
+                  formControlName="heritageSiteId"
+                  [class.is-invalid]="eventForm.get('heritageSiteId')?.invalid && eventForm.get('heritageSiteId')?.touched"
+                >
+                  <option value="">Select a heritage site</option>
+                  <option *ngFor="let site of sites" [value]="site.id">
+                    {{ site.name }}
+                  </option>
+                </select>
+                @if (eventForm.get('heritageSiteId')?.invalid && eventForm.get('heritageSiteId')?.touched) {
+                  <div class="invalid-feedback">Heritage site is required</div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mb-3">
+                <label for="description" class="form-label">Description *</label>
+                <textarea
+                  class="form-control"
+                  id="description"
+                  rows="3"
+                  formControlName="description"
+                  placeholder="Event description"
+                  [class.is-invalid]="eventForm.get('description')?.invalid && eventForm.get('description')?.touched"
+                ></textarea>
+                @if (eventForm.get('description')?.invalid && eventForm.get('description')?.touched) {
+                  <div class="invalid-feedback">Description is required</div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="start-date" class="form-label">Start Date *</label>
+                <input
+                  type="datetime-local"
+                  id="start-date"
+                  class="form-control"
+                  formControlName="startDate"
+                  [class.is-invalid]="eventForm.get('startDate')?.invalid && eventForm.get('startDate')?.touched"
+                />
+                @if (eventForm.get('startDate')?.invalid && eventForm.get('startDate')?.touched) {
+                  <div class="invalid-feedback">Start date is required</div>
+                }
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="end-date" class="form-label">End Date *</label>
+                <input
+                  type="datetime-local"
+                  id="end-date"
+                  class="form-control"
+                  formControlName="endDate"
+                  [class.is-invalid]="eventForm.get('endDate')?.invalid && eventForm.get('endDate')?.touched"
+                />
+                @if (eventForm.get('endDate')?.invalid && eventForm.get('endDate')?.touched) {
+                  <div class="invalid-feedback">End date is required</div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="mb-3">
+                <label for="location" class="form-label">Location *</label>
+                <div class="input-group mb-2">
+                  <input
+                    type="text"
+                    id="location"
+                    class="form-control"
+                    formControlName="location"
+                    placeholder="Click map to select coordinates"
+                    [class.is-invalid]="eventForm.get('location')?.invalid && eventForm.get('location')?.touched"
+                    readonly
+                  />
+                  <button class="btn btn-outline-primary" type="button" (click)="toggleMap()">
+                    {{ showMap ? 'Hide Map' : 'Select on Map' }}
+                  </button>
+                </div>
+                @if (showMap) {
+                  <app-map-picker (locationSelected)="onLocationSelected($event)"></app-map-picker>
+                }
+                @if (eventForm.get('location')?.invalid && eventForm.get('location')?.touched) {
+                  <div class="invalid-feedback">Location is required</div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <button 
+                type="submit" 
+                class="btn btn-primary"
+                [disabled]="eventForm.invalid || imageIds.length === 0 || isLoading"
+              >
+                @if (isLoading) {
+                  <span class="spinner-border spinner-border-sm me-1"></span>
+                  Adding...
+                } @else {
+                  Add Event
+                }
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

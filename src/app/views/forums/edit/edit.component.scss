@@ -1,0 +1,83 @@
+/* Conteneur principal */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Titre du formulaire */
+  h2 {
+    text-align: center;
+    color: #333; /* Couleur sombre pour le titre */
+  }
+  
+  /* Style des champs de texte */
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd; /* Bordure grise légère */
+    border-radius: 8px;
+    font-size: 14px; /* Taille de police réduite */
+    color: #333; /* Texte sombre */
+    transition: border-color 0.3s;
+  }
+  
+  /* Effet au focus pour les champs de texte */
+  input:focus, textarea:focus {
+    border-color: #4CAF50; /* Bordure verte au focus */
+    outline: none; /* Supprime le contour par défaut */
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Légère ombre verte */
+  }
+  
+  /* Style des boutons */
+  button {
+    padding: 8px 16px; /* Taille réduite */
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px; /* Taille de police réduite */
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  /* Bouton Enregistrer */
+  button[type="submit"] {
+    background-color: #4CAF50; /* Vert */
+    color: white;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #45a049; /* Vert foncé au survol */
+    transform: scale(1.05); /* Agrandissement au survol */
+  }
+  
+  button[type="submit"]:focus {
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Légère ombre verte au focus */
+  }
+  
+  /* Bouton Annuler */
+  button[type="button"] {
+    background-color: #f44336; /* Rouge */
+    color: white;
+  }
+  
+  button[type="button"]:hover {
+    background-color: #e53935; /* Rouge foncé au survol */
+    transform: scale(1.05); /* Agrandissement au survol */
+  }
+  
+  button[type="button"]:focus {
+    box-shadow: 0 0 5px rgba(244, 67, 54, 0.5); /* Légère ombre rouge au focus */
+  }
+  
+  /* Bouton désactivé */
+  button:disabled {
+    background-color: #bdbdbd; /* Gris clair */
+    cursor: not-allowed;
+    transform: none; /* Pas d'agrandissement */
+  }
+  
+  /* Ajout d'espacement entre les éléments du formulaire */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  

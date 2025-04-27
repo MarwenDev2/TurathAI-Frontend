@@ -1,0 +1,160 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="overview">
+            Overview
+            <a
+              class="btn btn-sm btn-outline-success rounded-2 float-end"
+              href="https://www.npmjs.com/package/ng2-nouislider"
+              target="_blank"
+            >
+              Official Website
+            </a>
+          </h5>
+          <p class="text-muted mb-3">
+            ng2-nouislider is a lightweight JavaScript range slider.
+          </p>
+  
+          <h5 class="mt-2">Usage</h5>
+          <p>
+            To use ng2-nouislider, follow the instructions from its documentation
+            over
+            <a
+              href="https://www.npmjs.com/package/ng2-nouislider"
+              class="text-primary"
+            >
+              here</a
+            >
+          </p>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="basic-range">
+            Default<a class="anchor-link" href="#basic-range">#</a>
+          </h5>
+  
+          <div class="mb-3">
+            <nouislider
+              [connect]="true"
+              [min]="0"
+              [max]="50"
+              [(ngModel)]="someRange"
+            ></nouislider>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="range">
+            Range<a class="anchor-link" href="#range">#</a>
+          </h5>
+  
+          <div class="mb-3">
+            <div id="rangeslider">
+              <nouislider
+                [config]="someRange2config"
+                [limit]="10"
+                [(ngModel)]="someRange2"
+              ></nouislider>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="locking-together">
+            Keyboard support<a class="anchor-link" href="#locking-together">#</a>
+          </h5>
+  
+          <div class="p-3">
+            <div class="slider" id="slider-merging-tooltips">
+              <nouislider
+                [config]="someKeyboardConfig"
+                [(ngModel)]="someKeyboard"
+              ></nouislider>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="tooltip">
+            Tooltips<a class="anchor-link" href="#tooltip">#</a>
+          </h5>
+  
+          <div class="p-3">
+            <div class="slider" id="slider-merging-tooltips">
+              <nouislider
+                [min]="0"
+                [max]="10"
+                [step]="0.05"
+                [(ngModel)]="someRange3"
+                [tooltips]="[true]"
+              ></nouislider>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="soft-limits">
+            Range With Config
+            <a class="anchor-link" href="#soft-limits">#</a>
+          </h5>
+  
+          <div class="mb-3">
+            <div class="slider" id="soft">
+              <nouislider
+                [connect]="true"
+                [min]="-1000"
+                [max]="1000"
+                [(ngModel)]="range"
+              ></nouislider>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-3 anchor" id="disabled">
+            Disable
+            <a class="anchor-link" href="#disabled">#</a>
+          </h5>
+  
+          <div class="mb-3">
+            <div class="slider" id="soft">
+              <nouislider
+                [min]="0"
+                [max]="100"
+                [step]="1"
+                [(ngModel)]="someRange"
+                [disabled]="true"
+              ></nouislider>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-xl-3">
+      <ui-examples-list
+        [linkList]="[
+          { label: 'Default', link: '#multi-range' },
+          { label: 'Range', link: '#range' },
+          { label: 'Keyboard support', link: '#locking-together' },
+          { label: 'Tooltips', link: '#soft-limits' },
+          { label: 'Disable', link: '#disabled' }
+        ]"
+      />
+    </div>
+  </div>
+</div>

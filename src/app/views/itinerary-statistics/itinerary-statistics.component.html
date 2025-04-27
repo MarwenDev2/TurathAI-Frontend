@@ -1,0 +1,209 @@
+<div class="container-fluid">
+  <div class="row page-titles mx-0">
+    <div class="col-sm-6 p-md-0">
+      <div class="welcome-text">
+        <h4>Itinerary Statistics</h4>
+        <span>Real-time analytics for itineraries</span>
+      </div>
+    </div>
+    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+      <button class="btn btn-primary" [routerLink]="['/itenary/list']">
+        <i class="fa fa-arrow-left"></i> Back to Itineraries List
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading and Error Messages -->
+  <div class="row" *ngIf="loading || error">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div *ngIf="loading" class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <p class="mt-2">Loading statistics...</p>
+          </div>
+          <div *ngIf="error" class="alert alert-danger">
+            {{ error }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistics Dashboard -->
+  <div class="row" *ngIf="statistics && !loading && !error">
+    <!-- Total Itineraries -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+      <div class="card">
+        <div class="card-body stat-widget-one">
+          <div class="stat-icon d-inline-block">
+            <i class="fa fa-map text-primary"></i>
+          </div>
+          <div class="stat-content d-inline-block">
+            <div class="stat-text">Total Itineraries</div>
+            <div class="stat-digit">{{ statistics.totalCount }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Low Budget Itineraries -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+      <div class="card">
+        <div class="card-body stat-widget-one">
+          <div class="stat-icon d-inline-block">
+            <i class="fa fa-tags text-success"></i>
+          </div>
+          <div class="stat-content d-inline-block">
+            <div class="stat-text">Low Budget (< $4000)</div>
+            <div class="stat-digit">{{ statistics.lowBudgetCount }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Budget -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+      <div class="card">
+        <div class="card-body stat-widget-one">
+          <div class="stat-icon d-inline-block">
+            <i class="fa fa-dollar text-danger"></i>
+          </div>
+          <div class="stat-content d-inline-block">
+            <div class="stat-text">Total Revenue</div>
+            <div class="stat-digit">{{ statistics.totalBudget | currency }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Average Budget -->
+    <div class="col-xl-3 col-lg-6 col-md-6">
+      <div class="card">
+        <div class="card-body stat-widget-one">
+          <div class="stat-icon d-inline-block">
+            <i class="fa fa-calculator text-warning"></i>
+          </div>
+          <div class="stat-content d-inline-block">
+            <div class="stat-text">Avg. Budget</div>
+            <div class="stat-digit">{{ statistics.averageBudget | currency }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Budget Range Card -->
+  <div class="row" *ngIf="statistics && !loading && !error">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Budget Range</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card bg-light">
+                <div class="card-body">
+                  <h5 class="card-title">Minimum Budget</h5>
+                  <p class="card-text display-4">{{ statistics.minBudget | currency }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card bg-light">
+                <div class="card-body">
+                  <h5 class="card-title">Maximum Budget</h5>
+                  <p class="card-text display-4">{{ statistics.maxBudget | currency }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Budget Distribution Description -->
+  <div class="row" *ngIf="statistics && !loading && !error">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Budget Overview</h4>
+        </div>
+        <div class="card-body">
+          <!-- Budget distribution progress bar -->
+          <div class="mb-4">
+            <div class="d-flex justify-content-between mb-2">
+              <div><span class="badge badge-success">Low Budget</span> <small>(under $4,000)</small></div>
+              <div><span class="badge badge-primary">Premium</span> <small>($4,000+)</small></div>
+            </div>
+            <div class="progress">
+              <div class="progress-bar bg-success" role="progressbar" 
+                   [style.width]="(statistics.lowBudgetCount / statistics.totalCount * 100) + '%'" 
+                   aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">
+                {{ (statistics.lowBudgetCount / statistics.totalCount * 100) | number:'1.0-0' }}%
+              </div>
+              <div class="progress-bar bg-primary" role="progressbar" 
+                   [style.width]="((statistics.totalCount - statistics.lowBudgetCount) / statistics.totalCount * 100) + '%'" 
+                   aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
+                {{ ((statistics.totalCount - statistics.lowBudgetCount) / statistics.totalCount * 100) | number:'1.0-0' }}%
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <div class="card bg-light shadow-sm">
+                <div class="card-body p-3">
+                  <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-success p-3 mr-3 text-white">
+                      <i class="fa fa-tag"></i>
+                    </div>
+                    <div>
+                      <h5 class="mb-0">Low Budget Itineraries</h5>
+                      <p class="mb-0">{{ statistics.lowBudgetCount }} of {{ statistics.totalCount }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card bg-light shadow-sm">
+                <div class="card-body p-3">
+                  <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-primary p-3 mr-3 text-white">
+                      <i class="fa fa-crown"></i>
+                    </div>
+                    <div>
+                      <h5 class="mb-0">Premium Itineraries</h5>
+                      <p class="mb-0">{{ statistics.totalCount - statistics.lowBudgetCount }} of {{ statistics.totalCount }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h5 class="text-muted">Key Insights</h5>
+          <p>The average budget per itinerary is <strong>{{ statistics.averageBudget | currency }}</strong>, with a total revenue of <strong>{{ statistics.totalBudget | currency }}</strong>.</p>
+          
+          <!-- Budget gauge visualization -->
+          <div class="my-4">
+            <h6>Budget Range</h6>
+            <div class="progress">
+              <div class="progress-bar bg-info w-100" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="d-flex justify-content-between mt-1">
+              <div><small>{{ statistics.minBudget | currency }}</small></div>
+              <div><small>{{ statistics.averageBudget | currency }}</small></div>
+              <div><small>{{ statistics.maxBudget | currency }}</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

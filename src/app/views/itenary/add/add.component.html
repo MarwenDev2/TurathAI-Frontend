@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title mb-0">Add New Itinerary</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="itenaryForm" (ngSubmit)="onSubmit()">
+          <div class="row mb-3">
+            <div class="col-lg-12">
+              <label for="description" class="form-label">Description</label>
+              <textarea
+                class="form-control"
+                id="description"
+                formControlName="description"
+                rows="4"
+                placeholder="Enter itinerary description"
+              ></textarea>
+              <div *ngIf="itenaryForm.get('description')?.invalid && itenaryForm.get('description')?.touched" class="text-danger">
+                Description is required
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-lg-6">
+              <label for="startDate" class="form-label">Start Date</label>
+              <input
+                type="date"
+                class="form-control"
+                id="startDate"
+                formControlName="startDate"
+              />
+              <div *ngIf="itenaryForm.get('startDate')?.invalid && itenaryForm.get('startDate')?.touched" class="text-danger">
+                Start date is required
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <label for="endDate" class="form-label">End Date</label>
+              <input
+                type="date"
+                class="form-control"
+                id="endDate"
+                formControlName="endDate"
+              />
+              <div *ngIf="itenaryForm.get('endDate')?.invalid && itenaryForm.get('endDate')?.touched" class="text-danger">
+                End date is required
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-lg-6">
+              <label for="budget" class="form-label">Budget</label>
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="budget"
+                  formControlName="budget"
+                  placeholder="Enter budget amount"
+                />
+              </div>
+              <div *ngIf="itenaryForm.get('budget')?.invalid && itenaryForm.get('budget')?.touched" class="text-danger">
+                Budget is required and must be greater than or equal to 0
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-lg-12">
+              <div class="hstack gap-2 justify-content-end">
+                <button type="button" class="btn btn-light" (click)="resetForm()">Clear</button>
+                <button type="submit" class="btn btn-primary" [disabled]="itenaryForm.invalid || isLoading">
+                  <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1"></span>
+                  Save Itinerary
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

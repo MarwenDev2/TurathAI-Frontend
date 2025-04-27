@@ -1,0 +1,124 @@
+<!-- user-details-modal.component.html -->
+<div class="modal-header">
+    <h4 class="modal-title">User Details</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+  </div>
+  
+  <div class="modal-body">
+    <div *ngIf="isLoading" class="text-center py-4">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  
+    <div *ngIf="!isLoading" class="row">
+      <!-- Left Column - Basic Info -->
+      <div class="col-md-5">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img [src]="getProfileImage()" 
+                 class="rounded-circle mb-3" 
+                 width="120" 
+                 height="120"
+                 alt="User Image">
+            <h4>{{user.firstName}} {{user.lastName}}</h4>
+            <p class="text-muted mb-1">{{user.role}}</p>
+            <p class="text-muted">
+              <img [src]="getCountryFlag(user.originCountry)" 
+                   *ngIf="getCountryFlag(user.originCountry)" 
+                   class="me-1">
+              {{user.originCountry || 'Not specified'}}
+            </p>
+          </div>
+        </div>
+  
+        <div class="card mb-4">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">Contact Information</h5>
+          </div>
+          <div class="card-body">
+            <p><strong>Email:</strong> {{user.email}}</p>
+            <p><strong>Member Since:</strong> {{user.createdAt | date:'mediumDate'}}</p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Right Column - Details -->
+      <div class="col-md-7">
+        <div class="card mb-4">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">About</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <h6>Languages</h6>
+              <p>{{user.spokenLanguage || 'Not specified'}}</p>
+            </div>
+  
+            <div class="mb-3" *ngIf="getInterestsList().length > 0">
+              <h6>Interests</h6>
+              <div class="d-flex flex-wrap gap-2">
+                <span class="badge bg-primary-subtle text-primary" 
+                      *ngFor="let interest of getInterestsList()">
+                  {{interest}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="card" *ngIf="userPreferences">
+          <div class="card-header bg-light">
+            <h5 class="mb-0">Travel Preferences</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <h6>Budget Range</h6>
+              <span class="badge" 
+                    [ngClass]="{
+                      'bg-danger': userPreferences.budgetRange === 'low',
+                      'bg-warning': userPreferences.budgetRange === 'medium',
+                      'bg-success': userPreferences.budgetRange === 'high'
+                    }">
+                {{userPreferences.budgetRange || 'Not specified'}}
+              </span>
+            </div>
+  
+            <div class="mb-3" *ngIf="getPreferenceList('preferenceCategories').length > 0">
+              <h6>Favorite Categories</h6>
+              <div class="d-flex flex-wrap gap-2">
+                <span class="badge bg-info-subtle text-info" 
+                      *ngFor="let category of getPreferenceList('preferenceCategories')">
+                  {{category}}
+                </span>
+              </div>
+            </div>
+  
+            <div class="mb-3" *ngIf="getPreferenceList('travelStyles').length > 0">
+              <h6>Travel Styles</h6>
+              <div class="d-flex flex-wrap gap-2">
+                <span class="badge bg-secondary-subtle text-secondary" 
+                      *ngFor="let style of getPreferenceList('travelStyles')">
+                  {{style}}
+                </span>
+              </div>
+            </div>
+  
+            <div *ngIf="getPreferenceList('languagePreferences').length > 0">
+              <h6>Language Preferences</h6>
+              <div class="d-flex flex-wrap gap-2">
+                <span class="badge bg-success-subtle text-success" 
+                      *ngFor="let lang of getPreferenceList('languagePreferences')">
+                  {{lang}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Close</button>
+  </div>

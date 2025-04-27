@@ -1,0 +1,63 @@
+<div class="create-post-container p-4 bg-white shadow-md rounded-xl max-w-2xl mx-auto mt-6">
+  <div class="create-post-header flex items-center mb-4">
+    <div class="user-avatar w-10 h-10 rounded-full overflow-hidden mr-3">
+      <img src="https://www.w3schools.com/w3images/avatar2.png" alt="User Avatar" class="w-full h-full object-cover">
+    </div>
+    <div class="user-name font-semibold text-gray-700">
+      <span>Nom d'utilisateur</span>
+    </div>
+  </div>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="forumForm" class="post-form space-y-4">
+    <!-- Titre -->
+    <textarea
+      formControlName="title"
+      placeholder="Partagez votre endroit préféré avec nous !"
+      rows="2"
+      class="form-input title-input w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    ></textarea>
+
+    <!-- Description -->
+    <textarea
+      formControlName="description"
+      placeholder="Partagez plus de détails..."
+      rows="4"
+      class="form-input description-input w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    ></textarea>
+
+    <!-- Téléchargement d'image -->
+    <div class="image-upload">
+      <label for="image" class="image-label inline-flex items-center cursor-pointer text-blue-600 hover:text-blue-800">
+        <i class="fa fa-camera mr-2"></i> Ajouter une image
+      </label>
+      <input id="image" type="file" (change)="onFileChange($event)" class="hidden" />
+
+      <!-- Prévisualisation de l'image -->
+      <div *ngIf="previewUrl" class="image-preview mt-3">
+        <img [src]="previewUrl" alt="Preview" class="w-full h-auto object-cover max-h-[500px] rounded-lg border" />
+      </div>
+    </div>
+
+    <!-- Message d'erreur -->
+    <div class="error-message text-red-600 font-medium" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <!-- Message de succès -->
+    <div class="success-message text-green-600 font-medium" *ngIf="successMessage">{{ successMessage }}</div>
+
+    <!-- Bouton de soumission -->
+    <button
+      type="submit"
+      [disabled]="isLoading"
+      class="submit-btn w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+    >
+      {{ isLoading ? 'Chargement...' : 'Publier' }}
+    </button>
+  </form>
+
+  <!-- Bouton pour voir la liste -->
+  <div class="mt-4">
+    <button (click)="goToList()" class="text-blue-600 hover:text-blue-800">
+      Voir la liste des forums
+    </button>
+  </div>
+</div>

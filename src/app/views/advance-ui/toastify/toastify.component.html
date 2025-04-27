@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-xl-9">
+      <div class="card">
+          <div class="card-body">
+              <h5 class="card-title mb-1 anchor" id="overview">
+                  Overview <a class="btn btn-sm btn-outline-success rounded-2 float-end" href="https://apvarun.github.io/toastify-js/" target="_blank"> Official Website </a>
+              </h5>
+              <p class="text-muted mb-3">Rater js is the best star rater for the browser. No dependencies. Unlimited number of stars</p>
+
+              <h5 class="mt-2">Usage</h5>
+              <p class="mb-0">Toastify-js's Javascript files are bundled in the <code>vendor.js</code> and globally included in all pages.</p>
+          </div>
+      </div>
+
+      <div class="card">
+          <div class="card-body">
+              <h5 class="card-title anchor mb-3" id="basic">
+                  Basic Toastify JS Example <a class="anchor-link" href="#basic">#</a>
+              </h5>
+
+              <div class="mb-3">
+                  <div class="hstack flex-wrap gap-2">
+                      <button  (click)="default()" type="button" data-toast data-toast-text="Welcome Back! This is a Toast Notification" data-toast-gravity="top" data-toast-position="right" data-toast-className="primary" data-toast-duration="3000" data-toast-close="close" data-toast-style="style" class="btn btn-light w-xs">
+                          Default
+                      </button>
+
+                      <button (click)="success('toast-top-center')" type="button" class="btn btn-light w-xs">
+                          Success
+                      </button>
+
+                      <button  (click)="warning()" type="button" data-toast data-toast-text="Warning ! Something went wrong try again" data-toast-gravity="top" data-toast-position="center" data-toast-className="warning" data-toast-duration="3000" class="btn btn-light w-xs">
+                          Warning
+                      </button>
+
+                      <button (click)="error()" type="button" data-toast data-toast-text="Error ! An error occurred." data-toast-gravity="top" data-toast-position="center" data-toast-className="danger" data-toast-duration="3000" class="btn btn-light w-xs">
+                          Error
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="card">
+          <div class="card-body">
+              <h5 class="card-title mb-3 anchor" id="display_position">
+                  Display Position Example <a class="anchor-link" href="#display_position">#</a>
+              </h5>
+
+              <div class="mb-3">
+                  <div class="hstack flex-wrap gap-2">
+                      <button (click)="positionToast('toast-top-left')" type="button" data-toast data-toast-text="Welcome Back ! This is a Toast Notification" data-toast-gravity="top" data-toast-position="left" data-toast-duration="3000" data-toast-close="close" class="btn btn-light w-xs">
+                          Top Left
+                      </button>
+
+                      <button  (click)="positionToast('toast-top-center')" type="button" data-toast data-toast-text="Welcome Back ! This is a Toast Notification" data-toast-gravity="top" data-toast-position="center" data-toast-duration="3000" data-toast-close="close" class="btn btn-light w-xs">
+                          Top Center
+                      </button>
+
+                      <button (click)="positionToast('toast-top-right')" type="button" data-toast data-toast-text="Welcome Back ! This is a Toast Notification" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" class="btn btn-light w-xs">
+                          Top Right
+                      </button>
+
+                      <button (click)="positionToast('toast-bottom-left')" type="button" data-toast data-toast-text="Welcome Back ! This is a Toast Notification" data-toast-gravity="bottom" data-toast-position="left" data-toast-duration="3000" data-toast-close="close" class="btn btn-light w-xs">
+                          Bottom Left
+                      </button>
+
+                      <button  (click)="positionToast('toast-bottom-center')" type="button" data-toast data-toast-text="Welcome Back ! This is a Toast Notification" data-toast-gravity="bottom" data-toast-position="center" data-toast-duration="3000" data-toast-close="close" class="btn btn-light w-xs">
+                          Bottom Center
+                      </button>
+
+                      <button  (click)="positionToast('toast-bottom-right')" type="button" data-toast data-toast-text="Welcome Back ! This is a Toast Notification" data-toast-gravity="bottom" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" class="btn btn-light w-xs">
+                          Bottom Right
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="card">
+          <div class="card-body">
+              <h5 class="card-title mb-3 anchor" id="rater">
+                  Offset, Close Button & Duration Example <a class="anchor-link" href="#rater">#</a>
+              </h5>
+
+              <div class="mb-3">
+                  <div class="d-flex align-items-center flex-wrap gap-2">
+                      <button (click)="positionToast('toast-top-right')" type="button" data-toast data-toast-text="Welcome Back ! This is a Toast Notification" data-toast-gravity="top" data-toast-position="right" data-toast-duration="3000" data-toast-offset data-toast-close="close" class="btn btn-light w-xs">
+                          Offset Position
+                      </button>
+
+                      <button (click)="positionToast('toast-top-right')" type="button" data-toast data-toast-text="Welcome Back ! This is a Toast Notification" data-toast-position="right" data-toast-duration="3000" data-toast-close="close" class="btn btn-light w-xs">
+                          Close icon Display
+                      </button>
+
+                      <button  (click)="durationToast('toast-top-right')" type="button" data-toast data-toast-text="Toast Duration 5s" data-toast-gravity="top" data-toast-position="right" data-toast-duration="5000" class="btn btn-light w-xs">
+                          Duration
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div> 
+
+  <div class="col-xl-3">
+    <ui-examples-list [linkList]="[
+    { label: 'Overview', link: '#overview' },
+    { label: 'Basic', link: '#basic' },
+    { label: 'Display Position Example', link: '#display_position' },
+    { label: 'Offset, Close Button & Duration Example', link: '#rater' }
+  ]" />
+  </div>
+</div>
