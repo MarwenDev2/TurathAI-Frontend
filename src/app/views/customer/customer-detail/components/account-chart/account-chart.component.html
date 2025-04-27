@@ -1,0 +1,35 @@
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex align-items-center gap-2">
+
+      <img src="assets/images/users/avatar-2.jpg" alt="avatar-3" class="avatar rounded-circle">
+
+      <div class="d-block">
+        <h4 class="text-dark fw-medium mb-1">Michael A. Miner</h4>
+        <p class="mb-0 text-muted">Welcome Back</p>
+      </div>
+      <div class="ms-auto">
+        <span class="text-muted">
+          <a href="javascript:void(0);" class="link-reset fs-3"><iconify-icon icon="solar:settings-bold"></iconify-icon></a>
+        </span>
+      </div>
+    </div>
+    <div class="mt-4">
+      <div class="d-flex align-items-center">
+        <h5 class="text-dark mb-0">All Account <span class="text-muted fw-normal ms-1"><i class="bx bxs-circle fs-10"></i></span><span class="text-muted fw-normal ms-1">Total Balance</span></h5>
+        <div class="ms-auto">
+          <a href="javascript:void(0);" class="link-reset fw-medium">UTS <i class="bx bx-down-arrow-alt text-danger"></i></a>
+        </div>
+      </div>
+      <h3 class="fw-semibold mt-2 mb-0">{{currency}}4,700 <span class="fs-5 text-muted ms-1">+{{currency}}232</span></h3>
+      <div id="chart2" class="apex-charts mt-3">
+        <apx-chart [chart]="chart2.chart!" [series]="chart2.series!" [stroke]="chart2.stroke!" [fill]="chart2.fill!" [markers]="chart2.markers!" [colors]="chart2.colors!" [tooltip]="chart2.tooltip!"></apx-chart>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer border-top gap-1 hstack">
+    <a href="javascript:void(0);" class="btn btn-primary w-100">Send</a>
+    <a href="javascript:void(0);" class="btn btn-light w-100">Receive</a>
+    <a href="javascript:void(0);" class="btn btn-soft-dark d-inline-flex align-items-center justify-content-center rounded avatar-sm"><i class="bx bx-plus fs-18"></i></a>
+  </div>
+</div>

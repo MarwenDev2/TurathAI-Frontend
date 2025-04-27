@@ -1,0 +1,53 @@
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+      <div>
+        <h4 class="fw-medium text-dark d-flex align-items-center gap-2">#0758267/90 <span class="badge bg-success-subtle text-success  px-2 py-1 fs-13">Paid</span><span class="border border-warning text-warning fs-13 px-2 py-1 rounded">In Progress</span></h4>
+        <p class="mb-0">Order / Order Details / #0758267/90 - April 23 , 2024 at 6:23 pm</p>
+      </div>
+      <div>
+        <a href="javascript:void(0);" class="btn btn-outline-secondary">Refund</a>
+        <a href="javascript:void(0);" class="btn btn-outline-secondary ms-1">Return</a>
+        <a href="javascript:void(0);" class="btn btn-primary ms-1">Edit Order</a>
+      </div>
+
+    </div>
+
+    <div class="mt-4">
+      <h4 class="fw-medium text-dark">Progress</h4>
+    </div>
+    <div class="row row-cols-xxl-5 row-cols-md-2 row-cols-1">
+      <div class="col">
+        <ngb-progressbar type="success" [value]="100" [striped]="true" [animated]="true" class="mt-3" [height]="'10px'"></ngb-progressbar>
+        <p class="mb-0 mt-2">Order Confirming</p>
+      </div>
+      <div class="col">
+        <ngb-progressbar type="success" [value]="100" [striped]="true" [animated]="true" class="mt-3" [height]="'10px'"></ngb-progressbar>
+        <p class="mb-0 mt-2">Payment Pending</p>
+      </div>
+      <div class="col">
+        <ngb-progressbar type="warning" [value]="60" [striped]="true" [animated]="true" class="mt-3" [height]="'10px'"></ngb-progressbar>
+        <div class="d-flex align-items-center gap-2 mt-2">
+          <p class="mb-0">Processing</p>
+          <div class="spinner-border spinner-border-sm text-warning" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <ngb-progressbar type="primary" [value]="0" [striped]="true" [animated]="true" class="mt-3" [height]="'10px'"></ngb-progressbar>
+        <p class="mb-0 mt-2">Shipping</p>
+      </div>
+      <div class="col">
+        <ngb-progressbar type="primary" [value]="0" [striped]="true" [animated]="true" class="mt-3" [height]="'10px'"></ngb-progressbar>
+        <p class="mb-0 mt-2">Delivered</p>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer d-flex flex-wrap align-items-center justify-content-between bg-light-subtle gap-2">
+    <p class="border rounded mb-0 px-2 py-1 bg-body"><i class='bx bx-arrow-from-left align-middle fs-16'></i> Estimated shipping date : <span class="text-dark fw-medium">Apr 25 , 2024</span></p>
+    <div>
+      <a href="javascript:void(0);" class="btn btn-primary">Make As Ready To Ship</a>
+    </div>
+  </div>
+</div>

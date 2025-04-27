@@ -8,6 +8,7 @@
             <iconify-icon icon="solar:hamburger-menu-broken" class="fs-24 align-middle"></iconify-icon>
           </button>
         </div>
+
         
         <div class="topbar-item">
           <h4 class="fw-bold topbar-button pe-none text-uppercase mb-0">{{title}}</h4>
@@ -16,9 +17,13 @@
 
       <div class="d-flex align-items-center gap-1">
 
+        
         <div class="topbar-item">
+          <button type="button" class="topbar-button" (click)="changeTheme()" id="light-dark-mode">
             <iconify-icon icon="solar:moon-bold-duotone" class="fs-24 align-middle"></iconify-icon>
+          </button>
         </div>
+
         
         <div ngbDropdown class="dropdown topbar-item">
           <button ngbDropdownToggle type="button" class="topbar-button position-relative arrow-none" id="page-header-notifications-dropdown">
@@ -75,37 +80,45 @@
           </button>
         </div>
 
+        
         <div class="topbar-item d-none d-md-flex">
           <button type="button" class="topbar-button" id="theme-settings-btn" (click)="open()" aria-controls="theme-settings-offcanvas">
             <iconify-icon icon="solar:clock-circle-bold-duotone" class="fs-24 align-middle"></iconify-icon>
           </button>
         </div>
+
         
         <div ngbDropdown class="dropdown topbar-item">
-          <a ngbDropdownToggle type="button" class="topbar-button arrow-none d-flex justify-content-center align-items-center" id="page-header-user-dropdown">
-            <img [src]="getProfileImage()" 
-                 alt="Profile Image" 
-                 class="border border-light border-3 rounded-circle"
-                 style="width: 50px; height: 50px;">
+          <a ngbDropdownToggle type="button" class="topbar-button arrow-none" id="page-header-user-dropdown">
+            <span class="d-flex align-items-center">
+              <img class="rounded-circle" width="32" src="assets/images/users/avatar-1.jpg" alt="avatar-3">
+            </span>
           </a>
           <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end">
-            <h6 class="dropdown-header">Welcome {{currentUser?.firstName}} {{currentUser?.lastName}}!</h6>
+            
+            <h6 class="dropdown-header">Welcome Gaston!</h6>
             <a class="dropdown-item" routerLink="/pages/profile">
               <i class="bx bx-user-circle text-muted fs-18 align-middle me-1"></i><span class="align-middle">Profile</span>
             </a>
             <a class="dropdown-item" routerLink="/apps/chat">
               <i class="bx bx-message-dots text-muted fs-18 align-middle me-1"></i><span class="align-middle">Messages</span>
             </a>
+
             <a class="dropdown-item" routerLink="/pages/pricing">
               <i class="bx bx-wallet text-muted fs-18 align-middle me-1"></i><span class="align-middle">Pricing</span>
             </a>
             <a class="dropdown-item" routerLink="/pages/faqs">
               <i class="bx bx-help-circle text-muted fs-18 align-middle me-1"></i><span class="align-middle">Help</span>
             </a>
-            <a class="dropdown-item" (click)="logout()">
-              <i class="bx bx-lock text-muted fs-18 align-middle me-1"></i><span class="align-middle">Logout</span>
+            <a class="dropdown-item" routerLink="/auth/lock-screen">
+              <i class="bx bx-lock text-muted fs-18 align-middle me-1"></i><span class="align-middle">Lock screen</span>
             </a>
+
             <div class="dropdown-divider my-1"></div>
+
+            <a class="dropdown-item text-danger" role="button" (click)="logout()">
+              <i class="bx bx-log-out fs-18 align-middle me-1"></i><span class="align-middle">Logout</span>
+            </a>
           </div>
         </div>
 

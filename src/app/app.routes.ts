@@ -1,43 +1,45 @@
-import { Routes } from '@angular/router';
-import { LayoutComponent } from './layouts/layout/layout.component';
-import { AuthLayoutComponent } from '@layouts/auth-layout/auth-layout.component';
-import { AuthGuard } from '@core/services/auth.guard';
-import { AUTH_ROUTES } from '@views/auth/auth.route';
-import { DashboardComponent } from '@views/dashboard/dashboard.component';
-import { VIEW_ROUTES } from '@views/views.route';
-import { ProfileComponent } from '@views/pages/profile/profile.component';
+import { Routes, Router, type UrlTree, RedirectCommand } from '@angular/router'
+import { LayoutComponent } from './layouts/layout/layout.component'
+import { AuthLayoutComponent } from '@layouts/auth-layout/auth-layout.component'
+import { AuthenticationService } from './core/services/auth.service'
+import { inject } from '@angular/core'
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full'
+    redirectTo: 'index',
+    pathMatch: 'full',
   },
   {
     path: '',
     component: LayoutComponent,
-    canActivate: [AuthGuard],
-    children: [
-      { 
-        path: 'dashboard', 
-        component: DashboardComponent,
-        data: { title: 'Dashboard' } 
+    canActivate: [
+      (url: any) => {
+        const router = inject(Router)
+        const currentUser = inject(AuthenticationService)
+        if (!currentUser.session) {
+          return router.createUrlTree(['/auth/signin'], {
+            queryParams: { returnUrl: url._routerState.url },
+          })
+        }
+        return true
       },
-      { 
-        path: 'profile',
-        component: ProfileComponent,
-        data: { title: 'Profile' }
-      },
-      ...VIEW_ROUTES
-    ]
+    ],
+    loadChildren: () =>
+      import('./views/views.route').then((mod) => mod.VIEW_ROUTES),
   },
   {
     path: 'auth',
     component: AuthLayoutComponent,
-    children: AUTH_ROUTES
+    loadChildren: () =>
+      import('./views/auth/auth.route').then((mod) => mod.AUTH_ROUTES),
   },
-  { 
-    path: '**', 
-    redirectTo: 'dashboard' 
-  }
-];
+  {
+    path: 'pages',
+    component: AuthLayoutComponent,
+    loadChildren: () =>
+      import('./views/other-pages/other-page.route').then(
+        (mod) => mod.OTHER_PAGE_ROUTES
+      ),
+  },
+]

@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [NgbPaginationModule,NgbDropdownModule,RouterLink ,CommonModule],
+  imports: [DecimalPipe,NgbPaginationModule,NgbDropdownModule,RouterLink,WidgetState3Component ,CommonModule],
   templateUrl: './list.component.html',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

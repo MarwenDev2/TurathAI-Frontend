@@ -4,7 +4,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask'
 @Component({
   selector: 'app-input-mask',
   standalone: true,
-  imports: [NgxMaskDirective],
+  imports: [NgxMaskPipe,NgxMaskDirective,NgxMaskPipe],
   templateUrl: './input-mask.component.html',
   styles: ``,
   providers: [provideNgxMask()],

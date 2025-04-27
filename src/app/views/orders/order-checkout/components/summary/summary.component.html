@@ -1,0 +1,75 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">Order Summary</h4>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      @for(item of cartList;track $index){
+      <div class="d-flex align-items-center gap-3 mb-4">
+        <div class="rounded bg-light avatar d-flex align-items-center justify-content-center">
+          <img [src]="item.image" alt="" class="avatar">
+        </div>
+        <div>
+          <a href="javascript:void(0);" class="text-dark fw-medium fs-15">{{item.title}}</a>
+          <p class="text-muted mb-0 mt-1 fs-13"><span>Size : </span>{{item.size}}</p>
+        </div>
+        <div class="ms-auto text-end">
+          <p class="text-dark fw-medium mb-1">{{currency}}{{item.total | number:'2.2'}}</p>
+          <p class="mb-0">Q. {{item.quantity | number:'2.0'}}</p>
+        </div>
+      </div>
+      }
+
+      <table class="table mb-0">
+        <tbody>
+          <tr>
+            <td class="px-0">
+              <p class="d-flex mb-0 align-items-center gap-1"><iconify-icon icon="solar:clipboard-text-broken"></iconify-icon> Sub Total : </p>
+            </td>
+            <td class="text-end text-dark fw-medium px-0">{{currency}}777.00</td>
+          </tr>
+          <tr>
+            <td class="px-0">
+              <p class="d-flex mb-0 align-items-center gap-1"><iconify-icon icon="solar:ticket-broken" class="align-middle"></iconify-icon> Discount : </p>
+            </td>
+            <td class="text-end text-dark fw-medium px-0">-{{currency}}60.00</td>
+          </tr>
+          <tr>
+            <td class="px-0">
+              <p class="d-flex mb-0 align-items-center gap-1"><iconify-icon icon="solar:kick-scooter-broken" class="align-middle"></iconify-icon> Delivery Charge : </p>
+            </td>
+            <td class="text-end text-dark fw-medium px-0">{{currency}}00.00</td>
+          </tr>
+          <tr>
+            <td class="px-0">
+              <p class="d-flex mb-0 align-items-center gap-1"><iconify-icon icon="solar:calculator-minimalistic-broken" class="align-middle"></iconify-icon> Estimated Tax (15.5%) : </p>
+            </td>
+            <td class="text-end text-dark fw-medium px-0">{{currency}}20.00</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer bg-light-subtle">
+    <div class="d-flex align-items-center justify-content-between">
+
+      <div>
+        <p class="fw-medium text-dark mb-0">Total Amount</p>
+      </div>
+      <div>
+        <p class="fw-medium text-dark mb-0">{{currency}}737.00</p>
+      </div>
+    </div>
+    <div class="alert alert-warning alert-icon mt-3 mb-0" role="alert">
+      <div class="d-flex align-items-center">
+        <div class="avatar-sm rounded bg-warning d-flex justify-content-center align-items-center fs-22 me-2 flex-shrink-0">
+          <iconify-icon icon="solar:kick-scooter-broken" class="align-middle text-white"></iconify-icon>
+        </div>
+        <div class="flex-grow-1">
+          Estimated Delivery by 25 April, 2024
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input,Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ImageSService } from '@core/services/imageS.service';
+import { ImageService } from '@core/services/image.service';
 import { CommonModule, DecimalPipe } from '@angular/common';
 
 
@@ -92,7 +92,7 @@ export class FileUploaderComponent {
   uploadedFiles: UploadedFile[] = [];
 
 
-  constructor(private imageService: ImageSService) {}
+  constructor(private imageService: ImageService) {}
 
   getImageUrl(id: number): string {
     return this.imageService.getImageUrl(id);

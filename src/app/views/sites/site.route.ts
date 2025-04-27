@@ -11,7 +11,7 @@ export const SITE_ROUTES: Route[] = [
     data: { title: 'Site List' },
   },
   {
-    path: 'details',
+    path: 'details/:id',
     component: DetailsComponent,
     data: { title: 'Site Details' },
   },

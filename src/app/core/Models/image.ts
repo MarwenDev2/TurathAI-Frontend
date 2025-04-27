@@ -1,3 +1,4 @@
+// src/app/core/models/image.model.ts
 export interface Image {
     id: number;
     name: string;

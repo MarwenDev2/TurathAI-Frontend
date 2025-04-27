@@ -1,0 +1,44 @@
+<div class="card text-center">
+  <div class="card-body">
+    <h4 class="mb-0 text-dark fw-medium">Company Reviews</h4>
+    <div class="p-2 d-flex gap-3 bg-light align-items-center justify-content-center mt-3 rounded">
+      <ul class="d-flex text-warning m-0 fs-24  list-unstyled">
+        <ng-template #t let-fill="fill">
+          <i class="bx bx-star text-warning fs-20">
+            @if (fill > 0) {
+            <i class="bx bxs-star text-warning fs-20 filled" [style.width.%]="fill"></i>
+            }
+          </i>
+        </ng-template>
+
+        <ngb-rating [rate]="4.5" [starTemplate]="t" [readonly]="true" [max]="5" />
+      </ul>
+      <p class="mb-0 text-dark fw-medium fs-16">4.5 Out of 5</p>
+    </div>
+    <p class="text-primary mt-2 fw-medium">Based on +23.5k Review</p>
+
+    <div class="my-4">
+      <div class="d-flex align-items-center gap-3">
+        <h5 class="mb-0 flex-shrink-0">5 star :</h5>
+        <ngb-progressbar type="warning" [value]="80" class="flex-grow-1" style="height: 10px"></ngb-progressbar>
+      </div>
+      <div class="d-flex align-items-center gap-3 my-3">
+        <h5 class="mb-0 flex-shrink-0">4 star :</h5>
+        <ngb-progressbar type="warning" [value]="50" class="flex-grow-1" style="height: 10px"></ngb-progressbar>
+      </div>
+      <div class="d-flex align-items-center gap-3 my-3">
+        <h5 class="mb-0 flex-shrink-0">3 star :</h5>
+        <ngb-progressbar type="warning" [value]="30" class="flex-grow-1" style="height: 10px"></ngb-progressbar>
+      </div>
+      <div class="d-flex align-items-center gap-3 my-3">
+        <h5 class="mb-0 flex-shrink-0">2 star :</h5>
+        <ngb-progressbar type="warning" [value]="20" class="flex-grow-1" style="height: 10px"></ngb-progressbar>
+      </div>
+      <div class="d-flex align-items-center gap-3 mt-3">
+        <h5 class="mb-0 flex-shrink-0">1 star :</h5>
+        <ngb-progressbar type="warning" [value]="10" class="flex-grow-1" style="height: 10px"></ngb-progressbar>
+      </div>
+    </div>
+    <a href="javascript:void(0);" class="text-primary mt-2 fw-medium">How do we calculate ratings ?</a>
+  </div>
+</div>

@@ -14,11 +14,13 @@ import {
   NgbOffcanvas,
   NgbOffcanvasModule,
 } from '@ng-bootstrap/ng-bootstrap';
+import { Store } from '@ngrx/store';
+import { changetheme } from '@store/layout/layout-action';
+import { getLayoutColor } from '@store/layout/layout-selector';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { ActivitiStremComponent } from './component/activiti-strem/activiti-strem.component';
 import { notificationsData } from './data';
-import { User } from '@core/Models/user';
-import { AuthService } from '@core/services/auth.service';
+import { logout } from '@store/authentication/authentication.actions';
 
 @Component({
   selector: 'app-topbar',
@@ -40,26 +42,11 @@ export class TopbarComponent {
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
   router = inject(Router);
+  store = inject(Store);
   offcanvasService = inject(NgbOffcanvas);
-  currentUser: User | null = null;
+
   notificationList = notificationsData;
 
-  constructor(private authService: AuthService) {}
-    
-    ngOnInit(): void {
-      this.authService.currentUser$.subscribe({
-        next: (user) => {
-          this.currentUser = user;
-        },
-        error: (err) => {
-          console.error('Error loading user data', err);
-        }
-      });
-    }
-
-    logout() {
-      this.authService.logout();
-    }    
   settingMenu() {
     this.settingsButtonClicked.emit();
   }
@@ -67,11 +54,23 @@ export class TopbarComponent {
   toggleMobileMenu() {
     this.mobileMenuButtonClicked.emit();
   }
-  getProfileImage(): string {
-    if (!this.currentUser?.image) return 'assets/images/default-avatar.png';
-    return `http://localhost:8080/assets/images/users/${this.currentUser.image}`;
+
+  changeTheme() {
+    const color = document.documentElement.getAttribute('data-bs-theme');
+    if (color == 'light') {
+      this.store.dispatch(changetheme({ color: 'dark' }));
+    } else {
+      this.store.dispatch(changetheme({ color: 'light' }));
+    }
+    this.store.select(getLayoutColor).subscribe((color) => {
+      document.documentElement.setAttribute('data-bs-theme', color);
+    });
   }
-  
+
+  logout() {
+    this.store.dispatch(logout())
+  }
+
   open() {
     this.offcanvasService.open(ActivitiStremComponent, {
       position: 'end',

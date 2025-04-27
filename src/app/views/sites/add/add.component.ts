@@ -37,7 +37,7 @@ export class AddComponent implements OnInit {
       categoryId: ['', Validators.required],
       location: ['', Validators.required],
       historicalSignificance: [''],
-      popularityScore: [0, [Validators.min(0), Validators.max(100)]],
+      expectedPopularity: ['Low', Validators.required],
       description: ['']
     });
   }
@@ -94,7 +94,7 @@ export class AddComponent implements OnInit {
 
   resetForm() {
     this.siteForm.reset({
-      popularityScore: 0
+      expectedPopularity: 'Low'
     });
     this.imageIds = [];
   }
@@ -124,5 +124,31 @@ export class AddComponent implements OnInit {
       },
       buttonsStyling: false
     });
+  }
+
+  getPopularityClass(popularity: string): string {
+    switch (popularity) {
+      case 'High':
+        return 'text-success';
+      case 'Medium':
+        return 'text-warning';
+      case 'Low':
+        return 'text-danger';
+      default:
+        return 'text-muted';
+    }
+  }
+
+  getPopularityIcon(popularity: string): string {
+    switch (popularity) {
+      case 'High':
+        return 'bx bx-trending-up';
+      case 'Medium':
+        return 'bx bx-trending-flat';
+      case 'Low':
+        return 'bx bx-trending-down';
+      default:
+        return 'bx bx-question-mark';
+    }
   }
 }

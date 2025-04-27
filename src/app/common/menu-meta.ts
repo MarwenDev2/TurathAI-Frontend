@@ -23,73 +23,150 @@ export const MENU: MenuItem[] = [
     label: 'Dashboard',
     link:'/index'
   },
+
   {
-    key: 'itinerary-statistics',
-    icon: 'solar:chart-bold-duotone',
-    label: 'Itinerary Statistics',
-    link:'/itinerary-statistics'
+    key: 'products',
+    icon: 'solar:t-shirt-bold-duotone',
+    label: 'Products',
+    collapsed: true,
+    subMenu: [
+      {
+        key: 'products-list',
+        label: 'List',
+        link: '/product/list',
+        parentKey: 'products',
+      },
+      {
+        key: 'products-grid',
+        label: 'Grid',
+        link: '/product/grid',
+        parentKey: 'products',
+      },
+      {
+        key: 'products-details',
+        label: 'Details',
+        link: '/product/details',
+        parentKey: 'products',
+      },
+      {
+        key: 'products-edit',
+        label: 'Edit',
+        link: '/product/edit',
+        parentKey: 'products',
+      },
+      {
+        key: 'products-create',
+        label: 'Create',
+        link: '/product/add',
+        parentKey: 'products',
+      }
+    ],
   },
-  ///////////////// Managements
+
+
+                    ///////////// MANAGMENT ////////////
+                    ///// users management
   {
     key: 'users',
     icon: 'solar:t-shirt-bold-duotone',
-    label: 'Users',
+    label: 'Users Management',
     collapsed: true,
     subMenu: [
       {
         key: 'users-list',
         label: 'List',
-        link: '/user/list',
+        link: '/users/list',
+        parentKey: 'users',
+      },
+      {
+        key: 'users-details',
+        label: 'Details',
+        link: '/users/details',
+        parentKey: 'users',
+      },
+      {
+        key: 'users-edit',
+        label: 'Edit',
+        link: '/users/edit',
         parentKey: 'users',
       },
       {
         key: 'users-create',
         label: 'Create',
-        link: '/user/add',
+        link: '/users/add',
         parentKey: 'users',
       }
     ],
   },
+      
+                  ///// gammification management
   {
-    key: 'Business',
+    key: 'gammification',
     icon: 'solar:t-shirt-bold-duotone',
-    label: 'Business',
+    label: 'Gammification Management',
     collapsed: true,
     subMenu: [
       {
-        key: 'businesses-list',
+        key: 'gammification-list',
         label: 'List',
-        link: '/businesses/list',
-        parentKey: 'Business',
+        link: '/gammification/list',
+        parentKey: 'gammification',
       },
       {
-        key: 'businesses-create',
+        key: 'gammification-details',
+        label: 'Details',
+        link: '/gammification/details',
+        parentKey: 'gammification',
+      },
+      {
+        key: 'gammification-edit',
+        label: 'Edit',
+        link: '/gammification/edit',
+        parentKey: 'gammification',
+      },
+      {
+        key: 'gammification-create',
         label: 'Create',
-        link: '/businesses/add',
-        parentKey: 'Business',
+        link: '/gammification/add',
+        parentKey: 'gammification',
       }
     ],
   },
+                  ///// discover management
   {
-    key: 'event',
-    icon: 'solar:calendar-bold-duotone', // Using a calendar icon for events
-    label: 'Event Management',
+    key: 'discover',
+    icon: 'solar:t-shirt-bold-duotone',
+    label: 'Discover Management',
     collapsed: true,
     subMenu: [
       {
-        key: 'event-list',
+        key: 'discover-list',
         label: 'List',
-        link: '/event/list',
-        parentKey: 'event',
+        link: '/discover/list',
+        parentKey: 'discover',
       },
       {
-        key: 'event-create',
+        key: 'discover-details',
+        label: 'Details',
+        link: '/discover/details',
+        parentKey: 'discover',
+      },
+      {
+        key: 'discover-edit',
+        label: 'Edit',
+        link: '/discover/edit',
+        parentKey: 'discover',
+      },
+      {
+        key: 'discover-create',
         label: 'Create',
-        link: '/event/add',
-        parentKey: 'event',
+        link: '/discover/add',
+        parentKey: 'discover',
       }
     ],
   },
+
+                ////// forums management
   {
     key: 'forums',
     icon: 'solar:t-shirt-bold-duotone',
@@ -153,43 +230,42 @@ export const MENU: MenuItem[] = [
         label: 'Create',
         link: '/itenary/add',
         parentKey: 'itenary',
-      },
-      
+      }
     ],
   },
             ///////////// Local Insight management
-            {
-              key: 'local-insight',
-              icon: 'solar:t-shirt-bold-duotone',
-              label: 'Local Insight Management',
-              collapsed: true,
-              subMenu: [
-                {
-                  key: 'local-insight-list',
-                  label: 'List',
-                  link: '/local-insight/list',
-                  parentKey: 'local-insight',
-                },
-                {
-                  key: 'local-insight-details',
-                  label: 'Details',
-                  link: '/local-insight/details',
-                  parentKey: 'local-insight',
-                },
-                {
-                  key: 'local-insight-edit',
-                  label: 'Edit',
-                  link: '/local-insight/edit',
-                  parentKey: 'local-insight',
-                },
-                {
-                  key: 'local-insight-create',
-                  label: 'Create',
-                  link: '/local-insight/add',
-                  parentKey: 'local-insight',
-                }
-              ],
-            },          
+  {
+    key: 'local-insight',
+    icon: 'solar:t-shirt-bold-duotone',
+    label: 'Local Insight Management',
+    collapsed: true,
+    subMenu: [
+      {
+        key: 'local-insight-list',
+        label: 'List',
+        link: '/local-insight/list',
+        parentKey: 'local-insight',
+      },
+      {
+        key: 'local-insight-details',
+        label: 'Details',
+        link: '/local-insight/details',
+        parentKey: 'local-insight',
+      },
+      {
+        key: 'local-insight-edit',
+        label: 'Edit',
+        link: '/local-insight/edit',
+        parentKey: 'local-insight',
+      },
+      {
+        key: 'local-insight-create',
+        label: 'Create',
+        link: '/local-insight/add',
+        parentKey: 'local-insight',
+      }
+    ],
+  },
 
   {
     key: 'sites',
@@ -223,6 +299,8 @@ export const MENU: MenuItem[] = [
       }
     ],
   },
+                    ///////////// END MANAGMENT ////////////
+
   {
     key: 'category',
     icon: 'solar:clipboard-list-bold-duotone',
@@ -250,26 +328,6 @@ export const MENU: MenuItem[] = [
     ],
   },
   {
-    key: 'inventory',
-    icon: 'solar:box-bold-duotone',
-    label: 'Inventory',
-    collapsed: true,
-    subMenu: [
-      {
-        key: 'inventory-warehouse',
-        label: 'Warehouse',
-        link: '/inventory/warehouse',
-        parentKey: 'inventory',
-      },
-      {
-        key: 'inventory-received-order',
-        label: 'Received Order',
-        link: '/inventory/received-order',
-        parentKey: 'inventory',
-      }
-    ],
-  },
-  {
     key: 'users',
     label: 'Users',
     isTitle: true,
@@ -281,46 +339,38 @@ export const MENU: MenuItem[] = [
     link: '/pages/profile',
   },
   {
-    key: 'reviews',
-    icon: 'solar:chat-square-like-bold-duotone',
-    label: 'Reviews',
+    key: 'role',
+    icon: 'solar:user-speak-rounded-bold-duotone',
+    label: 'Roles',
     collapsed: true,
     subMenu: [
       {
-        key: 'reviews-list',
-        label: 'All Reviews',
-        link: '/reviews/list',
-        parentKey: 'reviews',
+        key: 'role-list',
+        label: 'List',
+        link: '/role/list',
+        parentKey: 'role',
       },
       {
-        key: 'reviews-create',
-        label: 'Add Review',
-        link: '/reviews/add',
-        parentKey: 'reviews',
-      }
-    ]
+        key: 'role-edit',
+        label: 'Edit',
+        link: '/role/edit',
+        parentKey: 'role',
+      },
+      {
+        key: 'role-create',
+        label: 'Create',
+        link: '/role/add',
+        parentKey: 'role',
+      },
+    ],
   },
   {
-    key: 'wishlist',
-    icon: 'solar:heart-angle-bold-duotone',
-    label: 'Wishlists',
-    collapsed: true,
-    subMenu: [
-      {
-        key: 'wishlist-list',
-        label: 'All Wishlists',
-        link: '/wishlist/list',
-        parentKey: 'wishlist',
-      },
-      {
-        key: 'wishlist-create',
-        label: 'Wishlist Insights',
-        link: '/wishlist/add',
-        parentKey: 'wishlist',
-      }
-    ]
-  },
-{
+    key: 'review',
+    icon: 'solar:chat-square-like-bold-duotone',
+    label: 'Reviews',
+    link: '/pages/review',
+  },  
+  {
     key: 'authentication',
     label: 'Authentication',
     isTitle: false,
@@ -352,6 +402,16 @@ export const MENU: MenuItem[] = [
         parentKey: 'authentication',
       }
     ],
+  },
+  {
+    key: 'widgets',
+    icon: 'solar:atom-bold-duotone',
+    label: 'Widgets',
+    link: '/apps/widgets',
+    badge: {
+      variant: 'info',
+      text: '9+',
+    },
   },
   {
     key: 'components',
@@ -734,24 +794,6 @@ export const MENU: MenuItem[] = [
       },
     ],
   },
-  {
-    key: 'icons',
-    icon: 'solar:ufo-2-bold-duotone',
-    label: 'Icons',
-    collapsed: true,
-    subMenu: [
-      {
-        key: 'icons-boxicons',
-        label: 'Boxicons',
-        link: '/icons/boxicons',
-        parentKey: 'icons',
-      },
-      {
-        key: 'icons-solar',
-        label: 'Solar Icons',
-        link: '/icons/solar',
-        parentKey: 'icons',
-      },
-    ],
-  },
+
+
 ]

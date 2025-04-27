@@ -1,0 +1,52 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">Related Businesses</h4>
+  </div>
+  <div class="card-body">
+    <div class="swiper-container rounded" data-swiper="navigation">
+      <swiper-container [config]="swiperNavigation" init="false">
+        <swiper-slide class="swiper-slide" *ngFor="let business of businesses">
+          <div class="business-card">
+            <div class="business-image">
+              <img [src]="business.image || 'assets/images/default-business.jpg'" [alt]="business.name" class="img-fluid rounded">
+            </div>
+            <div class="business-info">
+              <h5 class="business-name">{{business.name}}</h5>
+              <div class="business-rating">
+                <ul class="d-flex text-warning m-0 fs-20 list-unstyled">
+                  <ng-template #t let-fill="fill">
+                    <i class="bx bx-star text-warning fs-20">
+                      @if (fill > 0) {
+                      <i class="bx bxs-star text-warning fs-20 filled" [style.width.%]="fill"></i>
+                      }
+                    </i>
+                  </ng-template>
+                  <ngb-rating [rate]="business.rating" [starTemplate]="t" [readonly]="true" [max]="5" />
+                </ul>
+                <span class="review-count">({{business.reviewCount}})</span>
+              </div>
+              <div class="business-type">{{business.type}}</div>
+              <div class="business-contact">
+                <i class="bx bx-phone"></i> {{business.contact}}
+              </div>
+              <div class="business-location">
+                <i class="bx bx-map"></i> {{business.latitude}}, {{business.longitude}}
+              </div>
+              <div class="business-actions">
+                <button class="btn btn-light btn-sm" title="Save to wishlist">
+                  <i class="bx bx-heart fs-18"></i>
+                </button>
+                <button class="btn btn-light btn-sm" title="Share">
+                  <i class="bx bx-share-alt fs-18"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper-container>
+      <div class="swiper-button-next basic-next"></div>
+      <div class="swiper-button-prev basic-prev"></div>
+      <div class="swiper-pagination basic-pagination"></div>
+    </div>
+  </div>
+</div> 

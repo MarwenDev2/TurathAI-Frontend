@@ -1,0 +1,116 @@
+<div class="card">
+  <div class="card-header">
+       <h4 class="card-title d-flex align-items-center gap-1"><iconify-icon icon="solar:shop-2-bold-duotone" class="text-primary fs-20"></iconify-icon>Store Settings</h4>
+  </div>
+  <div class="card-body">
+       <div class="row">
+            <div class="col-lg-6">
+                 <form>
+                      <div class="mb-3">
+                           <label for="store-name" class="form-label">Store Name</label>
+                           <input type="text" id="store-name" class="form-control" placeholder="Enter name">
+                      </div>
+                 </form>
+            </div>
+            <div class="col-lg-6">
+                 <form>
+                      <div class="mb-3">
+                           <label for="owner-name" class="form-label">Store Owner Full Name</label>
+                           <input type="text" id="owner-name" class="form-control" placeholder="Full name">
+                      </div>
+                 </form>
+            </div>
+            <div class="col-lg-6">
+                 <div class="mb-3">
+                      <label for="schedule-number" class="form-label">Owner Phone number</label>
+                      <input type="number" id="schedule-number" name="schedule-number" class="form-control" placeholder="Number">
+                 </div>
+            </div>
+            <div class="col-lg-6">
+                 <form>
+                      <div class="mb-3">
+                           <label for="schedule-email" class="form-label">Owner Email</label>
+                           <input type="email" id="schedule-email" name="schedule-email" class="form-control" placeholder="Email">
+                      </div>
+                 </form>
+            </div>
+            <div class="col-lg-12">
+                 <div class="mb-3">
+                      <label for="address" class="form-label">Full Address</label>
+                      <textarea class="form-control bg-light-subtle" id="address" rows="3" placeholder="Type address"></textarea>
+                 </div>
+            </div>
+            <div class="col-lg-4">
+                 <form>
+                      <div class="mb-3">
+                           <label for="your-zipcode" class="form-label">Zip-Code</label>
+                           <input type="number" id="your-zipcode" class="form-control" placeholder="zip-code">
+                      </div>
+                 </form>
+            </div>
+            <div class="col-lg-4">
+                 <form>
+                      <div class="mb-3">
+                           <label for="choices-city" class="form-label">City</label>
+                           <select selectFormInput class="form-control" id="choices-city" data-choices data-choices-groups data-placeholder="Select City" name="choices-city">
+                                <option value="">Choose a city</option>
+                                <optgroup label="UK">
+                                     <option value="London">London</option>
+                                     <option value="Manchester">Manchester</option>
+                                     <option value="Liverpool">Liverpool</option>
+                                </optgroup>
+                                <optgroup label="FR">
+                                     <option value="Paris">Paris</option>
+                                     <option value="Lyon">Lyon</option>
+                                     <option value="Marseille">Marseille</option>
+                                </optgroup>
+                                <optgroup label="DE" disabled>
+                                     <option value="Hamburg">Hamburg</option>
+                                     <option value="Munich">Munich</option>
+                                     <option value="Berlin">Berlin</option>
+                                </optgroup>
+                                <optgroup label="US">
+                                     <option value="New York">New York</option>
+                                     <option value="Washington" disabled>
+                                          Washington
+                                     </option>
+                                     <option value="Michigan">Michigan</option>
+                                </optgroup>
+                                <optgroup label="SP">
+                                     <option value="Madrid">Madrid</option>
+                                     <option value="Barcelona">Barcelona</option>
+                                     <option value="Malaga">Malaga</option>
+                                </optgroup>
+                                <optgroup label="CA">
+                                     <option value="Montreal">Montreal</option>
+                                     <option value="Toronto">Toronto</option>
+                                     <option value="Vancouver">Vancouver</option>
+                                </optgroup>
+                           </select>
+                      </div>
+                 </form>
+            </div>
+            <div class="col-lg-4">
+                 <form>
+                      <label for="choices-country" class="form-label">Country</label>
+                      <select selectFormInput class="form-control" id="choices-country" data-choices data-choices-groups data-placeholder="Select Country" name="choices-country">
+                           <option value="">Choose a country</option>
+                           <optgroup label="">
+                                <option value="">United Kingdom</option>
+                                <option value="Fran">France</option>
+                                <option value="Netherlands">Netherlands</option>
+                                <option value="U.S.A">U.S.A</option>
+                                <option value="Denmark">Denmark</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Australia">Australia</option>
+                                <option value="India">India</option>
+                                <option value="Germany">Germany</option>
+                                <option value="Spain">Spain</option>
+                                <option value="United Arab Emirates">United Arab Emirates</option>
+                           </optgroup>
+                      </select>
+                 </form>
+            </div>
+       </div>
+  </div>
+</div>

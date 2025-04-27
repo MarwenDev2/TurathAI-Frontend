@@ -9,7 +9,7 @@ import { map, switchMap } from 'rxjs/operators'; // Add these imports
   providedIn: 'root',
 })
 export class SiteService {
-  private apiUrl = 'http://localhost:8080/api/Sites'; // Adjust if your backend runs elsewhere
+  private apiUrl = 'http://localhost:9090/Sites'; // Adjust if your backend runs elsewhere
 
   constructor(private http: HttpClient) {}
 
@@ -69,7 +69,7 @@ export class SiteService {
     return this.http.get<Site[]>(`${this.apiUrl}/all`).pipe(
       switchMap(sites => {
         const requests = sites.map(site => 
-          this.http.get<number>(`http://localhost:8080/api/reviews/heritage-site/${site.id}/average-rating`).pipe(
+          this.http.get<number>(`http://localhost:9090/reviews/heritage-site/${site.id}/average-rating`).pipe(
             map(rating => ({
               ...site,
               averageRating: rating || 0 // Default to 0 if no rating

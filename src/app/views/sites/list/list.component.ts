@@ -1,7 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { NgbDropdownModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
-import { RouterLink } from '@angular/router';
+import { RouterLink , Router } from '@angular/router';
 import { state2Data } from '../../apps/widgets/data';
 import { WidgetState3Component } from '../../apps/widgets/components/widget-state3/widget-state3.component';
 import { CommonModule } from '@angular/common';
@@ -13,9 +13,12 @@ import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import { Chart, ChartConfiguration, ChartData, ChartEvent, ChartType, registerables } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
+
+// Register all Chart.js components
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-list',
@@ -25,7 +28,9 @@ import { BaseChartDirective } from 'ng2-charts';
     NgbPaginationModule,
     NgbDropdownModule,
     RouterLink,
+    BaseChartDirective,
     NgbRatingModule,
+    WidgetState3Component,
     CommonModule,
     FormsModule
   ],
@@ -67,9 +72,125 @@ export class ListComponent implements OnInit {
     },
   ];
 
+  public barChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        type: 'category',
+        display: true,
+        title: {
+          display: true,
+          text: 'Heritage Sites'
+        },
+        grid: {
+          display: false
+        }
+      },
+      y: {
+        type: 'linear',
+        display: true,
+        title: {
+          display: true,
+          text: 'Average Rating'
+        },
+        min: 0,
+        max: 5,
+        ticks: {
+          stepSize: 1
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => `Rating: ${context.raw}`
+        }
+      }
+    }
+  };
+
+  public barChartType: ChartType = 'bar';
+  public barChartData: ChartData<'bar'> = {
+    labels: [],
+    datasets: [
+      { 
+        data: [], 
+        backgroundColor: '#3b7ddd',
+        borderColor: '#3b7ddd',
+        hoverBackgroundColor: '#2f6ecb',
+        barThickness: 20
+      }
+    ]
+  };
+
+  // Donut Chart Configuration
+  public doughnutChartType: ChartType = 'doughnut';
+  public doughnutChartData: ChartData<'doughnut'> = {
+    labels: [],
+    datasets: [{
+      data: [],
+      backgroundColor: [
+        '#3b7ddd',
+        '#1cbb8c',
+        '#f7b84b',
+        '#f06548',
+        '#74788d',
+        '#34c38f',
+        '#50a5f1',
+        '#f1b44c',
+        '#556ee6',
+        '#f46a6a'
+      ],
+      borderColor: '#fff',
+      borderWidth: 2
+    }]
+  };
+
+  public doughnutChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'right',
+        labels: {
+          padding: 20,
+          usePointStyle: true,
+          pointStyle: 'circle'
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const label = context.label || '';
+            const value = typeof context.raw === 'number' ? context.raw : 0;
+            const dataset = context.dataset;
+            
+            // Calculate total with proper type handling
+            let total = 0;
+            if (dataset.data && Array.isArray(dataset.data)) {
+              total = dataset.data.reduce((acc: number, curr: unknown) => {
+                const num = typeof curr === 'number' ? curr : 0;
+                return acc + num;
+              }, 0);
+            }
+
+            // Calculate percentage with null check
+            const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : '0.0';
+            return `${label}: ${value} (${percentage}%)`;
+          }
+        }
+      }
+    }
+  };
+
   constructor(
     private siteService: SiteService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService ,
+    private router: Router
   ) {
     // Setup debounce for search
     this.searchSubject.pipe(
@@ -124,7 +245,7 @@ export class ListComponent implements OnInit {
     });
   }
 
-// Already present in your component — just ensure they’re linked
+// Already present in your component — just ensure they're linked
 onSearchInput(): void {
   this.searchSubject.next(this.searchTerm);
 }
@@ -164,7 +285,10 @@ getCategoryName(categoryId: number): string {
         this.filteredSites.sort((a, b) => a.name.localeCompare(b.name));
         break;
       case 'popularity':
-        this.filteredSites.sort((a, b) => b.popularityScore - a.popularityScore);
+        this.filteredSites.sort((a, b) => {
+          const popularityOrder = { 'High': 3, 'Medium': 2, 'Low': 1 };
+          return popularityOrder[b.expectedPopularity] - popularityOrder[a.expectedPopularity];
+        });
         break;
       case 'location':
         this.filteredSites.sort((a, b) => a.location.localeCompare(b.location));
@@ -203,7 +327,7 @@ getCategoryName(categoryId: number): string {
     if (!imageIds || imageIds.length === 0) {
       return ['assets/images/qr-code.png'];
     }
-    return imageIds.map(id => `http://localhost:8080/images/${id}`);
+    return imageIds.map(id => `http://localhost:9090/images/${id}`);
   }
 
 
@@ -304,61 +428,86 @@ getCategoryName(categoryId: number): string {
     });
   }
 
-  public barChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: 'Heritage Sites'
-        }
-      },
-      y: {
-        title: {
-          display: true,
-          text: 'Average Rating'
-        },
-        min: 0,
-        max: 5,
-        ticks: {
-          stepSize: 0.5
-        }
-      }
-    },
-    plugins: {
-      legend: {
-        display: false
-      },
-      tooltip: {
-        callbacks: {
-          label: (context) => `Rating: ${context.raw}`
-        }
-      }
-    }
-  };
-
-  public barChartType: ChartType = 'bar';
-  public barChartData: ChartData<'bar'> = {
-    labels: [],
-    datasets: [
-      { 
-        data: [], 
-        backgroundColor: '#3b7ddd',
-        borderColor: '#3b7ddd',
-        hoverBackgroundColor: '#2f6ecb'
-      }
-    ]
-  };
-
   prepareChartData(): void {
-    // Sort sites by average rating (highest first)
+    // Prepare bar chart data
     const topSites = [...this.sites]
       .filter(site => site.averageRating && site.averageRating > 0)
       .sort((a, b) => (b.averageRating || 0) - (a.averageRating || 0))
-      .slice(0, 5); // Get top 5 sites
+      .slice(0, 5);
 
-    // Update chart data
-    this.barChartData.labels = topSites.map(site => site.name);
-    this.barChartData.datasets[0].data = topSites.map(site => site.averageRating || 0);
+    this.barChartData = {
+      ...this.barChartData,
+      labels: topSites.map(site => site.name),
+      datasets: [{
+        ...this.barChartData.datasets[0],
+        data: topSites.map(site => site.averageRating || 0)
+      }]
+    };
+
+    // Prepare donut chart data
+    const categoryCounts = new Map<string, number>();
+    this.sites.forEach(site => {
+      const categoryName = this.getCategoryName(site.categoryId);
+      categoryCounts.set(categoryName, (categoryCounts.get(categoryName) || 0) + 1);
+    });
+
+    this.doughnutChartData = {
+      ...this.doughnutChartData,
+      labels: Array.from(categoryCounts.keys()),
+      datasets: [{
+        ...this.doughnutChartData.datasets[0],
+        data: Array.from(categoryCounts.values())
+      }]
+    };
+  }
+
+  viewSite(id: number): void {
+    this.router.navigate(['/sites/details', id]);
+  }
+  
+  getPopularityClass(popularity: string): string {
+    switch (popularity) {
+      case 'High':
+        return 'badge-soft-success';
+      case 'Medium':
+        return 'badge-soft-warning';
+      case 'Low':
+        return 'badge-soft-danger';
+      default:
+        return 'badge-soft-secondary';
+    }
+  }
+
+  getPopularityIcon(popularity: string): string {
+    switch (popularity) {
+      case 'High':
+        return 'bx bx-trending-up';
+      case 'Medium':
+        return 'bx bx-trending-flat';
+      case 'Low':
+        return 'bx bx-trending-down';
+      default:
+        return 'bx bx-question-mark';
+    }
+  }
+
+  getScoreClass(score: number): string {
+    if (score >= 8) {
+      return 'badge-soft-success';
+    } else if (score >= 5) {
+      return 'badge-soft-warning';
+    } else {
+      return 'badge-soft-danger';
+    }
+  }
+
+  getScoreIcon(score: number): string {
+    if (score >= 8) {
+      return 'bx bx-trending-up';
+    } else if (score >= 5) {
+      return 'bx bx-trending-flat';
+    } else {
+      return 'bx bx-trending-down';
+    }
   }
 }
