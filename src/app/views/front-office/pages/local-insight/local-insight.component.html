@@ -1,0 +1,154 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h4 class="card-title">Liste des Local Insights</h4>
+        <div class="d-flex align-items-center">
+          <!-- Icône de tri -->
+          <button class="btn btn-link text-dark me-2" (click)="sortInsights()" title="Trier alphabétiquement">
+            <i class="fas fa-sort-alpha-{{ sortAscending ? 'down' : 'up' }}"></i>
+          </button>
+          
+          <!-- Icône de recherche -->
+          <button class="btn btn-link text-dark me-2" (click)="toggleSearchBar()" title="Rechercher">
+            <i class="fas fa-search"></i>
+          </button>
+          
+          <!-- Icône d'ajout -->
+          <button class="btn btn-link text-dark" (click)="goToAdd()" title="Ajouter un insight">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Barre de recherche (conditionnelle) -->
+      @if (showSearchBar) {
+        <div class="card-body pt-0">
+          <div class="input-group mb-3">
+            <input 
+              type="text" 
+              class="form-control" 
+              placeholder="Rechercher par titre..." 
+              [(ngModel)]="searchQuery"
+              (input)="filterInsights()"
+              autofocus>
+            <button class="btn btn-outline-secondary" type="button" (click)="toggleSearchBar()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      }
+
+      <div class="card-body">
+        <!-- Messages d'état -->
+        @if (isLoading) {
+          <div class="alert alert-info text-center">
+            <i class="fas fa-circle-notch fa-spin me-2"></i> Chargement en cours...
+          </div>
+        }
+
+        @if (errorMessage) {
+          <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle me-2"></i> {{ errorMessage }}
+          </div>
+        }
+
+        @if (!isLoading && localInsights.length === 0) {
+          <div class="alert alert-info text-center">
+            <i class="fas fa-info-circle me-2"></i> Aucun insight trouvé
+          </div>
+        }
+
+        @if (!isLoading && searchQuery && filteredLocalInsights.length === 0) {
+          <div class="alert alert-warning text-center">
+            <i class="fas fa-search me-2"></i> Aucun résultat trouvé pour "{{ searchQuery }}"
+          </div>
+        }
+
+        <!-- Liste des cards -->
+        <div class="scrolling-wrapper">
+          @for (insight of filteredLocalInsights; track insight.id; let i = $index) {
+            <div class="card-container">
+              <div class="card h-100">
+                <div class="card-header bg-transparent">
+                  <h5 class="card-title mb-0">{{ insight.title }}</h5>
+                </div>
+
+                <div class="card-body position-relative">
+                  <div class="mb-3 p-3 bg-light rounded">
+                    {{ insight.description }}
+                  </div>
+
+                  <div class="text-end">
+                    <button class="btn btn-light border" (click)="toggleMore(i)">
+                      <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                  </div>
+                  <div class="reaction-icons">
+                    <!-- Bouton Like (icône seule) -->
+                    <span class="reaction-icon" 
+                          [class.active]="insight.isLiked"
+                          (click)="likeLocalInsight(insight)"
+                          title="J'aime">
+                      <i class="fas fa-thumbs-up"></i>
+                      <span class="count">{{ insight.likes || 0 }}</span>
+                    </span>
+                    
+                    <!-- Bouton Dislike (icône seule) -->
+                    <span class="reaction-icon" 
+                          [class.active]="insight.isDisliked"
+                          (click)="dislikeLocalInsight(insight)"
+                          title="Je n'aime pas">
+                      <i class="fas fa-thumbs-down"></i>
+                      <span class="count">{{ insight.dislikes || 0 }}</span>
+                    </span>
+                  </div>
+                  @if (showMore[i]) {
+                    <div class="d-flex justify-content-around align-items-center mt-3 border-top pt-3">
+                      <button class="icon-btn" (click)="speak(insight.description || '')" title="Écouter">
+                        <i class="fas fa-volume-up icon-outline"></i>
+                      </button>
+                      <button class="icon-btn" (click)="toggleVideo(i)" title="Lire la vidéo">
+                        <i class="fas fa-play icon-outline"></i>
+                      </button>
+                      <button class="icon-btn" (click)="editLocalInsight(insight.id)" title="Modifier">
+                        <i class="fas fa-pen icon-outline"></i>
+                      </button>
+                      <button class="icon-btn" (click)="deleteLocalInsight(insight.id)" title="Supprimer">
+                        <i class="fas fa-trash icon-outline"></i>
+                      </button>
+                    </div>
+                  }
+
+                  @if (showVideo[i] && insight.videoURL) {
+                    <div class="mt-3">
+                      @if (isEmbeddedVideo(insight.videoURL)) {
+                        <div class="ratio ratio-16x9">
+                          <iframe 
+                            [src]="getSafeEmbedUrl(insight.videoURL)" 
+                            allowfullscreen
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                          </iframe>
+                        </div>
+                      } @else {
+                        <video 
+                          class="w-100" 
+                          controls
+                          (loadedmetadata)="onVideoLoaded()">
+                          <source [src]="insight.videoURL" type="video/mp4">
+                          Votre navigateur ne supporte pas les vidéos.
+                        </video>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

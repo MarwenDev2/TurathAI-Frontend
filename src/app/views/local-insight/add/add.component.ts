@@ -6,7 +6,7 @@ import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 import { LocalInsightService } from '@core/services/local-insight.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-local-insight',
@@ -26,7 +26,6 @@ export class AddComponent implements OnInit {
     description: ['', Validators.required],
     type: ['', Validators.required],
     videoURL: [''],
-    audioURL: [''],
   });
 
   heritageSite: any = null; // 👈 On va stocker l'objet complet ici
@@ -36,12 +35,12 @@ export class AddComponent implements OnInit {
   successMessage = '';
   selectedImage: string | ArrayBuffer | null = null;
   imageFileName: string | null = null;
-
-  
+  isGeneratingDescription = false;
 
   ngOnInit(): void {
     this.fetchHeritageSite();
   }
+
 
   fetchHeritageSite() {
     this.http.get<any>('http://localhost:8080/api/Sites/get/1').subscribe({
@@ -80,7 +79,6 @@ export class AddComponent implements OnInit {
         description: formValue.description,
         type: formValue.type,
         videoURL: formValue.videoURL || null,
-        audioURL: formValue.audioURL || null,
         heritageSite: {
             id: this.heritageSite?.id || 2
         }
@@ -105,7 +103,7 @@ export class AddComponent implements OnInit {
 onCancel(): void {
   this.router.navigate(['/local-insight/list']);
 }
+}
 
 
  
-}

@@ -79,8 +79,7 @@ export class EditComponent implements OnInit {
             title: data.title || 'Sans titre',
             description: data.description || '',
             type: data.type || 'Culturel',
-            videoURL: data.videoURL?.trim() || '',
-            audioURL: data.audioURL?.trim() || ''
+            videoURL: data.videoURL?.trim() || ''
           });
         },
         error: (err) => {

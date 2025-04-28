@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from '@core/services/auth.service';
 import { User } from '@core/Models/user';
 import { 
@@ -13,12 +13,13 @@ import {
 } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as bootstrap from 'bootstrap';
 import { AboutComponent } from './components/about/about.component';
 import { AchievementComponent } from './components/achivement/achivement.component';
 import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
 import { UserService } from '@core/services/user.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -31,8 +32,8 @@ import { ToastrService } from 'ngx-toastr';
     PersonalInfoComponent,
     AboutComponent,
     AchievementComponent,
-    CommonModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './profile.component.html',
   animations: [
@@ -127,11 +128,20 @@ import { ToastrService } from 'ngx-toastr';
   ]
 })
 export class ProfileComponent implements OnInit {
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  
   currentUser: User | null = null;
   isLoading = true;
   interestsList: string[] = [];
   newInterest = '';
   isUpdating = false;
+  
+  // Profile form
+  profileForm!: FormGroup;
+  isSavingProfile = false;
+  selectedFile: File | null = null;
+  uploadErrorMessage = '';
+  imageFileName: string | null = null;
 
   // Stats data
   userStats = [
@@ -142,10 +152,14 @@ export class ProfileComponent implements OnInit {
   ];
 
   constructor(private authService: AuthService, 
-              private userService: UserService
-            , private toastr: ToastrService) {}
+              private userService: UserService,
+              private toastr: ToastrService,
+              private formBuilder: FormBuilder,
+              private modalService: NgbModal) {}
 
   ngOnInit(): void {
+    this.initializeProfileForm();
+    
     this.authService.currentUser$.subscribe({
       next: (user) => {
         this.currentUser = user;
@@ -163,6 +177,11 @@ export class ProfileComponent implements OnInit {
           if (user.interests) {
             this.interestsList = user.interests.split(',').map(i => i.trim());
           }
+          
+          // Update form with user data
+          if (user) {
+          this.updateProfileForm(user);
+        }
         }
       },
       error: (err) => {
@@ -183,8 +202,150 @@ export class ProfileComponent implements OnInit {
     return date.toLocaleDateString();
   }
 
+  initializeProfileForm(): void {
+    this.profileForm = this.formBuilder.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      originCountry: [''],
+      spokenLanguage: [''],
+      interests: ['']
+    });
+  }
+  
+  updateProfileForm(user: User): void {
+    this.profileForm.patchValue({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      originCountry: user.originCountry || '',
+      spokenLanguage: user.spokenLanguage || '',
+      interests: user.interests || ''
+    });
+  }
+  
+  openProfileModal(): void {
+    const modalElement = document.getElementById('editProfileModal');
+    if (modalElement) {
+      const modalInstance = new bootstrap.Modal(modalElement);
+      modalInstance.show();
+    }
+  }
+  
+  saveProfile(): void {
+    if (this.profileForm.invalid || !this.currentUser) {
+      return;
+    }
+    
+    this.isSavingProfile = true;
+    
+    const userData: User = {
+      ...this.currentUser,
+      firstName: this.profileForm.value.firstName,
+      lastName: this.profileForm.value.lastName,
+      originCountry: this.profileForm.value.originCountry,
+      spokenLanguage: this.profileForm.value.spokenLanguage,
+      interests: this.profileForm.value.interests
+    };
+    
+    this.userService.updateUser(this.currentUser.id, userData).subscribe({
+      next: (updatedUser: User) => {
+        this.toastr.success('Profile updated successfully');
+        this.currentUser = updatedUser;
+        this.authService.updateCurrentUser(updatedUser);
+        
+        // Close modal
+        const modalElement = document.getElementById('editProfileModal');
+        if (modalElement) {
+          const modalInstance = bootstrap.Modal.getInstance(modalElement);
+          modalInstance?.hide();
+        }
+        
+        // Refresh user data
+        this.loadUserData();
+      },
+      error: (error: any) => {
+        console.error('Error updating profile', error);
+        this.toastr.error('Failed to update profile');
+        this.isSavingProfile = false;
+      },
+      complete: () => {
+        this.isSavingProfile = false;
+      }
+    });
+  }
+  
   openImageUpload(): void {
-    // Implement image upload functionality
+    this.fileInput.nativeElement.click();
+  }
+  
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    
+    if (!input.files?.length) return;
+    
+    const file = input.files[0];
+    if (!file.type.match('image.*')) {
+      this.uploadErrorMessage = 'Only image files are allowed';
+      this.toastr.error(this.uploadErrorMessage);
+      return;
+    }
+    
+    if (file.size > 2 * 1024 * 1024) {
+      this.uploadErrorMessage = 'Image size should be less than 2MB';
+      this.toastr.error(this.uploadErrorMessage);
+      return;
+    }
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    // Display loading indicator
+    this.toastr.info('Uploading image...', '', { timeOut: 0, extendedTimeOut: 0, closeButton: true });
+    
+    fetch('http://localhost:8080/api/upload', {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      this.imageFileName = data.fileName;
+      this.updateUserWithNewImage();
+      this.toastr.clear(); // Clear loading toast
+      this.toastr.success('Profile image updated successfully');
+    })
+    .catch(err => {
+      console.error('Error uploading image:', err);
+      this.toastr.clear(); // Clear loading toast
+      this.toastr.error('Image upload failed. Please try again.');
+      this.uploadErrorMessage = 'Image upload failed. Please try again.';
+    });
+  }
+  
+  updateUserWithNewImage(): void {
+    if (!this.imageFileName || !this.currentUser) {
+      return;
+    }
+    
+    const updatedUser = {
+      ...this.currentUser,
+      image: this.imageFileName
+    };
+    
+    this.userService.updateUser(this.currentUser.id, updatedUser).subscribe({
+      next: (user: User) => {
+        this.currentUser = user;
+        this.authService.updateCurrentUser(user);
+        
+        // Force reload of user data with slight delay to ensure server updates are complete
+        setTimeout(() => {
+          this.loadUserData();
+        }, 300);
+      },
+      error: (error: any) => {
+        console.error('Error updating user with new image:', error);
+      }
+    });
   }
 
   loadUserData(): void {
@@ -193,6 +354,9 @@ export class ProfileComponent implements OnInit {
       next: (user) => {
         this.currentUser = user;
         this.updateUserData(user);
+        if (user) {
+          this.updateProfileForm(user);
+        }
       },
       error: (err) => {
         console.error('Error loading user from AuthService:', err);

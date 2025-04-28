@@ -70,7 +70,7 @@
                      <button ngbDropdownItem class="dropdown-item d-flex align-items-center gap-2" [routerLink]="['/auth/password']">
                       <i class="bx bx-lock-alt"></i> Change Password
                     </button>
-                  <button ngbDropdownItem class="dropdown-item d-flex align-items-center gap-2">
+                  <button ngbDropdownItem class="dropdown-item d-flex align-items-center gap-2" (click)="openProfileModal()">
                     <i class="bx bx-cog"></i> Settings
                   </button>
                   <div class="dropdown-divider"></div>
@@ -165,6 +165,99 @@
       <span>Updating interests...</span>
     </div>
   </ng-template>
+  
+  <!-- Edit Profile Modal -->
+  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content animate__animated animate__fadeIn">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="profileForm">
+            <div class="row">
+              <!-- Profile Image Section -->
+              <div class="col-md-12 mb-4 text-center">
+                <div class="position-relative d-inline-block">
+                  <img [src]="getProfileImage()" alt="Profile Image" 
+                       class="rounded-circle mb-3" 
+                       style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #f8f9fa;">
+                  <button class="btn btn-sm btn-primary rounded-circle position-absolute bottom-0 end-0" 
+                          style="width: 36px; height: 36px;"
+                          (click)="openImageUpload()">
+                    <i class="bx bx-camera"></i>
+                  </button>
+                </div>
+                <input type="file" 
+                       #fileInput 
+                       style="display: none;" 
+                       accept="image/*" 
+                       (change)="onFileSelected($event)">
+              </div>
+
+              <!-- Personal Information -->
+              <div class="col-md-6 mb-3">
+                <label class="form-label">First Name *</label>
+                <input type="text" class="form-control" formControlName="firstName">
+                <div *ngIf="profileForm.get('firstName')?.invalid && 
+                           (profileForm.get('firstName')?.dirty || profileForm.get('firstName')?.touched)"
+                     class="text-danger small mt-1">
+                  First name is required
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Last Name *</label>
+                <input type="text" class="form-control" formControlName="lastName">
+                <div *ngIf="profileForm.get('lastName')?.invalid && 
+                           (profileForm.get('lastName')?.dirty || profileForm.get('lastName')?.touched)"
+                     class="text-danger small mt-1">
+                  Last name is required
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Email *</label>
+                <input type="email" class="form-control" formControlName="email" [disabled]="true">
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Origin Country</label>
+                <input type="text" class="form-control" formControlName="originCountry">
+              </div>
+
+              <div class="col-md-12 mb-3">
+                <label class="form-label">Spoken Languages (comma separated)</label>
+                <textarea class="form-control" rows="2" 
+                          formControlName="spokenLanguage"
+                          placeholder="e.g., Arabic, French, English"></textarea>
+              </div>
+
+              <div class="col-md-12 mb-3">
+                <label class="form-label">Interests (comma separated)</label>
+                <textarea class="form-control" rows="2" 
+                          formControlName="interests"
+                          placeholder="e.g., History, Arts, Music"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" 
+                  (click)="saveProfile()"
+                  [disabled]="isSavingProfile || profileForm.invalid">
+            <span *ngIf="!isSavingProfile">Save Changes</span>
+            <span *ngIf="isSavingProfile">
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Saving...
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
   
   <!-- Account Information with Fade Animation -->
   <div class="row mt-4" [@fadeInUp]="'in'">

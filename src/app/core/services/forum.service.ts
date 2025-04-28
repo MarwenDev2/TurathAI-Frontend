@@ -7,7 +7,7 @@ import { Forum } from '@core/Models/forum';
   providedIn: 'root',
 })
 export class ForumService {
-  private apiUrl = 'http://localhost:8081/api/forums';
+  private apiUrl = 'http://localhost:8080/api/forums';
 
   // 🔁 Sujet pour notifier les composants abonnés
   private forumsChanged = new BehaviorSubject<boolean>(false);

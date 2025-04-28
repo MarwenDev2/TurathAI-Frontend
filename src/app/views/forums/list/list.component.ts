@@ -190,7 +190,7 @@ openContextMenu(event: MouseEvent, comment: any) {
     if (!forum.image) {
       return 'assets/images/default-avatar.png';
     }
-    return `http://localhost:8081/assets/images/forums/${forum.image}`;
+    return `http://localhost:8080/assets/images/forums/${forum.image}`;
   }
 
   deleteForum(forumId: number): void {

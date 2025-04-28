@@ -96,4 +96,25 @@ getCurrentUser(): Observable<User> {
   );
 }
 
+// Upload profile image
+uploadProfileImage(formData: FormData): Observable<any> {
+  return this.http.post(`${this.apiUrl}/upload-image`, formData).pipe(
+    catchError(error => {
+      console.error('Error uploading profile image:', error);
+      let errorMessage = 'Failed to upload profile image';
+      
+      if (error.error instanceof ErrorEvent) {
+        errorMessage = `Error: ${error.error.message}`;
+      } else {
+        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        if (error.error?.message) {
+          errorMessage = error.error.message;
+        }
+      }
+      
+      return throwError(() => new Error(errorMessage));
+    })
+  );
+}
+
 }

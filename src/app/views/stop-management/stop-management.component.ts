@@ -8,6 +8,8 @@ import { ItenaryService } from '@core/services/itinerary.service';
 import { Itinery } from '@core/Models/itinerary';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { SmsService } from '@core/services/sms.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-stop-management',
@@ -40,6 +42,7 @@ export class StopManagementComponent implements OnInit {
     private route: ActivatedRoute,
     private stopService: StopService,
     private itineraryService: ItenaryService,
+    private smsService: SmsService,
     private fb: FormBuilder
   ) { 
     this.stopForm = this.fb.group({
@@ -314,5 +317,68 @@ Stop Details:\n
   resetSearch(): void {
     this.searchForm.reset();
     this.filteredStops = [...this.stops];
+  }
+
+  sendSmsNotification(stopData: any): void {
+    if (!this.itinerary) {
+      this.error = 'Cannot send SMS: No itinerary information available';
+      return;
+    }
+
+    // Create a temporary stop object from form data
+    const tempStop: Stop = {
+      id: this.editingStopId || 0,
+      order: stopData.order,
+      duration: stopData.duration,
+      itineryId: this.itineraryId
+    };
+
+    // Prompt for phone number
+    Swal.fire({
+      title: 'Enter Phone Number',
+      input: 'tel',
+      inputPlaceholder: 'Enter phone number (e.g., +1234567890)',
+      showCancelButton: true,
+      confirmButtonText: 'Send SMS',
+      showLoaderOnConfirm: true,
+      preConfirm: (phoneNumber) => {
+        if (!phoneNumber) {
+          Swal.showValidationMessage('Please enter a phone number');
+          return false;
+        }
+        return phoneNumber;
+      }
+    }).then((result) => {
+      if (result.isConfirmed && this.itinerary) {
+        const phoneNumber = result.value;
+        this.smsService.sendStopNotification(tempStop, this.itinerary, phoneNumber).subscribe({
+          next: (response) => {
+            if (response.success) {
+              Swal.fire({
+                icon: 'success',
+                title: 'SMS Sent',
+                text: response.message,
+                timer: 2000,
+                showConfirmButton: false
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'SMS Failed',
+                text: response.message
+              });
+            }
+          },
+          error: (err) => {
+            console.error('SMS error:', err);
+            Swal.fire({
+              icon: 'error',
+              title: 'SMS Failed',
+              text: 'Failed to send SMS notification. Please try again.'
+            });
+          }
+        });
+      }
+    });
   }
 }

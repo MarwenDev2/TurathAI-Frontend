@@ -7,6 +7,7 @@ import { FrontOfficeHomeComponent } from './pages/home/home.component';
 import { FrontOfficeLayoutComponent } from './layout/front-office-layout.component';
 import { FrontOfficeRoutingModule } from './front-office-routing.module';
 import { FrontOfficeItinerariesComponent } from './pages/itineraries/itineraries.component';
+import { FrontOfficeProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { FrontOfficeItinerariesComponent } from './pages/itineraries/itineraries
     FrontOfficeComponent,
     FrontOfficeHomeComponent,
     FrontOfficeLayoutComponent,
-    FrontOfficeItinerariesComponent
+    FrontOfficeItinerariesComponent,
+    FrontOfficeProfileComponent
   ]
 })
-export class FrontOfficeModule { } 
+export class FrontOfficeModule { }

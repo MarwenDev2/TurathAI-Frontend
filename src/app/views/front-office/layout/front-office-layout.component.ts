@@ -20,7 +20,7 @@ export class FrontOfficeLayoutComponent {
     { label: 'Itineraries', link: '/frontoffice/itineraries' },
     { label: 'About', link: '/frontoffice/about' },
     { label: 'Services', link: '/frontoffice/services' },
-    { label: 'Contact', link: '/frontoffice/contact' }
+    { label: 'Local', link: '/frontoffice/local-insight' }
   ];
 
   currentUser$: Observable<User | null>;
@@ -37,5 +37,10 @@ export class FrontOfficeLayoutComponent {
 
   logout(): void {
     this.authService.logout();
+  }
+  
+  getUserImage(user: User): string {
+    if (!user.image) return 'assets/images/default-avatar.png';
+    return `http://localhost:8080/assets/images/users/${user.image}`;
   }
 }

@@ -65,7 +65,7 @@ export class AddComponent implements OnInit {
     };
     reader.readAsDataURL(file);
 
-    this.http.post<{ fileName: string, url: string }>('http://localhost:8081/api/upload', formData)
+    this.http.post<{ fileName: string, url: string }>('http://localhost:8080/api/upload', formData)
       .subscribe({
         next: (data) => {
           this.imageFileName = data.fileName;

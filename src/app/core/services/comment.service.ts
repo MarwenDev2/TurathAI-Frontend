@@ -8,8 +8,8 @@ import { ForumComment } from '@core/Models/forumComment';
 })
 export class CommentService {
   // L'URL de base pour les forums
-  private apiUrl = 'http://localhost:8081/api/forums';
-  private baseUrl = 'http://localhost:8081/api/comments';
+  private apiUrl = 'http://localhost:8080/api/forums';
+  private baseUrl = 'http://localhost:8080/api/comments';
 
   constructor(private http: HttpClient) {}
   addComment(forumId: number, comment: any): Observable<any> {

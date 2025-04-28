@@ -22,9 +22,11 @@
     <div class="nav-actions">
       <ng-container *ngIf="(currentUser$ | async) as user; else loginButton">
         <div ngbDropdown class="profile-dropdown">
-          <button class="btn-profile" ngbDropdownToggle>
-            <i class="bx bx-user-circle"></i>
-            <span class="ms-1">{{ user.firstName }}</span>
+          <button class="btn-profile d-flex align-items-center" ngbDropdownToggle>
+            <img *ngIf="user.image" [src]="getUserImage(user)" alt="Profile" 
+                 class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: cover;"> 
+            <i *ngIf="!user.image" class="bx bx-user-circle me-1"></i>
+            <span>{{ user.firstName }}</span>
           </button>
           <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end">
             <a class="dropdown-item" routerLink="/frontoffice/profile">

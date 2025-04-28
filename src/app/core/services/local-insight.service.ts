@@ -4,13 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { LocalInsight } from '@core/Models/localInsight';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class LocalInsightService {
   [x: string]: any;
-  private apiUrl = 'http://localhost:8080/api/local-insights';
+  private apiUrl = `http://localhost:8080/api/local-insights`;
 
   constructor(private http: HttpClient) { }
 
@@ -54,5 +53,49 @@ toggleLike(insightId: number, likeStatus: boolean): Observable<LocalInsight> {
   return this.http.patch<LocalInsight>(`${this.apiUrl}/${insightId}/like`, {
     isLiked: likeStatus
   });
+}
+
+likeLocalInsight(id: number): Observable<any> {
+  return this.http.post(`${this.apiUrl}/${id}/like`, {}).pipe(
+    catchError(error => {
+      console.error('Erreur lors du like:', error);
+      return throwError(() => new Error('Erreur lors du like'));
+    })
+  );
+}
+
+dislikeLocalInsight(id: number): Observable<any> {
+  return this.http.post(`${this.apiUrl}/${id}/dislike`, {}).pipe(
+    catchError(error => {
+      console.error('Erreur lors du dislike:', error);
+      return throwError(() => new Error('Erreur lors du dislike'));
+    })
+  );
+}
+
+removeLike(id: number): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/${id}/like`).pipe(
+    catchError(error => {
+      console.error('Erreur lors de la suppression du like:', error);
+      return throwError(() => new Error('Erreur lors de la suppression du like'));
+    })
+  );
+}
+
+removeDislike(id: number): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/${id}/dislike`).pipe(
+    catchError(error => {
+      console.error('Erreur lors de la suppression du dislike:', error);
+      return throwError(() => new Error('Erreur lors de la suppression du dislike'));
+    })
+  );
+}
+
+incrementLike(insightId: number): Observable<LocalInsight> {
+  return this.http.patch<LocalInsight>(`${this.apiUrl}/${insightId}/like`, {});
+}
+
+incrementDislike(insightId: number): Observable<LocalInsight> {
+  return this.http.patch<LocalInsight>(`${this.apiUrl}/${insightId}/dislike`, {});
 }
 }
