@@ -1,7 +1,6 @@
 import { Route } from '@angular/router'
 import { ChatComponent } from './chat/chat.component'
 import { EmailComponent } from './email/email.component'
-import { CalendarComponent } from './calendar/calendar.component'
 import { TodoComponent } from './todo/todo.component'
 import { WidgetsComponent } from './widgets/widgets.component'
 
@@ -15,11 +14,6 @@ export const APPS_ROUTES: Route[] = [
     path: 'email',
     component: EmailComponent,
     data: { title: 'Inbox' },
-  },
-  {
-    path: 'calendar',
-    component: CalendarComponent,
-    data: { title: 'Calendar' },
   },
   {
     path: 'todo',

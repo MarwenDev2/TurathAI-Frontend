@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { ItineraryService, Itinerary } from '../../services/itinerary.service';
 import { StopService } from '../../../../core/services/stop.service';
 import { Stop } from '../../../../core/Models/stop';
 import { forkJoin, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../../../core/services/auth.service';
+import { User } from '../../../../core/Models/user';
+import { StopMapComponent } from '../../../stop-management/stop-map/stop-map.component';
 
 @Component({
   selector: 'app-front-office-itineraries',
@@ -17,18 +20,24 @@ import Swal from 'sweetalert2';
   imports: [
     CommonModule,
     FormsModule, 
-    HttpClientModule
+    HttpClientModule,
+    StopMapComponent
   ]
 })
 export class FrontOfficeItinerariesComponent implements OnInit {
   itineraries: Itinerary[] = [];
   filteredItineraries: Itinerary[] = [];
+  paginatedItineraries: Itinerary[] = [];
   loading = true;
   error: string | null = null;
+  currentUser: any = null;
+  userActiveItineraries: Set<number> = new Set<number>();
+  loadingActiveState: Set<number> = new Set<number>();
   
   // Store stops for each itinerary
   itineraryStops: Map<number, Stop[]> = new Map<number, Stop[]>();
   expandedItinerary: number | null = null;
+  showMapItinerary: number | null = null;
   
   // Search and filter properties
   searchQuery: string = '';
@@ -38,12 +47,19 @@ export class FrontOfficeItinerariesComponent implements OnInit {
   maxBudget: number = 10000;
   sortOption: string = 'budgetLow'; // Default sort
 
+  // Pagination properties
+  currentPage: number = 1;
+  itemsPerPage: number = 3;
+  totalPages: number = 1;
+
   constructor(
     private itineraryService: ItineraryService,
-    private stopService: StopService
+    private stopService: StopService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
+    this.getCurrentUser();
     this.loadItineraries();
   }
 
@@ -130,6 +146,7 @@ export class FrontOfficeItinerariesComponent implements OnInit {
       return matchesSearch && matchesBudget;
     });
     
+    this.currentPage = 1; // Reset to first page when filters change
     this.sortItineraries();
   }
   
@@ -149,6 +166,7 @@ export class FrontOfficeItinerariesComponent implements OnInit {
         this.filteredItineraries.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
         break;
     }
+    this.updatePagination();
   }
   
   // Clear search
@@ -193,6 +211,7 @@ export class FrontOfficeItinerariesComponent implements OnInit {
       this.filteredItineraries = [...this.itineraries];
       this.sortItineraries();
       this.loading = false;
+      this.updatePagination();
     });
   }
   
@@ -202,6 +221,18 @@ export class FrontOfficeItinerariesComponent implements OnInit {
       this.expandedItinerary = null; // Collapse if already expanded
     } else {
       this.expandedItinerary = itineraryId; // Expand this one
+    }
+  }
+
+  toggleMap(itineraryId: number, event?: Event): void {
+    if (event) {
+      event.stopPropagation(); // Prevent event bubbling
+    }
+    
+    if (this.showMapItinerary === itineraryId) {
+      this.showMapItinerary = null;
+    } else {
+      this.showMapItinerary = itineraryId;
     }
   }
   
@@ -214,5 +245,172 @@ export class FrontOfficeItinerariesComponent implements OnInit {
   // Get stops for a specific itinerary
   getStopsForItinerary(itineraryId: number): Stop[] {
     return this.itineraryStops.get(itineraryId) || [];
+  }
+
+  // Get current user information
+  getCurrentUser() {
+    this.authService.currentUser$.subscribe({
+      next: (user: User | null) => {
+        this.currentUser = user;
+        this.loadUserActiveItineraries();
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Error fetching current user:', error);
+      }
+    });
+  }
+
+  // Load user's active itineraries
+  loadUserActiveItineraries() {
+    if (!this.currentUser) return;
+
+    this.userActiveItineraries.clear();
+    this.itineraryService.getItinerariesByUserId(this.currentUser.id).subscribe({
+      next: (itineraries: Itinerary[]) => {
+        itineraries.forEach((itinerary: Itinerary) => {
+          this.userActiveItineraries.add(itinerary.id);
+        });
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Error loading user active itineraries:', error);
+      }
+    });
+  }
+
+  // Check if an itinerary is active for the current user
+  isItineraryActive(itineraryId: number): boolean {
+    return this.userActiveItineraries.has(itineraryId);
+  }
+
+  // Toggle active state of an itinerary
+  toggleItineraryActive(itinerary: Itinerary, event: Event) {
+    event.stopPropagation(); // Prevent card expand/collapse
+    
+    if (!this.currentUser) {
+      Swal.fire({
+        title: 'Sign In Required',
+        text: 'Please sign in to add itineraries to your favorites.',
+        icon: 'info',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+
+    // Set loading state
+    this.loadingActiveState.add(itinerary.id);
+
+    if (this.isItineraryActive(itinerary.id)) {
+      // Remove from active itineraries
+      this.itineraryService.removeItineraryFromUser(itinerary.id).subscribe({
+        next: () => {
+          this.userActiveItineraries.delete(itinerary.id);
+          this.loadingActiveState.delete(itinerary.id);
+          Swal.fire({
+            toast: true,
+            position: 'bottom-end',
+            icon: 'success',
+            title: 'Removed from your itineraries',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error('Error removing itinerary from user:', error);
+          this.loadingActiveState.delete(itinerary.id);
+          Swal.fire({
+            toast: true,
+            position: 'bottom-end',
+            icon: 'error',
+            title: 'Failed to remove from your itineraries',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        }
+      });
+    } else {
+      // Add to active itineraries
+      this.itineraryService.assignItineraryToUser(itinerary.id, this.currentUser.id).subscribe({
+        next: () => {
+          this.userActiveItineraries.add(itinerary.id);
+          this.loadingActiveState.delete(itinerary.id);
+          Swal.fire({
+            toast: true,
+            position: 'bottom-end',
+            icon: 'success',
+            title: 'Added to your itineraries',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error('Error adding itinerary to user:', error);
+          this.loadingActiveState.delete(itinerary.id);
+          Swal.fire({
+            toast: true,
+            position: 'bottom-end',
+            icon: 'error',
+            title: 'Failed to add to your itineraries',
+            showConfirmButton: false,
+            timer: 2000
+          });
+        }
+      });
+    }
+  }
+
+  // Check if the active state is currently loading
+  isActiveStateLoading(itineraryId: number): boolean {
+    return this.loadingActiveState.has(itineraryId);
+  }
+
+  // Pagination methods
+  updatePagination(): void {
+    this.totalPages = Math.ceil(this.filteredItineraries.length / this.itemsPerPage);
+    this.totalPages = this.totalPages === 0 ? 1 : this.totalPages; // At least 1 page even if empty
+    this.goToPage(this.currentPage); // Ensure current page is valid
+  }
+
+  goToPage(page: number): void {
+    if (page < 1) {
+      page = 1;
+    } else if (page > this.totalPages) {
+      page = this.totalPages;
+    }
+    
+    this.currentPage = page;
+    const startIndex = (page - 1) * this.itemsPerPage;
+    const endIndex = Math.min(startIndex + this.itemsPerPage, this.filteredItineraries.length);
+    this.paginatedItineraries = this.filteredItineraries.slice(startIndex, endIndex);
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.goToPage(this.currentPage + 1);
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.goToPage(this.currentPage - 1);
+    }
+  }
+
+  // Generate an array of page numbers for the pagination UI
+  getPageNumbers(): number[] {
+    const pages: number[] = [];
+    // Show max 5 page numbers
+    const totalPages = this.totalPages;
+    let startPage = Math.max(1, this.currentPage - 2);
+    let endPage = Math.min(totalPages, startPage + 4);
+    
+    if (endPage - startPage < 4) {
+      startPage = Math.max(1, endPage - 4);
+    }
+    
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+    
+    return pages;
   }
 }

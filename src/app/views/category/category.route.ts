@@ -9,11 +9,11 @@ export const CATEGORY_ROUTES: Route[] = [
     component: CategoryListComponent,
     data: { title: 'Categories List' },
   },
-  {
-    path: 'edit',
-    component: CategoryEditComponent,
-    data: { title: 'Category Edit' },
-  },
+   {
+      path: 'edit/:id',
+      component: CategoryEditComponent,
+      data: { title: 'Category Edit' },
+    },
   {
     path: 'add',
     component: CategoryAddComponent,

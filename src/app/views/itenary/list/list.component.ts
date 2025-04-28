@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [DecimalPipe, NgbPaginationModule, NgbDropdownModule, RouterLink, WidgetState3Component, CommonModule, FormsModule],
+  imports: [NgbPaginationModule, NgbDropdownModule, RouterLink, CommonModule, FormsModule],
   templateUrl: './list.component.html',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

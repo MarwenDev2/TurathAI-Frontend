@@ -11,11 +11,13 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: FrontOfficeHomeComponent
+        component: FrontOfficeHomeComponent,
+        data: { title: 'Home' }
       },
       {
         path: 'itineraries',
-        component: FrontOfficeItinerariesComponent
+        component: FrontOfficeItinerariesComponent,
+        data: { title: 'Itineraries' }
       }
     ]
   }
@@ -25,4 +27,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class FrontOfficeRoutingModule { } 
+export class FrontOfficeRoutingModule { }

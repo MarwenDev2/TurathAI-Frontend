@@ -1,0 +1,136 @@
+<div class="container-fluid p-4">
+  <h2 class="mb-4">ALL WISHLISTS </h2>
+
+  <ngb-progressbar *ngIf="isLoading$ | async" type="primary" [value]="80" class="mb-3"></ngb-progressbar>
+
+  
+
+  <div class="d-flex flex-wrap mb-3 gap-2">
+    <div class="input-group" style="max-width: 300px;">
+      <span class="input-group-text"><i class="bx bx-search"></i></span>
+      <input type="text" class="form-control" placeholder="Search by name, site, or location" [(ngModel)]="searchTerm" (input)="onSearch()">
+    </div>
+
+    <div class="input-group" style="max-width: 700px;">
+      <div class="input-group-text">Date Range</div>
+      <input class="form-control" placeholder="Start date" ngbDatepicker #startPicker="ngbDatepicker" [(ngModel)]="startDate" (ngModelChange)="onDateRangeChange()">
+      <button class="btn btn-light-gray" (click)="startPicker.toggle()" type="button"><i class="bx bx-calendar"></i></button>
+      <div class="input-group-text">to</div>
+      <input class="form-control" placeholder="End date" ngbDatepicker #endPicker="ngbDatepicker" [(ngModel)]="endDate" (ngModelChange)="onDateRangeChange()">
+      <button class="btn btn-light-gray" (click)="endPicker.toggle()" type="button"><i class="bx bx-calendar"></i></button>
+    </div>
+
+    <button class="btn btn-gray" (click)="resetFilters()">
+      <i class="bx bx-reset me-1"></i>Clear Filters
+    </button>
+
+    <button class="btn btn-red" [disabled]="selectedWishlistIds.size === 0" (click)="bulkRemove()">
+      Remove Selected ({{ selectedWishlistIds.size }})
+    </button>
+    <button class="btn btn-teal ms-2" (click)="openExportModal()">
+      Export as CSV
+    </button>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-6" *ngFor="let group of wishlistGroups">
+      <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0 fw-bold">{{ group.user.firstName }} {{ group.user.lastName }}</h5>
+          <a [routerLink]="['/admin/users', group.user.id]" class="btn btn-sm btn-orange">
+            <i class="bx bx-show"></i> View User
+          </a>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let site of group.sites">
+            <div class="d-flex align-items-center">
+              <input type="checkbox" class="me-2" [checked]="selectedWishlistIds.has(site.id)" (change)="toggleSelection(site.id)">
+              <div>
+                <i class="bx bx-globe me-1"></i>
+                <strong>{{ site.heritageSite.name }}</strong>
+                <span class="text-muted ms-1">({{ site.heritageSite.location }})</span>
+                <div class="text-muted small">{{ site.createdAt | date:'yyyy-MM-dd' }}</div>
+              </div>
+            </div>
+            <div>
+              <button class="btn btn-sm btn-red me-1" (click)="removeWishlist(site.id)">
+                <i class="bx bxs-trash"></i> Remove
+              </button>
+              <a [routerLink]="['/admin/sites', site.heritageSite.id]" class="btn btn-sm btn-orange">
+                <i class="bx bx-show"></i> View Site
+              </a>
+            </div>
+          </li>
+          <li class="list-group-item text-center text-muted" *ngIf="!group.sites.length">
+            No sites in wishlist
+          </li>
+        </ul>
+        <div class="card-footer d-flex justify-content-between align-items-center">
+          <small class="font-italic">Total: {{ group.sites.length }} sites</small>
+          <a [routerLink]="['/admin/sites']" [queryParams]="{ userId: group.user.id }" class="btn btn-sm btn-orange">
+            <i class="bx bx-map"></i> View All Sites
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm text-center p-3 mt-3" *ngIf="!wishlistGroups.length && !(isLoading$ | async)">
+    <p class="text-muted mb-0">No wishlists found</p>
+  </div>
+
+  <div class="d-flex justify-content-center mt-3">
+    <ngb-pagination
+      [collectionSize]="totalItems"
+      [(page)]="page"
+      [pageSize]="pageSize"
+      (pageChange)="onPageChange($event)"
+      [boundaryLinks]="true">
+    </ngb-pagination>
+  </div>
+
+  <!-- Export Modal -->
+  <div class="modal fade" [ngClass]="{'show d-block': showExportModal}" tabindex="-1" role="dialog" *ngIf="showExportModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Export Wishlists to CSV</h5>
+          <button type="button" class="btn-close" (click)="closeExportModal()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <h6>Select Fields to Export:</h6>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="userName" [(ngModel)]="exportFields.userName">
+              <label class="form-check-label" for="userName">User Full Name</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="heritageSite" [(ngModel)]="exportFields.heritageSite">
+              <label class="form-check-label" for="heritageSite">Heritage Site</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="location" [(ngModel)]="exportFields.location">
+              <label class="form-check-label" for="location">Location</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox"  class="form-check-input" id="createdAt" [(ngModel)]="exportFields.createdAt">
+              <label class="form-check-label" for="createdAt">Added Date</label>
+            </div>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-soft-blue btn-sm" (click)="selectAllFields()">Select All</button>
+            <button class="btn btn-gray btn-sm" (click)="deselectAllFields()">Deselect All</button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark-gray" (click)="closeExportModal()">Cancel</button>
+          <button type="button" class="btn btn-teal" (click)="exportWishlists()">Export</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop fade show" *ngIf="showExportModal"></div>
+
+  <!-- Toast Container -->
+  <app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
+</div>

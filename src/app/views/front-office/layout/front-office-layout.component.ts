@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
-import { logout } from '@store/authentication/authentication.actions';
+import { AuthService } from '@core/services/auth.service';
+import { User } from '@core/Models/user';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-front-office-layout',
@@ -14,16 +16,26 @@ import { logout } from '@store/authentication/authentication.actions';
 })
 export class FrontOfficeLayoutComponent {
   navItems = [
-    { label: 'Home', link: '/front-office' },
-    { label: 'Itineraries', link: '/front-office/itineraries' },
-    { label: 'About', link: '/front-office/about' },
-    { label: 'Services', link: '/front-office/services' },
-    { label: 'Contact', link: '/front-office/contact' }
+    { label: 'Home', link: '/frontoffice' },
+    { label: 'Itineraries', link: '/frontoffice/itineraries' },
+    { label: 'About', link: '/frontoffice/about' },
+    { label: 'Services', link: '/frontoffice/services' },
+    { label: 'Contact', link: '/frontoffice/contact' }
   ];
 
-  constructor(private store: Store) {}
+  currentUser$: Observable<User | null>;
 
-  logout() {
-    this.store.dispatch(logout());
+  constructor(private authService: AuthService) {
+    this.currentUser$ = this.authService.currentUser$;
+    
+    // Update navigation links to use the correct path
+    this.navItems = this.navItems.map(item => ({
+      ...item,
+      link: item.link.replace('/front-office', '/frontoffice')
+    }));
   }
-} 
+
+  logout(): void {
+    this.authService.logout();
+  }
+}

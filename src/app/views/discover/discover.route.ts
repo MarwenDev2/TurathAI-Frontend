@@ -1,8 +1,8 @@
 import { Route } from '@angular/router'
-import { ListComponent } from './list/list.component'
-import { DetailsComponent } from './details/details.component'
-import { EditComponent } from './edit/edit.component'
-import { AddComponent } from './add/add.component'
+import { ListComponent } from './Business/list/list.component'
+import { DetailsComponent } from './Business/details/details.component'
+import { EditComponent } from './Business/edit/edit.component'
+import { AddComponent } from './Business/add/add.component'
 
 export const DISCOVER_ROUTES: Route[] = [
   {

@@ -1,0 +1,167 @@
+<div class="row">
+  @for (data of stateData; track $index; let last = $last) {
+    <div class="col-xl col-lg-4 col-md-6">
+      <div class="card">
+        <div class="card-body overflow-hidden position-relative">
+          <iconify-icon
+            [icon]="data.icon"
+            class="fs-36 text-{{ data.iconColor }}"
+          ></iconify-icon>
+          <h3 class="mb-0 fw-bold mt-3 mb-1">{{ data.amount }}</h3>
+          <p class="text-muted">{{ data.title }}</p>
+          <span class="badge fs-12 badge-soft-{{ data.badgeColor }}"
+            ><i class="ti ti-arrow-badge-up"></i> {{ data.badge }}%</span
+          >
+          <i class="{{ data.badgeIcon }} widget-icon"></i>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center gap-1">
+        <h4 class="card-title flex-grow-1">Businesses List</h4>
+
+        <div class="p-3">
+          <input type="text"
+                 class="form-control"
+                 placeholder="Search by name, type, or contact..."
+                 [(ngModel)]="searchTerm"
+                 (input)="onSearchInput()" />
+        </div>
+
+        <div ngbDropdown class="dropdown">
+          <button class="btn btn-outline-primary dropdown-toggle" ngbDropdownToggle>
+            Sort by
+          </button>
+          <div ngbDropdownMenu>
+            <button class="dropdown-item" (click)="sortBy('name')">Name (A-Z)</button>
+            <button class="dropdown-item" (click)="sortBy('type')">Type (A-Z)</button>
+            <button class="dropdown-item" (click)="sortBy('location')">Location</button>
+          </div>
+        </div>
+
+        <button *ngIf="selectedBusinesses.length > 0"
+                (click)="deleteSelectedBusinesses()"
+                class="btn btn-danger ms-2">
+          <iconify-icon icon="solar:trash-bin-minimalistic-2-broken" class="me-1"></iconify-icon>
+          Delete Selected
+        </button>
+
+        <a routerLink="/businesses/add" class="btn btn-sm btn-primary">
+          Add Business
+        </a>
+
+        <div ngbDropdown class="dropdown">
+          <a ngbDropdownToggle href="javascript:void(0);" class="dropdown-toggle btn btn-sm btn-outline-light">
+            Actions
+          </a>
+          <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end">
+            <a (click)="exportToExcel()" class="dropdown-item">
+              <iconify-icon icon="solar:download-minimalistic-line-duotone" class="me-1"></iconify-icon>
+              Export to Excel
+            </a>
+            <a href="javascript:void(0);" class="dropdown-item">Import</a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="table-responsive">
+          <table class="table align-middle mb-0 table-hover table-centered">
+            <thead class="bg-light-subtle">
+              <tr>
+                <th style="width: 20px;">
+                  <div class="form-check ms-1">
+                    <input type="checkbox" class="form-check-input" [(ngModel)]="allSelected" (change)="toggleAllSelection()">
+                  </div>
+                </th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Contact</th>
+                <th>Location</th>
+                <th>Heritage Site</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let business of paginatedBusinesses">
+                <td>
+                  <div class="form-check ms-1">
+                    <input type="checkbox" class="form-check-input"
+                    [checked]="selectedBusinesses.includes(business.id!)"
+                    (change)="toggleSelection(business.id!)">
+                  </div>
+                </td>
+                <td>
+                  <!-- Handle images from API response -->
+                  <div *ngIf="business.images && business.images.length > 0">
+                    <img [src]="'http://localhost:9090/images/' + business.images[0].id" 
+                         alt="Business image"
+                         style="width: 50px; height: 50px; object-fit: cover;"
+                         (error)="handleImageError($event)">
+                  </div>
+                  <!-- Handle imageIds for backward compatibility -->
+                  <div *ngIf="(!business.images || business.images.length === 0) && business.imageIds && business.imageIds.length > 0">
+                    <img [src]="getImageUrl(business.imageIds[0])" 
+                         alt="Business image"
+                         style="width: 50px; height: 50px; object-fit: cover;"
+                         (error)="handleImageError($event)">
+                  </div>
+                  <!-- No images case -->
+                  <div *ngIf="(!business.images || business.images.length === 0) && (!business.imageIds || business.imageIds.length === 0)">
+                    <img src="assets/default.jpg" 
+                         alt="No image"
+                         style="width: 50px; height: 50px; object-fit: cover; opacity: 0.7;">
+                  </div>
+                </td>
+                <td>{{ business.name }}</td>
+                <td>{{ business.type }}</td>
+                <td>{{ business.contact }}</td>
+                <td>
+                  <div>{{ getLocationDisplay(business) }}</div>
+                  <small class="text-muted">{{ business.latitude | number:'1.4-4' }}, {{ business.longitude | number:'1.4-4' }}</small>
+                </td>
+                <td>
+                  <a *ngIf="business.heritageSite" [routerLink]="['/sites/details', business.heritageSite.id]" class="text-primary">
+                    {{business.heritageSite.name}}
+                  </a>
+                  <span *ngIf="!business.heritageSite" class="text-muted">Not linked</span>
+                </td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <a [routerLink]="['/businesses/details', business.id]" class="btn btn-light btn-sm">
+                      <iconify-icon icon="solar:eye-broken"></iconify-icon>
+                    </a>
+                    <a [routerLink]="['/businesses/edit', business.id]" class="btn btn-soft-primary btn-sm">
+                      <iconify-icon icon="solar:pen-2-broken"></iconify-icon>
+                    </a>
+                    <a (click)="deleteBusiness(business.id!)" class="btn btn-soft-danger btn-sm">
+                      <iconify-icon icon="solar:trash-bin-minimalistic-2-broken"></iconify-icon>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card-footer border-top">
+        <nav aria-label="Page navigation example" class="mt-3 d-flex justify-content-end">
+          <ngb-pagination
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [collectionSize]="filteredBusinesses.length"
+            [maxSize]="5"
+            [boundaryLinks]="true"
+            [ellipses]="false">
+          </ngb-pagination>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

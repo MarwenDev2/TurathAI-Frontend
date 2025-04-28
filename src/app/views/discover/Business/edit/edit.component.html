@@ -1,0 +1,175 @@
+<div class="row">
+  <div class="col-xl-9 col-lg-8">
+    <!-- Loading indicator -->
+    @if (isLoading) {
+      <div class="card">
+        <div class="card-body text-center p-4">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-3">Loading business information...</p>
+        </div>
+      </div>
+    }
+
+    @if (!isLoading) {
+      <!-- Image Upload Section -->
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Business Photos</h4>
+        </div>
+        <div class="card-body">
+          <FileUploader [existingImageIds]="imageIds" (imageIdsChange)="onImageIdsChange($event)" />
+        </div>
+      </div>
+
+      <!-- Business Info Form -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <h4 class="card-title">Business Information</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="businessForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <label for="business-name" class="form-label">Business Name *</label>
+                  <input
+                    type="text"
+                    id="business-name"
+                    class="form-control"
+                    formControlName="name"
+                    placeholder="Business Name"
+                    [class.is-invalid]="businessForm.get('name')?.invalid && businessForm.get('name')?.touched"
+                  />
+                  @if (businessForm.get('name')?.invalid && businessForm.get('name')?.touched) {
+                    <div class="invalid-feedback">Business name is required</div>
+                  }
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <label for="business-type" class="form-label">Business Type *</label>
+                  <input
+                    type="text"
+                    id="business-type"
+                    class="form-control"
+                    formControlName="type"
+                    placeholder="Business Type (e.g., Restaurant, Hotel, Shop)"
+                    [class.is-invalid]="businessForm.get('type')?.invalid && businessForm.get('type')?.touched"
+                  />
+                  @if (businessForm.get('type')?.invalid && businessForm.get('type')?.touched) {
+                    <div class="invalid-feedback">Business type is required</div>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="mb-3">
+                  <label for="contact" class="form-label">Contact Information *</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="contact"
+                    formControlName="contact"
+                    placeholder="Phone, Email, Website, etc."
+                    [class.is-invalid]="businessForm.get('contact')?.invalid && businessForm.get('contact')?.touched"
+                  />
+                  @if (businessForm.get('contact')?.invalid && businessForm.get('contact')?.touched) {
+                    <div class="invalid-feedback">Contact information is required</div>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="mb-3">
+                  <label for="heritageSiteId" class="form-label">Associated Heritage Site (Optional)</label>
+                  <select 
+                    class="form-control" 
+                    id="heritageSiteId" 
+                    formControlName="heritageSiteId"
+                  >
+                    <option value="">None (Not associated with any site)</option>
+                    <option *ngFor="let site of sites" [value]="site.id">
+                      {{ site.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="mb-3">
+                  <label class="form-label">Location *</label>
+                  <div class="input-group mb-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [value]="coordinates.lat && coordinates.lng ? coordinates.lat + ', ' + coordinates.lng : ''"
+                      placeholder="Click map to select coordinates"
+                      readonly
+                    />
+                    <button class="btn btn-outline-primary" type="button" (click)="toggleMap()">
+                      {{ showMap ? 'Hide Map' : 'Select on Map' }}
+                    </button>
+                  </div>
+                  <div class="row g-3 mb-2" [class.is-invalid]="(businessForm.get('latitude')?.invalid || businessForm.get('longitude')?.invalid) && (businessForm.get('latitude')?.touched || businessForm.get('longitude')?.touched)">
+                    <div class="col-md-6">
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="latitude"
+                        placeholder="Latitude"
+                        [class.is-invalid]="businessForm.get('latitude')?.invalid && businessForm.get('latitude')?.touched"
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <input
+                        type="text"
+                        class="form-control"
+                        formControlName="longitude"
+                        placeholder="Longitude"
+                        [class.is-invalid]="businessForm.get('longitude')?.invalid && businessForm.get('longitude')?.touched"
+                      />
+                    </div>
+                  </div>
+                  @if (showMap) {
+                    <app-map-picker 
+                      [initialCoordinates]="coordinates.lat && coordinates.lng ? coordinates.lat + ',' + coordinates.lng : ''"
+                      (locationSelected)="onLocationSelected($event)">
+                    </app-map-picker>
+                  }
+                  @if ((businessForm.get('latitude')?.invalid || businessForm.get('longitude')?.invalid) && (businessForm.get('latitude')?.touched || businessForm.get('longitude')?.touched)) {
+                    <div class="invalid-feedback d-block">Location coordinates are required</div>
+                  }
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <button 
+                  type="submit" 
+                  class="btn btn-primary"
+                  [disabled]="businessForm.invalid || imageIds.length === 0 || isSubmitting"
+                >
+                  @if (isSubmitting) {
+                    <span class="spinner-border spinner-border-sm me-1"></span>
+                    Updating...
+                  } @else {
+                    Update Business
+                  }
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,181 @@
+<div class="container-fluid p-4">
+    <h2 class="mb-4 fw-bold text-dark">WISHLIST INSIGHTS </h2>
+  
+    <!-- Toast Container -->
+    <app-toasts aria-live="polite" aria-atomic="true"></app-toasts>
+  
+    <!-- Date Range Filter -->
+    <div class="mb-4">
+      <div class="input-group" style="max-width: 1000px;">
+        <div class="input-group-text bg-primary text-white">Date Range</div>
+        <input class="form-control" placeholder="Start date" ngbDatepicker #startPicker="ngbDatepicker" [(ngModel)]="startDate" (ngModelChange)="onDateRangeChange()">
+        <button class="btn btn-outline-primary me-5" (click)="startPicker.toggle()" type="button"><i class="bx bx-calendar"></i></button>
+        <div class="input-group-text bg-primary text-white ms-5">to</div>
+        <input class="form-control" placeholder="End date" ngbDatepicker #endPicker="ngbDatepicker" [(ngModel)]="endDate" (ngModelChange)="onDateRangeChange()">
+        <button class="btn btn-outline-primary" (click)="endPicker.toggle()" type="button"><i class="bx bx-calendar"></i></button>
+      </div>
+      <button class="btn btn-outline-primary mt-2 transition-transform" (click)="clearFilters()">
+        <i class="bx bx-reset me-1"></i> Clear Filters
+      </button>
+    </div>
+  
+    <!-- Total Wishlist Statistics -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <h3 class="mb-3 fw-semibold text-dark">Total Wishlist Statistics</h3>
+        <p class="text-muted mb-4">Total items, unique users, average items per user.</p>
+      </div>
+      <div class="col-12 col-md-6 col-xl-4" *ngFor="let stat of totalStatsWidgets">
+        <div class="card transition-transform shadow-lg">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-6">
+                <div class="avatar-md bg-soft-{{ stat.iconColor }} rounded-circle">
+                  <i class="bx {{ stat.icon }} avatar-title fs-3 text-{{ stat.iconColor }}"></i>
+                </div>
+              </div>
+              <div class="col-6 text-end">
+                <p class="text-muted mb-0 text-truncate fw-medium">{{ stat.title }}</p>
+                <h3 class="text-dark mt-1 mb-0">{{ stat.value }}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer py-2 bg-light bg-opacity-75 text-muted">
+            Updated {{ datePipe.transform(now, 'short') }}
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Insights Grid -->
+    <div class="row g-4">
+      <!-- Most Popular Heritage Sites -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card transition-transform shadow-lg h-100">
+          <div class="card-header gradient-success text-white">
+            <h5 class="card-title mb-0 fw-bold">Most Popular Heritage Sites</h5>
+            <p class="description mt-1 mb-0">Top 5 heritage sites by frequency.</p>
+          </div>
+          <div class="card-body">
+            <div dir="ltr">
+              <div id="bar-chart" class="apex-charts">
+                <apx-chart
+                  [chart]="barChart.chart!"
+                  [dataLabels]="barChart.dataLabels!"
+                  [colors]="barChart.colors!"
+                  [series]="barChart.series!"
+                  [title]="barChart.title!"
+                  [grid]="barChart.grid!"
+                  [xaxis]="barChart.xaxis!"
+                  [yaxis]="barChart.yaxis!"
+                  [plotOptions]="barChart.plotOptions!"
+                  [responsive]="barChart.responsive!"
+                  [tooltip]="barChart.tooltip!"
+                ></apx-chart>
+              </div>
+            </div>
+            <div *ngIf="!topHeritageSites.length" class="text-center text-muted mt-3">
+              No data available
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Wishlist Trends Over Time -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card transition-transform shadow-lg h-100">
+          <div class="card-header gradient-info text-white">
+            <h5 class="card-title mb-0 fw-bold">Wishlist Trends Over Time</h5>
+            <p class="description mt-1 mb-0">Number of wishlists created per month.</p>
+          </div>
+          <div class="card-body">
+            <div dir="ltr">
+              <div id="line-chart" class="apex-charts">
+                <apx-chart
+                  [chart]="lineChart.chart!"
+                  [dataLabels]="lineChart.dataLabels!"
+                  [colors]="lineChart.colors!"
+                  [stroke]="lineChart.stroke!"
+                  [series]="lineChart.series!"
+                  [title]="lineChart.title!"
+                  [grid]="lineChart.grid!"
+                  [xaxis]="lineChart.xaxis!"
+                  [responsive]="lineChart.responsive!"
+                  [tooltip]="lineChart.tooltip!"
+                ></apx-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- User Activity Insights -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card transition-transform shadow-lg h-100">
+          <div class="card-header gradient-warning text-white">
+            <h5 class="card-title mb-0 fw-bold">User Activity Insights</h5>
+            <p class="description mt-1 mb-0">Top 5 most active users by wishlist count.</p>
+          </div>
+          <div class="card-body">
+            <div dir="ltr">
+              <div id="donut-chart" class="apex-charts">
+                <apx-chart
+                  [chart]="donutChart.chart!"
+                  [dataLabels]="donutChart.dataLabels!"
+                  [colors]="donutChart.colors!"
+                  [series]="donutChart.series!"
+                  [labels]="donutChart.labels!"
+                  [title]="donutChart.title!"
+                  [legend]="donutChart.legend!"
+                  [plotOptions]="donutChart.plotOptions!"
+                  [responsive]="donutChart.responsive!"
+                  [tooltip]="donutChart.tooltip!"
+                ></apx-chart>
+              </div>
+            </div>
+            <div *ngIf="!userActivity.length" class="text-center text-muted mt-3">
+              No data available
+            </div>
+            <div class="mt-3">
+              <a *ngFor="let user of userActivity"
+                 [routerLink]="['/admin/users', user.user.id]"
+                 class="btn btn-sm btn-orange transition-transform me-2 mb-2">
+                View {{ user.user.firstName }} {{ user.user.lastName }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Location-Based Insights -->
+      <div class="col-12 col-md-12">
+        <div class="card transition-transform shadow-lg h-100">
+          <div class="card-header gradient-danger text-white">
+            <h5 class="card-title mb-0 fw-bold">Location-Based Insights</h5>
+            <p class="description mt-1 mb-0">Top 5 locations by wishlist count.</p>
+          </div>
+          <div class="card-body">
+            <div dir="ltr">
+              <div id="pie-chart" class="apex-charts">
+                <apx-chart
+                  [chart]="pieChart.chart!"
+                  [dataLabels]="pieChart.dataLabels!"
+                  [colors]="pieChart.colors!"
+                  [series]="pieChart.series!"
+                  [labels]="pieChart.labels!"
+                  [title]="pieChart.title!"
+                  [legend]="pieChart.legend!"
+                  [plotOptions]="pieChart.plotOptions!"
+                  [responsive]="pieChart.responsive!"
+                  [tooltip]="pieChart.tooltip!"
+                ></apx-chart>
+              </div>
+            </div>
+            <div *ngIf="!locationCounts.length" class="text-center text-muted mt-3">
+              No data available
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

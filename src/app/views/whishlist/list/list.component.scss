@@ -1,0 +1,150 @@
+.card {
+  border-radius: 0.5rem;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  padding: 1rem;
+}
+
+.list-group-item {
+  padding: 0.75rem 1rem;
+  border: none;
+}
+
+.btn-sm {
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.bx {
+  font-size: 1rem;
+  vertical-align: middle;
+}
+
+.alert {
+  padding: 0.75rem;
+}
+
+.card-footer {
+  background-color: #f8f9fa;
+  padding: 0.75rem 1rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.modal-backdrop {
+  opacity: 0.5;
+}
+
+.modal-content {
+  border-radius: 0.5rem;
+}
+
+.form-check {
+  margin-bottom: 0.5rem;
+}
+
+ngb-toast.fade {
+  transition: opacity 0.2s linear;
+}
+
+/* Existing View Button Style */
+.btn-orange {
+  background-color: #fd7e14;
+  border-color: #fd7e14;
+  color: #fff;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-orange:hover {
+  background-color: #e06c00;
+  border-color: #e06c00;
+}
+
+/* Remove Button Style (Deep Red) */
+.btn-red {
+  background-color: #e63946;
+  border-color: #e63946;
+  color: #fff;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-red:hover {
+  background-color: #d62828;
+  border-color: #d62828;
+}
+
+.btn-red:disabled {
+  background-color: #f4a1a8;
+  border-color: #f4a1a8;
+  color: #fff;
+  opacity: 0.65;
+}
+
+/* Export Button Style (Teal) */
+.btn-teal {
+  background-color: #2a9d8f;
+  border-color: #2a9d8f;
+  color: #fff;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-teal:hover {
+  background-color: #247b72;
+  border-color: #247b72;
+}
+
+/* Clear/Neutral Button Style (Gray) */
+.btn-gray {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #fff;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-gray:hover {
+  background-color: #5a6268;
+  border-color: #5a6268;
+}
+
+/* Date Picker Toggle Button Style (Light Gray) */
+.btn-light-gray {
+  background-color: #adb5bd;
+  border-color: #adb5bd;
+  color: #fff;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-light-gray:hover {
+  background-color: #969fa8;
+  border-color: #969fa8;
+}
+
+/* Modal Select All Button Style (Soft Blue) */
+.btn-soft-blue {
+  background-color: #48cae4;
+  border-color: #48cae4;
+  color: #fff;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-soft-blue:hover {
+  background-color: #32b7d6;
+  border-color: #32b7d6;
+}
+
+/* Modal Cancel Button Style (Dark Gray) */
+.btn-dark-gray {
+  background-color: #495057;
+  border-color: #495057;
+  color: #fff;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-dark-gray:hover {
+  background-color: #343a40;
+  border-color: #343a40;
+}

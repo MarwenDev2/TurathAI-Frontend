@@ -10,8 +10,11 @@
       <button class="btn btn-secondary mr-2" [routerLink]="['/itenary/list']">
         <i class="fa fa-arrow-left"></i> Back to Itineraries
       </button>
-      <button class="btn btn-primary" (click)="toggleAddForm()">
+      <button class="btn btn-primary mr-2" (click)="toggleAddForm()">
         <i class="fa fa-plus"></i> {{ showAddForm ? 'Cancel' : 'Add New Stop' }}
+      </button>
+      <button class="btn btn-info" (click)="toggleMap()">
+        <i class="fa fa-map"></i> {{ showMap ? 'Hide Map' : 'Show Map' }}
       </button>
     </div>
   </div>
@@ -45,9 +48,6 @@
             </div>
             <div class="text-right">
               <button type="submit" class="btn btn-primary" [disabled]="stopForm.invalid">Save</button>
-              <button type="button" class="btn btn-success ml-2" (click)="sendSmsNotification(stopForm.value)" [disabled]="stopForm.invalid">
-                <i class="fas fa-sms"></i> Send SMS
-              </button>
             </div>
           </form>
         </div>
@@ -74,6 +74,21 @@
               </button>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map Section -->
+  <div class="row" *ngIf="showMap">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Heritage Sites Map</h4>
+          <p class="card-text text-muted">Map showing locations of heritage sites in this itinerary</p>
+        </div>
+        <div class="card-body">
+          <app-stop-map [stops]="stops"></app-stop-map>
         </div>
       </div>
     </div>
@@ -115,17 +130,14 @@
                   <td>{{ stop.duration }}</td>
                   <td>
                     <div class="d-flex">
-                      <a href="javascript:void(0);" (click)="viewStopDetails(stop)" class="btn btn-info shadow btn-xs sharp mr-1" title="View Details">
-                        <i class="fas fa-clipboard-list"></i> View
+                      <a href="javascript:void(0);" (click)="viewStopDetails(stop)" class="btn btn-info shadow btn-xs sharp mr-1">
+                        <i class="fa fa-eye"></i>
                       </a>
-                      <a href="javascript:void(0);" (click)="editStop(stop)" class="btn btn-primary shadow btn-xs sharp mr-1" title="Edit Stop">
-                        <i class="fas fa-edit"></i> Edit
+                      <a href="javascript:void(0);" (click)="editStop(stop)" class="btn btn-primary shadow btn-xs sharp mr-1">
+                        <i class="fa fa-pencil"></i>
                       </a>
-                      <a href="javascript:void(0);" (click)="deleteStop(stop.id)" class="btn btn-danger shadow btn-xs sharp mr-1" title="Delete Stop">
-                        <i class="fas fa-trash"></i> Delete
-                      </a>
-                      <a href="javascript:void(0);" (click)="sendSmsNotification(stop)" class="btn btn-success shadow btn-xs sharp" title="Send SMS Notification">
-                        <i class="fas fa-sms"></i> SMS
+                      <a href="javascript:void(0);" (click)="deleteStop(stop.id)" class="btn btn-danger shadow btn-xs sharp">
+                        <i class="fa fa-trash"></i>
                       </a>
                     </div>
                   </td>

@@ -11,7 +11,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
   templateUrl: './itinerary-management.component.html',
-  styleUrls: ['./itinerary-management.component.scss']
+
 })
 export class ItineraryManagementComponent implements OnInit {
   itineraries: Itinery[] = [];

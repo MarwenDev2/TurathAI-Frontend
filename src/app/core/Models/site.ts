@@ -1,4 +1,3 @@
-// site.ts
 export interface Site {
     id: number;
     name: string;
@@ -8,5 +7,6 @@ export interface Site {
     popularityScore: number;
     categoryId: number;
     imageIds?: number[];
+    averageRating?: number;
   }
   

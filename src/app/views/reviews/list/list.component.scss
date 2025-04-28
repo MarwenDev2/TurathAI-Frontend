@@ -1,0 +1,127 @@
+.filter-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+
+  .form-group {
+    margin-bottom: 0;
+
+    label {
+      margin-right: 5px;
+    }
+
+    select,
+    input[type="text"] {
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+  }
+
+  .btn {
+    padding: 5px 15px;
+  }
+}
+
+.card {
+  .comment-wrapper {
+    .comment-text {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      &.expanded {
+        -webkit-line-clamp: unset;
+      }
+    }
+
+    .read-more-btn {
+      background: none;
+      border: none;
+      color: #007bff;
+      padding: 0;
+      font-size: 14px;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .form-group {
+      width: 200px;
+    }
+
+    .form-control {
+      padding: 5px;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.spinner-border {
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.list-group-item {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+
+  .badge {
+    font-size: 0.9rem;
+  }
+
+  .highlight {
+    background-color: #e99a69;
+    padding: 0 2px;
+    border-radius: 2px;
+  }
+}
+
+/* Export Modal Styles */
+.modal {
+  .modal-dialog {
+    max-width: 500px;
+  }
+
+  .modal-body {
+    .form-check {
+      margin-bottom: 10px;
+
+      .form-check-label {
+        margin-left: 5px;
+      }
+    }
+
+    h6 {
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .select-deselect-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+
+      .btn {
+        padding: 5px 10px;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .modal-footer {
+    .btn {
+      padding: 5px 15px;
+    }
+  }
+}
+
+/* Add custom style for the "No Reviews" badge */
+.badge-no-reviews {
+  background-color: #a94d30; /* Muted purple color */
+  color: #f2ecec; /* Dark text color for contrast */
+}

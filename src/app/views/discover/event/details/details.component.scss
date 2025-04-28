@@ -1,0 +1,38 @@
+.carousel-img-container {
+    height: 300px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    
+    img {
+      object-fit: contain;
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+  
+  .img-thumbnail {
+    height: 100px;
+    width: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s;
+  
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+  
+  .cursor-pointer {
+    cursor: pointer;
+  }
+  
+  .modal-body img {
+    max-height: 70vh;
+    width: auto;
+    margin: 0 auto;
+    display: block;
+  }

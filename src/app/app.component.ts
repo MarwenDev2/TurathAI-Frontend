@@ -8,6 +8,7 @@ import {
   RouterOutlet,
   type Event,
 } from '@angular/router'
+import { AuthService } from '@core/services/auth.service'
 import { TitleService } from '@core/services/title.service'
 import {
   NgProgressComponent,
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
   private titleService = inject(TitleService)
   private router = inject(Router)
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.router.events.subscribe((event: Event) => {
       this.checkRouteChange(event)
     })
@@ -37,6 +38,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.init()
+    this.authService.authStateInitialized().subscribe();
   }
 
   checkRouteChange(routerEvent: Event) {

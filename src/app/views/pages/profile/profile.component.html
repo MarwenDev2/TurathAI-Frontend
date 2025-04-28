@@ -1,118 +1,267 @@
-<div class="row">
-  <div class="col-xl-9 col-lg-8">
-    <div class="card overflow-hidden">
-      <div class="card-body">
-        <div class="bg-primary profile-bg rounded-top position-relative mx-n3 mt-n3">
-          <img src="assets/images/users/avatar-1.jpg" alt="" class="avatar-xl border border-light border-3 rounded-circle position-absolute top-100 start-0 translate-middle ms-5">
-        </div>
-        <div class="mt-5 d-flex flex-wrap align-items-center justify-content-between">
-          <div>
-            <h4 class="mb-1">Gaston Lapierre <i class='bx bxs-badge-check text-success align-middle'></i></h4>
-            <p class="mb-0">Project Head Manager</p>
+<div class="profile-container">
+  <!-- Profile Header Section -->
+  <div class="row">
+    <div class="col-xl-9 col-lg-8">
+      <div class="card overflow-hidden shadow-lg animate__animated animate__fadeIn" 
+           style="border-radius: 16px; transition: all 0.3s ease; border: none;">
+        <div class="card-body position-relative p-4">
+          <!-- Premium Profile Image with Floating Animation -->
+          <div class="profile-image-container" style="position: absolute; width: 120px; height: 120px; top: 20px; left: 30px; z-index: 10;
+            animation: float 6s ease-in-out infinite;">
+            <img [src]="getProfileImage()" 
+                alt="Profile Image" 
+                class="border border-light border-3 rounded-circle position-absolute"
+                style="width: 70px; height: 70px;">
+            <button class="btn btn-light btn-sm rounded-circle position-absolute bottom-0 end-0 shadow-sm"
+                    style="width: 36px; height: 36px; transition: all 0.2s ease;"
+                    (click)="openImageUpload()"
+                    [@buttonHover]="'normal'">
+              <i class="bx bx-camera fs-5"></i>
+            </button>
           </div>
-          <div class="d-flex align-items-center gap-2 my-2 my-lg-0">
-            <a href="javascript:void(0);" class="btn btn-info"><i class='bx bx-message-dots'></i> Message</a>
-            <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="bx bx-plus"></i> Follow</a>
-            <div ngbDropdown class="dropdown">
-              <a ngbDropdownToggle href="javascript:void(0);" class="dropdown-toggle arrow-none card-drop">
-                <iconify-icon icon="solar:menu-dots-bold" class="fs-20 align-middle text-muted"></iconify-icon>
-              </a>
-              <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end">
-                <a href="javascript:void(0);" class="dropdown-item">Download</a>
-                <a href="javascript:void(0);" class="dropdown-item">Export</a>
-                <a href="javascript:void(0);" class="dropdown-item">Import</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row mt-3 gy-2">
-          <div class="col-lg-2 col-6">
-            <div class="d-flex align-items-center gap-2 border-end">
-              <div class="">
-                <iconify-icon icon="solar:clock-circle-bold-duotone" class="fs-28 text-primary"></iconify-icon>
-              </div>
-              <div>
-                <h5 class="mb-1">3+ Years Job</h5>
-                <p class="mb-0">Experience</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-2 col-6">
-            <div class="d-flex align-items-center gap-2 border-end">
-              <div class="">
-                <iconify-icon icon="solar:cup-star-bold-duotone" class="fs-28 text-primary"></iconify-icon>
-              </div>
-              <div>
-                <h5 class="mb-1">5 Certificate</h5>
-                <p class="mb-0">Achieved</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-2 col-6">
-            <div class="d-flex align-items-center gap-2">
-              <div class="">
-                <iconify-icon icon="solar:notebook-bold-duotone" class="fs-28 text-primary"></iconify-icon>
-              </div>
-              <div>
-                <h5 class="mb-1">2 Internship</h5>
-                <p class="mb-0">Completed</p>
-              </div>
-            </div>
-          </div>
-        </div>
 
+          <div class="mt-4 d-flex flex-wrap align-items-center justify-content-between" 
+               style="margin-left: 140px; transition: all 0.3s ease;">
+            <!-- Error Message with Fade Animation -->
+            <div *ngIf="!isLoading && !currentUser" 
+                 class="alert alert-danger animate__animated animate__fadeIn">
+              <div class="d-flex align-items-center">
+                <i class="bx bx-error-circle me-2"></i>
+                <span>Failed to load user data. Please try again later.</span>
+                <button class="btn btn-sm btn-outline-danger ms-auto"
+                        [@buttonHover]="'normal'">
+                  Return to Login
+                </button>
+              </div>
+            </div>
+
+            <!-- User Info with Slide Animation -->
+            <div [@slideIn]="currentUser ? 'in' : 'out'">
+              <h4 class="mb-1 fw-bold" style="font-size: 1.5rem; color: #2c3e50;">
+                {{currentUser?.firstName}} {{currentUser?.lastName}}
+                <i *ngIf="currentUser?.role === 'ADMIN'" 
+                   class='bx bxs-badge-check text-primary align-middle ms-1'></i>
+              </h4>
+              <p class="mb-0 text-muted">{{currentUser?.role || 'Member'}}</p>
+            </div>
+
+            <!-- Action Buttons with Hover Effects -->
+            <div class="d-flex align-items-center gap-2 my-2 my-lg-0">
+              <button class="btn btn-primary px-3" 
+                      style="border-radius: 8px; transition: all 0.3s ease;"
+                      [@buttonHover]="'normal'">
+                <i class='bx bx-message-dots me-1'></i> Message
+              </button>
+              <button class="btn btn-outline-primary px-3" 
+                      style="border-radius: 8px; transition: all 0.3s ease;"
+                      [@buttonHover]="'normal'">
+                <i class="bx bx-plus me-1"></i> Follow
+              </button>
+              <div ngbDropdown class="dropdown">
+                <button ngbDropdownToggle 
+                        class="btn btn-light rounded-circle d-flex align-items-center justify-content-center"
+                        style="width: 36px; height: 36px; transition: all 0.3s ease;"
+                        [@buttonHover]="'normal'">
+                  <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+                <div ngbDropdownMenu 
+                     class="dropdown-menu dropdown-menu-end shadow animate__animated animate__fadeIn"
+                     style="border-radius: 12px; border: none;">
+                     <button ngbDropdownItem class="dropdown-item d-flex align-items-center gap-2" [routerLink]="['/auth/password']">
+                      <i class="bx bx-lock-alt"></i> Change Password
+                    </button>
+                  <button ngbDropdownItem class="dropdown-item d-flex align-items-center gap-2">
+                    <i class="bx bx-cog"></i> Settings
+                  </button>
+                  <div class="dropdown-divider"></div>
+                  <button ngbDropdownItem class="dropdown-item d-flex align-items-center gap-2 text-danger">
+                    <i class="bx bx-log-out"></i> Logout
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stats Section with Stagger Animation -->
+          <div class="row mt-3 gy-2" *ngIf="currentUser" 
+               style="margin-left: 140px;"
+               [@staggerAnimation]="'in'">
+            <div class="col-lg-3 col-6" *ngFor="let stat of userStats">
+              <div class="d-flex align-items-center gap-3 p-3 rounded-3" 
+                   style="background: rgba(13, 110, 253, 0.05); transition: all 0.3s ease;"
+                   [@cardHover]="'normal'">
+                <div>
+                  <h5 class="mb-0 fw-bold">{{stat.value}}</h5>
+                  <p class="mb-0 text-muted small">{{stat.label}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Personal Info Sidebar with Slide Animation -->
+    <div class="col-xl-3 col-lg-4" [@slideInRight]="'in'">
+      <profile-personal-info [user]="currentUser" />
+    </div>
+  </div>
+
+  <!-- Main Content Sections -->
+  <div class="row">
+    <div class="col-xl-8 col-lg-7" [@fadeIn]="'in'">
+      <profile-about [userId]="currentUser?.id" />
+    </div>
+    <div class="col-xl-4 col-lg-5" [@fadeIn]="'in'">
+      <profile-achievement [user]="currentUser" />
+    </div>
+  </div>
+
+  <!-- Interests Section with Fade Animation -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-white">
+          <h4 class="card-title mb-0 fw-bold">Interests</h4>
+        </div>
+        <div class="card-body">
+          <div class="d-flex flex-wrap gap-2 align-items-center">
+            <!-- Interests List -->
+            <ng-container *ngIf="!isUpdating; else updatingInterests">
+              <span *ngFor="let interest of interestsList" 
+                    class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill d-flex align-items-center gap-1">
+                {{interest}}
+                <button class="btn btn-link p-0 text-primary" 
+                        (click)="removeInterest(interest)"
+                        [disabled]="isUpdating">
+                  <i class="bx bx-x"></i>
+                </button>
+              </span>
+            </ng-container>
+            
+            <!-- Add Interest Form -->
+            <div class="input-group mt-2" style="max-width: 300px;">
+              <input type="text" class="form-control form-control-sm" 
+                    placeholder="Add interest..." 
+                    [(ngModel)]="newInterest"
+                    [disabled]="isUpdating"
+                    (keyup.enter)="addInterest()">
+              <button class="btn btn-primary btn-sm" 
+                      (click)="addInterest()"
+                      [disabled]="!newInterest.trim() || isUpdating">
+                <span *ngIf="!isUpdating"><i class="bx bx-plus"></i></span>
+                <span *ngIf="isUpdating" class="spinner-border spinner-border-sm"></span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-xl-3 col-lg-4">
-    <profile-personal-info />
-  </div>
-</div>
-<div class="row">
-  <div class="col-xl-8 col-lg-7">
-    <profile-about />
-  </div>
-  <div class="col-xl-4 col-lg-5">
-    <profile-achievement />
-  </div>
-</div>
 
-<div class="row">
-  <div class="col-lg-3">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">Popular Filters</h4>
-      </div>
-      <div class="card-body">
-        <div class="d-flex flex-wrap gap-2" role="group" aria-label="Basic checkbox toggle button group">
-          <input type="checkbox" class="btn-check" id="all-topic" checked>
-          <label class="btn bg-body rounded-pill d-flex justify-content-center align-items-center" for="all-topic">All Topics (23)</label>
-
-          <input type="checkbox" class="btn-check" id="saas">
-          <label class="btn bg-body rounded-pill d-flex justify-content-center align-items-center" for="saas">#SaaS (21)</label>
-
-          <input type="checkbox" class="btn-check" id="latam">
-          <label class="btn bg-body rounded-pill d-flex justify-content-center align-items-center" for="latam">#LatAm (5)</label>
-
-          <input type="checkbox" class="btn-check" id="inbound">
-          <label class="btn bg-body rounded-pill d-flex justify-content-center align-items-center" for="inbound">#inbound (4)</label>
-
-          <input type="checkbox" class="btn-check" id="europe">
-          <label class="btn bg-body rounded-pill d-flex justify-content-center align-items-center" for="europe">#Europe (25)</label>
-
-          <input type="checkbox" class="btn-check" id="performance">
-          <label class="btn bg-body rounded-pill d-flex justify-content-center align-items-center" for="performance">#Performance-marketing (7)</label>
-
-          <input type="checkbox" class="btn-check" id="facebook">
-          <label class="btn bg-body rounded-pill d-flex justify-content-center align-items-center" for="facebook">#Facebook-advertising (8)</label>
+  <ng-template #updatingInterests>
+    <div class="d-flex align-items-center gap-2 py-2">
+      <div class="spinner-border spinner-border-sm text-primary"></div>
+      <span>Updating interests...</span>
+    </div>
+  </ng-template>
+  
+  <!-- Account Information with Fade Animation -->
+  <div class="row mt-4" [@fadeInUp]="'in'">
+    <div class="col-lg-12">
+      <div class="card shadow-sm" style="border-radius: 16px; border: none;">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center"
+             style="border-bottom: 1px solid rgba(0,0,0,0.05);">
+          <h4 class="card-title mb-0 fw-bold">Account Information</h4>
+          <button class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1"
+                  style="border-radius: 8px;">
+            <i class="bx bx-cog"></i> Settings
+          </button>
         </div>
-      </div>
-      <div class="card-footer border-top text-center">
-        <a href="javascript:void(0);" class="link-primary">View More</a>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <div class="info-item">
+                <label class="small text-muted mb-1">Email</label>
+                <p class="mb-0 fw-bold">{{currentUser?.email}}</p>
+              </div>
+              <div class="info-item mt-3">
+                <label class="small text-muted mb-1">Account Created</label>
+                <p class="mb-0 fw-bold">{{currentUser?.createdAt | date}}</p>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="info-item">
+                <label class="small text-muted mb-1">Role</label>
+                <p class="mb-0">
+                  <span class="badge bg-success" style="border-radius: 8px; padding: 0.35rem 0.75rem;">
+                    {{currentUser?.role}}
+                  </span>
+                </p>
+              </div>
+              <div class="info-item mt-3">
+                <label class="small text-muted mb-1">Status</label>
+                <p class="mb-0">
+                  <span class="badge bg-success" style="border-radius: 8px; padding: 0.35rem 0.75rem;">
+                    Active
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="info-item">
+                <label class="small text-muted mb-1">Country</label>
+                <p class="mb-0 fw-bold">{{currentUser?.originCountry || 'Not specified'}}</p>
+              </div>
+              <div class="info-item mt-3">
+                <label class="small text-muted mb-1">Language</label>
+                <p class="mb-0 fw-bold">{{currentUser?.spokenLanguage || 'Not specified'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-lg-9">
-    <profile-reviews />
-  </div>
 </div>
+
+<!-- Animation Definitions -->
+<style>
+  /* Floating animation for profile image */
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+
+  /* Hover effects */
+  .profile-image-container:hover {
+    transform: scale(1.05) translateY(-5px);
+  }
+
+  /* Smooth transitions */
+  .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+  }
+
+  /* Button hover effects */
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.2);
+  }
+
+  .btn-outline-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.1);
+  }
+
+  /* Badge hover effects */
+  .badge:hover {
+    transform: scale(1.05);
+  }
+</style>

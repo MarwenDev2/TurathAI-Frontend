@@ -73,7 +73,7 @@
 
   <!-- Itineraries Grid -->
   <section class="itineraries-grid" *ngIf="!loading && !error && filteredItineraries.length > 0">
-    <div class="itinerary-card" *ngFor="let itinerary of filteredItineraries">
+    <div class="itinerary-card" *ngFor="let itinerary of paginatedItineraries">
       <div class="card-image">
         <!-- Placeholder image - replace with actual itinerary images when available -->
         <div class="image-placeholder">
@@ -81,6 +81,11 @@
         </div>
         <div class="card-badge">
           {{formatPrice(itinerary.budget)}}
+        </div>
+        <div class="favorite-button" (click)="toggleItineraryActive(itinerary, $event)">
+          <i *ngIf="isActiveStateLoading(itinerary.id)" class="fa fa-spinner fa-spin"></i>
+          <i *ngIf="!isActiveStateLoading(itinerary.id) && isItineraryActive(itinerary.id)" class="fa fa-check-circle"></i>
+          <i *ngIf="!isActiveStateLoading(itinerary.id) && !isItineraryActive(itinerary.id)" class="fa fa-circle-o"></i>
         </div>
       </div>
       <div class="card-content">
@@ -101,16 +106,25 @@
         
         <!-- Stops Section -->
         <div class="stops-section" *ngIf="hasStops(itinerary.id)">
-          <div class="stops-header" (click)="toggleStops(itinerary.id)">
-            <span class="stops-title">
+          <div class="stops-header">
+            <span class="stops-title" (click)="toggleStops(itinerary.id)">
               <i class="fa fa-map-marker-alt"></i> 
               {{ getStopsForItinerary(itinerary.id).length }} Destinations
             </span>
-            <i class="expand-icon" [class.expanded]="expandedItinerary === itinerary.id">
+            <span class="map-toggle" (click)="toggleMap(itinerary.id, $event)">
+              <i class="fa" [ngClass]="{'fa-map': showMapItinerary !== itinerary.id, 'fa-times': showMapItinerary === itinerary.id}"></i>
+              {{ showMapItinerary === itinerary.id ? 'Hide Map' : 'Show Map' }}
+            </span>
+            <i class="expand-icon" [class.expanded]="expandedItinerary === itinerary.id" (click)="toggleStops(itinerary.id)">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                 <path d="M7 10l5 5 5-5z"/>
               </svg>
             </i>
+          </div>
+          
+          <!-- Map View -->
+          <div class="stops-map" *ngIf="showMapItinerary === itinerary.id">
+            <app-stop-map [stops]="getStopsForItinerary(itinerary.id)" [itineraryId]="itinerary.id"></app-stop-map>
           </div>
           
           <!-- Expanded Stops Timeline -->
@@ -159,6 +173,31 @@
       </div>
     </div>
   </section>
+
+  <!-- Pagination Controls -->
+  <div class="pagination-controls" *ngIf="!loading && !error && filteredItineraries.length > 0">
+    <button class="page-button" [disabled]="currentPage === 1" (click)="prevPage()">
+      <i class="fa fa-chevron-left"></i>
+    </button>
+    
+    <div class="page-numbers">
+      <button 
+        *ngFor="let page of getPageNumbers()" 
+        class="page-number" 
+        [class.active]="page === currentPage"
+        (click)="goToPage(page)">
+        {{ page }}
+      </button>
+    </div>
+    
+    <button class="page-button" [disabled]="currentPage === totalPages" (click)="nextPage()">
+      <i class="fa fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <div class="pagination-info" *ngIf="!loading && !error && filteredItineraries.length > 0">
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  </div>
 
   <!-- No Results State -->
   <div class="no-results" *ngIf="!loading && !error && filteredItineraries.length === 0">

@@ -8,6 +8,7 @@ import { provideRouter } from '@angular/router'
 
 import { DecimalPipe } from '@angular/common'
 import {
+  HTTP_INTERCEPTORS,
   provideHttpClient,
   withFetch,
   withInterceptorsFromDi,
@@ -17,13 +18,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { provideEffects } from '@ngrx/effects'
 import { provideStore } from '@ngrx/store'
 import { provideStoreDevtools } from '@ngrx/store-devtools'
-import { CalendarEffects } from '@store/calendar/calendar.effects'
-import { localStorageSyncReducer } from '@store/layout/layout-reducers'
 import { provideToastr } from 'ngx-toastr'
 import { routes } from './app.routes'
 import { FakeBackendProvider } from './helper/fake-backend'
-import { rootReducer } from './store'
-import { AuthenticationEffects } from '@store/authentication/authentication.effects'
+import { AuthInterceptor } from '@core/AuthInterceptor'
+
+// Social Login imports
+import { SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login'
+import { socialAuthServiceConfig } from './core/config/social-auth.config'
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,11 +33,14 @@ export const appConfig: ApplicationConfig = {
     DecimalPipe,
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideStore(rootReducer, { metaReducers: [localStorageSyncReducer] }),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    provideEffects(CalendarEffects, AuthenticationEffects),
-    importProvidersFrom(BrowserAnimationsModule, BrowserModule),
+    importProvidersFrom(BrowserAnimationsModule, BrowserModule, SocialLoginModule),
     provideHttpClient(withFetch(), withInterceptorsFromDi()),
     provideToastr({}),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: socialAuthServiceConfig
+    }
   ],
 }

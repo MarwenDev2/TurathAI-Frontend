@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { environment } from '@environment/environment';
 
 export interface Itinerary {
   id: number;
@@ -65,6 +64,27 @@ export class ItineraryService {
   // Get QR code for an itinerary
   getQRCode(id: number): string {
     return `http://localhost:9090/api/qrcode/itinery/${id}`;
+  }
+
+  // Get all itineraries associated with a user
+  getItinerariesByUserId(userId: number): Observable<Itinerary[]> {
+    return this.http.get<Itinerary[]>(`${this.apiUrl}/user/${userId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // Assign an itinerary to a user
+  assignItineraryToUser(itineraryId: number, userId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/assign`, { itineraryId, userId }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // Remove itinerary from user
+  removeItineraryFromUser(itineraryId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/unassign/${itineraryId}`).pipe(
+      catchError(this.handleError)
+    );
   }
 
   // Error handling method

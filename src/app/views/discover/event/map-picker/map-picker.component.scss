@@ -1,0 +1,17 @@
+/* Fix for Leaflet default icon paths */
+.leaflet-default-icon-path {
+    background-image: url(https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png);
+  }
+  
+  /* Fix for missing marker icons */
+  .leaflet-div-icon {
+    background: transparent;
+    border: none;
+  }
+  
+  .leaflet-marker-icon {
+    background-image: url('https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
