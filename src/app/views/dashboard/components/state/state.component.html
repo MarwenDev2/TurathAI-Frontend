@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-12">
+    <div class="alert alert-primary text-truncate mb-3" role="alert">
+      We regret to inform you that our server is currently experiencing technical difficulties.
+    </div>
+  </div>
+
+  @for(item of stateList;track $index){
+  <div class="col-md-6">
+      <app-widget-card [item]="item" />
+  </div> 
+  }
+</div> 
+

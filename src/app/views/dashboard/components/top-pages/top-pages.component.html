@@ -1,0 +1,27 @@
+<div class="card card-height-100">
+  <div class="card-header d-flex align-items-center justify-content-between gap-2">
+    <h4 class="card-title flex-grow-1">Top Pages</h4>
+
+    <a href="javascript:void(0);" class="btn btn-sm btn-soft-primary">View All</a>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover table-nowrap table-centered m-0">
+      <thead class="bg-light bg-opacity-50">
+        <tr>
+          <th class="text-muted ps-3">Page Path</th>
+          <th class="text-muted">Page Views</th>
+          <th class="text-muted">Exit Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(item of pageList;track $index){
+        <tr>
+          <td class="ps-3"><a href="javascript:void(0);" class="text-muted">{{item.url}}</a></td>
+          <td>{{item.views}} </td>
+          <td><span class="badge badge-soft-{{item.status}}">{{item.change}}</span></td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,135 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor mb-3" id="usage">
+            Usage<a class="anchor-link" href="#usage">#</a>
+          </h5>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="basic">
+            Basic Example<a class="anchor-link" href="#basic">#</a>
+          </h5>
+          <p class="text-muted">Give textual form controls like <code>&lt;input&gt;</code>s and
+            <code>&lt;textarea&gt;</code>s an upgrade with custom styles, sizing, focus states, and more.</p>
+          <div class="">
+            <div class="mb-3">
+              <div id="gmaps-basic" class="gmaps">
+                <google-map [latitude]="latitude" [longitude]="longitude" [zoom]="15" width="100%" height="300px" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="google_map">
+            Markers Google Map<a class="anchor-link" href="#google_map">#</a>
+          </h5>
+          <p class="text-muted">Give textual form controls like <code>&lt;input&gt;</code>s and
+            <code>&lt;textarea&gt;</code>s an upgrade with custom styles, sizing, focus states, and more.</p>
+          <div class="">
+            <div class="mb-3">
+              <div id="gmaps-markers" class="gmaps">
+                <google-map height="300px" width="100%" [options]="mapOptions">
+                  @for (marker of markers; track $index) {
+                    <map-marker [position]="marker.position"/>
+                  }
+                </google-map>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="map_types">
+            Google Map Types<a class="anchor-link" href="#map_types">#</a>
+          </h5>
+          <p class="text-muted">Give textual form controls like <code>&lt;input&gt;</code>s and
+            <code>&lt;textarea&gt;</code>s an upgrade with custom styles, sizing, focus states, and more.</p>
+          <div class="">
+            <div class="mb-3">
+              <div id="gmaps-types" class="gmaps">
+                <google-map
+                [latitude]="latitude"
+                [options]="options"
+                [longitude]="longitude"
+                [zoom]="15"
+                width="100%"
+                height="300px"
+              />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="ultra_light">
+            Ultra Light With Labels<a class="anchor-link" href="#ultra_light">#</a>
+          </h5>
+          <p class="text-muted">Give textual form controls like <code>&lt;input&gt;</code>s and
+            <code>&lt;textarea&gt;</code>s an upgrade with custom styles, sizing, focus states, and more.</p>
+          <div class="">
+            <div class="mb-3">
+              <div id="ultra-light" class="gmaps">
+                <google-map
+                  [latitude]="latitude"
+                  [longitude]="longitude"
+                  [zoom]="15"
+                  width="100%"
+                  height="300px"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="dark-view">
+            Dark<a class="anchor-link" href="#dark-view">#</a>
+          </h5>
+          <p class="text-muted">Give textual form controls like <code>&lt;input&gt;</code>s and
+            <code>&lt;textarea&gt;</code>s an upgrade with custom styles, sizing, focus states, and more.</p>
+          <div class="">
+            <div class="mb-3">
+              <div id="dark" class="gmaps">
+                <google-map
+                [latitude]="latitude"
+                [longitude]="longitude"
+                [zoom]="15"
+                width="100%"
+                height="300px"
+             />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3">
+      <ui-examples-list
+      [linkList]="[
+        { label: 'Usage', link: '#usage' },
+        { label: 'Basic', link: '#basic' },
+        { label: 'Markers Google Map', link: '#google_map' },
+        { label: 'Google Map Types', link: '#map_types' },
+        { label: 'Ultra Light With Labels', link: '#ultra_light' },
+        { label: 'Dark', link: '#dark-view' }
+      ]"
+    />
+    </div>
+  </div>
+</div>

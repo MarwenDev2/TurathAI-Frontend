@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-12">
+    <div class="text-center my-4">
+      <h3>Simple Pricing Plans</h3>
+      <p class="text-muted text-center">
+        Get the power and control you need to manage your organization's
+        technical documentation
+      </p>
+    </div>
+    <div class="row justify-content-center">
+      @for (plan of plans; track $index) {
+        <div class="col-lg-3">
+          <div class="card card-pricing">
+            <div class="card-body">
+              @if (plan.ribbon) {
+                <div class="pricing-ribbon pricing-ribbon-primary float-end">
+                  {{ plan.ribbon }}
+                </div>
+              }
+              <h5 class="mt-0 mb-3 fs-14 text-uppercase fw-semibold">
+                {{ plan.name }}
+              </h5>
+              <h2 class="mt-0 mb-3 fw-bold">
+                ${{ plan.price }}
+                <span class="fs-14 fw-medium text-muted"
+                  >/ {{ plan.period }}</span
+                >
+              </h2>
+
+              <ul
+                class="card-pricing-features text-muted border-top pt-2 mt-2 ps-0 list-unstyled"
+              >
+                @for (feature of plan.features; track $index) {
+                  <li class="text-dark">
+                    <i class="bx bx-check-circle text-primary fs-15 me-1"></i
+                    >{{ feature }}
+                  </li>
+                }
+              </ul>
+
+              <div class="mt-4 text-center">
+                <button
+                  class="btn btn-primary px-sm-4 w-100"
+                  [disabled]="!plan.button.enabled"
+                >
+                  {{ plan.button.text }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

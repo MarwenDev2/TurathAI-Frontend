@@ -1,0 +1,73 @@
+<div class="container">
+
+  <div class="row">
+      <div class="col-xl-9">
+         <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title anchor mb-1" id="overview">
+                      Overview 
+                  </h5>
+                  
+                  <p class="mb-0"><span class="fw-medium">Find the JS file for the following chart at:</span> <code> ../src/assets/js/components/apexchart-bubble.js</code></p>
+              </div>
+          </div>
+
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title anchor" id="simple">Simple Bubble Chart</h4>
+                  <div dir="ltr">
+                      <div id="simple-bubble" class="apex-charts">
+                        <apx-chart
+                        [chart]="bubbleChart.chart!"
+                        [dataLabels]="bubbleChart.dataLabels!"
+                        [series]="bubbleChart.series!"
+                        [fill]="bubbleChart.fill!"
+                        [colors]="bubbleChart.colors!"
+                        [xaxis]="bubbleChart.xaxis!"
+                        [yaxis]="bubbleChart.yaxis!"
+                        [grid]="bubbleChart.grid!"
+                        [legend]="bubbleChart.legend!"
+                      >
+                      </apx-chart>
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
+
+          <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title anchor" id="3d-bubble">3D Bubble Chart</h4>
+                  <div dir="ltr">
+                      <div id="second-bubble" class="apex-charts">
+                        <apx-chart
+                        [chart]="secondbubbleChart.chart!"
+                        [dataLabels]="secondbubbleChart.dataLabels!"
+                        [series]="secondbubbleChart.series!"
+                        [fill]="secondbubbleChart.fill!"
+                        [colors]="secondbubbleChart.colors!"
+                        [xaxis]="secondbubbleChart.xaxis!"
+                        [yaxis]="secondbubbleChart.yaxis!"
+                        [grid]="secondbubbleChart.grid!"
+                        [legend]="secondbubbleChart.legend!"
+                      />
+                      </div>
+                  </div>
+              </div>
+              
+          </div>
+          
+      </div> 
+
+      <div class="col-xl-3">
+        <ui-examples-list
+        [linkList]="[
+          { label: 'Overview', link: '#overview' },
+          { label: 'Simple Bubble Chart', link: '#simple' },
+          { label: '3D Bubble Chart', link: '#3d-bubble' }
+        ]"
+      />
+      </div>
+  </div> 
+</div> 

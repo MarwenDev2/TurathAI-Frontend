@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor mb-1" id="overview">Overview</h5>
+  
+          <p class="mb-0">
+            <span class="fw-medium"
+              >Find the JS file for the following chart at:</span
+            >
+            <code> src/app/views/charts/polar.component.ts</code>
+          </p>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-3 anchor" id="basic">
+            Basic Polar Area Chart
+          </h4>
+          <div dir="ltr">
+            <div id="basic-polar-area" class="apex-charts">
+              <apx-chart
+                [series]="basicPolarChart.series!"
+                [chart]="basicPolarChart.chart!"
+                [stroke]="basicPolarChart.stroke!"
+                [labels]="basicPolarChart.labels!"
+                [colors]="basicPolarChart.colors!"
+                [legend]="basicPolarChart.legend!"
+                [responsive]="basicPolarChart.responsive!"
+                [fill]="basicPolarChart.fill!"
+              >
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-3 anchor" id="monochrome">
+            Monochrome Polar Area
+          </h4>
+          <div dir="ltr">
+            <div id="monochrome-polar-area" class="apex-charts">
+              <apx-chart
+                [series]="monochromePolarChart.series!"
+                [chart]="monochromePolarChart.chart!"
+                [stroke]="monochromePolarChart.stroke!"
+                [labels]="monochromePolarChart.labels!"
+                [yaxis]="monochromePolarChart.yaxis!"
+                [legend]="monochromePolarChart.legend!"
+                [plotOptions]="monochromePolarChart.plotOptions!"
+                [fill]="monochromePolarChart.fill!"
+                [theme]="monochromePolarChart.theme!"
+              >
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  
+    <div class="col-xl-3">
+      <ui-examples-list
+        [linkList]="[
+          { label: 'Overview', link: '#overview' },
+          { label: 'Basic Polar Area Chart', link: '#basic' },
+          { label: 'Monochrome Polar Area', link: '#monochrome' }
+        ]"
+      />
+    </div>
+  </div>
+</div>

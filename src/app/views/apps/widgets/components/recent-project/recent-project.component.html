@@ -1,0 +1,56 @@
+<div class="card">
+  <div class="card-body p-0">
+    <div class="pt-3 px-3">
+      <div class="float-end">
+        <a href="javascript:void(0);" class="text-primary"
+          >Export
+          <i class="bx bx-export ms-1"></i>
+        </a>
+      </div>
+      <h5 class="card-title mb-3">Recent Project Summary</h5>
+    </div>
+    <ngx-simplebar class="mb-3" data-simplebar style="max-height: 324px">
+      <div class="table-responsive table-centered table-nowrap px-3">
+        <table class="table table-hover mb-0">
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>Client</th>
+              <th>Team</th>
+              <th>Deadline</th>
+              <th>Work Progress</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (data of projectsList; track $index) {
+              <tr>
+                <td>{{ data.project }}</td>
+                <td>{{ data.client }}</td>
+                <td class="avatar-group">
+                  @for (team of data.team; track team) {
+                    <a href="javascript:void(0);" class="avatar-group-item">
+                      <img
+                        [src]="team"
+                        alt="avatar-2"
+                        class="img-fluid avatar-xs rounded-circle avatar-border"
+                      />
+                    </a>
+                  }
+                </td>
+                <td>{{ data.deadline }}</td>
+                <td>
+                  <ngb-progressbar
+                    [value]="data.progressValue"
+                    [type]="data.progressType"
+                    [height]="'5px'"
+                  ></ngb-progressbar>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </ngx-simplebar>
+  </div>
+</div>

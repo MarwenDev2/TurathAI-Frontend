@@ -1,0 +1,81 @@
+<div class="row justify-content-center">
+  <div class="col-lg-12">
+       <div class="card overflow-hidden" style="background: url('assets/images/small/img-2.jpg'); ">
+            <div class="position-absolute top-0 end-0 bottom-0 start-0 bg-dark opacity-75"></div>
+            <div class="card-body">
+                 <div class="row justify-content-center">
+                      <div class="col-lg-7 text-center">
+                           <h3 class="text-white">Help Center</h3>
+
+                           <p class="text-white-50">How can we help you ?</p>
+
+                           <div class="search-bar">
+                                <span><i class="bx bx-search-alt"></i></span>
+                                <input type="search" class="form-control rounded-pill bg-white border-0" id="search" placeholder="Search ...">
+                           </div>
+                      </div>
+                 </div>
+            </div>
+       </div>
+  </div>
+</div>
+
+<div class="row">
+  @for(item of helpList;track $index){
+    <div class="col-lg-4">
+         <div class="card">
+              <div class="card-body">
+                   <div class="avatar bg-primary-subtle d-flex align-items-center justify-content-center rounded mb-2">
+                        <iconify-icon [icon]="item.icon" class="fs-24 text-primary"></iconify-icon>
+                   </div>
+                   <h4 class="mt-3">{{item.title}}</h4>
+                   <p>{{item.description}}</p>
+  
+                   <div class="d-flex align-items-center gap-2">
+                        <img [src]="item.author.photo" alt="user photo" class="avatar-sm rounded-circle">
+                        <p class="mb-0">by {{item.author.name}}</p>
+  
+                        <div class="vr bg-dark-subtle h-75 my-auto"></div>
+  
+                        <a href="javascript:void(0);" (click)="open(content)" data-bs-target="#staticBackdrop" class="link-primary">{{item.videos | number : '2.0'}} Video</a>
+                   </div>
+              </div>                                   
+         </div>
+    </div>
+  }
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header border-bottom">
+    <h1 class="modal-title fs-18" id="staticBackdropLabel">Show Video</h1>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<div class="modal-body">
+    <h4 class="card-title">Getting Started with Larkon</h4>
+    <div class="row g-2 mt-2">
+         <div class="col-lg-6">
+              <div class="ratio ratio-16x9">
+                   <iframe src="https://www.youtube.com/embed/PrUxWZiQfy4?autohide=0&amp;showinfo=0&amp;controls=0" class="rounded"></iframe>
+              </div>
+         </div>
+         <div class="col-lg-6">
+              <div class="ratio ratio-16x9">
+                   <iframe width="560" height="315" src="https://www.youtube.com/embed/D89Dgg32yLk?si=hxvuTzNEzCyfuBN1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" class="rounded" allowfullscreen=""></iframe>
+              </div>
+         </div>
+         <div class="col-lg-6">
+              <div class="ratio ratio-16x9">
+                   <iframe width="560" height="315" src="https://www.youtube.com/embed/qBpY4MJt6lc?si=LXHNQxR1XHEt_5VT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="" class="rounded"></iframe>
+              </div>
+         </div>
+         <div class="col-lg-6">
+              <div class="ratio ratio-16x9">
+                   <iframe width="560" height="315" src="https://www.youtube.com/embed/wEw4A7CcSWU?si=BWA7J4IpWkiYvypk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="" class="rounded"></iframe>
+              </div>
+         </div>
+    </div>
+</div>
+<div class="modal-footer p-2">
+    <a href="javascript:void(0);" class="btn btn-primary">More Video</a>
+</div>
+</ng-template>

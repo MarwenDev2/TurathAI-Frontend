@@ -1,0 +1,23 @@
+@for (item of timelineList; track $index) {
+  <div class="d-flex flex-row fs-18 align-items-center mb-3">
+    <h5 class="mb-0">{{ item.date }}</h5>
+  </div>
+  @if (item.events) {
+    <ul class="list-unstyled left-timeline">
+      @for (event of item.events; track event) {
+        <li class="left-timeline-list">
+          <div class="card d-inline-block">
+            <div class="card-body">
+              <h5 class="mt-0 fs-16">
+                {{ event.title }}@if(event.badge){<span class="badge bg-secondary ms-1 align-items-center">{{event.badge}}</span>}
+              </h5>
+              <p class="text-muted mb-0">
+                {{ event.description }}
+              </p>
+            </div>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+}

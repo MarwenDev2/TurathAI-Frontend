@@ -1,0 +1,315 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="default">
+            Default Buttons<a class="anchor-link" href="#default">#</a>
+          </h5>
+          <p class="text-muted">
+            You can use a link with the href attribute
+          </p>
+          <div class="mb-3">
+            <div class="button-list">
+              <a (click)="openStart(content)" class="btn btn-primary" role="button" aria-controls="offcanvasExample">
+                Link with href
+              </a>
+              <button (click)="openStart(content)" class="btn btn-secondary" type="button" aria-controls="offcanvasExample">
+                Button with data-bs-target
+              </button>
+            </div>
+  
+            <ng-template let-offcanvas #content class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title mt-0" id="offcanvasExampleLabel">Offcanvas</h5>
+                <button (click)="offcanvas.close('Close click')" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <p>
+                  Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images,
+                  lists, etc.
+                </p>
+                <div ngbDropdown class="dropdown mt-3">
+                  <button ngbDropdownToggle class="btn btn-primary dropdown-toggle" type="button" id="defaultDropdownMenuButton">
+                    Dropdown button
+                  </button>
+                  <ul ngbDropdownMenu class="dropdown-menu" aria-labelledby="defaultDropdownMenuButton">
+                    <li><a ngbDropdownItem href="javascript:void(0);">Action</a></li>
+                    <li><a ngbDropdownItem href="javascript:void(0);">Another action</a></li>
+                    <li><a ngbDropdownItem href="javascript:void(0);">Something else here</a></li>
+                  </ul>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="static-backdrop">
+            Static Backdrop <a class="anchor-link" href="#static-backdrop">#</a>
+          </h5>
+          <p class="text-muted">
+            Scrolling the <code>&lt;body&gt;</code> element is disabled when an offcanvas and its backdrop are visible.
+            
+          </p>
+          <div class="mb-3">
+            <div class="button-list">
+              <button (click)="openNoBackdrop(backdrop)" class="btn btn-primary" type="button" aria-controls="offcanvasScrolling">Enable Body Scrolling</button>
+              <button (click)="openStart(enableBackdrop)" class="btn btn-secondary" type="button" aria-controls="offcanvasWithBackdrop">Enable Backdrop (Default)</button>
+              <button (click)="openScroll(scroll)" class="btn btn-success" type="button" aria-controls="offcanvasWithBothOptions">Enable Both Scrolling
+                & Backdrop</button>
+            </div>
+  
+  
+            <ng-template #backdrop let-offcanvas class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title mt-0" id="offcanvasScrollingLabel">Colored with scrolling</h5>
+                <button (click)="offcanvas.close('Close click')" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <p>
+                  Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images,
+                  lists, etc.
+                </p>
+                <div class="dropdown mt-3" ngbDropdown>
+                  <button ngbDropdownToggle class="btn btn-primary dropdown-toggle" type="button" id="scrollingDropdownMenuButton">
+                    Dropdown button
+                  </button>
+                  <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="scrollingDropdownMenuButton">
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ng-template>
+  
+            <ng-template #enableBackdrop let-offcanvas class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title mt-0" id="offcanvasWithBackdropLabel">Offcanvas with backdrop</h5>
+                <button (click)="offcanvas.close('Close click')" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <p>
+                  Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images,
+                  lists, etc.
+                </p>
+                <div ngbDropdown class="dropdown mt-3">
+                  <button ngbDropdownToggle class="btn btn-primary dropdown-toggle" type="button" id="backdropDropdownMenuButton">
+                    Dropdown button
+                  </button>
+                  <ul ngbDropdownMenu class="dropdown-menu" aria-labelledby="backdropDropdownMenuButton">
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ng-template>
+  
+  
+            <ng-template let-offcanvas #scroll class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title mt-0" id="offcanvasWithBothOptionsLabel">Backdroped with scrolling</h5>
+                <button (click)="offcanvas.close('close')" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <p>
+                  Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images,
+                  lists, etc.
+                </p>
+                <div ngbDropdown class="dropdown mt-3">
+                  <button ngbDropdownToggle class="btn btn-primary dropdown-toggle" type="button" id="scrollingBackdropDropdownMenuButton">
+                    Dropdown button
+                  </button>
+                  <ul ngbDropdownMenu class="dropdown-menu" aria-labelledby="scrollingBackdropDropdownMenuButton">
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="offcanvas-position">
+            Offcanvas Position <a class="anchor-link" href="#offcanvas-position">#</a>
+          </h5>
+          <p class="text-muted">
+            Try the top, right, bottom and left examples out below.
+          </p>
+          <ul>
+            <li><code>.offcanvas-top</code> places offcanvas on the top of the viewport</li>
+            <li><code>.offcanvas-end</code> places offcanvas on the right of the viewport</li>
+            <li><code>.offcanvas-bottom</code> places offcanvas on the bottom of the viewport</li>
+            <li><code>.offcanvas-start</code> places offcanvas on the left of the viewport</li>
+          </ul>
+          <div class="mb-3">
+            <div class="button-list">
+              <button (click)="openStart(leftOffcanvas)" class="btn btn-primary" type="button" aria-controls="leftOffcanvas">Left Offcanvas</button>
+              <button (click)="openEnd(rightOffcanvas)" class="btn btn-secondary" type="button" aria-controls="rightOffcanvas">Right Offcanvas</button>
+              <button (click)="openTop(topOffcanvas)" class="btn btn-success" type="button" aria-controls="topOffcanvas">Top Offcanvas</button>
+              <button (click)="openBottom(bottomOffcanvas)" class="btn btn-info" type="button" aria-controls="bottomOffcanvas">Bottom Offcanvas</button>
+            </div>
+  
+            <ng-template #leftOffcanvas let-offcanvas class="offcanvas offcanvas-start" tabindex="-1" id="leftOffcanvas" aria-labelledby="leftOffcanvasLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title mt-0" id="leftOffcanvasLabel">
+                  Offcanvas
+                </h5>
+                <button type="button" class="btn-close text-reset" (click)="offcanvas.close('Close click')" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <p>
+                  Some text as placeholder. In real life you can have the elements
+                  you have chosen. Like, text, images, lists, etc.
+                </p>
+                <div class="dropdown mt-3" ngbDropdown>
+                  <button class="btn btn-primary dropdown-toggle" ngbDropdownToggle type="button" id="leftDropdownMenuButton">
+                    Dropdown button
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="leftDropdownMenuButton" ngbDropdownMenu>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ng-template>
+  
+            <ng-template #rightOffcanvas let-offcanvas class="offcanvas offcanvas-end" tabindex="-1" id="rightOffcanvas" aria-labelledby="rightOffcanvasLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title mt-0" id="rightOffcanvasLabel">
+                  Offcanvas
+                </h5>
+                <button type="button" class="btn-close text-reset" (click)="offcanvas.close('Close click')" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <p>
+                  Some text as placeholder. In real life you can have the elements
+                  you have chosen. Like, text, images, lists, etc.
+                </p>
+                <div class="dropdown mt-3" ngbDropdown>
+                  <button class="btn btn-primary dropdown-toggle" ngbDropdownToggle type="button" id="rightDropdownMenuButton">
+                    Dropdown button
+                  </button>
+                  <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="rightDropdownMenuButton">
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ng-template>
+  
+            <ng-template #topOffcanvas let-offcanvas class="offcanvas offcanvas-top" tabindex="-1" id="topOffcanvas" aria-labelledby="topOffcanvasLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title mt-0" id="topOffcanvasLabel">
+                  Offcanvas
+                </h5>
+                <button type="button" class="btn-close text-reset" (click)="offcanvas.close('Close click')" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <p>
+                  Some text as placeholder. In real life you can have the elements
+                  you have chosen. Like, text, images, lists, etc.
+                </p>
+                <div class="dropdown mt-3" ngbDropdown>
+                  <button ngbDropdownToggle class="btn btn-primary dropdown-toggle" type="button" id="topDropdownMenuButton">
+                    Dropdown button
+                  </button>
+                  <ul ngbDropdownMenu class="dropdown-menu" aria-labelledby="topDropdownMenuButton">
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ng-template>
+  
+            <ng-template #bottomOffcanvas let-offcanvas class="offcanvas offcanvas-bottom" tabindex="-1" id="bottomOffcanvas" aria-labelledby="bottomOffcanvasLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title mt-0" id="bottomOffcanvasLabel">
+                  Offcanvas
+                </h5>
+                <button type="button" class="btn-close text-reset" (click)="offcanvas.close('Close click')" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <p>
+                  Some text as placeholder. In real life you can have the elements
+                  you have chosen. Like, text, images, lists, etc.
+                </p>
+                <div class="dropdown mt-3" ngbDropdown>
+                  <button ngbDropdownToggle class="btn btn-primary dropdown-toggle" type="button" id="bottomDropdownMenuButton">
+                    Dropdown button
+                  </button>
+                  <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="bottomDropdownMenuButton">
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Another action</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:void(0);">Something else here</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="col-xl-3">
+      <ui-examples-list [linkList]="[
+        { label: 'Default Buttons', link: '#default' },
+        { label: 'Static Backdrop', link: '#static-backdrop' },
+        { label: 'Offcanvas Position', link: '#offcanvas-position' }
+      ]" />
+    </div>
+  </div>
+</div>

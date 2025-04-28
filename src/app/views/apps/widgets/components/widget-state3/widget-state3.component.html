@@ -1,0 +1,53 @@
+<div class="row">
+  @for (data of stateList; track $index) {
+    <div class="col-md-6 col-xl-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6">
+              <div class="avatar-md bg-soft-{{ data.iconColor }} rounded">
+                <i
+                  class="bx {{ data.icon }} avatar-title fs-24 text-{{
+                    data.iconColor
+                  }}"
+                ></i>
+              </div>
+            </div>
+
+            <div class="col-6 text-end">
+              <p class="text-muted mb-0 text-truncate">
+                {{ data.title }}
+              </p>
+              <h3 class="text-dark mt-1 mb-0">
+                {{ data.value }}
+              </h3>
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="card-footer py-2 bg-light bg-opacity-50">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <span class="text-{{ data.badgeColor }}">
+                <i
+                  class="bx fs-12"
+                  [ngClass]="
+                    data.badgeColor == 'success'
+                      ? 'bxs-up-arrow'
+                      : 'bxs-down-arrow'
+                  "
+                ></i>
+                {{ data.badge }}%</span
+              >
+              <span class="text-muted ms-1 fs-12"> Last Month</span>
+            </div>
+            <a href="javascript:void(0);" class="text-reset fw-semibold fs-12"
+              >View More</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

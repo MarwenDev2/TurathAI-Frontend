@@ -1,0 +1,16 @@
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <div>
+        <h3 class="d-flex align-items-center gap-2">{{currency}}5,563.786 <span class="badge text-success bg-success-subtle px-2 py-1 fs-12"><i class="bx bx-up-arrow-alt"></i>4.53%</span></h3>
+        <p class="mb-0 text-muted">Gained <span class="text-success">{{currency}}378.56</span> This Month !</p>
+      </div>
+      <div class="avatar-md bg-light bg-opacity-50 rounded">
+        <iconify-icon icon="solar:chart-2-bold-duotone" class="fs-32 text-primary avatar-title"></iconify-icon>
+      </div>
+    </div>
+    <div class="apex-charts" id="sales_analytic_seller">
+      <apx-chart [chart]="analyticsChart.chart!" [series]="analyticsChart.series!" [colors]="analyticsChart.colors!" [dataLabels]="analyticsChart.dataLabels!" [stroke]="analyticsChart.stroke!" [labels]="analyticsChart.labels!" [xaxis]="analyticsChart.xaxis!" [yaxis]="analyticsChart.yaxis!" [grid]="analyticsChart.grid!" [legend]="analyticsChart.legend!" [fill]="analyticsChart.fill!" [responsive]="analyticsChart.responsive!"></apx-chart>
+    </div>
+  </div>
+</div>

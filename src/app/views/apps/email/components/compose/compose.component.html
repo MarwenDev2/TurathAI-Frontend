@@ -1,0 +1,108 @@
+<ngx-simplebar class="card h-100 mb-0">
+  <div class="card-body">
+    <div class="d-grid">
+      <button type="button" class="btn btn-danger" (click)="open(composeModal)" data-bs-target="#compose-modal">
+        Compose
+      </button>
+    </div>
+
+    <div class="nav flex-column mt-3" id="email-tab" role="tablist" aria-orientation="vertical">
+      <a class="nav-link px-0 py-1 active show" id="email-inbox-tab" (click)="updateData('inbox', 'type')" role="tab" aria-controls="email-inbox" aria-selected="true">
+        <span class="text-danger fw-bold">
+          <i class="bx bxs-inbox fs-16 me-2 align-middle"></i> Inbox
+          <span class="badge badge-soft-danger float-end ms-2">7</span>
+        </span>
+      </a>
+
+      <a class="nav-link px-0 py-1" id="email-starred-tab" (click)="updateData('isStarred', 'type')" href="javascript:void(0);" role="tab" aria-controls="email-starred" aria-selected="false">
+        <i class="bx bx-star fs-16 align-middle me-2"></i>Starred
+      </a>
+
+      <a class="nav-link px-0 py-1" id="email-draft-tab" (click)="updateData('draft', 'type')" href="javascript:void(0);" role="tab" aria-controls="email-draft" aria-selected="false">
+        <i class="bx bxs-file-doc fs-16 align-middle me-2"></i>Draft<span class="badge badge-soft-info float-end ms-2">32</span>
+      </a>
+
+      <a class="nav-link px-0 py-1" id="email-sent-tab" (click)="updateData('isSent', 'type')" href="javascript:void(0);" role="tab" aria-controls="email-sent" aria-selected="false">
+        <i class="bx bx-send fs-16 align-middle me-2"></i>Sent Mail
+      </a>
+
+      <a class="nav-link px-0 py-1" id="email-trash-tab" (click)="updateData('isTrash', 'type')" href="javascript:void(0);" role="tab" aria-controls="email-trash" aria-selected="false">
+        <i class="bx bx-trash fs-16 align-middle me-2"></i>Trash Mail
+      </a>
+
+      <a class="nav-link px-0 py-1" id="email-important-tab" (click)="updateData('isImportant', 'type')" href="javascript:void(0);" role="tab" aria-controls="email-important" aria-selected="false">
+        <i class="bx bx-tag fs-16 align-middle me-2"></i>Important
+      </a>
+
+      <h6 class="text-uppercase mt-4">Labels</h6>
+
+      <a class="nav-link px-0 py-1" id="email-updates-tab" (click)="updateData('updates', 'label')" href="javascript:void(0);" role="tab" aria-controls="email-updates" aria-selected="false">
+        <i class="bx bxs-circle font-13 text-info me-2"></i>Updates
+      </a>
+
+      <a class="nav-link px-0 py-1" id="email-social-tab" (click)="updateData('social', 'label')" href="javascript:void(0);" role="tab" aria-controls="email-social" aria-selected="false">
+        <i class="bx bxs-circle font-13 text-primary me-2"></i>Social
+      </a>
+
+      <a class="nav-link px-0 py-1" id="email-promotion-tab" (click)="updateData('promotions', 'label')" href="javascript:void(0);" role="tab" aria-controls="email-promotion" aria-selected="false">
+        <i class="bx bxs-circle font-13 text-secondary me-2"></i>Promotions
+      </a>
+
+      <a class="nav-link px-0 py-1" id="email-forums-tab" (click)="updateData('forums', 'label')" href="javascript:void(0);" role="tab" aria-controls="email-forums" aria-selected="false">
+        <i class="bx bxs-circle font-13 text-success me-2"></i>Forums
+      </a>
+    </div>
+
+    <div class="mt-5">
+      <h4>
+        <span class="badge rounded-pill p-1 px-2 badge-soft-secondary">FREE</span>
+      </h4>
+      <h6 class="text-uppercase mt-3">Storage</h6>
+      <ngb-progressbar type="success" [value]="46" [height]="'5px'" class="my-2"></ngb-progressbar>
+      <p class="text-muted font-13 mb-0">7.02 GB (46%) of 15 GB used</p>
+    </div>
+  </div>
+</ngx-simplebar>
+
+<ng-template #composeModal let-modal class="compose-mail" id="compose-modal" tabindex="-1" aria-labelledby="compose-modalLabel" aria-hidden="true">
+  <div class="modal-header overflow-hidden bg-primary p-2">
+    <h5 class="modal-title text-white" id="compose-modalLabel">New Message</h5>
+    <button type="button" class="btn-close btn-close-white" (click)="modal.close('Ok click')"></button>
+  </div>
+  <div class="modal-body p-4">
+    <div class="overflow-hidden">
+      <div class="mb-2">
+        <input type="email" class="form-control" id="toEmail" placeholder="To: " />
+      </div>
+      <div class="mb-2">
+        <input type="text" class="form-control" id="subject" placeholder="Subject " />
+      </div>
+
+      <div class="my-2">
+        <div id="snow-editor2">
+          <quill-editor id="snow-editor2" [(ngModel)]="content" #quillEditor theme="snow" [modules]="editorConfig" style="height: 200px" class="w-100"></quill-editor>
+        </div>
+      </div>
+
+      <div class="d-flex float-end">
+        <div ngbDropdown class="dropdown me-1">
+          <a ngbDropdownToggle href="javascript:void(0);" class="dropdown-toggle arrow-none btn btn-light">
+            <i class="bx bx-dots-vertical-rounded fs-18"></i>
+          </a>
+          <div ngbDropdownMenu class="dropdown-menu dropdown-menu-up">
+            <a href="javascript:void(0);" class="dropdown-item">Default to full screen</a>
+            <div class="dropdown-divider"></div>
+            <a href="javascript:void(0);" class="dropdown-item">Label</a>
+            <a href="javascript:void(0);" class="dropdown-item">Palin text mode</a>
+            <div class="dropdown-divider"></div>
+            <a href="javascript:void(0);" class="dropdown-item">Smart Compose Feedback</a>
+          </div>
+        </div>
+        <a href="javascript: void(0);" class="btn btn-light compose-close"><i class="bx bxs-trash fs-18"></i></a>
+      </div>
+      <div>
+        <a href="javascript: void(0);" class="btn btn-primary">Send</a>
+      </div>
+    </div>
+  </div>
+</ng-template>

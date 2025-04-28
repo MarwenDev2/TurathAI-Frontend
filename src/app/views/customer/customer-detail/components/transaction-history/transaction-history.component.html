@@ -1,0 +1,37 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">Transaction History</h4>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-middle mb-0 table-hover table-centered">
+        <thead class="bg-light-subtle">
+          <tr>
+            <th>Invoice ID</th>
+            <th>Status</th>
+            <th>Total Amount</th>
+            <th>Due Date</th>
+            <th>Payment Method</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(item of transactionList;track $index){
+          <tr>
+            <td><a href="javascript: void(0);" class="text-body">{{item.invoice}}</a> </td>
+            <td> <span class="badge py-1 px-2" [ngClass]="{'bg-success-subtle text-success':item.status == 'Completed','bg-danger-subtle text-danger':item.status == 'Pending' || item.status == 'Cancel'}">{{item.status}}</span> </td>
+            <td> ${{item.amount | number:'1.2'}} </td>
+            <td> {{item.date}}</td>
+            <td> {{item.payment_method}} </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer border-top">
+    <ngb-pagination [collectionSize]="30" [page]="1" class="pagination pagination-rounded m-0 justify-content-end">
+      <ng-template ngbPaginationPrevious><i class="bx bx-left-arrow-alt"></i></ng-template>
+      <ng-template ngbPaginationNext><i class="bx bx-right-arrow-alt"></i></ng-template>
+    </ngb-pagination>
+  </div>
+</div>

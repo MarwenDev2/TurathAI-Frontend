@@ -1,86 +1,27 @@
-# TurathAI Frontend Workspace
+# Larkon
 
-🚀 **Overview**  
-TurathAI Frontend is a multi-application Angular workspace containing both the public-facing **Frontoffice** and administrative **Backoffice** interfaces for the TurathAI platform.  
-This AI-driven initiative promotes sustainable tourism by showcasing Tunisia's rich heritage, with separate optimized experiences for end-users and administrators.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
 
----
+## Development server
 
-## 🌟 Application Features
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-### 🏛 Frontoffice (Public Site)
-- Heritage Site Exploration & Discovery  
-- Cultural Event Browsing  
-- User Review System  
-- AI-Powered Recommendations  
-- Gamification Features  
+## Code scaffolding
 
-### 👑 Backoffice (Admin Panel)
-- User Management System  
-- Content Management (Sites/Events)  
-- Analytics Dashboard  
-- System Configuration  
-- Moderation Tools  
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
----
+## Build
 
-## 🛠 Technologies Used
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-- **Angular Workspace**: Multi-project architecture  
-- **UI Frameworks**: Angular Material + TailwindCSS  
-- **State Management**: NgRx (shared store)  
-- **API Communication**: RESTful APIs via `HttpClient`  
-- **Authentication**: JWT with role-based guards  
-- **Build System**: Angular CLI with custom configurations  
+## Running unit tests
 
----
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## 🚀 Getting Started
+## Running end-to-end tests
 
-### ✅ Prerequisites
-- Node.js v16+ (LTS recommended)  
-- Angular CLI v15+ (`npm install -g @angular/cli`)  
-- Git  
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-### 📥 Installation & Development
+## Further help
 
-# Clone repository
-git clone https://github.com/MarwenDev2/TurathAI-Frontend.git
-cd TurathAI-Frontend
-
-# Install dependencies
-npm install
-
-ng serve
-
-### 🔧 Build Commands
-
-# Production build (both apps)
-ng build frontoffice --configuration production
-ng build backoffice --configuration production
-
-# Build with stats analysis
-ng build frontoffice --stats-json
-
-### 🌐 Access Points
-
-Frontoffice: http://localhost:4200/frontoffice
-
-Backoffice: http://localhost:4200/backoffice
-
-
-### 📌 Contributing Guidelines
-
-Clone the workspace
-
-Create feature branches from develop
-
-Follow naming conventions:
-
-feat/frontoffice/[feature-name]
-
-feat/backoffice/[feature-name]
-
-feat/shared/[component-name]
-
-Submit PRs to the develop branch
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

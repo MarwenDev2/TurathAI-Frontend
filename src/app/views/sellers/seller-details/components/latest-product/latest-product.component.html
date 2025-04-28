@@ -1,0 +1,67 @@
+<div class="card">
+  <div class="d-flex card-header justify-content-between align-items-center border-0 pb-1">
+    <div>
+      <h4 class="card-title">Latest Added Product</h4>
+    </div>
+    <div ngbDropdown class="dropdown">
+      <a ngbDropdownToggle href="javascript:void(0);" class="dropdown-toggle btn btn-sm btn-outline-light rounded">
+        This Month
+      </a>
+      <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end">
+        <a href="javascript:void(0);" class="dropdown-item">Download</a>
+        <a href="javascript:void(0);" class="dropdown-item">Export</a>
+        <a href="javascript:void(0);" class="dropdown-item">Import</a>
+      </div>
+    </div>
+  </div>
+  <div class="card-body pt-1 pb-2">
+    <div class="table-responsive">
+      <table class="table align-middle mb-0 table-hover table-centered">
+        <thead class="bg-light-subtle">
+          <tr>
+            <th style="width: 20px;">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="customCheck1">
+                <label class="form-check-label" for="customCheck1"></label>
+              </div>
+            </th>
+            <th>Product Name & Size</th>
+            <th>Tag ID</th>
+            <th>Category</th>
+            <th>Add Date</th>
+            <th>Items Published</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(item of productList;track $index){
+          <tr>
+            <td>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="customCheck2">
+                <label class="form-check-label" for="customCheck2"></label>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center gap-2">
+                <div class="rounded bg-light avatar-md d-flex align-items-center justify-content-center">
+                  <img [src]="item.image" alt="" class="avatar-md">
+                </div>
+                <div>
+                  <a href="javascript:void(0);" class="text-dark fw-medium fs-15">{{item.name}}</a>
+                  <p class="text-muted mb-0 mt-1 fs-13"><span>Variants : </span> {{item.variants}}</p>
+                </div>
+              </div>
+
+            </td>
+            <td>{{item.id}}</td>
+            <td> {{item.category}}</td>
+            <td>{{item.date}}</td>
+            <td> <span class="badge p-1 fs-12 me-1" [ngClass]="{'bg-success-subtle text-success':item.status == 'Published','bg-light text-dark':item.status == 'Pending','bg-danger-subtle text-danger':item.status == 'Draft'}">
+                <i class="bx me-1" [ngClass]="{'bx-check-double align-text-top fs-14':item.status == 'Published','bxs-circle align-middle fs-10':item.status == 'Pending','bx-time-five align-text-top fs-14':item.status == 'Draft'}"></i> {{item.status}}</span></td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

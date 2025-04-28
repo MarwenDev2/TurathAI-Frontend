@@ -1,0 +1,30 @@
+<div class="row align-items-center justify-content-center h-100">
+  <div class="col-lg-8">
+    <app-logo-box  className="auth-logo mb-3 text-center"/>
+    <div class="mx-auto text-center">
+      <img src="assets/images/coming-soon.png" alt="" class="h-auto my-3" style="max-width: 80%;">
+    </div>
+    <div class="row text-center my-4">
+      <div class="col border-end">
+        <h3 id="days" class="fw-bold fs-35">{{ countdown.days }}</h3>
+        <p class="text-uppercase fw-semibold mb-0">Days</p>
+      </div>
+      <div class="col border-end">
+        <h3 id="hours" class="fw-bold fs-35">{{ countdown.hours }}</h3>
+        <p class="text-uppercase fw-semibold mb-0">Hours</p>
+      </div>
+      <div class="col border-end">
+        <h3 id="minutes" class="fw-bold fs-35">{{ countdown.minutes }}</h3>
+        <p class="text-uppercase fw-semibold mb-0">Minutes</p>
+      </div>
+      <div class="col">
+        <h3 id="seconds" class="fw-bold fs-35">{{ countdown.seconds }}</h3>
+        <p class="text-uppercase fw-semibold mb-0">Seconds</p>
+      </div>
+    </div>
+    <p class="text-muted text-center mt-1 mb-4">Exciting news is on the horizon! We're thrilled to announce that something incredible is coming your way very soon. Our team has been hard at work behind the scenes, crafting something special just for you.</p>
+    <div class="text-center">
+      <a routerLink="/" class="btn btn-primary">Back To Home</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+
+.arrow-none {
+  &:after {
+    display: none !important;
+  }
+
+  &:before {
+    display: none !important;
+  }
+}
+
+.apex-charts {
+  div {
+    min-height: 0 !important;
+  }
+}
+
+ngb-pagination .pagination {
+  margin: 0
+}
+
+ngb-rating {
+  i {
+    position: relative;
+    display: inline-block;
+    color: #d3d3d3;
+    font-size: 0.875em;
+  }
+}
+
+.filled {
+  color: rgba(var(--bs-warning-rgb)) !important;
+  font-size: 0.875em;
+  overflow: hidden;
+  position: absolute !important;
+  top: 0;
+  left: 0;
+}
+
+.modal {
+  --bs-modal-border-color: none !important;
+}
+
+.emoji-mart {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+}
+
+.toast-top-center {
+  left: 45% !important;
+}
+
+.toast-bottom-center {
+  left: 45% !important;
+}
+
+.scrollspy-example {
+  position: relative;
+  height: 200px;
+  margin-top: 0.5rem;
+  overflow: auto;
+}
+
+.standard {
+  .toast-body {
+    padding: 0px !important;
+  }
+}
+
+.width-auto {
+  max-width: 450px !important;
+  width: 100% !important;
+}

@@ -1,0 +1,43 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h4 class="card-title">Friends Request (10)</h4>
+  </div>
+  <div class="card-body p-0 pb-3">
+    <ngx-simplebar class="p-3" data-simplebar style="max-height: 400px">
+      @for (data of friendList; track $index; let last = $last) {
+      <div class="d-flex align-items-center" [ngClass]="{ 'mb-3': !last }">
+        <div class="flex-shrink-0">
+          <img [src]="data.profile" class="img-fluid avatar-sm rounded me-2" alt="avatar-5" />
+        </div>
+        <div class="flex-grow-1">
+          <h5 class="mb-1 fs-14">
+            <a href="javascript:void(0);">{{ data.name }}</a>
+          </h5>
+          <p class="mb-0">
+            {{ data.mutual > 0 ? data.mutual : 'no' }} mutual friends
+          </p>
+        </div>
+        <div ngbDropdown class="dropdown">
+          <a ngbDropdownToggle href="javascript:void(0);" class="dropdown-toggle arrow-none text-dark">
+            <i class="bx bx-dots-vertical-rounded fs-18"></i>
+          </a>
+          <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end">
+            <a href="javascript:void(0);" class="dropdown-item">
+              <i class="bx bxs-user-detail me-1"></i>See Profile
+            </a>
+            <a href="javascript:void(0);" class="dropdown-item">
+              <i class="bx bxl-telegram me-1"></i>Message to Victoria
+            </a>
+            <a href="javascript:void(0);" class="dropdown-item">
+              <i class="bx bx-user-x me-1"></i>Unfriend Victoria
+            </a>
+            <a href="javascript:void(0);" class="dropdown-item">
+              <i class="bx bx-block me-1"></i>Block Victoria
+            </a>
+          </div>
+        </div>
+      </div>
+      }
+    </ngx-simplebar>
+  </div>
+</div>

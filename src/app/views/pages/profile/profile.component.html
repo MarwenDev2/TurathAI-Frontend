@@ -1,0 +1,118 @@
+<div class="row">
+  <div class="col-xl-9 col-lg-8">
+    <div class="card overflow-hidden">
+      <div class="card-body">
+        <div class="bg-primary profile-bg rounded-top position-relative mx-n3 mt-n3">
+          <img src="assets/images/users/avatar-1.jpg" alt="" class="avatar-xl border border-light border-3 rounded-circle position-absolute top-100 start-0 translate-middle ms-5">
+        </div>
+        <div class="mt-5 d-flex flex-wrap align-items-center justify-content-between">
+          <div>
+            <h4 class="mb-1">Gaston Lapierre <i class='bx bxs-badge-check text-success align-middle'></i></h4>
+            <p class="mb-0">Project Head Manager</p>
+          </div>
+          <div class="d-flex align-items-center gap-2 my-2 my-lg-0">
+            <a href="javascript:void(0);" class="btn btn-info"><i class='bx bx-message-dots'></i> Message</a>
+            <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="bx bx-plus"></i> Follow</a>
+            <div ngbDropdown class="dropdown">
+              <a ngbDropdownToggle href="javascript:void(0);" class="dropdown-toggle arrow-none card-drop">
+                <iconify-icon icon="solar:menu-dots-bold" class="fs-20 align-middle text-muted"></iconify-icon>
+              </a>
+              <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end">
+                <a href="javascript:void(0);" class="dropdown-item">Download</a>
+                <a href="javascript:void(0);" class="dropdown-item">Export</a>
+                <a href="javascript:void(0);" class="dropdown-item">Import</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3 gy-2">
+          <div class="col-lg-2 col-6">
+            <div class="d-flex align-items-center gap-2 border-end">
+              <div class="">
+                <iconify-icon icon="solar:clock-circle-bold-duotone" class="fs-28 text-primary"></iconify-icon>
+              </div>
+              <div>
+                <h5 class="mb-1">3+ Years Job</h5>
+                <p class="mb-0">Experience</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-6">
+            <div class="d-flex align-items-center gap-2 border-end">
+              <div class="">
+                <iconify-icon icon="solar:cup-star-bold-duotone" class="fs-28 text-primary"></iconify-icon>
+              </div>
+              <div>
+                <h5 class="mb-1">5 Certificate</h5>
+                <p class="mb-0">Achieved</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-6">
+            <div class="d-flex align-items-center gap-2">
+              <div class="">
+                <iconify-icon icon="solar:notebook-bold-duotone" class="fs-28 text-primary"></iconify-icon>
+              </div>
+              <div>
+                <h5 class="mb-1">2 Internship</h5>
+                <p class="mb-0">Completed</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-lg-4">
+    <profile-personal-info />
+  </div>
+</div>
+<div class="row">
+  <div class="col-xl-8 col-lg-7">
+    <profile-about />
+  </div>
+  <div class="col-xl-4 col-lg-5">
+    <profile-achievement />
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-3">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Popular Filters</h4>
+      </div>
+      <div class="card-body">
+        <div class="d-flex flex-wrap gap-2" role="group" aria-label="Basic checkbox toggle button group">
+          <input type="checkbox" class="btn-check" id="all-topic" checked>
+          <label class="btn bg-body rounded-pill d-flex justify-content-center align-items-center" for="all-topic">All Topics (23)</label>
+
+          <input type="checkbox" class="btn-check" id="saas">
+          <label class="btn bg-body rounded-pill d-flex justify-content-center align-items-center" for="saas">#SaaS (21)</label>
+
+          <input type="checkbox" class="btn-check" id="latam">
+          <label class="btn bg-body rounded-pill d-flex justify-content-center align-items-center" for="latam">#LatAm (5)</label>
+
+          <input type="checkbox" class="btn-check" id="inbound">
+          <label class="btn bg-body rounded-pill d-flex justify-content-center align-items-center" for="inbound">#inbound (4)</label>
+
+          <input type="checkbox" class="btn-check" id="europe">
+          <label class="btn bg-body rounded-pill d-flex justify-content-center align-items-center" for="europe">#Europe (25)</label>
+
+          <input type="checkbox" class="btn-check" id="performance">
+          <label class="btn bg-body rounded-pill d-flex justify-content-center align-items-center" for="performance">#Performance-marketing (7)</label>
+
+          <input type="checkbox" class="btn-check" id="facebook">
+          <label class="btn bg-body rounded-pill d-flex justify-content-center align-items-center" for="facebook">#Facebook-advertising (8)</label>
+        </div>
+      </div>
+      <div class="card-footer border-top text-center">
+        <a href="javascript:void(0);" class="link-primary">View More</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-9">
+    <profile-reviews />
+  </div>
+</div>

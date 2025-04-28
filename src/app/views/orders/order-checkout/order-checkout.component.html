@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-body">
+
+        <checkout-personal-detail />
+
+        <div class="mt-3">
+          <checkout-shipping-detail />
+        </div>
+
+        <div class="mt-5">
+          <checkout-payment-method />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+
+    <checkout-promo-code />
+
+    <checkout-summary />
+
+    <div class="main-btn my-4 text-end">
+      <a routerLink="/orders/cart" class="btn btn-danger">Back To Cart</a>
+      <a href="javascript:void(0);" class="btn btn-success ms-1" (click)="openModal()">Checkout Order</a>
+    </div>
+    <div data-bs-theme="dark">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex gap-3">
+            <div class="rounded-3 bg-light flex-shrink-0 avatar d-flex align-items-center justify-content-center">
+              <iconify-icon icon="solar:box-bold-duotone" class="fs-36 text-warning"></iconify-icon>
+            </div>
+            <div>
+              <h5 class="text-white fw-medium mb-1">Streaming box shipping information</h5>
+              <p class="text-white-50 mb-0">Below your selected items, enter your zip code to calculate the shipping charge. We like to make shipping simple and affordable!</p>
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-3 mt-4">
+            <div class="rounded-3 bg-light flex-shrink-0 avatar d-flex align-items-center justify-content-center">
+              <iconify-icon icon="solar:wallet-money-bold-duotone" class="fs-36 text-success"></iconify-icon>
+            </div>
+            <div>
+              <h5 class="text-white fw-medium mb-1">30 Day money back guarantee</h5>
+              <p class="text-white-50 mb-0">Money Return In 30 day In Your Bank Account</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

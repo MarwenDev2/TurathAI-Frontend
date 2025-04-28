@@ -1,0 +1,93 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title anchor mb-1" id="overview">
+            Overview
+          </h5>
+
+          <p class="mb-0"><span class="fw-medium">Find the JS file for the following chart at:</span>
+            <code> ../src/assets/js/components/apexchart-candlestick.js</code></p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title anchor" id="simple">Simple Candlestick Chart</h4>
+          <div dir="ltr">
+            <div id="simple-candlestick" class="apex-charts">
+              <apx-chart [chart]="candlestickChart.chart!" [plotOptions]="candlestickChart.plotOptions!"
+                [series]="candlestickChart.series!" [stroke]="candlestickChart.stroke!"
+                [xaxis]="candlestickChart.xaxis!" [grid]="candlestickChart.grid!" />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title anchor" id="combo">Combo Candlestick Chart</h4>
+          <div dir="ltr">
+            <div id="combo-candlestick" class="apex-charts">
+              <apx-chart [chart]="comboChart.chart!" [plotOptions]="comboChart.plotOptions!"
+                [series]="comboChart.series!" [xaxis]="comboChart.xaxis!" [grid]="comboChart.grid!" />
+            </div>
+            <div id="combo-bar-candlestick" class="apex-charts">
+              <apx-chart [chart]="combobarChart.chart!" [dataLabels]="combobarChart.dataLabels!"
+                [plotOptions]="combobarChart.plotOptions!" [series]="combobarChart.series!"
+                [xaxis]="combobarChart.xaxis!" [yaxis]="combobarChart.yaxis!" [grid]="combobarChart.grid!" />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-3 anchor" id="x-axis">Category X-Axis</h4>
+          <div dir="ltr">
+            <div id="x-axis-candlestick" class="apex-charts">
+              <apx-chart [series]="xaxiscandlestickChart.series!" [chart]="xaxiscandlestickChart.chart!"
+                [title]="xaxiscandlestickChart.title!" [grid]="xaxiscandlestickChart.grid!"
+                [annotations]="xaxiscandlestickChart.annotations!" [plotOptions]="xaxiscandlestickChart.plotOptions!"
+                [tooltip]="xaxiscandlestickChart.tooltip!" [colors]="xaxiscandlestickChart.colors!"
+                [xaxis]="xaxiscandlestickChart.xaxis!" [yaxis]="xaxiscandlestickChart.yaxis!" />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-3 anchor" id="line">Candlestick with Line</h4>
+          <div dir="ltr">
+            <apx-chart [series]="linecandlestickChart.series!" [chart]="linecandlestickChart.chart!"
+              [title]="linecandlestickChart.title!" [stroke]="linecandlestickChart.stroke!"
+              [legend]="linecandlestickChart.legend!" [grid]="linecandlestickChart.grid!"
+              [colors]="linecandlestickChart.colors!" [plotOptions]="linecandlestickChart.plotOptions!"
+              [tooltip]="linecandlestickChart.tooltip!" [xaxis]="linecandlestickChart.xaxis!"></apx-chart>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-xl-3">
+      <ui-examples-list [linkList]="[
+          { label: 'Overview', link: '#overview' },
+          { label: 'Simple Candlestick Chart', link: '#simple' },
+          { label: 'Combo Candlestick Chart', link: '#combo' },
+          { label: 'Category X-Axis', link: '#x-axis' },
+          { label: 'Candlestick with Line', link: '#line' }
+        ]" />
+    </div>
+  </div>
+</div>

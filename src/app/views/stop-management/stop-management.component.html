@@ -1,0 +1,140 @@
+<div class="container-fluid">
+  <div class="row page-titles mx-0">
+    <div class="col-sm-6 p-md-0">
+      <div class="welcome-text">
+        <h4>Stop Management</h4>
+        <span *ngIf="itinerary">for Itinerary: {{ itinerary.description }}</span>
+      </div>
+    </div>
+    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+      <button class="btn btn-secondary mr-2" [routerLink]="['/itenary/list']">
+        <i class="fa fa-arrow-left"></i> Back to Itineraries
+      </button>
+      <button class="btn btn-primary" (click)="toggleAddForm()">
+        <i class="fa fa-plus"></i> {{ showAddForm ? 'Cancel' : 'Add New Stop' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Add/Edit Stop Form -->
+  <div class="row" *ngIf="showAddForm">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">{{ editingStopId ? 'Edit Stop' : 'Add New Stop' }}</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="stopForm" (ngSubmit)="saveStop()">
+            <div class="row">
+              <!-- Hidden itinerary field - automatically filled with the current itinerary -->
+              <input type="hidden" formControlName="itineryId">
+              <div class="col-md-6 mb-3">
+                <label>Order</label>
+                <input type="number" class="form-control" formControlName="order">
+                <div *ngIf="stopForm.get('order')?.invalid && stopForm.get('order')?.touched" class="text-danger">
+                  Order is required
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label>Duration</label>
+                <input type="text" class="form-control" formControlName="duration" placeholder="e.g. 2 hours">
+                <div *ngIf="stopForm.get('duration')?.invalid && stopForm.get('duration')?.touched" class="text-danger">
+                  Duration is required
+                </div>
+              </div>
+            </div>
+            <div class="text-right">
+              <button type="submit" class="btn btn-primary" [disabled]="stopForm.invalid">Save</button>
+              <button type="button" class="btn btn-success ml-2" (click)="sendSmsNotification(stopForm.value)" [disabled]="stopForm.invalid">
+                <i class="fas fa-sms"></i> Send SMS
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Form -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Search Stops</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="searchForm" class="form-row align-items-end">
+            <div class="col-md-6 mb-3">
+              <label>Duration</label>
+              <input type="text" class="form-control" placeholder="Search by duration" formControlName="duration">
+            </div>
+            <div class="col-md-6 mb-3">
+              <button type="button" class="btn btn-secondary" (click)="resetSearch()">
+                <i class="fa fa-refresh"></i> Clear Search
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stop List -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Stops List</h4>
+          <p class="card-text text-muted">Drag and drop to change order</p>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-responsive-md">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Duration</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody cdkDropList (cdkDropListDropped)="onDrop($event)">
+                <tr *ngIf="loading">
+                  <td colspan="4" class="text-center">Loading...</td>
+                </tr>
+                <tr *ngIf="error">
+                  <td colspan="4" class="text-center text-danger">{{ error }}</td>
+                </tr>
+                <tr *ngIf="!loading && !error && filteredStops.length === 0 && stops.length > 0">
+                  <td colspan="5" class="text-center">No stops match your search criteria</td>
+                </tr>
+                <tr *ngIf="!loading && !error && stops.length === 0">
+                  <td colspan="5" class="text-center">No stops found for this itinerary</td>
+                </tr>
+                <tr *ngFor="let stop of filteredStops" cdkDrag class="cursor-pointer">
+                  <td>{{ stop.order }}</td>
+                  <td>{{ stop.duration }}</td>
+                  <td>
+                    <div class="d-flex">
+                      <a href="javascript:void(0);" (click)="viewStopDetails(stop)" class="btn btn-info shadow btn-xs sharp mr-1" title="View Details">
+                        <i class="fas fa-clipboard-list"></i> View
+                      </a>
+                      <a href="javascript:void(0);" (click)="editStop(stop)" class="btn btn-primary shadow btn-xs sharp mr-1" title="Edit Stop">
+                        <i class="fas fa-edit"></i> Edit
+                      </a>
+                      <a href="javascript:void(0);" (click)="deleteStop(stop.id)" class="btn btn-danger shadow btn-xs sharp mr-1" title="Delete Stop">
+                        <i class="fas fa-trash"></i> Delete
+                      </a>
+                      <a href="javascript:void(0);" (click)="sendSmsNotification(stop)" class="btn btn-success shadow btn-xs sharp" title="Send SMS Notification">
+                        <i class="fas fa-sms"></i> SMS
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

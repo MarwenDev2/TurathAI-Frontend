@@ -1,0 +1,147 @@
+<div class="row">
+  <div class="col-xl-9">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title mb-1 anchor" id="world_vector_map">
+          World Vector Map<a class="anchor-link" href="#world_vector_map">#</a>
+        </h5>
+        <p class="text-muted">
+          Give textual form controls like
+          <code>&lt;input&gt;</code>s and <code>&lt;textarea&gt;</code>s an
+          upgrade with custom styles, sizing, focus states, and more.
+        </p>
+        <div class="">
+          <div class="mb-3">
+            <div id="world-map-markers" style="height: 360px">
+              <app-world-vector-map
+                mapId="world-map-markers"
+                type="world"
+                [options]="worldMapConfig"
+             />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title mb-1 anchor" id="canada_vector_map">
+          Canada Vector Map<a class="anchor-link" href="#canada_vector_map"
+            >#</a
+          >
+        </h5>
+        <p class="text-muted">
+          Give textual form controls like
+          <code>&lt;input&gt;</code>s and <code>&lt;textarea&gt;</code>s an
+          upgrade with custom styles, sizing, focus states, and more.
+        </p>
+        <div class="">
+          <div class="mb-3">
+            <div id="canada-vector-map" style="height: 360px">
+              <app-world-vector-map
+                mapId="canada-map-markers"
+                type="canada"
+                [options]="canadaMapConfig"
+                height="300px"
+                width="100%"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title mb-1 anchor" id="russia_vector_map">
+          Russia Vector Map<a class="anchor-link" href="#russia_vector_map"
+            >#</a
+          >
+        </h5>
+        <p class="text-muted">
+          Give textual form controls like
+          <code>&lt;input&gt;</code>s and <code>&lt;textarea&gt;</code>s an
+          upgrade with custom styles, sizing, focus states, and more.
+        </p>
+        <div class="">
+          <div class="mb-3">
+            <div id="russia-vector-map" style="height: 360px">
+              <app-world-vector-map
+                mapId="russia-map-markers"
+                type="russia"
+                [options]="russiaMapConfig"
+                height="300px"
+                width="100%"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title mb-1 anchor" id="iraq_vector_map">
+          Iraq Vector Map<a class="anchor-link" href="#iraq_vector_map">#</a>
+        </h5>
+        <p class="text-muted">
+          Give textual form controls like
+          <code>&lt;input&gt;</code>s and <code>&lt;textarea&gt;</code>s an
+          upgrade with custom styles, sizing, focus states, and more.
+        </p>
+        <div class="">
+          <div class="mb-3">
+            <div id="iraq-vector-map" style="height: 360px">
+              <app-world-vector-map
+                mapId="iraq-map-markers"
+                type="iraq"
+                [options]="iraqMapConfig"
+                height="300px"
+                width="100%"
+             />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title mb-1 anchor" id="spain_vector_map">
+          Spain Vector Map<a class="anchor-link" href="#spain_vector_map">#</a>
+        </h5>
+        <p class="text-muted">
+          Give textual form controls like
+          <code>&lt;input&gt;</code>s and <code>&lt;textarea&gt;</code>s an
+          upgrade with custom styles, sizing, focus states, and more.
+        </p>
+        <div class="">
+          <div class="mb-3">
+            <div id="spain-vector-map" style="height: 360px">
+              <app-world-vector-map
+                mapId="spain-map-markers"
+                type="spain"
+                [options]="spainMapConfig"
+                height="300px"
+                width="100%"
+             />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-3">
+    <ui-examples-list
+      [linkList]="[
+        { label: 'World Vector Map', link: '#world_vector_map' },
+        { label: 'Canada Vector Map', link: '#canada_vector_map' },
+        { label: 'Russia Vector Map', link: '#russia_vector_map' },
+        { label: 'Iraq Vector Map', link: '#iraq_vector_map' },
+        { label: 'Spain Vector Map', link: '#spain_vector_map' }
+      ]"
+    />
+  </div>
+</div>

@@ -1,0 +1,152 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <div>
+            <h5 class="card-title mb-1 anchor" id="live-demo">
+              Live demo<a class="anchor-link" href="#live-demo">#</a>
+            </h5>
+            <p class="text-muted">We use JavaScript similar to the snippet above to render the following live popover. Titles are set via <code>title</code> and body content is set via <code>ngbPopover</code>.</p>
+  
+            <div class="mb-3">
+              <button popoverTitle="Popover title" placement="right" ngbPopover="And here's some amazing content. It's very engaging. Right?" type="button" class="btn btn-danger" data-bs-toggle="popover" title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="popover-directions">
+            Popover Directions <a class="anchor-link" href="#popover-directions">#</a>
+          </h5>
+          <p class="text-muted"> Four options are available: top, right, bottom, and left aligned.</p>
+  
+          <div class="mb-3">
+            <div class="d-flex flex-wrap gap-2">
+  
+              <button placement="top" ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." type="button" class="btn btn-primary" container="body">
+                Popover on top
+              </button>
+  
+  
+              <button placement="bottom" ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." type="button" class="btn btn-primary" container="body">
+                Popover on bottom
+              </button>
+  
+  
+              <button type="button" class="btn btn-primary" container="body" placement="left" ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." title="Popover title">
+                Popover on left
+              </button>
+  
+  
+              <button type="button" class="btn btn-primary" container="body" placement="right" ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+                Popover on right
+              </button>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="dismiss">
+            Dismiss on Next Click <a class="anchor-link" href="#dismiss">#</a>
+          </h5>
+          <p class="text-muted">Use the <code>focus</code> trigger to dismiss popovers
+            on the user’s next click of a different element than the toggle element.</p>
+  
+          <div class="mb-3">
+            <button type="button" tabindex="0" autoClose="inside" popoverTitle="Dismissible popover" class="btn btn-success" trigger="focus" ngbPopover="And here's some amazing content. It's very engaging. Right?" title="Dismissible popover">
+              Dismissible popover
+            </button>
+          </div>
+  
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="hover">
+            Hover <a class="anchor-link" href="#hover">#</a>
+          </h5>
+          <p class="text-muted">Use the <code>triggers="mouseenter:mouseleave"</code> trigger Hover to show popover.</p>
+  
+          <div class="mb-3">
+            <button placement="right" popoverTitle="Ohh Wow !" triggers="mouseenter:mouseleave" type="button" tabindex="0" class="btn btn-dark" ngbPopover="And here's some amazing content. It's very engaging. Right?" title="Ohh Wow !">
+              Please Hover Me
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="custom-popovers">
+            Custom Popovers <a class="anchor-link" href="#custom-popovers">#</a>
+          </h5>
+          <p class="text-muted"> ou can customize the appearance of popovers using CSS variables. We set a custom class with
+            <code>popoverClass="primary-popover"</code> to scope our custom appearance and use it to override some of the
+            local CSS variables.
+          </p>
+  
+          <div class="mb-3">
+            <div class="button-list">
+              <button type="button" class="btn btn-primary" placement="top" popoverClass="primary-popover" popoverTitle="Primary popover" ngbPopover="This popover is themed via CSS variables.">
+                Primary popover
+              </button>
+  
+              <button type="button" class="btn btn-success" placement="top" popoverClass="success-popover" popoverTitle="Success popover" ngbPopover="This popover is themed via CSS variables.">
+                Success popover
+              </button>
+  
+              <button type="button" class="btn btn-danger" placement="top" popoverClass="danger-popover" popoverTitle="Danger popover" ngbPopover="This popover is themed via CSS variables.">
+                Danger popover
+              </button>
+  
+              <button type="button" class="btn btn-info" placement="top" popoverClass="info-popover" popoverTitle="Info popover" ngbPopover="This popover is themed via CSS variables.">
+                Info popover
+              </button>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-1 anchor" id="disabled">
+            Disabled Elements <a class="anchor-link" href="#disabled">#</a>
+          </h5>
+          <p class="text-muted">Elements with the <code>disabled</code> attribute
+            aren’t interactive, meaning users cannot hover or click them to trigger a
+            popover (or tooltip). As a workaround, you’ll want to trigger the popover from a
+            wrapper <code>&lt;div&gt;</code> or <code>&lt;span&gt;</code> and override the
+            <code>pointer-events</code> on the disabled element.
+          </p>
+  
+          <div class="mb-3">
+            <span placement="right" triggers="mouseenter:mouseleave" ngbPopover="Disabled popover" class="d-inline-block">
+              <button class="btn btn-primary" style="pointer-events: none;" type="button" disabled>Disabled button</button>
+            </span>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  
+    <div class="col-xl-3">
+      <ui-examples-list [linkList]="[
+        { label: 'Live demo', link: '#live-demo' },
+        { label: 'Popover Directions', link: '#popover-directions' },
+        { label: 'Dismiss on Next Click', link: '#dismiss' },
+        { label: 'Hover', link: '#hover' },
+        { label: 'Custom Popovers', link: '#custom-popovers' },
+        { label: 'Disabled', link: '#disabled' }
+      ]" />
+    </div>
+
+</div>
+</div>
