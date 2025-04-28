@@ -27,6 +27,11 @@ export class ReviewService {
       catchError(this.handleError)
     );
   }
+  getRecentReviewsByUser(userId: number, limit: number = 5): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.apiUrl}/user/${userId}/recent`, { params: { limit: limit.toString() } }).pipe(
+      catchError(this.handleError)
+    );
+  }
 
   addReview(review: Review): Observable<string> {
     return this.http.post<string>(this.apiUrl, review).pipe(
@@ -52,11 +57,44 @@ export class ReviewService {
     );
   }
 
-  getReviewsByUser(userId: number): Observable<Review[]> {
-    return this.http.get<Review[]>(`${this.apiUrl}/user/${userId}`).pipe(
-      catchError(this.handleError)
-    );
-  }
+ // Existing method (unchanged)
+ getReviewsByUser(userId: number): Observable<Review[]> {
+  return this.http.get<Review[]>(`${this.apiUrl}/user/${userId}`).pipe(
+    catchError(this.handleError)
+  );
+}
+
+// New method for pagination
+getReviewsByUserPaginated(
+  userId: number,
+  page: number,
+  pageSize: number,
+  commentFilter?: string,
+  dateFilter?: string,
+  ratingFilter?: string
+): Observable<{ reviews: Review[], total: number }> {
+  let params = new HttpParams()
+    .set('page', page.toString())
+    .set('pageSize', pageSize.toString());
+  if (commentFilter) params = params.set('comment', commentFilter);
+  if (dateFilter) params = params.set('date', dateFilter);
+  if (ratingFilter) params = params.set('rating', ratingFilter);
+  return this.http.get<{ reviews: Review[], total: number }>(`${this.apiUrl}/user/${userId}/paginated`, { params }).pipe(
+    catchError(this.handleError)
+  );
+}
+
+getAverageRatingByUser(userId: number): Observable<number> {
+  return this.http.get<number>(`${this.apiUrl}/user/${userId}/average-rating`).pipe(
+    catchError(this.handleError)
+  );
+}
+
+getRatingDistributionByUser(userId: number): Observable<{ [key: number]: number }> {
+  return this.http.get<{ [key: number]: number }>(`${this.apiUrl}/user/${userId}/rating-distribution`).pipe(
+    catchError(this.handleError)
+  );
+}
 
   calculateAverageRating(siteId: number): Observable<{ average: number, hasReviews: boolean }> {
     return this.getReviewsByHeritageSite(siteId).pipe(
@@ -150,4 +188,7 @@ export class ReviewService {
     console.error('An error occurred:', errorMessage);
     return throwError(() => new Error(errorMessage));
   }
+
+
+
 }

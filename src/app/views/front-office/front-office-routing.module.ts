@@ -3,8 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { FrontOfficeLayoutComponent } from './layout/front-office-layout.component';
 import { FrontOfficeHomeComponent } from './pages/home/home.component';
 import { FrontOfficeItinerariesComponent } from './pages/itineraries/itineraries.component';
-import { FrontOfficeProfileComponent } from './pages/profile/profile.component';
 import { LocalInsightComponent } from './pages/local-insight/local-insight.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { WishlistComponent } from './pages/Wishlist/wishlist.component';
+import { ReviewComponent } from './pages/Reviews/review.component';
 
 const routes: Routes = [
   {
@@ -23,8 +25,18 @@ const routes: Routes = [
       },
       {
         path: 'profile',
-        component: FrontOfficeProfileComponent,
+        component: ProfileComponent,
         data: { title: 'My Profile' }
+      },
+      {
+        path: 'wishlist',
+        component: WishlistComponent,
+        data: { title: 'Wishlist' }
+      },
+      {
+        path: 'my-reviews',
+        component: ReviewComponent,
+        data: { title: 'My Reviews' }
       },
       {
         path: 'local-insight',

@@ -1,0 +1,205 @@
+<div class="container mt-4">
+     <div class="card shadow-sm">
+       <div class="card-header d-flex justify-content-between align-items-center">
+         <h2 class="card-title">My Wishlist</h2>
+         <div class="d-flex align-items-center gap-3">
+           <!-- Filter by City -->
+           <select class="form-select form-select-sm custom-select" [(ngModel)]="selectedCity" (ngModelChange)="filterByCity(selectedCity)">
+             <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+           </select>
+           <!-- Sorting Controls -->
+           <select class="form-select form-select-sm custom-select" [(ngModel)]="sortOption" (ngModelChange)="onSortChange()">
+             <option value="date-desc">Newest First</option>
+             <option value="date-asc">Oldest First</option>
+             <option value="name-asc">Name (A-Z)</option>
+             <option value="name-desc">Name (Z-A)</option>
+           </select>
+           <!-- Bulk Actions -->
+           <button class="btn btn-sm btn-danger custom-btn-danger" [disabled]="selectedItems.size === 0" (click)="bulkRemove()">
+             Remove Selected ({{ selectedItems.size }})
+           </button>
+           <!-- Export Button -->
+           <button class="btn btn-sm btn-primary custom-btn-primary" (click)="exportWishlist()">Export Wishlist</button>
+         </div>
+       </div>
+       <div class="card-body">
+         <!-- Insights Container -->
+         <div class="insights-container mb-4">
+           <!-- Left Column: Total Sites and Most Popular City -->
+           <div class="insights-left">
+             <!-- Total Sites -->
+             <div class="insight-card">
+               <div class="card shadow-sm p-3 bg-light rounded compact-card">
+                 <h5 class="card-title mb-2">Total Sites</h5>
+                 <div class="d-flex align-items-center">
+                   <i class="bx bx-list-ul fs-3 me-2 text-primary"></i>
+                   <span class="total-sites-number text-muted">{{ totalSites }}</span>
+                 </div>
+               </div>
+             </div>
+   
+             <!-- Most Popular City -->
+             <div class="insight-card" *ngIf="mostPopularCity">
+               <div class="card shadow-sm p-3 bg-light rounded compact-card">
+                 <h5 class="card-title mb-2">Your Most Popular City with heritage sites</h5>
+                 
+                 <div class="d-flex align-items-center">
+                   <i class="bx bx-map fs-3 me-2 text-primary"></i>
+                   <div>
+                     <p class="mb-1 city-highlight">{{ mostPopularCity }}</p>
+                     <ng-template #starTemplate let-fill="fill">
+                       <i
+                         class="bx bxs-star fs-5 me-1"
+                         [class.text-warning]="fill > 0"
+                         [class.text-muted]="fill === 0"
+                         [class.opacity-25]="fill === 0"
+                         [style.width.%]="fill"
+                       ></i>
+                     </ng-template>
+                     <ngb-rating
+                       [rate]="mostPopularCityRating"
+                       [starTemplate]="starTemplate"
+                       [max]="5"
+                       [readonly]="true"
+                       class="d-inline-block"
+                     ></ngb-rating>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+   
+           <!-- Right Column: Wishlist Timeline -->
+           <div class="insights-right" *ngIf="recentAdditions.length > 0">
+             <div class="insight-card">
+               <div class="card shadow-sm p-3 bg-light rounded compact-card h-100">
+                 <h5 class="card-title mb-2">Wishlist Timeline</h5>
+                 <div class="timeline">
+                   <div class="timeline-item" *ngFor="let addition of recentAdditions; let i = index">
+                     <div class="timeline-dot"></div>
+                     <div class="timeline-content">
+                       <strong class="me-2">{{ addition.heritageSite?.name || 'Unknown Site' }}</strong>
+                       <p class="mb-1 text-muted">
+                         Added on {{ addition.createdAt | date: 'medium' }}
+                       </p>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+   
+         <!-- Loading State -->
+         <div *ngIf="isLoading" class="alert alert-info">
+           Loading wishlist...
+         </div>
+   
+         <!-- Error State -->
+         <div *ngIf="errorMessage && !isLoading" class="alert alert-danger">
+           {{ errorMessage }}
+         </div>
+   
+         <!-- No Wishlist Items -->
+         <div *ngIf="!isLoading && filteredWishlist.length === 0 && !errorMessage" class="alert alert-info">
+           No heritage sites in your wishlist. Start adding some!
+         </div>
+   
+         <!-- Wishlist Items as Table -->
+         <div class="wishlist-items" *ngIf="!isLoading && filteredWishlist.length > 0">
+           <div class="card shadow-sm p-3 bg-light rounded">
+             <h5 class="card-title mb-3">Wishlist Items</h5>
+             <div class="d-flex align-items-center mb-3">
+               <input
+                 type="checkbox"
+                 class="custom-checkbox me-2"
+                 [checked]="selectAll"
+                 (change)="toggleSelectAll()"
+               >
+               <label>Select All</label>
+             </div>
+             <div class="table-responsive">
+               <table class="table table-hover modern-table">
+                 <thead>
+                   <tr>
+                     <th scope="col"></th>
+                     <th scope="col">Image</th>
+                     <th scope="col">Heritage Site</th>
+                     <th scope="col">Location</th>
+                     <th scope="col">Added On</th>
+                     <th scope="col">Details</th>
+                     <th scope="col">Actions</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                   <tr *ngFor="let item of filteredWishlist">
+                     <td>
+                       <input
+                         type="checkbox"
+                         class="custom-checkbox"
+                         [checked]="selectedItems.has(item.id)"
+                         (change)="toggleItemSelection(item.id)"
+                       >
+                     </td>
+                     <td>
+                        <!-- <img
+                         [src]="item.heritageSite?.image || 'https://via.placeholder.com/50'"
+                         alt="{{ item.heritageSite?.name || 'Unknown Site' }}"
+                         class="site-image"
+                       > -->
+
+                       <<img
+                       src="https://picsum.photos/80?random={{item.id}}"
+                       alt="{{ item.heritageSite?.name || 'Heritage Site' }}"
+                       class="site-image rounded"
+                       >
+                     </td>
+                     <td>{{ item.heritageSite?.name || 'Unknown Site' }}</td>
+                     <td>{{ item.heritageSite?.location || 'Unknown Location' }}</td>
+                     <td>{{ item.createdAt | date: 'medium' }}</td>
+                     <td>
+                       <button
+                         class="btn btn-sm btn-outline-info show-details-btn"
+                         [ngbTooltip]="item.heritageSite?.description || 'No description available'"
+                         placement="top"
+                       >
+                         Details
+                       </button>
+                     </td>
+                     <td>
+                       <button class="btn btn-sm btn-danger" (click)="removeFromWishlist(item.id)">
+                         Remove
+                       </button>
+                     </td>
+                   </tr>
+                 </tbody>
+               </table>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   
+     <!-- Confirmation Modal -->
+     <div class="modal modern-modal confirm-modal" [class.d-block]="showConfirmModal" tabindex="-1">
+       <div class="modal-dialog modal-md modal-dialog-centered">
+         <div class="modal-content">
+           <div class="modal-header border-0">
+             <h5 class="modal-title">Confirmation</h5>
+             <button type="button" class="btn-close" (click)="closeConfirmModal()"></button>
+           </div>
+           <div class="modal-body text-center">
+             <i class="bx bx-question-mark confirm-icon mb-3"></i>
+             <p>{{ confirmMessage }}</p>
+           </div>
+           <div class="modal-footer border-0 justify-content-center">
+             <button type="button" class="btn btn-secondary custom-btn-secondary me-2" (click)="closeConfirmModal()">Cancel</button>
+             <button type="button" class="btn btn-primary custom-btn-primary" (click)="confirmModalAction()">Yes</button>
+           </div>
+         </div>
+       </div>
+     </div>
+   
+     <!-- Modal Backdrop -->
+     <div class="modal-backdrop fade show" *ngIf="showConfirmModal"></div>
+   </div>

@@ -7,6 +7,8 @@ import { AuthService } from '@core/services/auth.service';
 import { UserService } from '@core/services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '@core/Models/user';
+import { UserPreferences } from '@core/Models/user-preferences';
+import { UserPreferencesService } from '@core/services/user-preferences.service';
 import * as bootstrap from 'bootstrap';
 import { 
   trigger, 
@@ -17,7 +19,7 @@ import {
 } from '@angular/animations';
 
 @Component({
-  selector: 'front-office-profile',
+  selector: 'app-profile',
   standalone: true,
   imports: [
     CommonModule,
@@ -56,7 +58,7 @@ import {
     ])
   ]
 })
-export class FrontOfficeProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
   
   currentUser: User | null = null;
@@ -70,6 +72,11 @@ export class FrontOfficeProfileComponent implements OnInit {
   uploadErrorMessage = '';
   imageFileName: string | null = null;
 
+  // Interests management
+  interestsList: string[] = [];
+  newInterest = '';
+  isUpdating = false;
+
   // Stats
   profileStats = [
     { icon: 'bx bx-map', label: 'Country', value: 'Unknown' },
@@ -82,15 +89,24 @@ export class FrontOfficeProfileComponent implements OnInit {
   savedItineraries: any[] = [];
   completedTrips: any[] = [];
 
+  // User preferences
+  userPreferences: UserPreferences | null = null;
+  preferencesForm!: FormGroup;
+  isLoadingPreferences = false;
+  isSavingPreferences = false;
+  private preferencesModal: any;
+
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private toastr: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private preferencesService: UserPreferencesService
   ) { }
 
   ngOnInit(): void {
     this.initializeProfileForm();
+    this.initializePreferencesForm();
     this.loadUserData();
     
     // Placeholder data - would come from a service in real implementation
@@ -133,6 +149,8 @@ export class FrontOfficeProfileComponent implements OnInit {
           
           // Update form
           this.updateProfileForm(user);
+          // Load preferences
+          this.loadUserPreferences();
         }
         
         this.isLoading = false;
@@ -154,6 +172,9 @@ export class FrontOfficeProfileComponent implements OnInit {
       spokenLanguage: user.spokenLanguage || '',
       interests: user.interests || ''
     });
+    
+    // Update interests list
+    this.interestsList = user.interests?.split(',').map(i => i.trim()).filter(i => i.length > 0) || [];
   }
   
   formatDate(date: Date | string): string {
@@ -311,5 +332,208 @@ export class FrontOfficeProfileComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.toastr.success('You have been logged out successfully');
+  }
+  
+  // Interest management methods
+  addInterest(): void {
+    if (!this.newInterest.trim() || this.isUpdating || !this.currentUser) {
+      return;
+    }
+    
+    this.isUpdating = true;
+    
+    // Add to local array first for UI responsiveness
+    const trimmedInterest = this.newInterest.trim();
+    if (!this.interestsList.includes(trimmedInterest)) {
+      this.interestsList.push(trimmedInterest);
+      
+      // Update user with new interests
+      const updatedUser = {
+        ...this.currentUser,
+        interests: this.interestsList.join(',')
+      };
+      
+      this.userService.updateUser(this.currentUser.id, updatedUser).subscribe({
+        next: (user: User) => {
+          this.currentUser = user;
+          this.authService.updateCurrentUser(user);
+          this.toastr.success(`"${trimmedInterest}" added to your interests`);
+          this.newInterest = ''; // Clear input
+          
+          // Update stats
+          if (this.profileStats.length >= 4) {
+            this.profileStats[3].value = this.interestsList.length.toString();
+          }
+        },
+        error: (error) => {
+          // Revert the local add if API fails
+          this.interestsList = this.interestsList.filter(i => i !== trimmedInterest);
+          console.error('Error adding interest:', error);
+          this.toastr.error('Failed to add interest. Please try again.');
+        },
+        complete: () => {
+          this.isUpdating = false;
+        }
+      });
+    } else {
+      this.toastr.info(`"${trimmedInterest}" is already in your interests`);
+      this.newInterest = ''; // Clear input
+      this.isUpdating = false;
+    }
+  }
+  
+  removeInterest(interest: string): void {
+    if (this.isUpdating || !this.currentUser) {
+      return;
+    }
+    
+    this.isUpdating = true;
+    
+    // Remove from local array first for UI responsiveness
+    this.interestsList = this.interestsList.filter(i => i !== interest);
+    
+    // Update user with new interests
+    const updatedUser = {
+      ...this.currentUser,
+      interests: this.interestsList.join(',')
+    };
+    
+    this.userService.updateUser(this.currentUser.id, updatedUser).subscribe({
+      next: (user: User) => {
+        this.currentUser = user;
+        this.authService.updateCurrentUser(user);
+        this.toastr.success(`"${interest}" removed from your interests`);
+        
+        // Update stats
+        if (this.profileStats.length >= 4) {
+          this.profileStats[3].value = this.interestsList.length.toString();
+        }
+      },
+      error: (error) => {
+        // Revert the local removal if API fails
+        this.interestsList.push(interest);
+        console.error('Error removing interest:', error);
+        this.toastr.error('Failed to remove interest. Please try again.');
+      },
+      complete: () => {
+        this.isUpdating = false;
+      }
+    });
+  }
+
+  // User Preferences methods
+  initializePreferencesForm(): void {
+    this.preferencesForm = this.formBuilder.group({
+      budgetRange: ['', Validators.required],
+      preferenceCategories: ['', Validators.required],
+      travelStyles: ['', Validators.required],
+      languagePreferences: ['', Validators.required]
+    });
+  }
+
+  loadUserPreferences(): void {
+    if (!this.currentUser) return;
+    
+    this.isLoadingPreferences = true;
+    this.preferencesService.getUserPreferencesByUserId(this.currentUser.id)
+      .subscribe({
+        next: (preferences) => {
+          this.userPreferences = preferences;
+          this.updatePreferencesForm();
+          this.isLoadingPreferences = false;
+        },
+        error: (err) => {
+          if (err.status === 404) {
+            this.userPreferences = null;
+          } else {
+            console.error('Error loading user preferences:', err);
+            this.toastr.error('Failed to load travel preferences');
+          }
+          this.isLoadingPreferences = false;
+        }
+      });
+  }
+
+  updatePreferencesForm(): void {
+    if (this.userPreferences) {
+      this.preferencesForm.patchValue({
+        budgetRange: this.userPreferences.budgetRange || '',
+        preferenceCategories: this.userPreferences.preferenceCategories || '',
+        travelStyles: this.userPreferences.travelStyles || '',
+        languagePreferences: this.userPreferences.languagePreferences || ''
+      });
+    } else {
+      this.preferencesForm.reset();
+    }
+  }
+
+  openPreferencesModal(): void {
+    const modalElement = document.getElementById('editPreferencesModal');
+    if (modalElement) {
+      this.preferencesModal = new bootstrap.Modal(modalElement);
+      this.preferencesModal.show();
+    }
+  }
+
+  splitCommaSeparated(value: string): string[] {
+    return value
+      .split(',')
+      .map(v => v.trim())
+      .filter(v => v.length > 0);
+  }
+
+  savePreferences(): void {
+    if (this.preferencesForm.invalid || !this.currentUser) return;
+
+    this.isSavingPreferences = true;
+
+    const preferencesData = {
+      budgetRange: this.preferencesForm.value.budgetRange,
+      preferenceCategories: this.splitCommaSeparated(this.preferencesForm.value.preferenceCategories).join(','),
+      travelStyles: this.splitCommaSeparated(this.preferencesForm.value.travelStyles).join(','),
+      languagePreferences: this.splitCommaSeparated(this.preferencesForm.value.languagePreferences).join(','),
+      userId: this.currentUser.id
+    };
+
+    const request$ = this.userPreferences && this.userPreferences.id
+      ? this.preferencesService.updateUserPreferences(this.userPreferences.id, preferencesData)
+      : this.preferencesService.createUserPreferences(preferencesData);
+
+    request$.subscribe({
+      next: (savedPrefs) => {
+        this.userPreferences = savedPrefs;
+        this.toastr.success(this.userPreferences ? 'Preferences updated successfully' : 'Preferences created successfully');
+        if (this.preferencesModal) {
+          this.preferencesModal.hide();
+        }
+        this.isSavingPreferences = false;
+      },
+      error: (err) => {
+        console.error('Error saving preferences:', err);
+        this.toastr.error('Failed to save preferences');
+        this.isSavingPreferences = false;
+      }
+    });
+  }
+
+  getPreferenceList(field: string): string[] {
+    if (!this.userPreferences || !(this.userPreferences as any)[field]) {
+      return [];
+    }
+    return (this.userPreferences as any)[field].split(',').map((i: string) => i.trim());
+  }
+
+  getBudgetRangeClass(): string {
+    if (!this.userPreferences?.budgetRange) return '';
+    switch (this.userPreferences.budgetRange.toLowerCase()) {
+      case 'low': return 'text-danger';
+      case 'medium': return 'text-warning';
+      case 'high': return 'text-success';
+      default: return '';
+    }
+  }
+
+  getPreferencesButtonText(): string {
+    return this.userPreferences ? 'Edit Travel Preferences' : 'Set Travel Preferences';
   }
 }

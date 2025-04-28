@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
 import { Wishlist } from '../Models/wishlist';
+
 
 interface Page<T> {
   content: T[];
@@ -22,6 +24,16 @@ export class WishlistService {
   private apiUrl = 'http://localhost:8080/api/wishlist';
 
   constructor(private http: HttpClient) {}
+
+  // Fetch wishlist for a specific user
+  getWishlist(userId: number): Observable<Wishlist[]> {
+    return this.http.get<Wishlist[]>(`${this.apiUrl}/user/${userId}`).pipe(
+      catchError(err => {
+        console.error('Error fetching wishlist for user:', err);
+        return throwError(() => new Error('Failed to fetch wishlist'));
+      })
+    );
+  }
 
   getAllWishlists(
     searchTerm: string | null,

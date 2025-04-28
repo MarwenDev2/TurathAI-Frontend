@@ -1,10 +1,10 @@
 import { Route } from '@angular/router';
-import { FrontOfficeProfileComponent } from './profile.component';
+import { ProfileComponent } from './profile.component';
 
 export const FRONT_OFFICE_PROFILE_ROUTES: Route[] = [
   {
     path: '',
-    component: FrontOfficeProfileComponent,
+    component: ProfileComponent,
     title: 'User Profile'
   }
 ];

@@ -7,7 +7,9 @@ import { FrontOfficeHomeComponent } from './pages/home/home.component';
 import { FrontOfficeLayoutComponent } from './layout/front-office-layout.component';
 import { FrontOfficeRoutingModule } from './front-office-routing.module';
 import { FrontOfficeItinerariesComponent } from './pages/itineraries/itineraries.component';
-import { FrontOfficeProfileComponent } from './pages/profile/profile.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { ReviewComponent } from './pages/Reviews/review.component';
+import { WishlistComponent } from './pages/Wishlist/wishlist.component';
 
 @NgModule({
   imports: [
@@ -20,7 +22,9 @@ import { FrontOfficeProfileComponent } from './pages/profile/profile.component';
     FrontOfficeHomeComponent,
     FrontOfficeLayoutComponent,
     FrontOfficeItinerariesComponent,
-    FrontOfficeProfileComponent
+    ProfileComponent,
+    ReviewComponent,
+    WishlistComponent
   ]
 })
 export class FrontOfficeModule { }

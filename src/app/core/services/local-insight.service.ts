@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { LocalInsight } from '@core/Models/localInsight';
+import { User } from '@core/Models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +31,21 @@ export class LocalInsightService {
   createLocalInsight(localInsight: LocalInsight): Observable<LocalInsight> {
     return this.http.post<LocalInsight>(`${this.apiUrl}/creation`, localInsight);
   }
-
   
+  /**
+   * Sends an email notification after a local insight has been created
+   * @param localInsightId The ID of the created local insight
+   * @param userEmail The email of the user who created the local insight
+   * @param userName The name of the user who created the local insight
+   * @returns Observable with the notification result
+   */
+  sendLocalInsightNotification(localInsightId: number, userEmail: string, userName: string): Observable<any> {
+    return this.http.post(`http://localhost:8080/api/local-insights/notify`, {
+      localInsightId,
+      userEmail,
+      userName
+    });
+  }
 
   deleteLocalInsight(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);

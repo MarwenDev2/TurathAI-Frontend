@@ -22,27 +22,22 @@
   .carousel-slide {
     min-width: 100%;
     height: 100%;
-    background-size: cover;
-    background-position: center;
     position: relative;
+    overflow: hidden;
 
-    // Using the uploaded images
-    &:nth-child(1) {
-      background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../../../../../assets/images/carousel/slide1.jpg');
-    }
-    &:nth-child(2) {
-      background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../../../../../assets/images/carousel/slide2.jpg');
-    }
-    &:nth-child(3) {
-      background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../../../../../assets/images/carousel/slide3.jpg');
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
     }
   }
 
   .slide-content {
     position: absolute;
-    top: 50%;
+    top: 35%; // ✅ moved higher (was 50%)
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -35%); // ✅ adjust translation to match new top
     text-align: center;
     color: white;
     width: 80%;
@@ -81,6 +76,7 @@
     justify-content: center;
     transition: all 0.3s ease;
     backdrop-filter: blur(5px);
+    z-index: 10;
 
     &:hover {
       background: rgba(255,255,255,0.3);
@@ -108,15 +104,17 @@
     left: 50%;
     transform: translateX(-50%);
     display: flex;
+    align-items: center; // ✅ align vertically center
+    justify-content: center;
     gap: 10px;
     padding: 10px;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     backdrop-filter: blur(5px);
 
     .indicator {
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       background: rgba(255,255,255,0.5);
       border: none;
@@ -134,7 +132,7 @@
     }
   }
 
-  // Existing Hero Styles
+  // Hero Section
   .hero {
     background: linear-gradient(135deg, #007bff 0%, #00bcd4 100%);
     color: white;
@@ -175,7 +173,7 @@
     }
   }
 
-  // Existing Features Styles
+  // Features Section
   .features {
     padding: 2rem 0;
 
@@ -222,4 +220,4 @@
       }
     }
   }
-} 
+}

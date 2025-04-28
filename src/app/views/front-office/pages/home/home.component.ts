@@ -11,45 +11,17 @@ import { RouterModule } from '@angular/router';
 })
 export class FrontOfficeHomeComponent implements OnInit, OnDestroy {
   features = [
-    {
-      title: 'Easy Management',
-      description: 'Streamline your business operations with our intuitive management tools',
-      icon: '📊'
-    },
-    {
-      title: 'Real-time Updates',
-      description: 'Stay informed with real-time updates and notifications',
-      icon: '⚡'
-    },
-    {
-      title: 'Secure Platform',
-      description: 'Your data is protected with enterprise-grade security',
-      icon: '🔒'
-    }
+    { title: 'Easy Management', description: 'Streamline your business operations with our intuitive management tools', icon: '📊' },
+    { title: 'Real-time Updates', description: 'Stay informed with real-time updates and notifications', icon: '⚡' },
+    { title: 'Secure Platform', description: 'Your data is protected with enterprise-grade security', icon: '🔒' }
   ];
 
-  carouselSlides = [
-    {
-      image: 'assets/images/carousel/slide1.jpg',
-      title: 'Welcome to Our Platform',
-      description: 'Discover the power of our comprehensive business solution'
-    },
-    {
-      image: 'assets/images/carousel/slide2.jpg',
-      title: 'Streamline Your Workflow',
-      description: 'Efficient tools to boost your productivity'
-    },
-    {
-      image: 'assets/images/carousel/slide3.jpg',
-      title: 'Connect with Your Team',
-      description: 'Collaborate seamlessly with your colleagues'
-    }
-  ];
-
+  carouselSlides: { image: string; title: string; description: string; }[] = [];
   currentSlide = 0;
   autoSlideInterval: any;
 
   ngOnInit() {
+    this.loadCarouselSlides();
     this.startAutoSlide();
   }
 
@@ -57,10 +29,28 @@ export class FrontOfficeHomeComponent implements OnInit, OnDestroy {
     this.stopAutoSlide();
   }
 
+  loadCarouselSlides() {
+    const imageNames = [
+      'Tunis-Medina-Panorama-View.jpg',
+      'tunisia-travel-guide-64.jpg',
+      'tunisia-2_2.jpg',
+      'tunisia-1_2.jpg',
+      'shu-Tunisia-SidiBouSaid-760300645-1440x823',
+      'images.jpeg',
+      'download (3).jpeg',
+      'tunisia.jpg',
+      '1213a0c2-city-32784-16b8fc4f8fa.jpg'
+    ];
+
+    this.carouselSlides = imageNames.map((name, index) => ({
+      image: `/assets/images/carousel/${name}`,
+      title: `Slide ${index + 1}`,
+      description: `Description for slide ${index + 1}`
+    }));
+  }
+
   startAutoSlide() {
-    this.autoSlideInterval = setInterval(() => {
-      this.nextSlide();
-    }, 5000);
+    this.autoSlideInterval = setInterval(() => this.nextSlide(), 5000);
   }
 
   stopAutoSlide() {
@@ -80,4 +70,4 @@ export class FrontOfficeHomeComponent implements OnInit, OnDestroy {
   goToSlide(index: number) {
     this.currentSlide = index;
   }
-} 
+}

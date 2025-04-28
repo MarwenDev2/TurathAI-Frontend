@@ -1,5 +1,5 @@
-import { User } from './user';
 import { Site } from './site';
+import { User } from './user';
 
 export interface Review {
   id: number;
@@ -9,4 +9,7 @@ export interface Review {
   flagged: boolean;
   user: User;
   heritageSite: Site;
+
+  selected?: boolean; // For bulk actions
+  expanded?: boolean; //for showing / hiding details of a review fel timeline 
 }

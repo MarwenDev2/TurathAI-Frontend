@@ -1,0 +1,202 @@
+<div class="container">
+  <div class="row">
+    <!-- Sidebar for Average Rating and Review Count -->
+    <div class="col-md-3">
+      <div class="card mb-3">
+        <div class="card-body">
+          <p class="mb-1"><strong>Total Reviews:</strong> {{ totalReviews || 0 }}</p>
+          <p class="mb-1"><strong>Average Rating:</strong> {{ (averageRating || 0) | number: '1.1-1' }}/5</p>
+          <ul class="d-flex text-warning m-0 fs-20 list-unstyled">
+            <ng-template #t let-fill="fill">
+              <i class="bx bx-star text-warning fs-20">
+                <i *ngIf="fill > 0" class="bx bxs-star text-warning fs-20 filled" [style.width.%]="fill"></i>
+              </i>
+            </ng-template>
+            <ngb-rating [rate]="averageRating || 0" [starTemplate]="t" [readonly]="true" [max]="5" />
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Reviews Section -->
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4 class="card-title">Reviews for This Heritage Site</h4>
+          <div class="d-flex gap-2 align-items-center">
+            <!-- Filter by Rating Dropdown -->
+            <select [(ngModel)]="selectedRating" (ngModelChange)="filterByRating($event)" class="form-select">
+              <option [ngValue]="null">All Ratings</option>
+              <option [ngValue]="5">5 Stars</option>
+              <option [ngValue]="4">4 Stars</option>
+              <option [ngValue]="3">3 Stars</option>
+              <option [ngValue]="2">2 Stars</option>
+              <option [ngValue]="1">1 Star</option>
+            </select>
+            <!-- Reset Button -->
+            <button class="btn btn-secondary" (click)="resetFilter()">Reset</button>
+            <!-- Add Review Button -->
+            <button *ngIf="canAddReview" class="btn btn-primary" (click)="openReviewModal(reviewModal)">
+              <i class="bx bx-plus"></i> Add Review
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <!-- Loading State -->
+          <div *ngIf="isLoading" class="text-center">
+            <p>Loading reviews...</p>
+          </div>
+
+          <!-- Error State -->
+          <div *ngIf="errorMessage && !isLoading" class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+
+          <!-- No Reviews -->
+          <div *ngIf="!isLoading && !userReview && paginatedReviews.length === 0 && !errorMessage" class="text-muted">
+            No reviews available for this heritage site.
+          </div>
+
+          <!-- Current User's Review (if exists) -->
+          <ng-container *ngIf="userReview">
+            <div class="d-flex align-items-center gap-2">
+              <img
+               
+                alt="User Avatar"
+                class="avatar-md rounded-circle"
+              
+              >
+              <div>
+                <h5 class="mb-0">{{ (userReview.user?.firstName || '') + ' ' + (userReview.user?.lastName || '') || 'Anonymous' }}</h5>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2 mt-3 mb-1">
+              <ul class="d-flex text-warning m-0 fs-20 list-unstyled">
+                <ng-template #t let-fill="fill">
+                  <i class="bx bx-star text-warning fs-20">
+                    <i *ngIf="fill > 0" class="bx bxs-star text-warning fs-20 filled" [style.width.%]="fill"></i>
+                  </i>
+                </ng-template>
+                <ngb-rating [rate]="userReview.rating ?? 0" [starTemplate]="t" [readonly]="true" [max]="5" />
+              </ul>
+              <p class="fw-medium mb-0 text-dark fs-15">
+                Rating: {{ userReview.rating ?? 0 }}/5 -
+                {{ (userReview.rating ?? 0) >= 4 ? 'Excellent Quality' : (userReview.rating ?? 0) >= 3 ? 'Good Quality' : 'Average Quality' }}
+              </p>
+            </div>
+
+            <p class="mb-0 text-dark fw-medium fs-15">
+              Reviewed on {{ userReview.createdAt | date: 'dd MMMM yyyy' }}
+            </p>
+            <p class="text-muted">{{ userReview.comment || 'No comment provided.' }}</p>
+            <div class="mt-2 d-flex gap-2">
+              <button *ngIf="userReview?.id != null" class="btn btn-sm btn-warning" (click)="openReviewModal(reviewModal, userReview)">Edit</button>
+              <button *ngIf="userReview?.id != null" class="btn btn-sm btn-danger" (click)="deleteReview(userReview.id)">Delete</button>
+            </div>
+
+            <hr class="my-3" *ngIf="paginatedReviews.length > 0">
+          </ng-container>
+
+          <!-- Other Reviews -->
+          <ng-container *ngFor="let review of paginatedReviews; last as isLast">
+            <div class="d-flex align-items-center gap-2">
+              <img
+                
+                alt="User Avatar"
+                class="avatar-md rounded-circle"
+                
+              >
+              <div>
+                <h5 class="mb-0">{{ (review.user?.firstName || '') + ' ' + (review.user?.lastName || '') || 'Anonymous' }}</h5>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2 mt-3 mb-1">
+              <ul class="d-flex text-warning m-0 fs-20 list-unstyled">
+                <ng-template #t let-fill="fill">
+                  <i class="bx bx-star text-warning fs-20">
+                    <i *ngIf="fill > 0" class="bx bxs-star text-warning fs-20 filled" [style.width.%]="fill"></i>
+                  </i>
+                </ng-template>
+                <ngb-rating [rate]="review.rating ?? 0" [starTemplate]="t" [readonly]="true" [max]="5" />
+              </ul>
+              <p class="fw-medium mb-0 text-dark fs-15">
+                Rating: {{ review.rating ?? 0 }}/5 -
+                {{ (review.rating ?? 0) >= 4 ? 'Excellent Quality' : (review.rating ?? 0) >= 3 ? 'Good Quality' : 'Average Quality' }}
+              </p>
+            </div>
+
+            <p class="mb-0 text-dark fw-medium fs-15">
+              Reviewed on {{ review.createdAt | date: 'dd MMMM yyyy' }}
+            </p>
+            <p class="text-muted">{{ review.comment || 'No comment provided.' }}</p>
+            <div class="mt-2 d-flex gap-2">
+              <ng-container *ngIf="isAdmin">
+                <button *ngIf="review?.id != null" class="btn btn-sm btn-warning" (click)="openReviewModal(reviewModal, review)">Edit</button>
+                <button *ngIf="review?.id != null" class="btn btn-sm btn-danger" (click)="deleteReview(review.id)">Delete</button>
+              </ng-container>
+            </div>
+
+            <hr *ngIf="!isLast" class="my-3">
+          </ng-container>
+
+          <!-- Pagination Controls -->
+          <div class="d-flex justify-content-center mt-4" *ngIf="paginatedReviews.length > 0">
+            <nav>
+              <ul class="pagination">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                  <button class="page-link" (click)="goToPage(currentPage - 1)">Previous</button>
+                </li>
+                <li class="page-item" *ngFor="let page of getPages()" [class.active]="page === currentPage">
+                  <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
+                </li>
+                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                  <button class="page-link" (click)="goToPage(currentPage + 1)">Next</button>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add/Edit Review Modal -->
+<ng-template #reviewModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ editingReview ? 'Edit Review' : 'Add Review' }}</h5>
+    <button type="button" class="btn-close" (click)="closeReviewModal()"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="rating" class="form-label">Rating</label>
+        <ul class="d-flex text-warning m-0 fs-20 list-unstyled">
+          <ng-template #t let-fill="fill">
+            <i class="bx bx-star text-warning fs-20">
+              <i *ngIf="fill > 0" class="bx bxs-star text-warning fs-20 filled" [style.width.%]="fill"></i>
+            </i>
+          </ng-template>
+          <ngb-rating [(rate)]="newReview.rating" [starTemplate]="t" [max]="5" />
+        </ul>
+      </div>
+      <div class="mb-3">
+        <label for="comment" class="form-label">Comment</label>
+        <textarea
+          class="form-control"
+          id="comment"
+          rows="3"
+          [(ngModel)]="newReview.comment"
+          name="comment"
+          placeholder="Write your review..."
+        ></textarea>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeReviewModal()">Close</button>
+    <button type="button" class="btn btn-primary" (click)="submitReview()">
+      {{ editingReview ? 'Update' : 'Add' }} Review
+    </button>
+  </div>
+</ng-template>
