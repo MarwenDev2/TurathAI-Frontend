@@ -1,0 +1,76 @@
+.card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .avatar-md {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .fs-20 {
+    font-size: 20px;
+  }
+  
+  .filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+  
+  .text-muted {
+    font-size: 0.9rem;
+  }
+  
+  .fs-14 {
+    font-size: 14px;
+  }
+  
+  .fs-15 {
+    font-size: 15px;
+  }
+  
+  .text-warning {
+    color: #ffc107 !important;
+  }
+  
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .col-md-3, .col-md-9 {
+    padding: 15px;
+    box-sizing: border-box;
+  }
+  
+  @media (min-width: 768px) {
+    .col-md-3 {
+      flex: 0 0 25%;
+      max-width: 25%;
+    }
+    .col-md-9 {
+      flex: 0 0 75%;
+      max-width: 75%;
+    }
+  }
+  
+  .card {
+    width: 100%;
+  }
+  
+  .form-select {
+    max-width: 150px;
+  }
+  

@@ -1,0 +1,390 @@
+.modal {
+    display: none;
+  }
+  
+  .modal.d-block {
+    display: block;
+  }
+  
+  .table th,
+  .table td {
+    vertical-align: middle;
+  }
+  
+  .alert {
+    margin-bottom: 1rem;
+  }
+  
+  .spinner-border {
+    width: 2rem;
+    height: 2rem;
+  }
+
+
+
+  /* styles for the insights container*/
+  .insights-container {
+    display: flex;
+    gap: 20px; /* Space between the two cards */
+  }
+  
+  .insight-card {
+    flex: 1; /* Each card takes equal width */
+    min-width: 0; /* Prevents flex items from overflowing */
+  }
+  
+  .rating-label {
+    width: 50px; /* Reduced width for the rating label (e.g., "5 Stars") */
+    font-size: 0.9rem; /* Slightly smaller font for compactness */
+  }
+  
+  .review-count {
+    font-size: 0.9rem; /* Smaller font for the review count */
+    white-space: nowrap; /* Prevents wrapping of the review count */
+  }
+
+  /* style for the average rating card */
+  .average-rating-title {
+    font-size: 1.5rem; /* Larger title font size */
+    font-weight: 600; /* Slightly bolder for emphasis */
+  }
+  
+  .average-rating-value {
+    font-size: 2em; /* Larger font size for the rating value */
+    font-weight: 500; /* Medium weight for balance */
+  }
+  
+  /* Ensure the stars have a slight glow effect for visual appeal */
+  .insight-card .bx.bxs-star {
+    transition: transform 0.9s ease-in-out;
+  }
+  
+  .insight-card .bx.bxs-star.text-warning {
+    transform: scale(1.3); /* Slight scale-up for filled stars */
+  }
+
+ 
+  
+  /* Add a subtle hover effect to the entire card for interactivity */
+  .insight-card:hover {
+    .card {
+      box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow on hover */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .insights-container {
+      flex-direction: column;
+    }
+  
+    .insight-card {
+      width: 100%; /* Full width on smaller screens */
+    }
+  }
+
+  
+  /* Styles for the searchable dropdown */
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-menu {
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+  }
+  
+  .dropdown-item {
+    cursor: pointer;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f8f9fa;
+  }
+  
+  /* Modern Modal Styling */
+  .modern-modal {
+    .modal-dialog {
+      max-width: 600px;
+    }
+  
+    .modal-content {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      background: #fff;
+      padding: 20px;
+    }
+  
+    .modal-header {
+      border-bottom: none;
+      padding-bottom: 0;
+  
+      .modal-title {
+        font-weight: 600;
+        color: #333;
+      }
+  
+      .btn-close {
+        background-size: 1.2em;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+  
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  
+    .modal-body {
+      padding: 1.5rem;
+  
+      .form-label {
+        font-weight: 500;
+        color: #555;
+      }
+  
+      .form-control,
+      .form-select {
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        transition: border-color 0.2s, box-shadow 0.2s;
+  
+        &:focus {
+          border-color: #00c4b4; /* Matching a teal shade, adjust as needed */
+          box-shadow: 0 0 0 0.2rem rgba(0, 196, 180, 0.1);
+          outline: none;
+        }
+      }
+  
+      textarea.form-control {
+        resize: vertical;
+      }
+    }
+  
+    .modal-footer {
+      border-top: none;
+      padding-top: 0;
+  
+      .btn {
+        border-radius: 8px;
+        padding: 0.5rem 1.5rem;
+        font-weight: 500;
+        transition: transform 0.1s, background-color 0.2s;
+  
+        &:active {
+          transform: scale(0.95);
+        }
+      }
+  
+      .custom-btn-secondary {
+        background-color: #6c757d; /* Neutral gray */
+        color: #fff;
+        border: none;
+  
+        &:hover {
+          background-color: #5a6268;
+        }
+  
+        &:disabled {
+          background-color: #adb5bd;
+          cursor: not-allowed;
+        }
+      }
+  
+      .custom-btn-primary {
+        background-color: #00c4b4; /* Teal shade to match a modern theme */
+        border: none;
+        color: #fff;
+  
+        &:hover {
+          background-color: #00a89a;
+        }
+  
+        &:disabled {
+          background-color: #80e2d9;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+  
+  /* Confirmation Modal Styling */
+  .confirm-modal {
+    .modal-content {
+      border-radius: 20px;
+      text-align: center;
+    }
+  
+    .modal-header {
+      justify-content: center;
+      padding-bottom: 0;
+  
+      .modal-title {
+        font-size: 1.5rem;
+        color: #333;
+      }
+  
+      .btn-close {
+        position: absolute;
+        right: 1rem;
+      }
+    }
+  
+    .modal-body {
+      padding: 2rem;
+  
+      .confirm-icon {
+        font-size: 3rem;
+        color: #00c4b4; /* Match the primary color */
+        display: block;
+      }
+  
+      p {
+        font-size: 1.1rem;
+        color: #555;
+        margin-bottom: 0;
+      }
+    }
+  
+    .modal-footer {
+      .btn {
+        min-width: 100px;
+      }
+    }
+  }
+  
+  /* Rating Styling */
+  ngb-rating {
+    outline: none;
+  }
+  
+  .ratingnum {
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .modern-modal {
+    .modal-content {
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+  }
+  .confirm-modal {
+    .confirm-icon {
+      font-size: 3rem;
+      color: #007bff;
+    }
+  }
+  .custom-btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  .custom-btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+  }
+
+
+     
+  .timeline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Space between timeline items */
+    padding: 0;
+  }
+  
+  .timeline-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    width: 220px; /* Fixed width for each item to keep them organized */
+    min-height: 80px; /* Minimum height to ensure consistency */
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .timeline-item:hover {
+    .timeline-content {
+      background: #f8f9fa;
+      transform: translateY(-2px);
+    }
+  }
+  
+  .timeline-dot {
+    width: 10px;
+    height: 10px;
+    background: #007bff;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 5px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #007bff;
+  }
+  
+  .timeline-content {
+    margin-left: 20px; /* Reduced from 30px to bring dot and content closer */
+    padding: 8px; /* Reduced padding for a more compact look */
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .timeline-content p {
+    margin: 0;
+    font-size: 0.85rem; /* Slightly smaller font for compactness */
+  }
+  
+  .timeline-content small {
+    font-size: 0.75rem; /* Smaller date font */
+  }
+  
+  .timeline-content .btn-link {
+    font-size: 0.8rem; /* Smaller button font */
+    text-decoration: none;
+  }
+  
+  .timeline-content .btn-link:hover {
+    text-decoration: underline;
+  }
+
+
+
+  .table-skeleton {
+    .skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 5s infinite;
+      border-radius: 5px;
+    }
+    .skeleton-text {
+      height: 30px;
+      width: 100%;
+    }
+    .skeleton-checkbox {
+      height: 16px;
+      width: 16px;
+      margin: 0 auto;
+    }
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  .compare-card {
+    flex: 1;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin: 0 10px;
+    background: #f9f9f9;
+    text-align: center;
+  }
+

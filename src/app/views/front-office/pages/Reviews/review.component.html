@@ -1,0 +1,490 @@
+<div class="container mt-4">
+  <h2>My Reviews</h2>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    {{ errorMessage }}
+  </div>
+
+
+
+<!-- Insights Container -->
+<div class="insights-container mb-3">
+
+
+  <!-- Average Rating -->
+<div *ngIf="userAverageRating >= 0" class="insight-card">
+  <div class="card shadow-sm p-3 bg-light rounded h-100">
+    <h5 class="card-title mb-3 average-rating-title">Your Average Rating</h5>
+    <div class="d-flex flex-column align-items-center">
+      <ng-template #avgStarTemplate let-fill="fill">
+        <i
+          class="bx bxs-star fs-2 me-1"
+          [class.text-warning]="fill > 0"
+          [class.text-muted]="fill === 0"
+          [class.opacity-25]="fill === 0"
+          [style.width.%]="fill"
+        ></i>
+      </ng-template>
+      <ngb-rating
+        [rate]="userAverageRating"
+        [starTemplate]="avgStarTemplate"
+        [max]="5"
+        [readonly]="true"
+        class="d-inline-block mb-2"
+      ></ngb-rating>
+      <span class="average-rating-value fs-3 text-muted">({{ userAverageRating | number:'1.1-1' }} / 5)</span>
+    </div>
+  </div>
+</div>
+
+  <!-- Rating Distribution -->
+  <div class="insight-card">
+    <div class="card shadow-sm p-3 bg-light rounded h-100">
+      <h5 class="card-title mb-3">Your Rating Distribution</h5>
+      <div *ngFor="let rating of [5, 4, 3, 2, 1]" class="mb-2">
+        <div class="d-flex align-items-center">
+          <span class="me-2 rating-label">
+            {{ rating }} Star{{ rating !== 1 ? 's' : '' }}
+          </span>
+          <ngb-progressbar
+            type="primary"
+            [value]="ratingDistribution[rating] * 10"
+            [max]="100"
+            [showValue]="false"
+            class="flex-grow-1"
+          ></ngb-progressbar>
+          <span class="ms-2 review-count">{{ ratingDistribution[rating] }} review{{ ratingDistribution[rating] !== 1 ? 's' : '' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+ <!-- Recent Activity Timeline -->
+<div class="mb-3">
+  <div class="card shadow-sm p-3 bg-light rounded">
+    <h5 class="card-title mb-3">Recent Added Reviews </h5>
+    <div *ngIf="recentReviews.length === 0" class="text-muted">
+      No recent activity.
+    </div>
+    <div class="timeline">
+      <div *ngFor="let review of recentReviews" class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="d-flex align-items-center mb-1">
+            <strong class="me-2">{{ review.heritageSite.name || 'Unknown' }}</strong>
+            <ng-template #timelineStarTemplate let-fill="fill">
+              <i
+                class="bx bxs-star fs-6 me-1"
+                [class.text-warning]="fill > 0"
+                [class.text-muted]="fill === 0"
+                [class.opacity-25]="fill === 0"
+                [style.width.%]="fill"
+              ></i>
+            </ng-template>
+            <ngb-rating
+              [rate]="review.rating"
+              [starTemplate]="timelineStarTemplate"
+              [max]="5"
+              [readonly]="true"
+              class="d-inline-block"
+            ></ngb-rating>
+            <i
+              class="bx me-1"
+              [class.bx-smile]="review.rating >= 4"
+              [class.bx-meh]="review.rating === 3"
+              [class.bx-frown]="review.rating <= 2"
+              [class.text-success]="review.rating >= 4"
+              [class.text-warning]="review.rating === 3"
+              [class.text-danger]="review.rating <= 2"
+            ></i>
+          </div>
+          <p *ngIf="review.expanded" class="mb-1 text-muted">
+            {{ review.comment | slice:0:50 }}{{ review.comment.length > 50 ? '...' : '' }}
+          </p>
+          <div class="d-flex justify-content-between align-items-center">
+            <small class="text-muted">{{ review.createdAt | date: 'medium' }}</small>
+            <div>
+              <button
+                class="btn btn-link btn-sm p-0 me-2 text-secondary"
+                (click)="review.expanded = !review.expanded"
+              >
+                {{ review.expanded ? 'Hide' : 'Show' }} Details
+              </button>
+              <button class="btn btn-link btn-sm p-0 text-primary" (click)="openEditModal(review)">
+                Edit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Filters -->
+  <div class="mb-3">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Filter by comment..."
+          [(ngModel)]="commentFilter"
+          (input)="applyFilters()"
+        />
+      </div>
+      <div class="col-md-3">
+        <input
+          type="date"
+          class="form-control"
+          [(ngModel)]="dateFilter"
+          (change)="applyFilters()"
+        />
+      </div>
+      <div class="col-md-3">
+        <select class="form-select" [(ngModel)]="ratingFilter" (change)="applyFilters()">
+          <option value="">All Ratings</option>
+          <option *ngFor="let rating of [1, 2, 3, 4, 5]" [value]="rating">{{ rating }} Stars</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-secondary w-100" (click)="resetFilters()">Reset Filters</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Review Button -->
+  <button class="btn btn-primary mb-3" (click)="openAddModal()">Add Review</button>
+
+  <!-- Bulk Actions -->
+  <div *ngIf="selectedReviews.length > 1" class="mb-3">
+    <button class="btn btn-info me-2" (click)="openCompareModal()">Compare Selected ({{ selectedReviews.length }})</button>
+    <button class="btn btn-danger" (click)="deleteSelectedReviews()">Delete Selected ({{ selectedReviews.length }})</button>
+  </div>
+
+  <!-- Loading Skeleton -->
+<div *ngIf="isLoading" class="table-skeleton">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th><div class="skeleton skeleton-checkbox"></div></th>
+        <th><div class="skeleton skeleton-text"></div></th>
+        <th><div class="skeleton skeleton-text"></div></th>
+        <th><div class="skeleton skeleton-text"></div></th>
+        <th><div class="skeleton skeleton-text"></div></th>
+        <th><div class="skeleton skeleton-text"></div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let _ of [1, 2, 3, 4, 5]">
+        <td><div class="skeleton skeleton-checkbox"></div></td>
+        <td><div class="skeleton skeleton-text"></div></td>
+        <td><div class="skeleton skeleton-text"></div></td>
+        <td><div class="skeleton skeleton-text"></div></td>
+        <td><div class="skeleton skeleton-text"></div></td>
+        <td><div class="skeleton skeleton-text"></div></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+  <!-- Reviews Table -->
+  <table class="table table-bordered" *ngIf="!isLoading && reviews.length > 0">
+    <thead>
+      <tr>
+        <th><input type="checkbox" (change)="toggleSelectAll()" [(ngModel)]="selectAll"></th>
+        <th>Heritage Site</th>
+        <th>Rating</th>
+        <th>Comment</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let review of paginatedReviews">
+        <td><input type="checkbox" [(ngModel)]="review.selected" (change)="updateSelectAll()"></td>
+        <td>
+          <span [ngbTooltip]="review.heritageSite.description || 'No description available'" placement="top">
+            {{ review.heritageSite.name || 'Unknown Heritage Site' }}
+          </span>
+        </td>
+        <td>
+          <ng-template #tableStarTemplate let-fill="fill">
+            <i
+              class="bx bxs-star fs-5"
+              [class.text-warning]="fill > 0"
+              [class.text-muted]="fill === 0"
+              [class.opacity-25]="fill === 0"
+              [style.width.%]="fill"
+            ></i>
+          </ng-template>
+          <ngb-rating
+            [rate]="review.rating"
+            [starTemplate]="tableStarTemplate"
+            [max]="5"
+            [readonly]="true"
+            class="d-inline-block"
+          ></ngb-rating>
+          <span class="badge bg-info align-middle ms-2">{{ review.rating }}</span>
+        </td>
+        <td>{{ review.comment || 'No comment' }}</td>
+        <td>{{ review.createdAt | date: 'shortDate' }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="openEditModal(review)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteReview(review.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Empty State -->
+  <div *ngIf="!isLoading && reviews.length === 0" class="alert alert-info">
+    You haven't added any reviews yet. Click "Add Review" to get started!
+  </div>
+
+  <!-- Pagination -->
+  <ngb-pagination
+    *ngIf="reviews.length > 0"
+    [(page)]="page"
+    [pageSize]="pageSize"
+    [collectionSize]="totalReviews"
+    (pageChange)="onPageChange()"
+    class="d-flex justify-content-center"
+  ></ngb-pagination>
+</div>
+
+<!-- Add Review Modal -->
+<div class="modal modern-modal" [class.d-block]="showAddModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Review</h5>
+        <button type="button" class="btn-close" (click)="closeAddModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="addErrorMessage" class="alert alert-danger" role="alert">
+          {{ addErrorMessage }}
+        </div>
+        <ngb-progressbar *ngIf="isSubmitting" type="primary" [value]="submitProgress" [showValue]="false" class="mb-3"></ngb-progressbar>
+        <form (ngSubmit)="addReview()">
+          <div class="mb-3">
+            <label for="addHeritageSite" class="form-label">Heritage Site</label>
+            <div class="dropdown">
+              <input
+                type="text"
+                id="addHeritageSite"
+                class="form-control"
+                placeholder="Search for a heritage site..."
+                [(ngModel)]="addHeritageSiteSearchTerm"
+                (input)="addSearchHeritageSites()"
+                (click)="addToggleDropdown()"
+                name="addHeritageSiteSearch"
+              />
+              <div class="dropdown-menu w-100" [class.show]="addIsDropdownOpen">
+                <a
+                  *ngFor="let site of filteredHeritageSites"
+                  class="dropdown-item"
+                  (click)="addSelectHeritageSite(site)"
+                >
+                  {{ site.name }}
+                </a>
+                <div *ngIf="filteredHeritageSites.length === 0" class="dropdown-item text-muted">
+                  No heritage sites found
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="rating" class="form-label">Rating</label>
+            <div>
+              <ng-template #starTemplate let-fill="fill">
+                <i
+                  class="bx bxs-star fs-3"
+                  [class.text-warning]="fill > 0"
+                  [class.text-muted]="fill === 0"
+                  [class.opacity-25]="fill === 0"
+                  [style.width.%]="fill"
+                ></i>
+              </ng-template>
+              <ngb-rating
+                [(rate)]="newReviewRating"
+                [starTemplate]="starTemplate"
+                (hover)="addHovered = $event"
+                (leave)="addHovered = 0"
+                [max]="5"
+                class="d-inline-block"
+              ></ngb-rating>
+              <span class="ratingnum badge bg-info align-middle ms-2 mb-2">{{ newReviewRating || addHovered || 0 }}</span>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="comment" class="form-label">Comment</label>
+            <textarea
+              id="comment"
+              class="form-control"
+              [(ngModel)]="newReview.comment"
+              name="comment"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary custom-btn-secondary" (click)="closeAddModal()" [disabled]="isSubmitting">Close</button>
+            <button type="submit" class="btn btn-primary custom-btn-primary" [disabled]="isSubmitting">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Review Modal -->
+<div class="modal modern-modal" [class.d-block]="showEditModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Review</h5>
+        <button type="button" class="btn-close" (click)="closeEditModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="editErrorMessage" class="alert alert-danger" role="alert">
+          {{ editErrorMessage }}
+        </div>
+        <ngb-progressbar *ngIf="isSubmitting" type="primary" [value]="submitProgress" [showValue]="false" class="mb-3"></ngb-progressbar>
+        <form *ngIf="selectedReview" (ngSubmit)="updateReview()">
+          <div class="mb-3">
+            <label for="editHeritageSite" class="form-label">Heritage Site</label>
+            <div class="dropdown">
+              <input
+                type="text"
+                id="editHeritageSite"
+                class="form-control"
+                placeholder="Search for a heritage site..."
+                [(ngModel)]="addHeritageSiteSearchTerm"
+                (input)="searchHeritageSites()"
+                (click)="toggleDropdown()"
+                name="heritageSiteSearch"
+              />
+              <div class="dropdown-menu w-100" [class.show]="isDropdownOpen">
+                <a
+                  *ngFor="let site of filteredHeritageSites"
+                  class="dropdown-item"
+                  (click)="selectHeritageSite(site)"
+                >
+                  {{ site.name }}
+                </a>
+                <div *ngIf="filteredHeritageSites.length === 0" class="dropdown-item text-muted">
+                  No heritage sites found
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="editRating" class="form-label">Rating</label>
+            <div>
+              <ng-template #editStarTemplate let-fill="fill">
+                <i
+                  class="bx bxs-star fs-3"
+                  [class.text-warning]="fill > 0"
+                  [class.text-muted]="fill === 0"
+                  [class.opacity-25]="fill === 0"
+                  [style.width.%]="fill"
+                ></i>
+              </ng-template>
+              <ngb-rating
+                [(rate)]="selectedReview.rating"
+                [starTemplate]="editStarTemplate"
+                (hover)="editHovered = $event"
+                (leave)="editHovered = 0"
+                [max]="5"
+                class="d-inline-block"
+              ></ngb-rating>
+              <span class="ratingnum badge bg-info align-middle ms-2 mb-2">{{ selectedReview.rating || editHovered || 0 }}</span>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="editComment" class="form-label">Comment</label>
+            <textarea
+              id="editComment"
+              class="form-control"
+              [(ngModel)]="selectedReview.comment"
+              name="editComment"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary custom-btn-secondary" (click)="closeEditModal()" [disabled]="isSubmitting">Close</button>
+            <button type="submit" class="btn btn-primary custom-btn-primary" [disabled]="isSubmitting">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Compare Reviews Modal -->
+<div class="modal modern-modal" [class.d-block]="showCompareModal" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Compare Reviews</h5>
+        <button type="button" class="btn-close" (click)="closeCompareModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-around">
+          <div *ngFor="let review of selectedReviews" class="compare-card p-3">
+            <h6>{{ review.heritageSite.name || 'Unknown' }}</h6>
+            <ng-template #compareStarTemplate let-fill="fill">
+              <i
+                class="bx bxs-star fs-4 me-1"
+                [class.text-warning]="fill > 0"
+                [class.text-muted]="fill === 0"
+                [class.opacity-25]="fill === 0"
+                [style.width.%]="fill"
+              ></i>
+            </ng-template>
+            <ngb-rating
+              [rate]="review.rating"
+              [starTemplate]="compareStarTemplate"
+              [max]="5"
+              [readonly]="true"
+              class="d-inline-block mb-2"
+            ></ngb-rating>
+            <p class="mb-1"><strong>Comment:</strong> {{ review.comment || 'No comment' }}</p>
+            <p class="mb-0"><strong>Date:</strong> {{ review.createdAt | date: 'medium' }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeCompareModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal modern-modal confirm-modal" [class.d-block]="showConfirmModal" tabindex="-1">
+  <div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title">Confirmation</h5>
+        <button type="button" class="btn-close" (click)="closeConfirmModal()"></button>
+      </div>
+      <div class="modal-body text-center">
+        <i class="bx bx-question-mark confirm-icon mb-3"></i>
+        <p>{{ confirmMessage }}</p>
+      </div>
+      <div class="modal-footer border-0 justify-content-center">
+        <button type="button" class="btn btn-secondary custom-btn-secondary me-2" (click)="closeConfirmModal()">Cancel</button>
+        <button type="button" class="btn btn-primary custom-btn-primary" (click)="confirmModalAction()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Backdrop -->
+<div class="modal-backdrop fade show" *ngIf="showAddModal || showEditModal || showConfirmModal"></div>

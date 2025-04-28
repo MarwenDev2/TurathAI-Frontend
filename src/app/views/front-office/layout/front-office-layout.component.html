@@ -1,0 +1,58 @@
+<div class="front-office-layout">
+  <nav class="top-nav">
+    <div class="nav-brand">
+      <a routerLink="/frontoffice">
+        <img 
+          alt="TurathAI Logo" 
+          src="./assets/images/logo-dark.png" 
+          class="navbar-logo"
+        />
+      </a>
+    </div>
+    
+    <div class="nav-links">
+      <a *ngFor="let item of navItems" 
+         [routerLink]="item.link" 
+         routerLinkActive="active"
+         class="nav-link">
+        {{item.label}}
+      </a>
+    </div>
+    
+    <div class="nav-actions">
+      <ng-container *ngIf="(currentUser$ | async) as user; else loginButton">
+        <div ngbDropdown class="profile-dropdown">
+          <button class="btn-profile d-flex align-items-center" ngbDropdownToggle>
+            <img *ngIf="user.image" [src]="getUserImage(user)" alt="Profile" 
+                 class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: cover;"> 
+            <i *ngIf="!user.image" class="bx bx-user-circle me-1"></i>
+            <span>{{ user.firstName }}</span>
+          </button>
+          <div ngbDropdownMenu class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" routerLink="/frontoffice/profile">
+              <i class="bx bx-user"></i> Profile
+            </a>
+            <a class="dropdown-item" routerLink="/frontoffice/wishlist">
+              <i class="bx bx-heart"></i> Wishlist
+            </a>
+            <a class="dropdown-item" routerLink="/frontoffice/my-reviews">
+              <i class="bx bx-heart"></i>My Reviews
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-danger" (click)="logout()" style="cursor: pointer;">
+              <i class="bx bx-log-out"></i> Logout
+            </a>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #loginButton>
+        <a class="btn btn-primary" routerLink="/auth/signin">Login</a>
+        <a class="btn btn-outline-primary ms-2" routerLink="/auth/signup">Register</a>
+      </ng-template>
+    </div>
+  </nav>
+  
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

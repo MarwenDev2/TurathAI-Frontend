@@ -1,0 +1,223 @@
+.home-container {
+  // Carousel Styles
+  .carousel-section {
+    margin: -2rem -2rem 2rem -2rem;
+    overflow: hidden;
+    position: relative;
+    height: 500px;
+  }
+
+  .carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .carousel-slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: 100%;
+  }
+
+  .carousel-slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  .slide-content {
+    position: absolute;
+    top: 35%; // ✅ moved higher (was 50%)
+    left: 50%;
+    transform: translate(-50%, -35%); // ✅ adjust translation to match new top
+    text-align: center;
+    color: white;
+    width: 80%;
+    max-width: 800px;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+      line-height: 1.6;
+    }
+  }
+
+  .carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.2);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    z-index: 10;
+
+    &:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .control-icon {
+      color: white;
+      font-size: 1.5rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    &.prev {
+      left: 20px;
+    }
+
+    &.next {
+      right: 20px;
+    }
+  }
+
+  .carousel-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center; // ✅ align vertically center
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+
+    .indicator {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &.active {
+        background: white;
+        transform: scale(1.2);
+      }
+
+      &:hover {
+        background: rgba(255,255,255,0.8);
+      }
+    }
+  }
+
+  // Hero Section
+  .hero {
+    background: linear-gradient(135deg, #007bff 0%, #00bcd4 100%);
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+    margin: -2rem -2rem 2rem -2rem;
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+      }
+
+      p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+      }
+
+      .cta-button {
+        background: white;
+        color: #007bff;
+        border: none;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+
+  // Features Section
+  .features {
+    padding: 2rem 0;
+
+    h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 3rem;
+      color: #333;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 0 1rem;
+
+      .feature-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        text-align: center;
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: translateY(-5px);
+        }
+
+        .feature-icon {
+          font-size: 2.5rem;
+          margin-bottom: 1rem;
+        }
+
+        h3 {
+          color: #333;
+          margin-bottom: 1rem;
+          font-size: 1.5rem;
+        }
+
+        p {
+          color: #666;
+          line-height: 1.6;
+        }
+      }
+    }
+  }
+}
