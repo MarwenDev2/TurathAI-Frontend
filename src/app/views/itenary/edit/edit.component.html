@@ -25,7 +25,8 @@
           <div *ngIf="siteLoadError" class="alert alert-danger">{{ siteLoadError }}</div>
           
           <app-heritage-map-picker 
-            [heritageSites]="heritageSites" 
+            [heritageSites]="heritageSites"
+            [initialSelectedSites]="selectedStops"
             (sitesSelected)="onSitesSelected($event)"
           ></app-heritage-map-picker>
         </div>

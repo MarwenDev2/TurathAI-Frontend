@@ -243,41 +243,91 @@ export class EditComponent implements OnInit {
     this.itenaryService.update(formData)
       .pipe(
         switchMap(() => {
-          // Now update stops - first delete all existing stops
-          return this.stopService.deleteByItineraryId(this.itenaryId).pipe(
-            catchError(err => {
-              console.error('Error removing existing stops', err);
-              return of(null); // Continue even if delete fails
-            })
-          );
-        }),
-        switchMap(() => {
-          // Then create new stops based on selected sites
-          if (this.selectedStops.length === 0) {
+          // Instead of deleting all stops and creating new ones, we'll handle updates intelligently
+          
+          // 1. Find which stops to update (they have stopId from existing records)
+          const stopsToUpdate = this.selectedStops.filter(stop => stop.stopId);
+          
+          // 2. Find which stops to create (they don't have stopId)
+          const stopsToCreate = this.selectedStops.filter(stop => !stop.stopId);
+          
+          // 3. Find which stops to delete (in existingStops but not in selectedStops)
+          const stopIdsToKeep = stopsToUpdate.map(stop => stop.stopId);
+          const stopsToDelete = this.existingStops.filter(stop => !stopIdsToKeep.includes(stop.id));
+          
+          // Group all operations
+          const operations: any[] = [];
+          
+          // Handle deletes
+          if (stopsToDelete.length > 0) {
+            const deleteOps = stopsToDelete.map(stop => 
+              this.stopService.delete(stop.id).pipe(
+                catchError(err => {
+                  console.error(`Error deleting stop ${stop.id}`, err);
+                  return of(null);
+                })
+              )
+            );
+            operations.push(...deleteOps);
+          }
+          
+          // Handle updates
+          if (stopsToUpdate.length > 0) {
+            const updateOps = stopsToUpdate.map(stop => 
+              this.stopService.update({
+                id: stop.stopId,
+                order: stop.order,
+                duration: stop.duration,
+                itineryId: this.itenaryId,
+                heritageSiteId: stop.id
+              }).pipe(
+                catchError(err => {
+                  console.error(`Error updating stop ${stop.stopId}`, err);
+                  return of(null);
+                })
+              )
+            );
+            operations.push(...updateOps);
+          }
+          
+          // Handle creates
+          if (stopsToCreate.length > 0) {
+            const createOps = stopsToCreate.map(stop => 
+              this.stopService.add({
+                id: 0,
+                order: stop.order,
+                duration: stop.duration,
+                itineryId: this.itenaryId,
+                heritageSiteId: stop.id
+              }).pipe(
+                catchError(err => {
+                  console.error(`Error creating new stop for site ${stop.id}`, err);
+                  return of(null);
+                })
+              )
+            );
+            operations.push(...createOps);
+          }
+          
+          // If no operations, return empty array
+          if (operations.length === 0) {
             return of([]);
           }
           
-          const stopRequests = this.selectedStops.map(site => {
-            return this.stopService.add({
-              id: 0,
-              order: site.order,
-              duration: site.duration,
-              itineryId: this.itenaryId,
-              heritageSiteId: site.id
-            });
-          });
-          
-          return forkJoin(stopRequests);
+          // Execute all operations in parallel
+          return forkJoin(operations);
         })
       )
       .subscribe({
         next: () => {
           this.showSuccessAlert(`Itinerary updated successfully with ${this.selectedStops.length} stops!`);
-          this.router.navigate(['/itenary/list']);
+          // Ensure proper redirection to the itinerary list
+          this.router.navigate(['/itinerary-management']);
         },
         error: (err) => {
           console.error('Error updating itinerary or stops', err);
           this.showErrorAlert('Failed to update itinerary completely. Some changes may not have been saved.');
+          this.isLoading = false;
         },
         complete: () => {
           this.isLoading = false;
