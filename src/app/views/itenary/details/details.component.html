@@ -76,5 +76,33 @@
         </div>
       </div>
     </div>
+    
+    <!-- Route Map Section -->
+    <div *ngIf="!isLoading && !error && itenary">
+      <div class="mt-4">
+        <!-- Loading state for stops -->
+        <div *ngIf="stopsLoading" class="text-center p-4">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading stops...</span>
+          </div>
+          <p class="mt-2">Loading itinerary stops...</p>
+        </div>
+        
+        <!-- Error state for stops -->
+        <div *ngIf="stopsError && !stopsLoading" class="alert alert-warning">
+          <div class="alert-body">
+            <p class="mb-0">Failed to load stops for this itinerary. The route map may not display correctly.</p>
+            <div class="mt-3">
+              <button class="btn btn-outline-warning btn-sm" (click)="loadStops(itenaryId)">
+                <i class="mdi mdi-refresh me-1"></i> Retry Loading Stops
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Route Map -->
+        <app-itinerary-route-map [stops]="stops"></app-itinerary-route-map>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,8 +1,11 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="card">
-      <div class="card-header">
+      <div class="card-header d-flex justify-content-between align-items-center">
         <h4 class="card-title mb-0">Edit Itinerary</h4>
+        <button *ngIf="!isLoading" type="button" class="btn btn-outline-primary" (click)="toggleMap()">
+          {{ showMap ? 'Hide Map' : 'Show Map & Manage Stops' }}
+        </button>
       </div>
       <div class="card-body">
         <div *ngIf="isLoading" class="text-center p-4">
@@ -12,6 +15,21 @@
           <p class="mt-2">Loading itinerary data...</p>
         </div>
 
+        <!-- Map picker section -->
+        <div *ngIf="!isLoading && showMap" class="mb-4">
+          <h5 class="mb-3">Heritage Sites for Itinerary</h5>
+          <div *ngIf="isSiteLoading" class="text-center p-3">
+            <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+            <span class="ms-2">Loading heritage sites...</span>
+          </div>
+          <div *ngIf="siteLoadError" class="alert alert-danger">{{ siteLoadError }}</div>
+          
+          <app-heritage-map-picker 
+            [heritageSites]="heritageSites" 
+            (sitesSelected)="onSitesSelected($event)"
+          ></app-heritage-map-picker>
+        </div>
+        
         <form *ngIf="!isLoading" [formGroup]="itenaryForm" (ngSubmit)="onSubmit()">
           <input type="hidden" formControlName="id">
           <input type="hidden" formControlName="userId">
@@ -74,6 +92,26 @@
               </div>
               <div *ngIf="itenaryForm.get('budget')?.invalid && itenaryForm.get('budget')?.touched" class="text-danger">
                 Budget is required and must be greater than or equal to 0
+              </div>
+            </div>
+          </div>
+
+          <!-- Stops Summary (visible even when map is hidden) -->
+          <div *ngIf="selectedStops.length > 0" class="row mb-4">
+            <div class="col-lg-12">
+              <div class="alert alert-info">
+                <h5>Selected Stops ({{ selectedStops.length }})</h5>
+                <ul class="list-unstyled">
+                  <li *ngFor="let stop of selectedStops; let i = index" class="mb-2">
+                    <span class="badge bg-primary me-2">{{ stop.order }}</span>
+                    <strong>{{ stop.name }}</strong> - Duration: {{ stop.duration }}
+                  </li>
+                </ul>
+                <p *ngIf="!showMap" class="mb-0 mt-2">
+                  <button type="button" class="btn btn-sm btn-outline-primary" (click)="toggleMap()">
+                    Show Map to Edit Stops
+                  </button>
+                </p>
               </div>
             </div>
           </div>

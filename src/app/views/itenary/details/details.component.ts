@@ -2,13 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { ItenaryService } from '@core/services/itinerary.service';
+import { StopService } from '@core/services/stop.service';
 import { Itinery } from '@core/Models/itinerary';
+import { Stop } from '@core/Models/stop';
+import { ItineraryRouteMapComponent } from '../itinerary-route-map/itinerary-route-map.component';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ItineraryRouteMapComponent],
   templateUrl: './details.component.html'
 })
 export class DetailsComponent implements OnInit {
@@ -16,11 +19,15 @@ export class DetailsComponent implements OnInit {
   itenary?: Itinery;
   isLoading = true;
   error = false;
+  stops: Stop[] = [];
+  stopsLoading = true;
+  stopsError = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private itenaryService: ItenaryService
+    private itenaryService: ItenaryService,
+    private stopService: StopService
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +51,9 @@ export class DetailsComponent implements OnInit {
       next: (data) => {
         this.itenary = data;
         this.isLoading = false;
+        
+        // Load stops for this itinerary
+        this.loadStops(id);
       },
       error: (err) => {
         console.error('Error loading itinerary', err);
@@ -88,6 +98,23 @@ export class DetailsComponent implements OnInit {
     });
   }
 
+  loadStops(itineraryId: number): void {
+    this.stopsLoading = true;
+    this.stopsError = false;
+    
+    this.stopService.getByItineraryId(itineraryId).subscribe({
+      next: (stops) => {
+        this.stops = stops;
+        this.stopsLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading stops', err);
+        this.stopsError = true;
+        this.stopsLoading = false;
+      }
+    });
+  }
+
   deleteItenary(): void {
     Swal.fire({
       title: 'Are you sure?',
@@ -96,11 +123,8 @@ export class DetailsComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
       cancelButtonText: 'No, cancel!',
-      customClass: {
-        confirmButton: 'btn btn-danger w-xs me-2 mt-2',
-        cancelButton: 'btn btn-light w-xs mt-2'
-      },
-      buttonsStyling: false
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
     }).then((result) => {
       if (result.isConfirmed) {
         this.itenaryService.delete(this.itenaryId).subscribe({
@@ -109,9 +133,8 @@ export class DetailsComponent implements OnInit {
               title: 'Deleted!',
               text: 'Itinerary has been deleted.',
               icon: 'success',
-              confirmButtonText: 'OK',
               customClass: {
-                confirmButton: 'btn btn-primary w-xs me-2 mt-2'
+                confirmButton: 'btn btn-success'
               },
               buttonsStyling: false
             });
@@ -119,7 +142,15 @@ export class DetailsComponent implements OnInit {
           },
           error: (err) => {
             console.error('Error deleting itinerary', err);
-            this.showErrorAlert('Failed to delete itinerary. Please try again.');
+            Swal.fire({
+              title: 'Error!',
+              text: 'Failed to delete itinerary.',
+              icon: 'error',
+              customClass: {
+                confirmButton: 'btn btn-danger'
+              },
+              buttonsStyling: false
+            });
           }
         });
       }

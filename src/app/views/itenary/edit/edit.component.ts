@@ -2,9 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ItenaryService } from '@core/services/itinerary.service';
+import { StopService } from '@core/services/stop.service';
+import { SiteService } from '@core/services/site.service';
 import { Itinery } from '@core/Models/itinerary';
+import { Stop } from '@core/Models/stop';
+import { Site } from '@core/Models/site';
+import { HeritageMapPickerComponent } from '../heritage-map-picker/heritage-map-picker.component';
 import Swal from 'sweetalert2';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
+import { forkJoin, of } from 'rxjs';
+import { switchMap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit',
@@ -12,7 +19,8 @@ import { Router, ActivatedRoute, RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    HeritageMapPickerComponent
   ],
   templateUrl: './edit.component.html'
 })
@@ -21,10 +29,18 @@ export class EditComponent implements OnInit {
   isLoading = false;
   itenaryId: number = 0;
   itenary?: Itinery;
+  heritageSites: Site[] = [];
+  selectedStops: any[] = [];
+  existingStops: Stop[] = [];
+  showMap = false;
+  isSiteLoading = false;
+  siteLoadError = '';
 
   constructor(
     private fb: FormBuilder,
     private itenaryService: ItenaryService,
+    private stopService: StopService,
+    private siteService: SiteService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -39,6 +55,9 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Load all heritage sites first
+    this.loadHeritageSites();
+    
     // Get the itinerary ID from the route parameters
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
@@ -52,10 +71,31 @@ export class EditComponent implements OnInit {
     });
   }
 
+  loadHeritageSites(): void {
+    this.isSiteLoading = true;
+    this.siteService.getAll().subscribe({
+      next: (sites) => {
+        this.heritageSites = sites;
+        this.isSiteLoading = false;
+      },
+      error: (err) => {
+        console.error('Error loading heritage sites:', err);
+        this.siteLoadError = 'Failed to load heritage sites. Please refresh the page.';
+        this.isSiteLoading = false;
+      }
+    });
+  }
+  
+  toggleMap(): void {
+    this.showMap = !this.showMap;
+  }
+
   loadItenary(id: number): void {
     this.isLoading = true;
-    this.itenaryService.getById(id).subscribe({
-      next: (data) => {
+    
+    // Load both the itinerary and its stops
+    this.itenaryService.getById(id).pipe(
+      switchMap((data) => {
         this.itenary = data;
         // Format dates for the form
         const startDate = data.startDate ? new Date(data.startDate) : null;
@@ -69,17 +109,70 @@ export class EditComponent implements OnInit {
           budget: data.budget,
           userId: data.userId
         });
+        
+        // Now load the stops for this itinerary
+        return this.stopService.getByItineraryId(id);
+      }),
+      catchError(err => {
+        console.error('Error loading stops', err);
+        this.showErrorAlert('Failed to load itinerary stops. Some data may be missing.');
+        return of([]);
+      })
+    ).subscribe({
+      next: (stops) => {
+        this.existingStops = stops;
+        
+        // Transform stops to the format expected by the map picker
+        if (stops && stops.length > 0) {
+          this.transformStopsForMapPicker(stops);
+        }
+        
         this.isLoading = false;
       },
       error: (err) => {
-        console.error('Error loading itinerary', err);
-        this.showErrorAlert('Failed to load itinerary. Please try again.');
+        console.error('Error in itinerary loading process', err);
+        this.showErrorAlert('Failed to load complete itinerary data. Please try again.');
         this.isLoading = false;
         this.router.navigate(['/itenary/list']);
       }
     });
   }
-
+  
+  transformStopsForMapPicker(stops: Stop[]): void {
+    // We need to wait for heritage sites to be loaded
+    if (this.heritageSites.length === 0) {
+      setTimeout(() => this.transformStopsForMapPicker(stops), 500);
+      return;
+    }
+    
+    // Map stops to the format expected by the map picker
+    this.selectedStops = stops.map(stop => {
+      // Find the corresponding heritage site
+      const site = this.heritageSites.find(site => site.id === stop.heritageSite?.id);
+      
+      if (site) {
+        return {
+          ...site,
+          order: stop.order,
+          duration: stop.duration,
+          // Extract days from duration string (e.g., "2 days" -> 2)
+          // Using optional chaining to avoid "Object is possibly 'undefined'" errors
+          durationDays: parseInt(stop.duration?.split(' ')?.[0] || '1'),
+          stopId: stop.id // Keep track of original stop ID for updates
+        };
+      }
+      return null;
+    }).filter(Boolean) as any[];
+    
+    // Sort by order
+    this.selectedStops.sort((a, b) => a.order - b.order);
+    
+    // Automatically show the map if we have stops
+    if (this.selectedStops.length > 0) {
+      this.showMap = true;
+    }
+  }
+  
   // Format a date as YYYY-MM-DD for input[type="date"]
   formatDateForInput(date: Date): string {
     const yyyy = date.getFullYear().toString();
@@ -87,17 +180,59 @@ export class EditComponent implements OnInit {
     const dd = date.getDate().toString().padStart(2, '0');
     return `${yyyy}-${mm}-${dd}`;
   }
-
-  onSubmit() {
+  
+  onSitesSelected(sites: any[]): void {
+    this.selectedStops = sites;
+    
+    // Ensure each stop has the correct duration format
+    this.selectedStops.forEach(stop => {
+      if (!stop.duration || !stop.duration.includes('day')) {
+        const days = stop.durationDays || 1;
+        stop.duration = `${days} day${days !== 1 ? 's' : ''}`;
+      }
+    });
+  }
+  
+  onSubmit(): void {
     if (this.itenaryForm.invalid) {
       this.showErrorAlert('Please fill all required fields');
       return;
     }
 
+    // Check total duration matches
+    const formData = {...this.itenaryForm.value};
+    const startDate = new Date(formData.startDate);
+    const endDate = new Date(formData.endDate);
+    
+    // Calculate total days of itinerary
+    const itineraryDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+    
+    // Calculate total days from stops
+    let totalStopDays = 0;
+    this.selectedStops.forEach(stop => {
+      // Using optional chaining to avoid "Object is possibly 'undefined'" errors
+      const days = parseInt(stop.duration?.split(' ')?.[0] || '0');
+      if (!isNaN(days)) {
+        totalStopDays += days;
+      }
+    });
+    
+    // Check if total days exceed itinerary duration
+    if (totalStopDays > itineraryDays) {
+      this.showErrorAlert(`Your stops require ${totalStopDays} days, but your itinerary is only ${itineraryDays} days long. Please adjust your dates or reduce stop durations.`);
+      return;
+    }
+    
+    // Warn if there's a significant difference
+    if (totalStopDays < itineraryDays - 1) {
+      if (!confirm(`Your stops only account for ${totalStopDays} days, but your itinerary is ${itineraryDays} days long. Do you want to continue?`)) {
+        return;
+      }
+    }
+
     this.isLoading = true;
     
     // Format dates properly before sending
-    const formData = {...this.itenaryForm.value};
     if (formData.startDate) {
       formData.startDate = new Date(formData.startDate);
     }
@@ -106,14 +241,43 @@ export class EditComponent implements OnInit {
     }
 
     this.itenaryService.update(formData)
+      .pipe(
+        switchMap(() => {
+          // Now update stops - first delete all existing stops
+          return this.stopService.deleteByItineraryId(this.itenaryId).pipe(
+            catchError(err => {
+              console.error('Error removing existing stops', err);
+              return of(null); // Continue even if delete fails
+            })
+          );
+        }),
+        switchMap(() => {
+          // Then create new stops based on selected sites
+          if (this.selectedStops.length === 0) {
+            return of([]);
+          }
+          
+          const stopRequests = this.selectedStops.map(site => {
+            return this.stopService.add({
+              id: 0,
+              order: site.order,
+              duration: site.duration,
+              itineryId: this.itenaryId,
+              heritageSiteId: site.id
+            });
+          });
+          
+          return forkJoin(stopRequests);
+        })
+      )
       .subscribe({
         next: () => {
-          this.showSuccessAlert('Itinerary updated successfully!');
+          this.showSuccessAlert(`Itinerary updated successfully with ${this.selectedStops.length} stops!`);
           this.router.navigate(['/itenary/list']);
         },
         error: (err) => {
-          console.error('Error updating itinerary', err);
-          this.showErrorAlert('Failed to update itinerary. Please try again.');
+          console.error('Error updating itinerary or stops', err);
+          this.showErrorAlert('Failed to update itinerary completely. Some changes may not have been saved.');
         },
         complete: () => {
           this.isLoading = false;
@@ -121,7 +285,7 @@ export class EditComponent implements OnInit {
       });
   }
 
-  showSuccessAlert(message: string) {
+  showSuccessAlert(message: string): void {
     Swal.fire({
       title: 'Success!',
       text: message,
@@ -134,8 +298,8 @@ export class EditComponent implements OnInit {
       buttonsStyling: false
     });
   }
-
-  showErrorAlert(message: string) {
+  
+  showErrorAlert(message: string): void {
     Swal.fire({
       title: 'Error!',
       text: message,

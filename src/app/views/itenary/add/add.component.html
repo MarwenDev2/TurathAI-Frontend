@@ -68,13 +68,50 @@
             </div>
           </div>
 
+          <!-- Heritage Sites Map Section -->
+          <div class="row mb-4">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">Heritage Sites & Stops</h5>
+                  <button type="button" class="btn btn-outline-primary" (click)="toggleMap()">
+                    {{ showMap ? 'Hide Map' : 'Show Heritage Sites Map' }}
+                  </button>
+                </div>
+                <div class="card-body">
+                  <div *ngIf="isSiteLoading" class="text-center">
+                    <div class="spinner-border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p>Loading heritage sites...</p>
+                  </div>
+                  
+                  <div *ngIf="siteLoadError" class="alert alert-danger">
+                    {{ siteLoadError }}
+                  </div>
+                  
+                  <div *ngIf="showMap && !isSiteLoading && !siteLoadError">
+                    <app-heritage-map-picker 
+                      [heritageSites]="heritageSites" 
+                      (sitesSelected)="onSitesSelected($event)"
+                    ></app-heritage-map-picker>
+                  </div>
+                  
+                  <div *ngIf="!showMap && !isSiteLoading" class="alert alert-info">
+                    Click the "Show Heritage Sites Map" button to select heritage sites as stops for your itinerary.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="row mt-4">
             <div class="col-lg-12">
               <div class="hstack gap-2 justify-content-end">
                 <button type="button" class="btn btn-light" (click)="resetForm()">Clear</button>
                 <button type="submit" class="btn btn-primary" [disabled]="itenaryForm.invalid || isLoading">
                   <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1"></span>
-                  Save Itinerary
+                  Save Itinerary with {{ selectedStops.length }} Stop{{ selectedStops.length !== 1 ? 's' : '' }}
                 </button>
               </div>
             </div>

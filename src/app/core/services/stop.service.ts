@@ -102,4 +102,8 @@ export class StopService {
     
     return backendStop;
   }
+
+  deleteByItineraryId(itineraryId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/itinerary/${itineraryId}`);
+  }
 }
