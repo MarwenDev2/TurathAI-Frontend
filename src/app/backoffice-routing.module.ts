@@ -7,6 +7,7 @@ import { AUTH_ROUTES } from '@views/auth/auth.route';
 import { DashboardComponent } from '@views/dashboard/dashboard.component';
 import { ProfileComponent } from '@views/pages/profile/profile.component';
 import { VIEW_ROUTES } from '@views/views.route';
+import { RoleGuard } from './app.routes';
 
 const routes: Routes = [
   {
@@ -15,9 +16,16 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'frontoffice',
+    loadChildren: () => import('./views/front-office/front-office.module').then(m => m.FrontOfficeModule),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['USER'] }
+  },
+  {
     path: '',
     component: LayoutComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ADMIN'] },
     children: [
       {
         path: 'dashboard',
@@ -39,7 +47,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'dashboard'
+    redirectTo: ''
   }
 ];
 

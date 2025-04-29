@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { ITENARY_ROUTES } from './itenary.route';
 
 @Component({
   selector: 'app-itenary',
-  imports: [],
-  templateUrl: './itenary.component.html',
-  styleUrl: './itenary.component.scss'
+  standalone: true,
+  imports: [RouterModule],
+  templateUrl: './itenary.component.html'
 })
 export class ItenaryComponent {
-
+  // This is a container component for the itenary feature
+  // It just needs to render the router-outlet for child routes
 }

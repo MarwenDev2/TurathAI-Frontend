@@ -1,0 +1,85 @@
+<section class="carousel-section">
+  <div class="carousel-container">
+    <div class="carousel-slides" [style.transform]="'translateX(' + (-currentSlide * 100) + '%)'">
+      <div class="carousel-slide" *ngFor="let site of featuredSites" [style.background-image]="'url(' + getSiteImage(site.imageIds) + ')'">
+        <div class="slide-content">
+          <h2>{{site.name}}</h2>
+          <p>{{site.description | slice:0:150}}...</p>
+          <a [routerLink]="['/front-office/heritage-sites/details', site.id]" class="btn btn-light">View Details</a>
+        </div>
+      </div>
+    </div>
+    
+    <button class="carousel-control prev" (click)="prevSlide()">
+      <span class="control-icon">❮</span>
+    </button>
+    
+    <button class="carousel-control next" (click)="nextSlide()">
+      <span class="control-icon">❯</span>
+    </button>
+    
+    <div class="carousel-indicators">
+      <button 
+        *ngFor="let site of featuredSites; let i = index" 
+        class="indicator" 
+        [class.active]="i === currentSlide"
+        (click)="goToSlide(i)">
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Discover Heritage Sites</h1>
+    <p>Explore the rich cultural heritage and historical significance of our region's most treasured landmarks</p>
+    <button class="cta-button">Explore Now</button>
+  </div>
+</section>
+
+<div class="heritage-site-details">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <app-heritage-site-image 
+          [site]="siteData">
+        </app-heritage-site-image>
+      </div>
+      <div class="col-md-4">
+        <app-heritage-site-info [site]="siteData"></app-heritage-site-info>
+      </div>
+    </div>
+  </div>
+</div> 
+
+
+<!-- Add this after the existing content in heritage-site-details.component.html -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <app-site-itinerary *ngIf="siteId" [siteId]="siteId"></app-site-itinerary>
+    </div>
+  </div>
+</div>
+
+<!-- Local Insights Section -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <app-site-local-insights *ngIf="siteId" [siteId]="siteId"></app-site-local-insights>
+    </div>
+  </div>
+</div>
+
+<!-- Reviews Section -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-12">
+      <div class="section-header">
+        <h2>Reviews</h2>
+        <p>Discover unique perspectives and stories from locals</p>
+      </div>
+      <app-reviews *ngIf="siteId" [siteId]="siteId"></app-reviews>
+    </div>
+  </div>
+</div>

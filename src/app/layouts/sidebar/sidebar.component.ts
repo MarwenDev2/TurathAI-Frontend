@@ -9,9 +9,6 @@ import {
   NgbCollapseModule,
   type NgbCollapse,
 } from '@ng-bootstrap/ng-bootstrap';
-import { Store } from '@ngrx/store';
-import { changesidebarsize } from '@store/layout/layout-action';
-import { getSidebarsize } from '@store/layout/layout-selector';
 import { SimplebarAngularModule } from 'simplebar-angular';
 
 @Component({
@@ -36,8 +33,6 @@ export class SidebarComponent {
     basePath !== '' ? basePath + '/' : '',
     '/',
   );
-
-  store = inject(Store);
 
   constructor() {
     this.router.events.forEach((event) => {
@@ -191,9 +186,5 @@ export class SidebarComponent {
     } else {
       size = 'sm-hover';
     }
-    this.store.dispatch(changesidebarsize({ size }));
-    this.store.select(getSidebarsize).subscribe((size) => {
-      document.documentElement.setAttribute('data-menu-size', size);
-    });
   }
 }

@@ -72,19 +72,31 @@ export class AddComponent implements OnInit {
     
     const siteData: Site = {
       ...this.siteForm.value,
-      imageIds: this.imageIds
+      imageIds: this.imageIds,
+      popularityScore: 0 // Add default popularity score
     };
+
+    // Log the data being sent
+    console.log('Sending site data:', siteData);
 
     this.siteService.add(siteData)
       .subscribe({
-        next: () => {
+        next: (response) => {
+          console.log('Site added successfully:', response);
           this.showSuccessAlert('Site added successfully!');
           this.resetForm();
-          this.router.navigate(['/sites/list']); // Adjust the route as needed
+          this.router.navigate(['/sites/list']);
         },
-        error: (err) => {
-          console.error('Error adding site', err);
-          this.showErrorAlert('Failed to add site. Please try again.');
+        error: (error) => {
+          console.error('Error adding site:', error);
+          let errorMessage = 'Failed to add site. ';
+          if (error instanceof Error) {
+            errorMessage += error.message;
+          } else {
+            errorMessage += 'Please try again.';
+          }
+          this.showErrorAlert(errorMessage);
+          this.isLoading = false;
         },
         complete: () => {
           this.isLoading = false;

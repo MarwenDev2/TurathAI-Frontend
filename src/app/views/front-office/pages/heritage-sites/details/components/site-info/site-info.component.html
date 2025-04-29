@@ -1,0 +1,121 @@
+<div class="site-info-container">
+  <div class="site-info-body">
+    <!-- Badge for Popularity -->
+    <div class="d-flex justify-content-between align-items-start mb-4">
+      <div class="d-flex gap-2">
+        <h4 class="badge bg-success text-light fs-16 py-2 px-3">Highly Popular</h4>
+        <h4 *ngIf="site.categoryId" class="badge bg-info text-light fs-16 py-2 px-3">
+          {{getCategoryName(site.categoryId)}}
+        </h4>      
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-light btn-lg" title="Add to Wishlist">
+          <i class="bx bx-heart fs-20"></i>
+        </button>
+        <button class="btn btn-light btn-lg" title="Copy Link">
+          <i class="bx bx-link fs-20"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Heritage Site Rating -->
+    <div class="d-flex gap-3 align-items-center mb-4">
+      @if (hasRating) {
+        <ul class="d-flex text-warning m-0 fs-24 list-unstyled">
+          <ng-template #t let-fill="fill">
+            <i class="bx bx-star text-warning fs-24">
+              @if (fill > 0) {
+                <i class="bx bxs-star text-warning fs-24 filled" [style.width.%]="fill"></i>
+              }
+            </i>
+          </ng-template>
+          <ngb-rating 
+            [(rate)]="rating" 
+            [readonly]="true" 
+            [max]="5"
+            [starTemplate]="t">
+          </ngb-rating>
+        </ul>
+        <span class="ms-2 text-muted fs-14">
+          ({{rating | number:'1.1-1'}})
+        </span>
+      } @else {
+        <span class="text-muted fs-14">No reviews yet</span>
+      }
+      <span class="text text-success fs-16 py-2 px-3">
+        <i class="bx bx-check-circle me-1"></i> Recommended by 95% of travelers
+      </span>
+    </div>
+
+    <!-- Heritage Site Name and Category -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="fw-bold mb-0">{{site.name}}</h1>
+      <span class="badge bg-primary text-light fs-16 py-2 px-3">{{getCategoryName(site.categoryId)}}</span>
+    </div>
+
+    <!-- Location and Historical Period -->
+    <div class="row align-items-center g-3 mb-4">
+      <div class="col-lg-4">
+        <div class="d-flex align-items-center gap-3">
+          <i class="bx bx-map text-primary fs-24"></i>
+          <div>
+            <h4 class="text-dark fw-medium mb-1">Location</h4>
+            <p class="text-muted mb-0 fs-16">{{site.location}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="d-flex align-items-center gap-3">
+          <i class="bx bx-calendar text-primary fs-24"></i>
+          <div>
+            <h4 class="text-dark fw-medium mb-1">Historical Period</h4>
+            <p class="text-muted mb-0 fs-16">{{site.historicalSignificance}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="d-flex align-items-center gap-3">
+          <i class="bx bx-star text-primary fs-24"></i>
+          <div>
+            <h4 class="text-dark fw-medium mb-1">Popularity</h4>
+            <span class="{{getPopularityClass(site.expectedPopularity)}} text-light fs-14 py-2 px-3">
+              <i [class]="getPopularityIcon(site.expectedPopularity)"></i>
+              {{site.expectedPopularity}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Historical Significance -->
+    <div class="mb-4">
+      <h3 class="text-dark fw-medium mb-3">Historical Significance:</h3>
+      <p class="text-muted fs-16">{{site.historicalSignificance}} <a href="javascript:void(0);" class="link-primary">Read more</a></p>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-4">
+      <h3 class="text-dark fw-medium mb-3">Description:</h3>
+      <p class="text-muted fs-16">{{site.description}} <a href="javascript:void(0);" class="link-primary">Read more</a></p>
+    </div>
+
+    <!-- Visitor Information -->
+    <div class="mt-4">
+      <h3 class="text-dark fw-medium mb-3">Visitor Information</h3>
+      <ul class="d-flex flex-column gap-3 list-unstyled fs-16 my-3">
+        <li>
+          <i class='bx bx-check text-success fs-20'></i> UNESCO World Heritage Site
+        </li>
+        <li>
+          <i class='bx bx-check text-success fs-20'></i> Guided tours available
+        </li>
+        <li>
+          <i class='bx bx-check text-success fs-20'></i> Audio guides in multiple languages
+        </li>
+        <li>
+          <i class='bx bx-check text-success fs-20'></i> Wheelchair accessible
+        </li>
+      </ul>
+    </div>
+  </div>
+</div> 

@@ -259,6 +259,12 @@ getCategoryName(categoryId: number): string {
   return this.categoriesMap.get(categoryId) || 'Unknown';
 }
 
+getSiteImage(imageIds: number[] | undefined): string {
+  if (!imageIds || imageIds.length === 0) {
+    return 'assets/images/default-site.jpg';
+  }
+  return `http://localhost:9090/images/${imageIds[0]}`;
+}
 
   searchSites(): void {
     if (!this.searchTerm) {
@@ -324,9 +330,6 @@ getCategoryName(categoryId: number): string {
 
 
   getImageUrls(imageIds: number[]): string[] {
-    if (!imageIds || imageIds.length === 0) {
-      return ['assets/images/qr-code.png'];
-    }
     return imageIds.map(id => `http://localhost:9090/images/${id}`);
   }
 

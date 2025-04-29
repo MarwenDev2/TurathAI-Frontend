@@ -1,0 +1,297 @@
+/* Style général pour la page */
+.container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Titre de la page */
+h2 {
+  text-align: center;
+  color: #333;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+/* Message de chargement */
+.loading-message {
+  text-align: center;
+  font-size: 1rem;
+  color: #999;
+}
+
+/* Message quand il n'y a pas de forums */
+.no-forums {
+  text-align: center;
+  font-size: 1rem;
+  color: #f44336;
+}
+
+/* Liste des forums (affichage en colonne) */
+.forums-list {
+  display: block;
+  margin-top: 20px;
+}
+
+/* Style pour chaque forum */
+.forum-item {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  margin-bottom: 20px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.forum-item:hover {
+  transform: translateY(-5px);
+}
+
+/* Contenu du forum (titre, description) */
+.forum-content h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.forum-content p {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* Image du forum (dimensions fixes pour toutes les images) */
+.forum-image {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.forum-image img {
+  width: 100%;
+  max-height: 150px; /* Limite la hauteur des images */
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Boutons */
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.forum-content h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  padding-top: 20px; /* Espacement entre le titre et les icônes */
+}
+
+.forum-item {
+  position: relative;
+  margin-bottom: 20px;
+}
+.context-menu {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  z-index: 9999; /* Assure-toi que le menu est au-dessus des autres éléments */
+  padding: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+.context-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.comment-input-container {
+  display: flex;
+  align-items: center;
+  background-color: #f0f2f5;
+  border: 1px solid #ccd0d5;
+  border-radius: 30px;
+  padding: 5px 10px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+.comment-textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  resize: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  outline: none;
+  min-height: 40px;
+  max-height: 120px;
+  overflow-y: auto;
+  color: #050505;
+}
+
+.send-button, .toggle-comments-button {
+  background-color: #1877f2;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 20px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+
+  &:hover {
+    background-color: #166fe5;
+    transform: scale(1.05);
+  }
+}
+
+
+.context-menu li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.context-menu li:hover {
+  background-color: #f0f0f0;
+}
+
+
+.context-menu button {
+  background: none;
+  border: none;
+  padding: 5px 10px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.context-menu button:hover {
+  background-color: #f0f0f0;
+}
+
+
+.buttons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  margin-bottom: 10px; /* Espace entre les icônes */
+  color: #333;
+}
+
+.buttons button:hover {
+  color: #007bff;   /* couleur au survol (bleu) */
+}
+.forum-header {
+  position: relative;
+}
+
+/* Section des commentaires */
+.comments-section {
+  margin-top: 10px;
+  background-color: #f1f1f1;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.comments-section textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.comments-section button {
+  background-color: #2196F3;
+  font-size: 0.9rem;
+}
+
+.comments-section button:hover {
+  background-color: #0b7dda;
+}
+
+.comments-section div {
+  margin-top: 8px;
+}
+
+.comments-section p {
+  font-size: 0.9rem;
+  color: #333;
+  margin: 5px 0;
+}
+
+/* Modal de confirmation */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: popup 0.3s ease-out;
+}
+
+@keyframes popup {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.modal-actions {
+  margin-top: 15px;
+}
+
+.confirm-btn,
+.cancel-btn {
+  padding: 8px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.confirm-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.confirm-btn:hover {
+  background-color: #e53935;
+}
+
+.cancel-btn {
+  background-color: #4CAF50;
+  color: white;
+  margin-left: 10px;
+}
+
+.cancel-btn:hover {
+  background-color: #388E3C;
+}

@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ItenaryService {
-  private apiUrl = 'http://localhost:8080/api/itineries'; // Adjust if your backend runs elsewhere
+  private apiUrl = 'http://localhost:9090/api/itineries'; // Adjust if your backend runs elsewhere
 
   constructor(private http: HttpClient) {}
 
@@ -32,13 +32,17 @@ export class ItenaryService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/remove/${id}`);
   }
+
+  getItinerariesBySiteId(siteId: number): Observable<Itinery[]> {
+    return this.http.get<Itinery[]>(`${this.apiUrl}/site/${siteId}`);
+  }
   
   getQRCode(id: number): string {
-    return `http://localhost:8080/api/qrcode/itinery/${id}`;
+    return `http://localhost:9090/api/qrcode/itinery/${id}`;
   }
 
   exportToPdf(): Observable<Blob> {
-    return this.http.get(`http://localhost:8080/api/export/pdf`, {
+    return this.http.get(`http://localhost:9090/api/export/pdf`, {
       responseType: 'blob',
       headers: {
         'Accept': 'application/pdf'
@@ -55,7 +59,7 @@ export class ItenaryService {
   }
 
   exportToExcel(): Observable<Blob> {
-    return this.http.get(`http://localhost:8080/api/export/excel`, {
+    return this.http.get(`http://localhost:9090/api/export/excel`, {
       responseType: 'blob',
       headers: {
         'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'

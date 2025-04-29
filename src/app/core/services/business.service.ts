@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, catchError, map, of, tap } from 'rxjs';
 import { Business } from '../Models/business';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BusinessService {
-  private apiUrl = 'http://localhost:8080/api/businesses';
-  private imageApiUrl = 'http://localhost:8080/images';
+  private apiUrl = 'http://localhost:9090/api/businesses';
+  private imageApiUrl = 'http://localhost:9090/images';
 
   constructor(private http: HttpClient) { }
 
@@ -26,7 +26,36 @@ export class BusinessService {
   }
 
   getBusinessesBySiteId(siteId: number): Observable<Business[]> {
-    return this.http.get<Business[]>(`${this.apiUrl}/by-site/${siteId}`);
+    console.log(`Fetching businesses for site ID: ${siteId}`);
+    return this.http.get<Business[]>(`${this.apiUrl}/by-site/${siteId}`).pipe(
+      tap(businesses => console.log(`Found ${businesses.length} businesses for site ${siteId}:`, businesses)),
+      map(businesses => businesses.map(business => {
+        // Ensure all business objects have consistent properties
+        return {
+          ...business,
+          // Make sure image URLs are properly formatted
+          images: business.images?.map(img => ({
+            ...img,
+            url: img.url || `${this.imageApiUrl}/${img.id}`
+          })) || []
+        };
+      })),
+      catchError((error: HttpErrorResponse) => {
+        console.error(`Error fetching businesses for site ${siteId}:`, error);
+        // Try an alternative endpoint if the first one fails
+        if (error.status === 404) {
+          console.log('Trying alternative endpoint...');
+          return this.http.get<Business[]>(`${this.apiUrl}/heritage-site/${siteId}`).pipe(
+            tap(businesses => console.log('Alternative endpoint result:', businesses)),
+            catchError(altError => {
+              console.error('Alternative endpoint also failed:', altError);
+              return of([]); // Return empty array as fallback
+            })
+          );
+        }
+        return of([]); // Return empty array as fallback
+      })
+    );
   }
 
   createBusiness(business: Business): Observable<Business> {

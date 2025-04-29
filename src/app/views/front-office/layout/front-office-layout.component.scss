@@ -1,0 +1,199 @@
+.front-office-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-nav {
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  .nav-brand {
+    flex: 1;
+    a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .nav-actions {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.navbar-logo {
+  height: 40px;
+  width: auto;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.nav-link {
+  color: #666;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #007bff;
+    background: rgba(0,123,255,0.1);
+  }
+
+  &.active {
+    color: #007bff;
+    background: rgba(0,123,255,0.1);
+  }
+}
+
+/* Rest of your existing styles for dropdowns, buttons, etc. */
+.main-content {
+  margin-top: 4rem;
+  padding: 2rem;
+  flex: 1;
+}
+  
+.nav-links {
+  display: flex;
+  gap: 2rem;
+
+  .nav-link {
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #007bff;
+      background: rgba(0,123,255,0.1);
+    }
+
+    &.active {
+      color: #007bff;
+      background: rgba(0,123,255,0.1);
+    }
+  }
+}
+
+.nav-actions {
+  .profile-dropdown {
+    .btn-profile {
+      background: none;
+      border: none;
+      padding: 0.5rem;
+      cursor: pointer;
+      color: #666;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #007bff;
+      }
+
+      i {
+        vertical-align: middle;
+      }
+    }
+
+    .dropdown-menu {
+      min-width: 200px;
+      padding: 0.5rem 0;
+      border: none;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+      .dropdown-item {
+        padding: 0.5rem 1rem;
+        color: #666;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+
+        i {
+          font-size: 1.2rem;
+        }
+
+        &:hover {
+          background: rgba(0,123,255,0.1);
+          color: #007bff;
+        }
+
+        &.text-danger {
+          color: #dc3545;
+          &:hover {
+            background: rgba(220,53,69,0.1);
+            color: #dc3545;
+          }
+        }
+      }
+
+      .dropdown-divider {
+        margin: 0.5rem 0;
+        border-color: #eee;
+      }
+    }
+  }
+}
+
+.main-content {
+  margin-top: 4rem;
+  padding: 2rem;
+  flex: 1;
+} 
+
+.navbar-logo {
+  height: 40px; /* Adjust based on your design needs */
+  width: auto;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.top-nav {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  
+  .nav-brand {
+    margin-right: auto;
+    
+    a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+  }
+  
+  /* Rest of your existing navbar styles */
+}

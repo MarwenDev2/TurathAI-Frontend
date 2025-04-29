@@ -101,7 +101,7 @@
                   <!-- Handle images from API response -->
                   <div *ngIf="event.images && event.images.length > 0">
                     {{ event.images.length }} images
-                    <img [src]="'http://localhost:8080/images/' + event.images[0].id" 
+                    <img [src]="'http://localhost:9090/images/' + event.images[0].id" 
                          alt="Event image"
                          style="width: 50px; height: 50px; object-fit: cover;"
                          (error)="handleImageError($event)">

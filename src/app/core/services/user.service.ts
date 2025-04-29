@@ -10,7 +10,7 @@ import { UserPreferences } from '@core/Models/user-preferences';
 })
 export class UserService {
 
-  private apiUrl = 'http://localhost:8080/api/users'; // ✅ change this to match your backend endpoint
+  private apiUrl = 'http://localhost:9090/api/users'; // ✅ change this to match your backend endpoint
   userForm: any;
 
   constructor(private http: HttpClient, private userPreferencesService: UserPreferencesService) { }
@@ -92,6 +92,27 @@ getCurrentUser(): Observable<User> {
     catchError(error => {
       console.error('Error fetching current user:', error);
       throw new Error('Failed to fetch user data');
+    })
+  );
+}
+
+// Upload profile image
+uploadProfileImage(formData: FormData): Observable<any> {
+  return this.http.post(`${this.apiUrl}/upload-image`, formData).pipe(
+    catchError(error => {
+      console.error('Error uploading profile image:', error);
+      let errorMessage = 'Failed to upload profile image';
+      
+      if (error.error instanceof ErrorEvent) {
+        errorMessage = `Error: ${error.error.message}`;
+      } else {
+        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        if (error.error?.message) {
+          errorMessage = error.error.message;
+        }
+      }
+      
+      return throwError(() => new Error(errorMessage));
     })
   );
 }

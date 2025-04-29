@@ -1,28 +1,35 @@
 import { Route } from '@angular/router';
-import { SigninComponent } from './signin/signin.component';
-import { SignupComponent } from './signup/signup.component';
-import { PasswordComponent } from './password/password.component';
+import { SignInComponent } from './signin/signin.component';
+import { SignUpComponent } from './signup/signup.component';
 import { LockScreenComponent } from './lock-screen/lock-screen.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { PasswordComponent } from './password/password.component';
 
 export const AUTH_ROUTES: Route[] = [
   {
     path: 'signin',
-    component: SigninComponent,
-    data: { title: 'Sign In' },
+    component: SignInComponent
   },
   {
     path: 'signup',
-    component: SignupComponent,
-    data: { title: 'Sign Up' },
+    component: SignUpComponent
   },
+  { path: '', redirectTo: 'signin', pathMatch: 'full' },
   {
     path: 'password',
-    component: PasswordComponent,
-    data: { title: 'Reset Password' },
+    component: PasswordComponent
   },
   {
     path: 'lock-screen',
-    component: LockScreenComponent,
-    data: { title: 'Lock Screen' },
+    component: LockScreenComponent
   },
+  { 
+    path: 'forgot-password', 
+    component: ForgotPasswordComponent 
+  },
+  { 
+    path: 'reset-password', 
+    component: ResetPasswordComponent 
+  }
 ];

@@ -34,6 +34,6 @@ export class RecentUsersComponent implements OnInit {
     }
     
     // For local images served by your backend
-    return `http://localhost:8080/assets/images/users/${imagePath}`;
+    return `http://localhost:9090/assets/images/users/${imagePath}`;
   }
 }

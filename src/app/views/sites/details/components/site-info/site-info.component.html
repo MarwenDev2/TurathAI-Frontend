@@ -20,7 +20,7 @@
 
     <!-- Heritage Site Rating -->
     <div class="d-flex gap-2 align-items-center mb-3">
-      @if (rating > 0) {
+      @if (hasRating) {
         <ul class="d-flex text-warning m-0 fs-20 list-unstyled">
           <ng-template #t let-fill="fill">
             <i class="bx bx-star text-warning fs-20">

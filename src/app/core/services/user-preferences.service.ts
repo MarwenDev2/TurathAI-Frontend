@@ -7,7 +7,7 @@ import { UserPreferences } from '@core/Models/user-preferences';
   providedIn: 'root'
 })
 export class UserPreferencesService {
-  private apiUrl = 'http://localhost:8080/api/user-preferences';
+  private apiUrl = 'http://localhost:9090/api/user-preferences';
 
   constructor(private http: HttpClient) { }
 

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { currency } from '@common/constants';
-import { QuantityControlDirective } from '@core/directive/quantity-control.directive'
+// Removed unused import
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap'
 import { CommonModule } from '@angular/common';
 import { Site } from '@core/Models/site';
@@ -8,12 +8,13 @@ import { Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SiteService } from '@core/services/site.service';
 import { CategoryService } from '@core/services/category.service';
+import { ReviewService } from '@core/services/review.service';
 
 
 @Component({
   selector: 'site-info-detail',
   standalone: true,
-  imports: [QuantityControlDirective,NgbRatingModule, CommonModule],
+  imports: [NgbRatingModule, CommonModule],
   templateUrl: './site-info.component.html',
   styles: [`
     .filled {
@@ -23,12 +24,38 @@ import { CategoryService } from '@core/services/category.service';
     }
   `]
 })
-export class SiteInfoComponent {
+export class SiteInfoComponent implements OnChanges {
   currency=currency
   @Input() site!: Site;
 
-  get rating(): number {
-    return this.site?.averageRating ?? 0;
+  rating: number = 0;
+  hasRating: boolean = false;
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.site && this.site.id) {
+      this.updateRating();
+    }
+  }
+  
+  updateRating(): void {
+    if (this.site?.averageRating) {
+      this.rating = this.site.averageRating;
+      this.hasRating = this.rating > 0;
+    } else {
+      // Use the ReviewService's calculateAverageRating function
+      this.reviewService.calculateAverageRating(this.site.id).subscribe({
+        next: (result) => {
+          this.rating = result.average;
+          this.hasRating = result.hasReviews;
+          console.log(`Ratings for site ${this.site.id}:`, result);
+        },
+        error: (error: any) => {
+          console.error('Error calculating average rating:', error);
+          this.hasRating = false;
+          this.rating = 0;
+        }
+      });
+    }
   }
 
   categoriesMap = new Map<number, string>();
@@ -39,7 +66,8 @@ export class SiteInfoComponent {
   constructor(
     private route: ActivatedRoute,
     private siteService: SiteService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private reviewService: ReviewService
   ) {}
 
   loadData(): void {

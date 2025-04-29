@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class StopService {
-  private apiUrl = 'http://localhost:8080/api/stops'; // Adjust if your backend runs elsewhere
+  private apiUrl = 'http://localhost:9090/api/stops'; // Adjust if your backend runs elsewhere
 
   constructor(private http: HttpClient) {}
 
@@ -40,6 +40,10 @@ export class StopService {
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/remove/${id}`);
+  }
+
+  getBySiteId(siteId: number): Observable<Stop[]> {
+    return this.http.get<Stop[]>(`${this.apiUrl}/site/${siteId}`);
   }
 
   reorderStops(stops: Stop[]): Observable<Stop[]> {

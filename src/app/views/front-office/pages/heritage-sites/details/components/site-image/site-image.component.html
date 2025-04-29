@@ -1,0 +1,22 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title mb-3">Site Gallery</h5>
+    <div class="swiper-container rounded" data-swiper="navigation">
+      <swiper-container [config]="swiperNavigation" init="false">
+        @for (imageUrl of getImageUrls(site.imageIds); track imageUrl) {
+          <swiper-slide class="swiper-slide">
+            <img [src]="imageUrl" [alt]="site.name" class="img-fluid rounded" />
+          </swiper-slide>
+        }
+        @empty {
+          <swiper-slide class="swiper-slide">
+            <img src="assets/images/qr-code.png" [alt]="site.name" class="img-fluid rounded" />
+          </swiper-slide>
+        }
+      </swiper-container>
+      <div class="swiper-button-next basic-next"></div>
+      <div class="swiper-button-prev basic-prev"></div>
+      <div class="swiper-pagination basic-pagination"></div>
+    </div>
+  </div>
+</div> 

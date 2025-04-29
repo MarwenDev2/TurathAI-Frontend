@@ -7,7 +7,7 @@ import { User } from '@core/Models/user';
   providedIn: 'root'
 })
 export class UserStatisticsService {
-  private apiUrl = 'http://localhost:8080/api/users';
+  private apiUrl = 'http://localhost:9090/api/users';
 
   constructor(private http: HttpClient) { }
 

@@ -19,7 +19,7 @@ interface Page<T> {
   providedIn: 'root'
 })
 export class WishlistService {
-  private apiUrl = 'http://localhost:8080/api/wishlist';
+  private apiUrl = 'http://localhost:9090/api/wishlist';
 
   constructor(private http: HttpClient) {}
 

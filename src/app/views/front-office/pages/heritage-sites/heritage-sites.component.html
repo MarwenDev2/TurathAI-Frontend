@@ -1,0 +1,286 @@
+<section class="carousel-section">
+  <div class="carousel-container">
+    <div class="carousel-slides" [style.transform]="'translateX(' + (-currentSlide * 100) + '%)'">
+      <div class="carousel-slide" *ngFor="let site of featuredSites" [style.background-image]="'url(' + getSiteImage(site.imageIds) + ')'">
+        <div class="slide-content">
+          <h2>{{site.name}}</h2>
+          <p>{{site.description | slice:0:150}}...</p>
+          <a [routerLink]="['/frontoffice/heritage-sites/details', site.id]" class="btn btn-light">
+            View Details
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <button class="carousel-control prev" (click)="prevSlide()">
+      <span class="control-icon">❮</span>
+    </button>
+    
+    <button class="carousel-control next" (click)="nextSlide()">
+      <span class="control-icon">❯</span>
+    </button>
+    
+    <div class="carousel-indicators">
+      <button 
+        *ngFor="let site of featuredSites; let i = index" 
+        class="indicator" 
+        [class.active]="i === currentSlide"
+        (click)="goToSlide(i)">
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Discover Heritage Sites</h1>
+    <p>Explore the rich cultural heritage and historical significance of our region's most treasured landmarks</p>
+    <button class="cta-button">Explore Now</button>
+  </div>
+</section>
+
+<div class="container py-5">
+
+
+  <!-- Recommended Sites Section -->
+  <div class="recommended-sites-section mb-5">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+      <h2 class="section-title">Recommended For You</h2>
+      <a href="#" class="view-all-link">View All <i class="bx bx-chevron-right"></i></a>
+    </div>
+
+
+    <div class="row">
+      @for (site of filteredSites; track site.id) {
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="site-card">
+            <div class="card-image">
+              <img [src]="getSiteImage(site.imageIds)" [alt]="site.name">
+              <button class="wishlist-btn" (click)="toggleWishlist(site.id)">
+                <i class="bx" [class.bx-heart]="!isInWishlist(site.id)" [class.bxs-heart]="isInWishlist(site.id)"></i>
+              </button>
+            </div>
+            <div class="card-content">
+              <h3 class="site-name">
+                <a [routerLink]="['/frontoffice/heritage-sites/details', site.id]">{{site.name}}</a>
+              </h3>
+              <p class="site-location">
+                <i class="bx bx-map"></i> {{site.location}}
+              </p>
+              <p class="site-description">{{site.description | slice:0:150}}...</p>
+              
+              <div class="site-meta">
+                <div class="rating">
+                  <ul class="d-flex text-warning m-0 fs-20 list-unstyled">
+                    <ng-template #t let-fill="fill">
+                      <i class="bx bx-star text-warning fs-20">
+                        @if (fill > 0) {
+                          <i class="bx bxs-star text-warning fs-20 filled" [style.width.%]="fill"></i>
+                        }
+                      </i>
+                    </ng-template>
+                    <ngb-rating 
+                      [rate]="site.averageRating || 0" 
+                      [readonly]="true" 
+                      [max]="5"
+                      [starTemplate]="t">
+                    </ngb-rating>
+                    <span class="ms-2 text-muted fs-12">
+                      ({{site.averageRating || 0 | number:'1.1-1'}})
+                    </span>
+                  </ul>
+                </div>
+                
+                <div class="popularity-badges">
+                  <span class="badge {{getPopularityClass(site.expectedPopularity)}}">
+                    <i [class]="getPopularityIcon(site.expectedPopularity)"></i>
+                    {{site.expectedPopularity}}
+                  </span>
+                  <span class="badge {{getScoreClass(site.popularityScore)}}">
+                    <i [class]="getScoreIcon(site.popularityScore)"></i>
+                    Score: {{site.popularityScore | number:'1.1-1'}}/10
+                  </span>
+                </div>
+              </div>
+
+              <div class="card-actions">
+                <a [routerLink]="['/frontoffice/heritage-sites/details', site.id]" class="btn btn-primary">
+                  View Details
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+
+  </div>
+
+    <!-- Navigation Bar -->
+    <div class="site-navigation mb-4">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="search-box">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Search sites..." 
+                   [(ngModel)]="searchTerm"
+                   (input)="onSearchInput()">
+            <i class="bx bx-search"></i>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="category-filter">
+            <select class="form-select" [(ngModel)]="selectedCategory" (change)="filterByCategory()">
+              <option value="">All Categories</option>
+              <option *ngFor="let category of categories" [value]="category.id">
+                {{category.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="sort-options">
+            <select class="form-select" [(ngModel)]="sortBy" (change)="sortSites()">
+              <option value="name">Sort by Name</option>
+              <option value="popularity">Sort by Popularity</option>
+              <option value="rating">Sort by Rating</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  <!-- All Sites Section -->
+  <div class="all-sites-section">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+      <h2 class="section-title">All Heritage Sites</h2>
+      <div class="view-options">
+        <button class="btn btn-outline-primary me-2" (click)="toggleViewMode()">
+          <i class="bx" [class.bx-grid-alt]="!isGridView" [class.bx-list-ul]="isGridView"></i>
+          {{isGridView ? 'Grid View' : 'List View'}}
+        </button>
+      </div>
+    </div>
+    
+    @if (isGridView) {
+      <div class="row">
+        @for (site of filteredSites; track site.id) {
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="site-card">
+              <div class="card-image">
+                <img [src]="getSiteImage(site.imageIds)" [alt]="site.name">
+                <button class="wishlist-btn" (click)="toggleWishlist(site.id)">
+                  <i class="bx" [class.bx-heart]="!isInWishlist(site.id)" [class.bxs-heart]="isInWishlist(site.id)"></i>
+                </button>
+              </div>
+              <div class="card-content">
+                <h3 class="site-name">
+                  <a [routerLink]="['/frontoffice/heritage-sites', site.id]">{{site.name}}</a>
+                </h3>
+                <p class="site-location">
+                  <i class="bx bx-map"></i> {{site.location}}
+                </p>
+                <p class="site-description">{{site.description | slice:0:150}}...</p>
+                
+                <div class="site-meta">
+                  <div class="rating">
+                    <ul class="d-flex text-warning m-0 fs-20 list-unstyled">
+                      <ng-template #t let-fill="fill">
+                        <i class="bx bx-star text-warning fs-20">
+                          @if (fill > 0) {
+                            <i class="bx bxs-star text-warning fs-20 filled" [style.width.%]="fill"></i>
+                          }
+                        </i>
+                      </ng-template>
+                      <ngb-rating 
+                        [rate]="site.averageRating || 0" 
+                        [readonly]="true" 
+                        [max]="5"
+                        [starTemplate]="t">
+                      </ngb-rating>
+                      <span class="ms-2 text-muted fs-12">
+                        ({{site.averageRating || 0 | number:'1.1-1'}})
+                      </span>
+                    </ul>
+                  </div>
+                  
+                  <div class="popularity-badges">
+                    <span class="badge {{getPopularityClass(site.expectedPopularity)}}">
+                      <i [class]="getPopularityIcon(site.expectedPopularity)"></i>
+                      {{site.expectedPopularity}}
+                    </span>
+                    <span class="badge {{getScoreClass(site.popularityScore)}}">
+                      <i [class]="getScoreIcon(site.popularityScore)"></i>
+                      Score: {{site.popularityScore | number:'1.1-1'}}/10
+                    </span>
+                  </div>
+                </div>
+
+                <div class="card-actions">
+                  <a [routerLink]="['/frontoffice/heritage-sites/details', site.id]" class="btn btn-primary">
+                    View Details
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="list-view">
+        @for (site of filteredSites; track site.id) {
+          <div class="site-list-item">
+            <div class="row align-items-center">
+              <div class="col-md-3">
+                <img [src]="getSiteImage(site.imageIds)" [alt]="site.name" class="list-image">
+              </div>
+              <div class="col-md-6">
+                <h3 class="site-name">{{site.name}}</h3>
+                <p class="site-location">
+                  <i class="bx bx-map"></i> {{site.location}}
+                </p>
+                <p class="site-description">{{site.description | slice:0:200}}...</p>
+                <div class="site-meta">
+                  <div class="rating">
+                    <ul class="d-flex text-warning m-0 fs-20 list-unstyled">
+                      <ng-template #t let-fill="fill">
+                        <i class="bx bx-star text-warning fs-20">
+                          @if (fill > 0) {
+                            <i class="bx bxs-star text-warning fs-20 filled" [style.width.%]="fill"></i>
+                          }
+                        </i>
+                      </ng-template>
+                      <ngb-rating 
+                        [rate]="site.averageRating || 0" 
+                        [readonly]="true" 
+                        [max]="5"
+                        [starTemplate]="t">
+                      </ngb-rating>
+                      <span class="ms-2 text-muted fs-12">
+                        ({{site.averageRating || 0 | number:'1.1-1'}})
+                      </span>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 text-end">
+                <div class="popularity-badges mb-3">
+                  <span class="badge {{getPopularityClass(site.expectedPopularity)}}">
+                    <i [class]="getPopularityIcon(site.expectedPopularity)"></i>
+                    {{site.expectedPopularity}}
+                  </span>
+                </div>
+                <a [routerLink]="['/frontoffice/heritage-sites/details', site.id]" class="btn btn-primary">
+                  View Details
+                </a>
+                
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div> 

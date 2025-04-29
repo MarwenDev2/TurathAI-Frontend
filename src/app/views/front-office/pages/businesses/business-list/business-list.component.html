@@ -1,0 +1,112 @@
+<div class="business-list-container">
+  <!-- Carousel Section -->
+  <section class="carousel-section">
+    <div class="carousel-container">
+      <div class="carousel-slides" [style.transform]="'translateX(' + (-currentSlide * 100) + '%)'">
+        <div class="carousel-slide" *ngFor="let slide of carouselSlides">
+          <div class="slide-content">
+            <h2>{{slide.title}}</h2>
+            <p>{{slide.description}}</p>
+          </div>
+        </div>
+      </div>
+      
+      <button class="carousel-control prev" (click)="prevSlide()">
+        <span class="control-icon">❮</span>
+      </button>
+      
+      <button class="carousel-control next" (click)="nextSlide()">
+        <span class="control-icon">❯</span>
+      </button>
+      
+      <div class="carousel-indicators">
+        <button 
+          *ngFor="let slide of carouselSlides; let i = index" 
+          class="indicator" 
+          [class.active]="i === currentSlide"
+          (click)="goToSlide(i)">
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Local Heritage Businesses</h1>
+      <p>Discover and support businesses that preserve our cultural heritage</p>
+    </div>
+  </section>
+
+  <!-- Business Grid Section -->
+  <section class="business-grid">
+    <div class="container">
+      <!-- Loading State -->
+      <div class="loading-state" *ngIf="loading">
+        <div class="spinner"></div>
+        <p>Loading businesses...</p>
+      </div>
+
+      <!-- Error State -->
+      <div class="error-state" *ngIf="error">
+        <p>Failed to load businesses. Please try again later.</p>
+        <button (click)="loadBusinesses()" class="retry-button">
+          <i class="fas fa-redo"></i> Retry
+        </button>
+      </div>
+
+      <!-- Business Grid -->
+      <div class="row" *ngIf="!loading && !error">
+        <div class="col-md-4 mb-4" *ngFor="let business of paginatedBusinesses">
+          <div class="business-card" (click)="viewBusinessDetails(business.id!)">
+            <div class="card-image">
+              <!-- Handle images from API response -->
+              <div *ngIf="business.images && business.images.length > 0">
+                <img
+                [src]="getBusinessImage(business)" 
+                [alt]="business.name"
+                (error)="handleImageError($event)">
+              </div>
+              <!-- Handle imageIds for backward compatibility -->
+              <div *ngIf="(!business.images || business.images.length === 0) && business.imageIds && business.imageIds.length > 0">
+                <img [src]="businessService.getImageUrl(business.imageIds[0])" 
+                     [alt]="business.name"
+                     (error)="handleImageError($event)">
+              </div>
+              <!-- No images case -->
+              <div *ngIf="(!business.images || business.images.length === 0) && (!business.imageIds || business.imageIds.length === 0)">
+                <img src="assets/images/placeholder.jpg" 
+                     [alt]="business.name"
+                     style="opacity: 0.7;">
+              </div>
+              <div class="business-type">{{business.type}}</div>
+            </div>
+            <div class="card-content">
+              <h3 class="business-name">{{business.name}}</h3>
+              <div class="business-location" *ngIf="business.heritageSite">
+                <i class="fas fa-map-marker-alt"></i>
+                Related to Heritage site : {{business.heritageSite.name}}
+              </div>
+              <div class="business-contact">
+                <i class="fas fa-phone"></i>
+                {{business.contact}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="d-flex justify-content-center mt-4" *ngIf="businesses.length > pageSize">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true">
+        </ngb-pagination>
+      </div>
+    </div>
+  </section>
+</div>

@@ -17,11 +17,11 @@
     <item-detail />
   </div>
   <div class="col-lg-6">
-    <detail-top-review />
+    <detail-top-review [siteId]="siteData?.id" />
   </div>
 </div>
 <div class="row">
   <div class="col-12">
-    <related-business [businesses]="relatedBusinesses"></related-business>
+    <related-business [siteId]="siteData?.id"></related-business>
   </div>
 </div>

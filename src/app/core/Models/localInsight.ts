@@ -5,7 +5,9 @@ export class LocalInsight {
     description?: string;
     type?: string;
     videoURL?: string;
-    audioURL?: string;
-    heritageSite?: any; 
-   
-  }
+    likes?: number;
+    dislikes?: number;
+    isLiked?: boolean;
+    isDisliked?: boolean;
+    heritageSite?: any;
+}

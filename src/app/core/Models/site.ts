@@ -1,13 +1,12 @@
-// site.ts
 export interface Site {
     id: number;
     name: string;
     location: string;
     description: string;
     historicalSignificance: string;
-    expectedPopularity: 'Low' | 'Medium' | 'High';
     popularityScore: number;
     categoryId: number;
+        expectedPopularity: 'Low' | 'Medium' | 'High';
     imageIds?: number[];
     averageRating?: number;
   }

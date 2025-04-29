@@ -1,0 +1,173 @@
+<div class="card reviews-section">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div class="d-flex align-items-center">
+          <h4 class="card-title mb-0">Top Reviews</h4>
+          <span class="badge bg-primary rounded-pill ms-2" style="font-size: 14px;">{{ collectionSize }}</span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <!-- Filter by Rating Dropdown -->
+          <select [(ngModel)]="selectedRating" (ngModelChange)="filterByRating($event)" class="form-select form-select-sm" style="width: auto;">
+            <option [ngValue]="null">All Ratings</option>
+            <option [ngValue]="5">5 Stars</option>
+            <option [ngValue]="4">4 Stars</option>
+            <option [ngValue]="3">3 Stars</option>
+            <option [ngValue]="2">2 Stars</option>
+            <option [ngValue]="1">1 Star</option>
+          </select>
+          <!-- Reset Button -->
+          <button class="btn btn-outline-secondary btn-sm" (click)="resetFilter()">
+            <i class="bx bx-reset"></i> Reset
+          </button>
+          <!-- Add Review Button - only visible for authenticated users -->
+          <button *ngIf="currentUser" class="btn btn-primary btn-sm" (click)="openReviewModal(reviewModal)">
+            <i class="bx bx-plus"></i> Add Review
+          </button>
+          <!-- Login prompt for unauthenticated users -->
+          <a *ngIf="!currentUser" routerLink="/auth/signin" class="btn btn-outline-primary btn-sm">
+            <i class="bx bx-log-in"></i> Login to Review
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Loading reviews...</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-state" *ngIf="error">
+      <p class="text-danger">{{ error }}</p>
+    </div>
+
+    <div class="card-body" *ngIf="!loading && !error">
+      @if (reviews.length === 0) {
+        <p class="text-muted text-center">No reviews yet.</p>
+      } @else {
+        <!-- Reviews count summary -->
+        <p class="text-muted mb-4 text-center">
+          Showing {{ (page-1) * pageSize + 1 }}-{{ Math.min(page * pageSize, collectionSize) }} of {{ collectionSize }} reviews
+        </p>
+        
+        <!-- Reviews listing -->
+        @for (review of pagedReviews; track review.id) {
+          <div class="review-item">
+            <div class="d-flex align-items-center gap-2">
+              <img [src]="review.user.image || 'assets/images/users/avatar-6.jpg'" alt="User avatar" class="avatar-md rounded-circle">
+              <div>
+                <h5 class="mb-0">{{review.user.firstName || 'Anonymous'}} {{review.user.lastName || ''}}</h5>
+              </div>
+            </div>
+            <div class="d-flex align-items-center gap-2 mt-3 mb-1">
+              <ul class="d-flex text-warning m-0 fs-20 list-unstyled">
+                <ng-template #t let-fill="fill">
+                  <i class="bx bx-star text-warning fs-20">
+                    @if (fill > 0) {   
+                    <i class="bx bxs-star text-warning fs-20 filled" [style.width.%]="fill"></i>
+                    }
+                  </i>
+                </ng-template>
+  
+                <ngb-rating [rate]="review.rating" [starTemplate]="t" [readonly]="true" [max]="5" />
+              </ul>
+              <p class="fw-medium mb-0 text-dark fs-15">{{getRatingText(review.rating)}}</p>
+            </div>
+  
+            <p class="mb-0 text-dark fw-medium fs-15">Reviewed on {{review.createdAt | date}}</p>
+            <p class="text-muted">{{review.comment}}</p>
+            <div class="mt-2 d-flex gap-2">
+                <!-- Only show edit/delete for admin or the owner of the review -->
+                <ng-container *ngIf="isAdmin || (currentUser && currentUser.id === review.user.id)">
+                  <button *ngIf="review?.id != null" class="btn btn-sm btn-warning" (click)="openReviewModal(reviewModal, review)">
+                    <i class="bx bx-edit"></i> Edit
+                  </button>
+                  <button *ngIf="review?.id != null" class="btn btn-sm btn-danger" (click)="deleteReview(review.id)">
+                    <i class="bx bx-trash"></i> Delete
+                  </button>
+                </ng-container>
+                <!-- Show a message for others if it's the current user's review -->
+                <ng-container *ngIf="currentUser && (currentUser.id === review.user.id)">
+                  <span class="badge bg-info ms-2">Your review</span>
+                </ng-container>
+              </div>
+            <div class="mt-2">
+              <a href="javascript:void(0);" class="fs-14 me-3 text-muted"><i class='bx bx-like'></i> Helpful</a>
+              <a href="javascript:void(0);" class="fs-14 text-muted"> Report</a>
+            </div>
+  
+            @if (!$last) {
+              <hr class="my-3">
+            }
+          </div>
+        }
+        
+        <!-- Pagination controls -->
+        <div class="d-flex justify-content-center mt-4" *ngIf="collectionSize > pageSize">
+          <ngb-pagination
+            [collectionSize]="collectionSize"
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [maxSize]="5"
+            [rotate]="true"
+            [boundaryLinks]="true"
+            (pageChange)="onPageChange($event)"
+            aria-label="Reviews pagination">
+          </ngb-pagination>
+        </div>
+      }
+    </div>
+</div>
+
+<!-- Toast Notifications -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div *ngIf="showToast" class="toast show" [ngClass]="{'bg-success text-white': toastType === 'success', 'bg-danger text-white': toastType === 'error', 'bg-info text-white': toastType === 'info'}" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto">{{toastType === 'success' ? 'Success' : toastType === 'error' ? 'Error' : 'Information'}}</strong>
+      <button type="button" class="btn-close" (click)="showToast = false"></button>
+    </div>
+    <div class="toast-body">
+      {{toastMessage}}
+    </div>
+  </div>
+</div>
+
+<!-- Add/Edit Review Modal -->
+<ng-template #reviewModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">{{ editingReview ? 'Edit Review' : 'Add Review' }}</h5>
+      <button type="button" class="btn-close" (click)="closeReviewModal()"></button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <label for="rating" class="form-label">Rating</label>
+          <ul class="d-flex text-warning m-0 fs-20 list-unstyled">
+            <ng-template #t let-fill="fill">
+              <i class="bx bx-star text-warning fs-20">
+                <i *ngIf="fill > 0" class="bx bxs-star text-warning fs-20 filled" [style.width.%]="fill"></i>
+              </i>
+            </ng-template>
+            <ngb-rating [(rate)]="newReview.rating" [starTemplate]="t" [max]="5" />
+          </ul>
+        </div>
+        <div class="mb-3">
+          <label for="comment" class="form-label">Comment</label>
+          <textarea
+            class="form-control"
+            id="comment"
+            rows="3"
+            [(ngModel)]="newReview.comment"
+            name="comment"
+            placeholder="Write your review..."
+          ></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeReviewModal()">Close</button>
+      <button type="button" class="btn btn-primary" (click)="submitReview()">
+        {{ editingReview ? 'Update' : 'Add' }} Review
+      </button>
+    </div>
+  </ng-template>

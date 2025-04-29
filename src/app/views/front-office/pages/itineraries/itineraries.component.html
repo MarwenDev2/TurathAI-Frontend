@@ -1,0 +1,209 @@
+<div class="itineraries-container">
+  <section class="itineraries-header">
+    <h1>Our Itineraries</h1>
+    <p>Discover our carefully crafted travel experiences designed just for you</p>
+  </section>
+  
+  <!-- Search and Filter Bar -->
+  <section class="search-filter-bar" *ngIf="!loading && !error && itineraries.length > 0">
+    <div class="search-container">
+      <div class="search-input-wrapper">
+        <i class="fa fa-search search-icon"></i>
+        <input 
+          type="text" 
+          class="search-input" 
+          placeholder="Search itineraries..." 
+          [(ngModel)]="searchQuery"
+          (input)="filterItineraries()"
+        />
+        <button *ngIf="searchQuery" class="clear-search" (click)="clearSearch()">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+    </div>
+    
+    <div class="filter-container">
+      <div class="filter-group">
+        <label>Budget Range:</label>
+        <div class="price-range">
+          <span class="price-value">{{formatPrice(minBudget)}}</span>
+          <input 
+            type="range" 
+            class="range-slider" 
+            [min]="minPossibleBudget" 
+            [max]="maxPossibleBudget"
+            [(ngModel)]="minBudget"
+            (input)="filterItineraries()"
+          />
+          <input 
+            type="range" 
+            class="range-slider" 
+            [min]="minPossibleBudget" 
+            [max]="maxPossibleBudget"
+            [(ngModel)]="maxBudget"
+            (input)="filterItineraries()"
+          />
+          <span class="price-value">{{formatPrice(maxBudget)}}</span>
+        </div>
+      </div>
+      
+      <div class="sort-group">
+        <label>Sort by:</label>
+        <select class="sort-select" [(ngModel)]="sortOption" (change)="sortItineraries()">
+          <option value="budgetLow">Price: Low to High</option>
+          <option value="budgetHigh">Price: High to Low</option>
+          <option value="startDateNewest">Start Date: Newest First</option>
+          <option value="startDateOldest">Start Date: Oldest First</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading itineraries...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="error">
+    <p class="error-message">{{error}}</p>
+    <button class="retry-button" (click)="loadItineraries()">Try Again</button>
+  </div>
+
+  <!-- Itineraries Grid -->
+  <section class="itineraries-grid" *ngIf="!loading && !error && filteredItineraries.length > 0">
+    <div class="itinerary-card" *ngFor="let itinerary of paginatedItineraries">
+      <div class="card-image">
+        <!-- Placeholder image - replace with actual itinerary images when available -->
+        <div class="image-placeholder">
+          <i class="fa fa-map-marked-alt"></i>
+        </div>
+        <div class="card-badge">
+          {{formatPrice(itinerary.budget)}}
+        </div>
+        <div class="favorite-button" (click)="toggleItineraryActive(itinerary, $event)">
+          <i *ngIf="isActiveStateLoading(itinerary.id)" class="fa fa-spinner fa-spin"></i>
+          <i *ngIf="!isActiveStateLoading(itinerary.id) && isItineraryActive(itinerary.id)" class="fa fa-check-circle"></i>
+          <i *ngIf="!isActiveStateLoading(itinerary.id) && !isItineraryActive(itinerary.id)" class="fa fa-circle-o"></i>
+        </div>
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">Travel Experience</h3>
+        <p class="card-description">{{itinerary.description}}</p>
+        
+        <div class="card-dates">
+          <div class="date-item">
+            <i class="fa fa-calendar-check"></i>
+            <span>{{itinerary.startDate | date:'mediumDate'}}</span>
+          </div>
+          <div class="date-separator">➝</div>
+          <div class="date-item">
+            <i class="fa fa-calendar-times"></i>
+            <span>{{itinerary.endDate | date:'mediumDate'}}</span>
+          </div>
+        </div>
+        
+        <!-- Stops Section -->
+        <div class="stops-section" *ngIf="hasStops(itinerary.id)">
+          <div class="stops-header">
+            <span class="stops-title" (click)="toggleStops(itinerary.id)">
+              <i class="fa fa-map-marker-alt"></i> 
+              {{ getStopsForItinerary(itinerary.id).length }} Destinations
+            </span>
+            <span class="map-toggle" (click)="toggleMap(itinerary.id, $event)">
+              <i class="fa" [ngClass]="{'fa-map': showMapItinerary !== itinerary.id, 'fa-times': showMapItinerary === itinerary.id}"></i>
+              {{ showMapItinerary === itinerary.id ? 'Hide Map' : 'Show Map' }}
+            </span>
+            <i class="expand-icon" [class.expanded]="expandedItinerary === itinerary.id" (click)="toggleStops(itinerary.id)">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M7 10l5 5 5-5z"/>
+              </svg>
+            </i>
+          </div>
+          
+          <!-- Map View -->
+          <div class="stops-map" *ngIf="showMapItinerary === itinerary.id">
+          </div>
+          
+          <!-- Expanded Stops Timeline -->
+          <div class="stops-timeline" *ngIf="expandedItinerary === itinerary.id">
+            <div class="timeline-wrapper">
+              <div class="timeline-track"></div>
+              <div class="timeline-items">
+                <div class="timeline-item" *ngFor="let stop of getStopsForItinerary(itinerary.id); let i = index; let isLast = last">
+                  <div class="timeline-marker" [class.first]="i === 0" [class.last]="isLast">
+                    <span class="stop-number">{{i + 1}}</span>
+                  </div>
+                  <div class="timeline-content">
+                    <div class="stop-info">
+                      <h4 class="stop-name" *ngIf="stop.heritageSite?.name">{{stop.heritageSite?.name}}</h4>
+                      <p class="stop-duration">
+                        <svg class="duration-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-.5-13H13v5.25l4.5 2.67-.75 1.23L11 13V7z"/>
+                        </svg>
+                        {{stop.duration || 'Duration not specified'}}
+                      </p>
+                      <p class="stop-description" *ngIf="stop.heritageSite?.description">
+                        {{stop.heritageSite?.description}}
+                      </p>
+                      <p class="stop-location" *ngIf="stop.heritageSite?.location">
+                        <i class="fa fa-map-pin"></i> {{stop.heritageSite?.location}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card-actions">
+          <button class="book-button" (click)="onBookNow(itinerary)">
+            <i class="fa fa-ticket-alt"></i> Book Now
+          </button>
+          <button class="qr-button" (click)="showQRCode(itinerary.id)">
+            <svg class="qr-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <path d="M3 3h7v7H3V3zm2 2v3h3V5H5zm-2 9h7v7H3v-7zm2 2v3h3v-3H5zm9-16h7v7h-7V3zm2 2v3h3V5h-3zm4 9.5V16h-1.5v-1.5H16zM16 14h-1.5v1.5H16V14zm-3-1.5h1.5V14H13v-1.5zm1.5 3H16V17h-1.5v-1.5zM13 17h1.5v1.5H13V17zm1.5 3H16v1.5h-1.5V20zM13 20h1.5v1.5H13V20zm6-8h1.5v1.5H19V12zm-1.5 3H19V17h-1.5v-1.5zM19 17h1.5v1.5H19V17zm0 3h1.5v1.5H19V20z"/>
+            </svg>
+            View QR
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pagination Controls -->
+  <div class="pagination-controls" *ngIf="!loading && !error && filteredItineraries.length > 0">
+    <button class="page-button" [disabled]="currentPage === 1" (click)="prevPage()">
+      <i class="fa fa-chevron-left"></i>
+    </button>
+    
+    <div class="page-numbers">
+      <button 
+        *ngFor="let page of getPageNumbers()" 
+        class="page-number" 
+        [class.active]="page === currentPage"
+        (click)="goToPage(page)">
+        {{ page }}
+      </button>
+    </div>
+    
+    <button class="page-button" [disabled]="currentPage === totalPages" (click)="nextPage()">
+      <i class="fa fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <div class="pagination-info" *ngIf="!loading && !error && filteredItineraries.length > 0">
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  </div>
+
+  <!-- No Results State -->
+  <div class="no-results" *ngIf="!loading && !error && filteredItineraries.length === 0">
+    <p>No itineraries found.</p>
+    <p *ngIf="itineraries.length > 0" class="filter-message">Try adjusting your search filters</p>
+    <button class="refresh-button" (click)="resetFilters()">
+      <i class="fa fa-sync"></i> Reset Filters
+    </button>
+  </div>
+</div>

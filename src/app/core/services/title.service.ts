@@ -31,7 +31,7 @@ export class TitleService {
     if (route.snapshot.data['title']) {
       this.titleService.setTitle(
         route.snapshot.data['title'] +
-          ' | Larkon - Angular Responsive Admin Dashboard Template'
+          ' | TurathAi - Angular Responsive Admin Dashboard Template'
       )
     }
   }

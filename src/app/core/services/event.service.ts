@@ -7,8 +7,8 @@ import { EventSite } from '../Models/event';
   providedIn: 'root'
 })
 export class EventService {
-  private apiUrl = 'http://localhost:8080/api/events';
-  private imageApiUrl = 'http://localhost:8080/images';
+  private apiUrl = 'http://localhost:9090/api/events';
+  private imageApiUrl = 'http://localhost:9090/images';
 
   constructor(private http: HttpClient) { }
 

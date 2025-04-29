@@ -71,18 +71,16 @@ export class DetailsComponent implements OnInit {
 
   siteId!: number;
   siteData!: Site;
+  categoriesMap = new Map<number, string>();
 
   constructor(
     private route: ActivatedRoute,
     private siteService: SiteService,
     private categoryService: CategoryService,
-  ) { }
-
-
-
-  categoriesMap = new Map<number, string>();
+  ) {}
 
   ngOnInit(): void {
+    this.loadData();
     this.route.paramMap.subscribe(params => {
       const idParam = params.get('id');
       if (idParam) {
@@ -90,27 +88,27 @@ export class DetailsComponent implements OnInit {
         this.loadSiteDetails();
       }
     });
-    
-  }
-
-  loadSiteDetails() {
-    this.siteService.getAllWithRatings().subscribe((sites: Site[]) => {
-      const site = sites.find(s => s.id === this.siteId);
-      if (site) {
-        this.siteData = site;
-        console.log('Fetched Site with Rating:', this.siteData);
-      }
-    });
   }
 
   loadData(): void {
     this.categoryService.getAllCategories().subscribe((categories) => {
-      categories.forEach((cat) => this.categoriesMap.set(cat.id, cat.name));}
+      categories.forEach((cat) => this.categoriesMap.set(cat.id, cat.name));
+    });
+  }
 
-    )};
-  
+  loadSiteDetails() {
+    this.siteService.getById(this.siteId).subscribe({
+      next: (site: Site) => {
+        this.siteData = site;
+        console.log('Fetched Site:', this.siteData);
+      },
+      error: (error) => {
+        console.error('Error loading site details:', error);
+      }
+    });
+  }
 
   getCategoryName(categoryId: number): string {
-  return this.categoriesMap.get(categoryId) || 'Unknown';
-}
+    return this.categoriesMap.get(categoryId) || 'Unknown';
+  }
 }

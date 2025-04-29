@@ -7,7 +7,7 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
   providedIn: 'root'
 })
 export class ReviewService {
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = 'http://localhost:9090';
   private apiUrl = `${this.baseUrl}/api/reviews`;
 
   constructor(private http: HttpClient) { }
@@ -47,8 +47,36 @@ export class ReviewService {
   }
 
   getReviewsByHeritageSite(siteId: number): Observable<Review[]> {
+    console.log(`Fetching reviews for heritage site ID: ${siteId}`);
     return this.http.get<Review[]>(`${this.apiUrl}/heritage-site/${siteId}`).pipe(
-      catchError(this.handleError)
+      map(reviews => {
+        console.log(`Received ${reviews.length} reviews for site ${siteId}:`, reviews);
+        // Transform reviews to ensure consistent properties if needed
+        return reviews.map(review => ({
+          ...review,
+          // Ensure user object is properly formed to prevent template errors
+          user: review.user || { firstName: 'Anonymous', lastName: '' }
+        }));
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error(`Error fetching reviews for site ${siteId} from primary endpoint:`, error);
+        
+        // Try an alternative API endpoint if the primary one fails
+        console.log(`Attempting to fetch reviews from alternative endpoint for site ${siteId}`);
+        return this.http.get<Review[]>(`${this.baseUrl}/api/heritage-sites/${siteId}/reviews`).pipe(
+          map(reviews => {
+            console.log(`Received ${reviews.length} reviews from alternative endpoint:`, reviews);
+            return reviews.map(review => ({
+              ...review,
+              user: review.user || { firstName: 'Anonymous', lastName: '' }
+            }));
+          }),
+          catchError((fallbackError: HttpErrorResponse) => {
+            console.error(`Fallback endpoint also failed for site ${siteId}:`, fallbackError);
+            return throwError(() => new Error('Failed to fetch reviews for this heritage site'));
+          })
+        );
+      })
     );
   }
 
