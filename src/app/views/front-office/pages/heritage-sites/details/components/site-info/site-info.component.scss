@@ -1,0 +1,142 @@
+.site-info-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+  .site-name {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+
+  .site-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #666;
+
+      i {
+        color: #007bff;
+      }
+    }
+  }
+
+  .site-description,
+  .site-features,
+  .site-history {
+    margin-bottom: 2rem;
+
+    h2 {
+      font-size: 1.5rem;
+      color: #333;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 0.5rem;
+    }
+
+    p {
+      color: #666;
+      line-height: 1.6;
+    }
+  }
+
+  .features-list {
+    list-style: none;
+    padding: 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      color: #666;
+
+      i {
+        color: #28a745;
+      }
+    }
+  }
+}
+
+.site-info-body {
+  padding: 2.5rem;
+
+  h1 {
+    font-size: 2.5rem;
+    color: #212529;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    color: #212529;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+    color: #212529;
+  }
+
+  .badge {
+    font-weight: 500;
+    border-radius: 8px;
+  }
+
+  .btn-light {
+    border-radius: 8px;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: #f8f9fa;
+      transform: translateY(-2px);
+    }
+  }
+
+  .text-muted {
+    color: #6c757d !important;
+  }
+
+  .link-primary {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  ul {
+    li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .site-info-container {
+    padding: 1rem;
+
+    .site-name {
+      font-size: 2rem;
+    }
+
+    .site-meta {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+} 

@@ -1,0 +1,153 @@
+<div class="forum-details-container">
+  <div class="header">
+    <button class="btn btn-outline-secondary back-btn" (click)="goBack()">
+      <i class="bx bx-arrow-back"></i> Back to Forums
+    </button>
+    <div *ngIf="isForumOwner()" class="actions">
+      <button class="btn btn-outline-primary" (click)="editForum()">
+        <i class="bx bx-edit"></i> Edit
+      </button>
+      <button class="btn btn-outline-danger ms-2" (click)="deleteForum()">
+        <i class="bx bx-trash"></i> Delete
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && !forum" class="not-found">
+    <h2>Forum Not Found</h2>
+    <p>The forum you're looking for doesn't exist or has been removed.</p>
+    <button class="btn btn-primary" (click)="goBack()">Go Back to Forums</button>
+  </div>
+
+  <div *ngIf="!isLoading && forum" class="forum-content">
+    <div class="forum-header">
+      <div class="user-info">
+        <img [src]="getImageUrl(forum)" alt="User avatar" class="avatar" />
+        <div>
+          <h1 class="forum-title">{{ forum.title }}</h1>
+          <p class="forum-meta">
+            <span class="author">By {{ forum.username || 'Anonymous' }}</span>
+            <span class="date">Posted on {{ forum.createdAt | date:'mediumDate' }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-body">
+      <div class="forum-description">
+        <h3>Description</h3>
+        <p *ngIf="forum.description">{{ forum.description }}</p>
+        <p *ngIf="!forum.description" class="text-muted">Aucune description disponible pour ce forum.</p>
+      </div>
+      <img *ngIf="forum.coverImage" [src]="forum.coverImage" alt="Forum cover image" class="cover-image" />
+    </div>
+
+    <div class="forum-stats">
+      <div class="stat-item">
+        <i class="bx bx-message"></i>
+        <span>{{ forum.comments?.length || 0 }} Comments</span>
+      </div>
+      <div class="stat-item">
+        <i class="bx bx-like"></i>
+        <span>{{ forum.likes || 0 }} Likes</span>
+      </div>
+    </div>
+
+    <div class="comments-section">
+      <h3>Comments ({{ forum.comments?.length || 0 }})</h3>
+      
+      <div *ngIf="forum.comments && forum.comments.length > 0" class="comments-list">
+        <div *ngFor="let comment of forum.comments" class="comment">
+          <div class="comment-header">
+            <img src="assets/images/default-avatar.png" alt="User avatar" class="avatar-small" />
+            <div class="comment-meta">
+              <span class="comment-author">{{ comment.username || 'Anonymous' }}</span>
+              <span class="comment-date">{{ comment.createdAt | date:'medium' }}</span>
+            </div>
+            
+            <!-- Boutons d'édition et de suppression - toujours affichés pour test -->
+            <div class="comment-actions" *ngIf="isCommentOwner(comment)">
+              <button class="btn btn-sm btn-link" (click)="editComment(comment)">
+                <i class="bx bx-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-link text-danger" (click)="deleteComment(comment)">
+                <i class="bx bx-trash"></i>
+              </button>
+            </div>
+          </div>
+          <div class="comment-content">
+            {{ comment.content }}
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="!forum.comments || forum.comments.length === 0" class="no-comments">
+        <p>No comments yet. Be the first to comment!</p>
+      </div>
+
+      <div id="comment-form" class="add-comment-section">
+        <h4>{{ commentBeingEdited ? 'Edit Your Comment' : 'Add Your Comment' }}</h4>
+        
+        <div class="form-group">
+          <div class="textarea-container">
+            <textarea 
+              [(ngModel)]="newComment" 
+              class="form-control" 
+              [ngClass]="{'is-invalid': hasErrorWord}"
+              (keyup)="checkForBadWords()"
+              rows="4" 
+              placeholder="Write your comment here..."
+            ></textarea>
+            
+            <button 
+              type="button" 
+              class="emoji-button visible-emoji-btn" 
+              (click)="toggleEmojiPicker($event)" 
+              title="Insert emoji">
+              <span class="emoji-icon">😊</span>
+              <span class="emoji-text">Emojis</span>
+            </button>
+            
+            <!-- Sélecteur d'émojis -->
+            <div class="emoji-picker-wrapper" (click)="$event.stopPropagation()">
+              <app-emoji-picker
+                [showEmojiPicker]="showEmojiPicker"
+                (emojiSelected)="addEmoji($event)"
+                (closeEmojiPicker)="closeEmojiPicker()"
+              ></app-emoji-picker>
+            </div>
+          </div>
+          
+          <!-- Message d'avertissement pour les mots interdits -->
+          <div *ngIf="hasErrorWord" class="forbidden-word-alert">
+            <i class="bx bx-error-circle"></i> {{ badWordError }}
+          </div>
+        </div>
+        
+        <div class="comment-form-actions">
+          <div *ngIf="commentBeingEdited" class="editing-label">
+            <span class="text-primary">Editing comment</span>
+            <button class="btn btn-sm btn-link" (click)="cancelEditingComment()">Cancel</button>
+          </div>
+          
+          <button 
+            (click)="addComment()" 
+            class="btn btn-primary mt-2"
+            [disabled]="!newComment || newComment.trim() === '' || hasErrorWord">
+            {{ commentBeingEdited ? 'Update Comment' : 'Post Comment' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Site } from '../Models/site';
-import { Observable , forkJoin } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators'; // Add these imports
+import { Observable, forkJoin, throwError } from 'rxjs';
+import { map, switchMap, catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -21,8 +21,21 @@ export class SiteService {
     return this.http.get<Site>(`${this.apiUrl}/get/${id}`);
   }
 
-  add(Site: Site): Observable<Site> {
-    return this.http.post<Site>(`${this.apiUrl}/addSite`, Site);
+  add(site: Site): Observable<Site> {
+    return this.http.post<any>(`${this.apiUrl}/addSite`, site).pipe(
+      map(response => {
+        if (response && response.body) {
+          return response.body;
+        } else if (response) {
+          return response;
+        }
+        throw new Error('Failed to add heritage site');
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error adding site:', error);
+        throw new Error(error.error?.message || 'Failed to add heritage site');
+      })
+    );
   }
 
   update(Site: Site): Observable<Site> {
@@ -70,14 +83,43 @@ export class SiteService {
       switchMap(sites => {
         const requests = sites.map(site => 
           this.http.get<number>(`http://localhost:8080/api/reviews/heritage-site/${site.id}/average-rating`).pipe(
-            map(rating => ({
-              ...site,
-              averageRating: rating || 0 // Default to 0 if no rating
-            }))
+            map(rating => {
+              // Map average review ratings directly to popularity scores
+              let newPopularityScore = site.popularityScore; // Default to current score
+              
+              // If there is a rating, update the popularity score based on rating
+              if (rating !== undefined && rating !== null) {
+                if (rating >= 1 && rating < 3) {
+                  // Low reviews (1-2): Score = 3
+                  newPopularityScore = 3;
+                } else if (rating >= 3 && rating < 4) {
+                  // Medium reviews (3): Score = 5
+                  newPopularityScore = 5;
+                } else if (rating >= 4 && rating <= 5) {
+                  // High reviews (4-5): Score = 8
+                  newPopularityScore = 8;
+                }
+              }
+              
+              return {
+                ...site,
+                averageRating: rating || 0, // Default to 0 if no rating
+                popularityScore: newPopularityScore
+              };
+            })
           )
         );
         return forkJoin(requests);
       })
+    );
+  }
+  
+  // Method to check if a site needs maintenance (low popularity score and rating)
+  getSitesNeedingMaintenance(sites: Site[]): Site[] {
+    // Find sites with popularity score of 3 (low) and average rating less than 3
+    return sites.filter(site => 
+      site.popularityScore <= 3 && 
+      site.averageRating !== undefined && site.averageRating < 3
     );
   }
 

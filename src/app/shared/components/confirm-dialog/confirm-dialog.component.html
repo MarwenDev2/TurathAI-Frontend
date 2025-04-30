@@ -1,0 +1,29 @@
+<div *ngIf="visible" class="confirm-dialog-overlay" (click)="cancel()">
+  <div class="confirm-dialog-container" [ngClass]="'confirm-' + data?.type" (click)="stopPropagation($event)">
+    <div class="confirm-dialog-header">
+      <h3>{{ data?.title }}</h3>
+      <button class="close-button" (click)="cancel()">
+        <i class="bx bx-x"></i>
+      </button>
+    </div>
+    
+    <div class="confirm-dialog-body">
+      <div class="dialog-icon">
+        <i *ngIf="data?.type === 'danger'" class="bx bx-trash-alt"></i>
+        <i *ngIf="data?.type === 'warning'" class="bx bx-error-circle"></i>
+        <i *ngIf="data?.type === 'info'" class="bx bx-info-circle"></i>
+        <i *ngIf="data?.type === 'success'" class="bx bx-check-circle"></i>
+      </div>
+      <p>{{ data?.message }}</p>
+    </div>
+    
+    <div class="confirm-dialog-footer">
+      <button class="btn btn-outline-secondary cancel-btn" (click)="cancel()">
+        {{ data?.cancelText || 'Cancel' }}
+      </button>
+      <button class="btn confirm-btn" [ngClass]="'btn-' + data?.type" (click)="confirm()">
+        {{ data?.confirmText || 'Confirm' }}
+      </button>
+    </div>
+  </div>
+</div>

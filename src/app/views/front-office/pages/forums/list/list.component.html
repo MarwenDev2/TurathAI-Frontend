@@ -1,0 +1,126 @@
+<div class="forums-container">
+  <div class="header">
+    <h1>Community Forums</h1>
+    <button class="btn btn-primary create-btn" (click)="createForum()">Create New Forum</button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && forums.length === 0" class="no-forums">
+    <p>No forums available. Be the first to create a discussion!</p>
+  </div>
+
+  <div class="forums-grid">
+    <div *ngFor="let forum of forums" class="forum-card" [attr.data-forum-id]="forum.id">
+      <!-- Card image - now larger like a postcard -->
+      <div class="card-image-container">
+        <img [src]="forum.image ? getImageUrl(forum) : 'assets/images/default-forum.jpg'" alt="Forum image" class="card-image" (click)="navigateToDetails(forum)">
+        <div class="card-overlay">
+          <h3 class="forum-title" (click)="navigateToDetails(forum)">{{ forum.title }}</h3>
+        </div>
+      </div>
+      
+      <div class="card-content">
+        <div class="user-info">
+          <img src="assets/images/default-avatar.png" alt="User avatar" class="avatar" />
+          <span class="author-info">{{ forum.username || 'Anonymous' }} • {{ forum.createdAt | date }}</span>
+        </div>
+
+        <!-- Description du forum -->
+        <div class="forum-description">
+          <p [ngClass]="{'text-muted': !forum.description}">{{ forum.description || 'Aucune description disponible' }}</p>
+        </div>
+
+        <div class="forum-footer">
+          <div class="stats">
+            <span><i class="bx bx-message"></i> {{ forum.comments?.length || 0 }} Comments</span>
+            <span><i class="bx bx-like"></i> {{ forum.likes || 0 }} Likes</span>
+          </div>
+          <button class="btn btn-outline-primary btn-sm" (click)="navigateToDetails(forum)">Read More</button>
+        </div>
+
+        <div class="comments-section">
+          <h4>Comments</h4>
+          <div *ngIf="forum.comments && forum.comments.length > 0" class="comments-list">
+            <div *ngFor="let comment of forum.comments" class="comment">
+              <div class="comment-header">
+                <img src="assets/images/default-avatar.png" alt="User avatar" class="avatar-small" />
+                <span class="comment-author">{{ comment.username || 'Anonymous' }}</span>
+                <span class="comment-date">{{ comment.createdAt | date:'short' }}</span>
+                
+                <div class="comment-actions" *ngIf="isCommentOwner(comment)">
+                  <button class="btn btn-sm btn-link" (click)="editComment(comment, forum)">
+                    <i class="bx bx-edit"></i>
+                  </button>
+                  <button class="btn btn-sm btn-link text-danger" (click)="deleteComment(comment, forum)">
+                    <i class="bx bx-trash"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="comment-content">
+                {{ comment.content }}
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!forum.comments || forum.comments.length === 0" class="no-comments">
+            <p>No comments yet. Be the first to comment!</p>
+          </div>
+
+          <div class="add-comment">
+            <div class="textarea-container">
+              <textarea [(ngModel)]="forum.newComment" 
+                       placeholder="Write a comment..." 
+                       class="form-control"
+                       [ngClass]="{'is-invalid': forum.hasErrorWord}"
+                       (keyup)="checkForBadWords(forum)"></textarea>
+              
+              <button 
+                type="button" 
+                class="emoji-button visible-emoji-btn" 
+                (click)="toggleEmojiPicker($event, forum.id!)" 
+                title="Insert emoji">
+                <span class="emoji-icon">😊</span>
+                <span class="emoji-text">Emojis</span>
+              </button>
+              
+              <!-- Sélecteur d'émojis -->
+              <div class="emoji-picker-wrapper" (click)="$event.stopPropagation()">
+                <app-emoji-picker
+                  *ngIf="showEmojiPicker && currentForumId === forum.id"
+                  [showEmojiPicker]="true"
+                  (emojiSelected)="addEmoji($event)"
+                  (closeEmojiPicker)="closeEmojiPicker()"
+                ></app-emoji-picker>
+              </div>
+            </div>
+                     
+            <!-- Message d'avertissement pour les mots interdits -->
+            <div *ngIf="forum.hasErrorWord" class="forbidden-word-alert">
+              <i class="bx bx-error-circle"></i> {{ forum.badWordError }}
+            </div>
+            
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <div *ngIf="commentBeingEdited && commentBeingEdited.forumId === forum.id" class="editing-label">
+                <span class="text-primary">Editing comment</span>
+                <button class="btn btn-sm btn-link" (click)="cancelEditingComment()">Cancel</button>
+              </div>
+              <button (click)="addComment(forum)" 
+                     class="btn btn-primary btn-sm"
+                     [disabled]="!forum.newComment || forum.newComment.trim() === '' || forum.hasErrorWord">
+                {{ commentBeingEdited && commentBeingEdited.forumId === forum.id ? 'Update' : 'Add' }} Comment
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

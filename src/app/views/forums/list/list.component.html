@@ -30,7 +30,7 @@
   
       <!-- Image du forum -->
       <div class="forum-image">
-        <img [src]="getImageUrl(forum)" alt="Forum Image" />
+        <img [src]="forum.image ? getImageUrl(forum) : 'assets/images/default-forum.jpg'" alt="Forum image" class="card-image">
       </div>
   
       <!-- Bouton pour afficher les commentaires -->

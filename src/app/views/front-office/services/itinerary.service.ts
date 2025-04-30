@@ -82,4 +82,38 @@ export class ItineraryService {
     
     return throwError(() => new Error(errorMessage));
   }
+
+
+// Assign an itinerary to a user
+assignItineraryToUser(itineraryId: number, userId: number): Observable<any> {
+  return this.http.post(`${this.apiUrl}/assign`, { itineraryId, userId }).pipe(
+    catchError(this.handleError)
+  );
+}
+
+// Remove itinerary from user
+removeItineraryFromUser(itineraryId: number): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/unassign/${itineraryId}`).pipe(
+    catchError(this.handleError)
+  );
+}
+
+
+  getItinerariesBySiteId(siteId: number): Observable<Itinerary[]> {
+    return this.http.get<Itinerary[]>(`${this.apiUrl}/site/${siteId}`, {
+      responseType: 'json'
+    } as const).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+  getItinerariesByUserId(userId: number): Observable<Itinerary[]> {
+    return this.http.get<Itinerary[]>(`${this.apiUrl}/user/${userId}`, {
+      responseType: 'json'
+    } as const).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+  
 } 

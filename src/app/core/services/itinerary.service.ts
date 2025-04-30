@@ -37,6 +37,8 @@ export class ItenaryService {
     return `http://localhost:8080/api/qrcode/itinery/${id}`;
   }
 
+
+
   exportToPdf(): Observable<Blob> {
     return this.http.get(`http://localhost:8080/api/export/pdf`, {
       responseType: 'blob',
@@ -73,5 +75,9 @@ export class ItenaryService {
   
   getStatistics(): Observable<ItineraryStatistics> {
     return this.http.get<ItineraryStatistics>(`${this.apiUrl}/statistics`);
+  }
+
+  getItinerariesBySiteId(siteId: number): Observable<Itinery[]> {
+    return this.http.get<Itinery[]>(`${this.apiUrl}/site/${siteId}`);
   }
 }

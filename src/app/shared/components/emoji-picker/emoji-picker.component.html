@@ -1,0 +1,28 @@
+<div class="emoji-picker-container" *ngIf="showEmojiPicker" (click)="stopEvent($event)" #emojiContainer style="width: 280px !important; min-width: 280px !important;">
+  <div class="emoji-picker-header">
+    <span class="title">Émojis</span>
+    <button class="close-btn" (click)="close($event)">×</button>
+  </div>
+  
+  <div class="emoji-categories">
+    <button 
+    *ngFor="let category of categories; trackBy: trackById"
+      class="category-btn" 
+      [class.active]="selectedCategory === category.name"
+      (click)="selectCategory(category.name, $event)" 
+      [title]="category.name">
+      {{ category.icon }}
+    </button>
+  </div>
+  
+  <div class="emoji-list">
+    <div class="emoji-scroll">
+      <button 
+        *ngFor="let emoji of emojisInCategory" 
+        class="emoji-btn" 
+        (click)="selectEmoji(emoji, $event)">
+        {{ emoji }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -186,12 +186,23 @@ openContextMenu(event: MouseEvent, comment: any) {
 
   
 
-  getImageUrl(forum: Forum): string {
-    if (!forum.image) {
-      return 'assets/images/default-avatar.png';
-    }
-    return `http://localhost:8080/assets/images/forums/${forum.image}`;
+ // Update your getImageUrl method:
+getImageUrl(forum: Forum): string {
+  if (!forum.image) {
+    return 'assets/images/default-forum.jpg';
   }
+  
+  // Try using the full URL instead of a relative path
+  if (forum.image.startsWith('http')) {
+    return forum.image;
+  }
+  
+  // If you have headers available from your auth service
+  // return `http://localhost:8080/images/${forum.image}`;
+  
+  // Or, if images are stored as static assets on your server:
+  return `http://localhost:8080/assets/images/forums/${forum.image}`;
+}
 
   deleteForum(forumId: number): void {
     if (forumId !== undefined) {

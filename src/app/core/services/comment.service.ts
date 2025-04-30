@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ForumComment } from '@core/Models/forumComment';
-
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -21,7 +22,32 @@ export class CommentService {
   updateComment(commentId: number, updatedComment: any) {
     return this.http.put(`${this.baseUrl}/forums/:forumId/${commentId}`, updatedComment);
   }
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('authToken');
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+    
+    return headers;
+  }
   
+  // Update your getByForumId method:
+  getByForumId(forumId: number): Observable<ForumComment[]> {
+    console.log(`Fetching comments for forum ${forumId}`);
+    return this.http.get<ForumComment[]>(`${this.apiUrl}/${forumId}/comments`, {
+      headers: this.getHeaders()
+    }).pipe(
+      catchError(error => {
+        console.error(`Error fetching comments for forum ${forumId}:`, error);
+        // Return empty array to prevent component errors
+        return of([]);
+      })
+    );
+  }
   
 
   // 🔄 Récupérer tous les commentaires
@@ -42,11 +68,6 @@ export class CommentService {
         'Content-Type': 'application/json'
       })
     });
-  }
-
-  // 🔍 Récupérer les commentaires par forumId
-  getByForumId(forumId: number): Observable<ForumComment[]> {
-    return this.http.get<ForumComment[]>(`${this.apiUrl}/${forumId}/comments`);
   }
 
   // ❌ Supprimer un commentaire

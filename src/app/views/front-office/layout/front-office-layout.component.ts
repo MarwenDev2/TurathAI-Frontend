@@ -17,10 +17,13 @@ import { Observable } from 'rxjs';
 export class FrontOfficeLayoutComponent {
   navItems = [
     { label: 'Home', link: '/frontoffice' },
+    { label: 'Local', link: '/frontoffice/local-insight' },
+    { label: 'Heritage Sites', link: '/frontoffice/heritage-sites' },
+    { label: 'Businesses', link: '/frontoffice/businesses' },
     { label: 'Itineraries', link: '/frontoffice/itineraries' },
-    { label: 'About', link: '/frontoffice/about' },
+    { label: 'Forums', link: '/frontoffice/forums' },
     { label: 'Services', link: '/frontoffice/services' },
-    { label: 'Local', link: '/frontoffice/local-insight' }
+    { label: 'Contact', link: '/frontoffice/contact' }
   ];
 
   currentUser$: Observable<User | null>;
@@ -43,4 +46,5 @@ export class FrontOfficeLayoutComponent {
     if (!user.image) return 'assets/images/default-avatar.png';
     return `http://localhost:8080/assets/images/users/${user.image}`;
   }
+  
 }

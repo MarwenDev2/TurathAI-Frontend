@@ -1,0 +1,217 @@
+.confirm-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+  backdrop-filter: blur(3px);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.confirm-dialog-container {
+  width: 100%;
+  max-width: 450px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: slideIn 0.3s ease-out;
+  
+  &.confirm-danger {
+    border-top: 5px solid #dc3545;
+  }
+  
+  &.confirm-warning {
+    border-top: 5px solid #ffc107;
+  }
+  
+  &.confirm-info {
+    border-top: 5px solid #0dcaf0;
+  }
+  
+  &.confirm-success {
+    border-top: 5px solid #198754;
+  }
+}
+
+.confirm-dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #777;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: color 0.2s;
+    
+    &:hover {
+      color: #333;
+    }
+  }
+}
+
+.confirm-dialog-body {
+  padding: 25px 20px;
+  display: flex;
+  align-items: center;
+  
+  .dialog-icon {
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    i {
+      font-size: 36px;
+      
+      &.bx-trash-alt {
+        color: #dc3545;
+      }
+      
+      &.bx-error-circle {
+        color: #ffc107;
+      }
+      
+      &.bx-info-circle {
+        color: #0dcaf0;
+      }
+      
+      &.bx-check-circle {
+        color: #198754;
+      }
+    }
+  }
+  
+  p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #444;
+  }
+}
+
+.confirm-dialog-footer {
+  padding: 15px 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid #eee;
+  
+  .btn {
+    min-width: 100px;
+    transition: all 0.2s;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    
+    &:hover {
+      background-color: darken(#dc3545, 10%);
+      border-color: darken(#dc3545, 12%);
+    }
+  }
+  
+  .btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #212529;
+    
+    &:hover {
+      background-color: darken(#ffc107, 10%);
+      border-color: darken(#ffc107, 12%);
+    }
+  }
+  
+  .btn-info {
+    background-color: #0dcaf0;
+    border-color: #0dcaf0;
+    color: #fff;
+    
+    &:hover {
+      background-color: darken(#0dcaf0, 10%);
+      border-color: darken(#0dcaf0, 12%);
+    }
+  }
+  
+  .btn-success {
+    background-color: #198754;
+    border-color: #198754;
+    
+    &:hover {
+      background-color: darken(#198754, 10%);
+      border-color: darken(#198754, 12%);
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+  }
+  to { 
+    opacity: 1; 
+  }
+}
+
+@keyframes slideIn {
+  from { 
+    transform: translateY(-20px);
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0);
+    opacity: 1; 
+  }
+}
+
+// Style pour bloquer le défilement quand la modal est ouverte
+:host-context(body.modal-open) {
+  overflow: hidden;
+}
+
+// Responsive
+@media (max-width: 576px) {
+  .confirm-dialog-container {
+    width: 95%;
+    margin: 0 10px;
+  }
+  
+  .confirm-dialog-footer {
+    flex-direction: column;
+    
+    .btn {
+      width: 100%;
+    }
+    
+    .cancel-btn {
+      order: 2;
+    }
+    
+    .confirm-btn {
+      order: 1;
+      margin-bottom: 10px;
+    }
+  }
+}

@@ -184,11 +184,16 @@ export class EditComponent implements OnInit {
   onSitesSelected(sites: any[]): void {
     this.selectedStops = sites;
     
-    // Ensure each stop has the correct duration format
+    // Preserve the original duration format for existing stops
     this.selectedStops.forEach(stop => {
-      if (!stop.duration || !stop.duration.includes('day')) {
+      if (!stop.duration) {
+        // Only add a default duration if it's missing
         const days = stop.durationDays || 1;
-        stop.duration = `${days} day${days !== 1 ? 's' : ''}`;
+        stop.duration = `${days}`;
+      } else if (stop.duration && !stop.stopId) {
+        // For new stops, ensure we use the format without "days"
+        const days = parseInt(stop.duration.split(' ')[0]) || stop.durationDays || 1;
+        stop.duration = `${days}`;
       }
     });
   }
@@ -322,7 +327,7 @@ export class EditComponent implements OnInit {
         next: () => {
           this.showSuccessAlert(`Itinerary updated successfully with ${this.selectedStops.length} stops!`);
           // Ensure proper redirection to the itinerary list
-          this.router.navigate(['/itinerary-management']);
+          this.router.navigate(['/itenary/list']);
         },
         error: (err) => {
           console.error('Error updating itinerary or stops', err);

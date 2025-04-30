@@ -7,6 +7,9 @@ import { LocalInsightComponent } from './pages/local-insight/local-insight.compo
 import { ProfileComponent } from './pages/profile/profile.component';
 import { WishlistComponent } from './pages/Wishlist/wishlist.component';
 import { ReviewComponent } from './pages/Reviews/review.component';
+import { BusinessListComponent } from './pages/businesses/business-list/business-list.component';
+import { HeritageSiteDetailsComponent } from './pages/heritage-sites/details/heritage-site-details.component';
+import { HeritageSitesComponent } from './pages/heritage-sites/heritage-sites.component';
 
 const routes: Routes = [
   {
@@ -37,6 +40,24 @@ const routes: Routes = [
         path: 'my-reviews',
         component: ReviewComponent,
         data: { title: 'My Reviews' }
+      },
+      {
+        path: 'heritage-sites',
+        component: HeritageSitesComponent
+      },
+      {
+        path: 'heritage-sites/details/:id',
+        component: HeritageSiteDetailsComponent
+      },
+      {
+        path: 'businesses',
+        component: BusinessListComponent,
+        data: { title: 'Local Businesses' }
+      },
+      {
+        path: 'forums',
+        loadChildren: () =>
+          import('./pages/forums/forums.routes').then((mod) => mod.FORUMS_ROUTES),
       },
       {
         path: 'local-insight',

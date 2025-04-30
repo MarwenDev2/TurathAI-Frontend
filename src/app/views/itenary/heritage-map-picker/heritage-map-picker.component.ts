@@ -261,9 +261,9 @@ export class HeritageMapPickerComponent implements AfterViewInit, OnChanges {
   confirmAddSite(position: 'start' | 'middle' | 'end') {
     if (!this.tempSelectedSite) return;
     
-    // Format duration
+    // Format duration - just use the number without 'day' or 'days'
     const days = this.tempSelectedSite.durationDays;
-    this.tempSelectedSite.duration = `${days} day${days !== 1 ? 's' : ''}`;
+    this.tempSelectedSite.duration = `${days}`;
     
     // Find the min and max order values from existing stops
     let minOrder = 0;
@@ -508,14 +508,14 @@ export class HeritageMapPickerComponent implements AfterViewInit, OnChanges {
     // Validate the input
     if (days && !isNaN(days) && days > 0) {
       // Update the duration string format
-      this.selectedSites[index].duration = `${days} day${days !== 1 ? 's' : ''}`;
+      this.selectedSites[index].duration = `${days}`;
       
       // Update visual indication
       this.updateMarkerPopup(this.selectedSites[index]);
     } else {
       // Fallback to default 1 day if input is invalid
       this.selectedSites[index].durationDays = 1;
-      this.selectedSites[index].duration = '1 day';
+      this.selectedSites[index].duration = '1';
       
       // Update visual indication
       this.updateMarkerPopup(this.selectedSites[index]);

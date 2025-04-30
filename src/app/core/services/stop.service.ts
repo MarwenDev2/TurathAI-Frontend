@@ -106,4 +106,9 @@ export class StopService {
   deleteByItineraryId(itineraryId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/itinerary/${itineraryId}`);
   }
+
+  getBySiteId(siteId: number): Observable<Stop[]> {
+    return this.http.get<Stop[]>(`${this.apiUrl}/site/${siteId}`);
+  }
+  
 }

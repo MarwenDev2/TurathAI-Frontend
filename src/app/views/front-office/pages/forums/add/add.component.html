@@ -1,0 +1,75 @@
+<div class="create-forum-container">
+  <div class="header">
+    <h1>Create New Forum</h1>
+    <button class="btn btn-outline-secondary" (click)="goBack()">
+      <i class="bx bx-arrow-back"></i> Back to Forums
+    </button>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div class="forum-form">
+    <form [formGroup]="forumForm" (ngSubmit)="onSubmit()">
+      <div class="form-group mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input 
+          type="text" 
+          id="title" 
+          formControlName="title" 
+          class="form-control"
+          [ngClass]="{'is-invalid': forumForm.get('title')?.invalid && forumForm.get('title')?.touched}"
+        >
+        <div *ngIf="forumForm.get('title')?.invalid && forumForm.get('title')?.touched" class="invalid-feedback">
+          <div *ngIf="forumForm.get('title')?.errors?.['required']">Title is required</div>
+          <div *ngIf="forumForm.get('title')?.errors?.['minlength']">Title must be at least 5 characters</div>
+          <div *ngIf="forumForm.get('title')?.errors?.['maxlength']">Title cannot exceed 100 characters</div>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="description" class="form-label">Description (Optional)</label>
+        <textarea 
+          id="description" 
+          formControlName="description" 
+          class="form-control" 
+          rows="8"
+        ></textarea>
+      </div>
+
+      <div class="form-group mb-4">
+        <label for="image" class="form-label">Cover Image (Optional)</label>
+        <input 
+          type="file" 
+          id="image" 
+          class="form-control" 
+          accept="image/*"
+          (change)="onFileSelected($event)"
+        >
+        <div *ngIf="imagePreview" class="image-preview mt-3">
+          <img [src]="imagePreview" alt="Preview" />
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button 
+          type="button" 
+          class="btn btn-outline-secondary" 
+          (click)="goBack()" 
+          [disabled]="isSubmitting"
+        >
+          Cancel
+        </button>
+        <button 
+          type="submit" 
+          class="btn btn-primary" 
+          [disabled]="forumForm.get('title')?.invalid || isSubmitting"
+        >
+          <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+          Create Forum
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
