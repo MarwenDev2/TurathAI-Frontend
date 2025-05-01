@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbPaginationModule, NgbProgressbarModule, NgbRatingModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { FormsModule } from '@angular/forms';
@@ -10,20 +9,16 @@ import { ReviewService } from '@core/services/review.service';
 import { UserService } from '@core/services/user.service';
 import { Site } from '@core/Models/site';
 import { SiteService } from '@core/services/site.service';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'review-list',
   standalone: true,
-  imports: [NgbPaginationModule, NgbProgressbarModule, NgbRatingModule, NgbTooltipModule, RouterLink, FormsModule, CommonModule],
+  imports: [NgbPaginationModule, NgbProgressbarModule, NgbRatingModule, NgbTooltipModule, FormsModule, CommonModule],
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.scss'],
 })
 export class ReviewComponent implements OnInit {
-
-  mockUserId = 1; // hetha el user li nesta3emel fih static 
-
-
-
 
   reviews: Review[] = [];
   heritageSites: Site[] = [];
@@ -82,9 +77,8 @@ export class ReviewComponent implements OnInit {
   constructor(
     private reviewService: ReviewService,
     private userService: UserService,
-    private heritageSiteService: SiteService
-    // lehne nzid service el user curent 
-    // private authService: AuthService 
+    private heritageSiteService: SiteService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -93,15 +87,11 @@ export class ReviewComponent implements OnInit {
   }
 
   loadCurrentUser(): void {
-    //// Replace mock user ID with the actual current user
-    // nbadel next line b hethi : this.authService.getCurrentUser().subscribe({ ........
-    this.userService.getUserById(this.mockUserId).subscribe({
-      next: (user) => {
+    // Use the AuthService to get the current user
+    this.authService.currentUser$.subscribe(user => {
+      if (user) {
         this.currentUser = user;
-        if (user.role === 'CLIENT') {
-          this.errorMessage = 'Clients cannot manage reviews.';
-          return;
-        }
+        
         forkJoin({
           averageRating: this.reviewService.getAverageRatingByUser(user.id),
           ratingDistribution: this.reviewService.getRatingDistributionByUser(user.id),
@@ -119,11 +109,9 @@ export class ReviewComponent implements OnInit {
             this.loadReviews();
           },
         });
-      },
-      error: (err) => {
-        this.errorMessage = 'Failed to load user data.';
-        console.error(err);
-      },
+      } else {
+        this.errorMessage = 'You must be logged in to view your reviews.';
+      }
     });
   }
 
@@ -405,7 +393,7 @@ export class ReviewComponent implements OnInit {
     this.loadReviews();
   }
 
-  get paginatedReviews(): Review[] {
+  paginatedReviews(): Review[] {
     return this.filteredReviews;
   }
 

@@ -28,6 +28,16 @@ export class LocalInsightService {
     return this.http.get<LocalInsight>(`${this.apiUrl}/${id}`);
   }
 
+  getLocalInsightsBySiteId(siteId: number): Observable<LocalInsight[]> {
+    return this.http.get<LocalInsight[]>(`${this.apiUrl}/site/${siteId}`).pipe(
+      tap(data => console.log('Local insights for site received:', data)),
+      catchError(error => {
+        console.error('Error loading local insights for site:', error);
+        return throwError(() => new Error('Failed to load local insights for this site'));
+      })
+    );
+  }
+
   createLocalInsight(localInsight: LocalInsight): Observable<LocalInsight> {
     return this.http.post<LocalInsight>(`${this.apiUrl}/creation`, localInsight);
   }

@@ -9,7 +9,7 @@ import { map, switchMap, catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class SiteService {
-  private apiUrl = 'http://localhost:8080/api/Sites'; // Adjust if your backend runs elsewhere
+  private apiUrl = 'http://localhost:8080/api/Sites';
 
   constructor(private http: HttpClient) {}
 

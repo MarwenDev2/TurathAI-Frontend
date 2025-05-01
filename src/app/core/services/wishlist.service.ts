@@ -1,8 +1,7 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { Wishlist } from '../Models/wishlist';
 
@@ -24,6 +23,37 @@ export class WishlistService {
   private apiUrl = 'http://localhost:8080/api/wishlist';
 
   constructor(private http: HttpClient) {}
+
+  /**
+   * Add a heritage site to the user's wishlist
+   * @param userId The user ID
+   * @param siteId The heritage site ID
+   * @returns A message indicating success or failure
+   */
+  addToWishlist(userId: number, siteId: number): Observable<string> {
+    return this.http.post(`${this.apiUrl}/add/${userId}/${siteId}`, {}, { responseType: 'text' }).pipe(
+      catchError(err => {
+        console.error('Error adding site to wishlist:', err);
+        return throwError(() => new Error('Failed to add to wishlist'));
+      })
+    );
+  }
+
+  /**
+   * Check if a heritage site is in the user's wishlist
+   * @param userId The user ID
+   * @param siteId The heritage site ID to check
+   * @returns An Observable that resolves to true if the site is in the wishlist
+   */
+  isSiteInWishlist(userId: number, siteId: number): Observable<boolean> {
+    return this.getWishlist(userId).pipe(
+      map(wishlistItems => wishlistItems.some(item => item.heritageSite?.id === siteId)),
+      catchError(err => {
+        console.error('Error checking wishlist:', err);
+        return throwError(() => new Error('Failed to check wishlist'));
+      })
+    );
+  }
 
   // Fetch wishlist for a specific user
   getWishlist(userId: number): Observable<Wishlist[]> {

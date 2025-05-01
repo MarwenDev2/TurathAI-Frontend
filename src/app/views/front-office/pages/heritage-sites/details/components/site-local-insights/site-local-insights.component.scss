@@ -1,0 +1,254 @@
+.local-insights-container {
+  padding: 2rem 0;
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h2 {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: #666;
+      font-size: 1.1rem;
+    }
+  }
+
+  .insights-carousel {
+    position: relative;
+    padding: 1rem;
+
+    swiper-container {
+      padding: 1rem;
+      margin: -1rem;
+    }
+
+    .insight-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      .card-media {
+        position: relative;
+        height: 180px;
+        background: linear-gradient(45deg, #2193b0, #6dd5ed);
+        overflow: hidden;
+
+        .video-preview {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+          }
+
+          i {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+          }
+
+          span {
+            font-size: 1rem;
+            font-weight: 500;
+          }
+        }
+      }
+
+      .card-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        .insight-type {
+          display: inline-block;
+          padding: 0.3rem 0.8rem;
+          border-radius: 20px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          margin-bottom: 1rem;
+
+          &.story {
+            background-color: #e3f2fd;
+            color: #1976d2;
+          }
+
+          &.tip {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+          }
+
+          &.fact {
+            background-color: #fff3e0;
+            color: #f57c00;
+          }
+        }
+
+        .insight-title {
+          font-size: 1.2rem;
+          color: #333;
+          margin-bottom: 0.8rem;
+          font-weight: 600;
+        }
+
+        .insight-description {
+          color: #666;
+          font-size: 0.95rem;
+          line-height: 1.5;
+          margin-bottom: 1rem;
+          flex: 1;
+        }
+
+        .insight-actions {
+          display: flex;
+          gap: 1rem;
+          margin-top: auto;
+
+          .action-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 20px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover {
+              background: #eeeeee;
+            }
+
+            &.active {
+              background: #e3f2fd;
+              color: #1976d2;
+
+              i {
+                color: #1976d2;
+              }
+            }
+
+            i {
+              font-size: 1.1rem;
+            }
+
+            span {
+              font-size: 0.9rem;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Loading State
+  .loading-state {
+    text-align: center;
+    padding: 3rem;
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #3498db;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      animation: spin 1s linear infinite;
+    }
+
+    p {
+      color: #666;
+    }
+  }
+
+  // Error State
+  .error-state {
+    text-align: center;
+    padding: 2rem;
+    background: #fff5f5;
+    border-radius: 8px;
+    margin: 1rem auto;
+    max-width: 500px;
+
+    .error-message {
+      color: #dc3545;
+      margin-bottom: 1rem;
+    }
+
+    .retry-button {
+      padding: 0.5rem 1.5rem;
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #c82333;
+      }
+
+      i {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  // Empty State
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 1rem auto;
+
+    i {
+      font-size: 3rem;
+      color: #adb5bd;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #495057;
+      margin-bottom: 0.5rem;
+    }
+
+    span {
+      color: #6c757d;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

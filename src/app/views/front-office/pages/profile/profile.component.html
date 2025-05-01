@@ -76,11 +76,6 @@
               </button>
             </li>
             <li class="nav-item">
-              <button class="nav-link" [class.active]="activeTab === 'itineraries'" (click)="setActiveTab('itineraries')">
-                <i class="bx bx-map me-1"></i> Saved Itineraries
-              </button>
-            </li>
-            <li class="nav-item">
               <button class="nav-link" [class.active]="activeTab === 'trips'" (click)="setActiveTab('trips')">
                 <i class="bx bx-trip me-1"></i> My Trips
               </button>
@@ -229,45 +224,6 @@
         </div>
       </div>
       
-      <!-- Saved Itineraries Tab -->
-      <div *ngIf="activeTab === 'itineraries'" [@fadeIn]="'in'">
-        <div class="card border-0 shadow-sm rounded-4">
-          <div class="card-header bg-white pt-4 pb-3 border-0">
-            <h5 class="mb-0"><i class="bx bx-map me-2 text-primary"></i> Saved Itineraries</h5>
-          </div>
-          <div class="card-body">
-            <div *ngIf="savedItineraries.length > 0" class="row g-4">
-              <div *ngFor="let item of savedItineraries" class="col-md-6">
-                <div class="card h-100 border-0 shadow-sm" 
-                     [@cardHover]="'normal'"
-                     (mouseenter)="onCardMouseEnter($event)"
-                     (mouseleave)="onCardMouseLeave($event)">
-                  <img [src]="item.imageUrl" class="card-img-top" alt="Itinerary" style="height: 150px; object-fit: cover;">
-                  <div class="card-body">
-                    <h6 class="card-title">{{item.title}}</h6>
-                    <p class="card-text small text-muted mb-1">
-                      <i class="bx bx-map-pin me-1"></i> {{item.locations}}
-                    </p>
-                    <p class="card-text small text-muted">
-                      <i class="bx bx-calendar me-1"></i> {{item.days}} days
-                    </p>
-                    <a href="javascript:void(0)" class="btn btn-sm btn-outline-primary mt-2">View Details</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div *ngIf="savedItineraries.length === 0" class="text-center py-5">
-              <div class="mb-3">
-                <i class="bx bx-map-alt text-muted" style="font-size: 4rem;"></i>
-              </div>
-              <h6 class="mb-2">No Saved Itineraries</h6>
-              <p class="text-muted">You haven't saved any itineraries yet.</p>
-              <a routerLink="/itineraries" class="btn btn-primary mt-2">Browse Itineraries</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      
       <!-- My Trips Tab -->
       <div *ngIf="activeTab === 'trips'" [@fadeIn]="'in'">
         <div class="card border-0 shadow-sm rounded-4">
@@ -275,35 +231,131 @@
             <h5 class="mb-0"><i class="bx bx-trip me-2 text-primary"></i> My Trips</h5>
           </div>
           <div class="card-body">
-            <div *ngIf="completedTrips.length > 0" class="row g-4">
-              <div *ngFor="let trip of completedTrips" class="col-md-6">
-                <div class="card h-100 border-0 shadow-sm" 
-                     [@cardHover]="'normal'"
-                     (mouseenter)="onCardMouseEnter($event)"
-                     (mouseleave)="onCardMouseLeave($event)">
-                  <img [src]="trip.imageUrl" class="card-img-top" alt="Trip" style="height: 150px; object-fit: cover;">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                      <h6 class="card-title mb-0">{{trip.title}}</h6>
-                      <span class="badge bg-success rounded-pill d-flex align-items-center gap-1">
-                        {{trip.rating}} <i class="bx bxs-star"></i>
-                      </span>
+            
+            <div *ngIf="loadingTrips" class="text-center py-4">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2 text-muted">Loading your trips...</p>
+            </div>
+            
+            <div *ngIf="!loadingTrips && currentItineraries.length === 0 && upcomingItineraries.length === 0" class="text-center py-4">
+              <div class="mb-3">
+                <i class="bx bx-map text-muted" style="font-size: 3rem;"></i>
+              </div>
+              <h6 class="text-muted">You don't have any booked trips yet</h6>
+              <p class="text-muted small">Explore our itineraries and book your next adventure!</p>
+              <a routerLink="/itineraries" class="btn btn-outline-primary">Discover Itineraries</a>
+            </div>
+            
+            <!-- Current Trips -->
+            <div *ngIf="currentItineraries.length > 0" class="mb-4">
+              <h6 class="mb-3">Current Trips</h6>
+              
+              <div class="row g-3">
+                <div *ngFor="let itinerary of currentItineraries" class="col-md-6">
+                  <div class="card h-100 border-0 shadow-sm hover-elevation">
+                    <div class="card-body p-0">
+                      <div class="position-relative">
+                        <!-- Visual representation instead of image -->
+                        <div class="trip-visual-header position-relative" 
+                             [style.background]="'linear-gradient(45deg, #3f51b5, #2196f3)'">
+                          <div class="itinerary-stops-icons">
+                            <ng-container *ngFor="let stop of itineraryStops[itinerary.id] || []; let i = index">
+                              <div class="stop-dot" [style.left]="(i * 30) + 10 + 'px'" *ngIf="i < 3">
+                                <i class="bx bx-map-pin"></i>
+                              </div>
+                            </ng-container>
+                          </div>
+                          <div class="p-3 text-white">
+                            <h5 class="mb-1">{{itinerary.title || 'Heritage Journey'}}</h5>
+                            <p class="mb-0 small">
+                              <i class="bx bx-map-alt me-1"></i>
+                              {{itinerary.locations || (itineraryStops[itinerary.id] ? itineraryStops[itinerary.id].length : 0) + ' stops'}}
+                            </p>
+                            <div class="d-flex align-items-center mt-2">
+                              <i class="bx bx-calendar me-1"></i>
+                              <span class="small">{{itinerary.startDate | date:'mediumDate'}} - {{itinerary.endDate | date:'mediumDate'}}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="p-3">
+                          <div class="d-flex align-items-center mb-2">
+                            <div class="flex-grow-1">
+                              <div class="d-flex align-items-center mb-1">
+                                <i class="bx bx-time-five me-1 text-primary"></i>
+                                <span class="small text-muted">{{itineraryStops[itinerary.id] ? itineraryStops[itinerary.id].length : 0}} stops</span>
+                              </div>
+                              <div class="d-flex align-items-center">
+                                <i class="bx bx-money me-1 text-success"></i>
+                                <span class="small text-muted">Budget: {{itinerary.budget | currency}}</span>
+                              </div>
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary" (click)="openItineraryDetails(itinerary)">
+                              <i class="bx bx-info-circle me-1"></i> Details
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <p class="card-text small text-muted">
-                      <i class="bx bx-calendar me-1"></i> {{trip.date}}
-                    </p>
-                    <a href="javascript:void(0)" class="btn btn-sm btn-outline-primary mt-2">View Details</a>
                   </div>
                 </div>
               </div>
             </div>
-            <div *ngIf="completedTrips.length === 0" class="text-center py-5">
-              <div class="mb-3">
-                <i class="bx bx-trip text-muted" style="font-size: 4rem;"></i>
+            
+            <!-- Upcoming Trips -->
+            <div *ngIf="upcomingItineraries.length > 0" class="mb-4">
+              <h6 class="mb-3">Upcoming Trips</h6>
+              
+              <div class="row g-3">
+                <div *ngFor="let itinerary of upcomingItineraries" class="col-md-6">
+                  <div class="card h-100 border-0 shadow-sm hover-elevation">
+                    <div class="card-body p-0">
+                      <div class="position-relative">
+                        <!-- Visual representation instead of image -->
+                        <div class="trip-visual-header position-relative"
+                             [style.background]="'linear-gradient(45deg, #ff9800, #ff5722)'">
+                          <div class="itinerary-stops-icons">
+                            <ng-container *ngFor="let stop of itineraryStops[itinerary.id] || []; let i = index">
+                              <div class="stop-dot" [style.left]="(i * 30) + 10 + 'px'" *ngIf="i < 3">
+                                <i class="bx bx-map-pin"></i>
+                              </div>
+                            </ng-container>
+                          </div>
+                          <div class="p-3 text-white">
+                            <h5 class="mb-1">{{itinerary.title || 'Heritage Journey'}}</h5>
+                            <p class="mb-0 small">
+                              <i class="bx bx-map-alt me-1"></i>
+                              {{itinerary.locations || (itineraryStops[itinerary.id] ? itineraryStops[itinerary.id].length : 0) + ' stops'}}
+                            </p>
+                            <div class="d-flex align-items-center mt-2">
+                              <i class="bx bx-calendar me-1"></i>
+                              <span class="small">{{itinerary.startDate | date:'mediumDate'}} - {{itinerary.endDate | date:'mediumDate'}}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="p-3">
+                          <div class="d-flex align-items-center mb-2">
+                            <div class="flex-grow-1">
+                              <div class="small text-muted mb-1">
+                                <i class="bx bx-time-five me-1 text-primary"></i>
+                                Starts in {{itinerary.startDate ? (itinerary.startDate | timeUntil) : 'soon'}}
+                              </div>
+                              <div class="small text-muted">
+                                <i class="bx bx-money me-1 text-success"></i>
+                                Budget: {{itinerary.budget | currency}}
+                              </div>
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary" (click)="openItineraryDetails(itinerary)">
+                              <i class="bx bx-info-circle me-1"></i> Details
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <h6 class="mb-2">No Trips Yet</h6>
-              <p class="text-muted">You haven't completed any trips yet.</p>
-              <a routerLink="/itineraries" class="btn btn-primary mt-2">Plan Your First Trip</a>
             </div>
           </div>
         </div>
@@ -319,8 +371,8 @@
     <h4 class="mb-2">Oops! Something went wrong</h4>
     <p class="text-muted mb-4">We couldn't load your profile information. Please try again later.</p>
     <div class="d-flex justify-content-center gap-2">
-      <button class="btn btn-primary" (click)="loadUserData()">Try Again</button>
-      <a routerLink="/" class="btn btn-outline-secondary">Go to Homepage</a>
+      <button (click)="loadUserData()" class="btn btn-primary">Retry</button>
+      <a routerLink="/" class="btn btn-outline-secondary">Go to Home</a>
     </div>
   </div>
 </div>
@@ -490,6 +542,182 @@
             Saving...
           </span>
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Book Itinerary Modal -->
+<div class="modal fade" id="bookItineraryModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content animate__animated animate__fadeIn">
+      <div class="modal-header">
+        <h5 class="modal-title">Book Your Trip</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="selectedItinerary" class="mb-4">
+          <div class="d-flex align-items-center mb-3">
+            <img [src]="selectedItinerary.imageUrl || 'assets/images/default-site.jpg'" alt="Itinerary" class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
+            <div>
+              <h6 class="mb-1">{{selectedItinerary.title || 'Heritage Site'}}</h6>
+              <p class="small text-muted mb-0"><i class="bx bx-map-pin me-1"></i> {{selectedItinerary.locations || 'Unknown location'}}</p>
+            </div>
+          </div>
+          
+          <div class="alert alert-info mb-3">
+            <i class="bx bx-info-circle me-2"></i> 
+            This will assign this itinerary to your account. You can always cancel it later if needed.
+          </div>
+          
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="bookItinerary()">Book Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Itinerary Details Modal -->
+<div class="modal fade" id="itineraryDetailsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content animate__animated animate__fadeIn">
+      <div class="modal-header">
+        <h5 class="modal-title">Itinerary Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="selectedItinerary" class="mb-4">
+          <!-- Itinerary header -->
+          <div class="itinerary-header p-3 rounded mb-4 text-white"
+               [style.background]="'linear-gradient(45deg, #3f51b5, #2196f3)'">
+            <h4 class="mb-1">{{selectedItinerary.title || 'Heritage Journey'}}</h4>
+            <div class="d-flex flex-wrap">
+              <div class="me-4 mb-2">
+                <i class="bx bx-calendar me-1"></i>
+                <span>{{selectedItinerary.startDate | date}} - {{selectedItinerary.endDate | date}}</span>
+              </div>
+              <div class="me-4 mb-2">
+                <i class="bx bx-money me-1"></i>
+                <span>Budget: {{selectedItinerary.budget | currency}}</span>
+              </div>
+              <div *ngIf="selectedItinerary.locations" class="mb-2">
+                <i class="bx bx-map me-1"></i>
+                <span>{{selectedItinerary.locations}}</span>
+              </div>
+            </div>
+            <p *ngIf="selectedItinerary.description" class="mb-0 mt-2">
+              {{selectedItinerary.description}}
+            </p>
+          </div>
+          
+          <!-- Itinerary stops -->
+          <h6 class="mb-3">Stops <span class="badge bg-primary ms-2">{{selectedItineraryStops.length}}</span></h6>
+          
+          <div *ngIf="selectedItineraryStops.length === 0" class="text-center py-3">
+            <p class="text-muted">No stops available for this itinerary.</p>
+          </div>
+          
+          <div *ngIf="selectedItineraryStops.length > 0" class="itinerary-timeline">
+            <div *ngFor="let stop of selectedItineraryStops; let i = index" class="timeline-item">
+              <div class="timeline-number">{{stop.order || i+1}}</div>
+              <div class="timeline-content card">
+                <div class="card-body">
+                  <h6 class="mb-1">{{stop.heritageSite?.name || 'Heritage Site'}}</h6>
+                  <p *ngIf="stop.heritageSite && stop.heritageSite.description" class="small text-muted mb-2">
+                    {{stop.heritageSite.description.substring(0, 150)}}{{stop.heritageSite.description.length > 150 ? '...' : ''}}
+                  </p>
+                  <div class="d-flex align-items-center small text-muted">
+                    <div *ngIf="stop.duration" class="me-3">
+                      <i class="bx bx-time me-1"></i>
+                      <span>Duration: {{stop.duration}}</span>
+                    </div>
+                    <div *ngIf="stop.heritageSite && stop.heritageSite.location" class="me-3">
+                      <i class="bx bx-map-pin me-1"></i>
+                      <span>{{stop.heritageSite.location}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <button *ngIf="selectedItinerary && !isItineraryBooked(selectedItinerary.id)" 
+                type="button" class="btn btn-primary" (click)="bookItinerary()">
+          Book Now
+        </button>
+        <button *ngIf="selectedItinerary && isItineraryBooked(selectedItinerary.id)" 
+                type="button" class="btn btn-success" disabled>
+          <i class="bx bx-check me-1"></i> Already Booked
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Review Modal -->
+<div class="modal fade" id="addReviewModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content animate__animated animate__fadeIn">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Review</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="selectedReviewSite" class="mb-4">
+          <div class="d-flex align-items-center mb-3">
+            <img [src]="getHeritageSiteImage(selectedReviewSite.imageIds)" alt="Heritage Site" class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
+            <div>
+              <h6 class="mb-1">{{selectedReviewSite.name}}</h6>
+              <p class="small text-muted mb-0"><i class="bx bx-map-pin me-1"></i> {{selectedReviewSite.location}}</p>
+            </div>
+          </div>
+          
+          <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+            <div class="mb-3">
+              <label class="form-label">Your Rating</label>
+              <div class="rating-selector">
+                <div class="d-flex">
+                  <div class="star-rating">
+                    <ng-container *ngFor="let star of [5,4,3,2,1]">
+                      <input type="radio" [id]="'star'+star" [value]="star" formControlName="rating" />
+                      <label [for]="'star'+star" [title]="star + ' stars'">
+                        <i class="bx bxs-star"></i>
+                      </label>
+                    </ng-container>
+                  </div>
+                </div>
+                <small class="text-muted mt-1 d-block">Selected: {{reviewForm.get('rating')?.value}} star(s)</small>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="reviewContent" class="form-label">Your Review</label>
+              <textarea 
+                id="reviewContent" 
+                formControlName="content"
+                class="form-control" 
+                rows="4" 
+                placeholder="Share your experience visiting this heritage site..."></textarea>
+              <div *ngIf="reviewForm.get('content')?.invalid && reviewForm.get('content')?.touched" class="text-danger small mt-1">
+                <div *ngIf="reviewForm.get('content')?.errors?.['required']">Review content is required</div>
+                <div *ngIf="reviewForm.get('content')?.errors?.['minlength']">Review must be at least 10 characters</div>
+                <div *ngIf="reviewForm.get('content')?.errors?.['maxlength']">Review cannot exceed 500 characters</div>
+              </div>
+              <small class="text-muted mt-1 d-block">Characters: {{reviewForm.get('content')?.value?.length || 0}}/500</small>
+            </div>
+            
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" [disabled]="reviewForm.invalid">Submit Review</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>

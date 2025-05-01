@@ -9,8 +9,18 @@
         </h4>      
       </div>
       <div class="d-flex gap-2">
-        <button class="btn btn-light btn-lg" title="Add to Wishlist">
-          <i class="bx bx-heart fs-20"></i>
+        <button class="btn btn-light btn-lg wishlist-btn" 
+                (click)="toggleWishlist(site.id)" 
+                [ngbTooltip]="isInWishlist(site.id) ? 'Remove from wishlist' : 'Add to wishlist'">
+          <i class="bx" 
+             [class.bx-heart]="!isInWishlist(site.id)" 
+             [class.bxs-heart]="isInWishlist(site.id)"
+             [class.heart-red]="isInWishlist(site.id)"></i>
+        </button>
+        <button class="btn btn-light btn-lg" 
+                (click)="openAddReviewModal(site)"
+                [ngbTooltip]="'Add a review'">
+          <i class="bx bx-star fs-20"></i>
         </button>
         <button class="btn btn-light btn-lg" title="Copy Link">
           <i class="bx bx-link fs-20"></i>

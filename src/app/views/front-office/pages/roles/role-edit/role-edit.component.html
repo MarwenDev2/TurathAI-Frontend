@@ -67,7 +67,7 @@
               
               >
               <div>
-                <h5 class="mb-0">{{ (userReview.user?.firstName || '') + ' ' + (userReview.user?.lastName || '') || 'Anonymous' }}</h5>
+                <h5 class="mb-0">{{ (userReview.user.firstName || '') + ' ' + (userReview.user.lastName || '') || 'Anonymous' }}</h5>
               </div>
             </div>
             <div class="d-flex align-items-center gap-2 mt-3 mb-1">
@@ -77,11 +77,11 @@
                     <i *ngIf="fill > 0" class="bx bxs-star text-warning fs-20 filled" [style.width.%]="fill"></i>
                   </i>
                 </ng-template>
-                <ngb-rating [rate]="userReview.rating ?? 0" [starTemplate]="t" [readonly]="true" [max]="5" />
+                <ngb-rating [rate]="userReview.rating" [starTemplate]="t" [readonly]="true" [max]="5" />
               </ul>
               <p class="fw-medium mb-0 text-dark fs-15">
-                Rating: {{ userReview.rating ?? 0 }}/5 -
-                {{ (userReview.rating ?? 0) >= 4 ? 'Excellent Quality' : (userReview.rating ?? 0) >= 3 ? 'Good Quality' : 'Average Quality' }}
+                Rating: {{ userReview.rating }}/5 -
+                {{ (userReview.rating) >= 4 ? 'Excellent Quality' : (userReview.rating) >= 3 ? 'Good Quality' : 'Average Quality' }}
               </p>
             </div>
 
@@ -107,7 +107,7 @@
                 
               >
               <div>
-                <h5 class="mb-0">{{ (review.user?.firstName || '') + ' ' + (review.user?.lastName || '') || 'Anonymous' }}</h5>
+                <h5 class="mb-0">{{ (review.user.firstName || '') + ' ' + (review.user.lastName || '') || 'Anonymous' }}</h5>
               </div>
             </div>
             <div class="d-flex align-items-center gap-2 mt-3 mb-1">
@@ -117,11 +117,11 @@
                     <i *ngIf="fill > 0" class="bx bxs-star text-warning fs-20 filled" [style.width.%]="fill"></i>
                   </i>
                 </ng-template>
-                <ngb-rating [rate]="review.rating ?? 0" [starTemplate]="t" [readonly]="true" [max]="5" />
+                <ngb-rating [rate]="review.rating" [starTemplate]="t" [readonly]="true" [max]="5" />
               </ul>
               <p class="fw-medium mb-0 text-dark fs-15">
-                Rating: {{ review.rating ?? 0 }}/5 -
-                {{ (review.rating ?? 0) >= 4 ? 'Excellent Quality' : (review.rating ?? 0) >= 3 ? 'Good Quality' : 'Average Quality' }}
+                Rating: {{ review.rating }}/5 -
+                {{ (review.rating) >= 4 ? 'Excellent Quality' : (review.rating) >= 3 ? 'Good Quality' : 'Average Quality' }}
               </p>
             </div>
 

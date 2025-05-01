@@ -49,5 +49,46 @@
 }
 
 .bx.bxs-star {
-  margin-right: 0.25rem;
+  position: relative;
+  display: inline-block;
+  font-size: 2rem;
+  line-height: 1;
+  color: #ffca2c;
+  overflow: hidden;
+}
+
+ngb-rating {
+  display: inline-flex;
+  margin: 0.5rem 0;
+  outline: none;
+  cursor: pointer;
+}
+
+ngb-rating .star {
+  position: relative;
+  display: inline-block;
+  font-size: 2rem;
+  margin-right: 4px;
+}
+
+ngb-rating .star i {
+  display: inline-block;
+  font-size: 2rem;
+  color: #e9ecef;
+}
+
+ngb-rating .star i.filled {
+  color: #ffca2c;
+}
+
+ngb-rating .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

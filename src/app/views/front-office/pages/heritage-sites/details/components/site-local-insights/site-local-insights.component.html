@@ -1,0 +1,65 @@
+<div class="local-insights-container">
+  <div class="section-header">
+    <h2>Local Insights</h2>
+    <p>Discover unique perspectives and stories from locals</p>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading local insights...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="error">
+    <p class="error-message">{{ error }}</p>
+    <button class="retry-button" (click)="loadLocalInsights()">
+      <i class="fa fa-sync"></i> Retry
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="insights-carousel" *ngIf="!loading && !error && localInsights.length > 0">
+    <swiper-container [config]="swiperConfig">
+      <swiper-slide *ngFor="let insight of localInsights">
+        <div class="insight-card">
+          <!-- Video Preview if available -->
+          <div class="card-media" *ngIf="insight.videoURL">
+            <div class="video-preview">
+              <i class="fa fa-play-circle"></i>
+              <span>Watch Video</span>
+            </div>
+          </div>
+          
+          <div class="card-content">
+            <div class="insight-type" [class]="insight.type?.toLowerCase()">
+              {{ insight.type }}
+            </div>
+            
+            <h3 class="insight-title">{{ insight.title }}</h3>
+            <p class="insight-description">{{ insight.description }}</p>
+            
+            <div class="insight-actions">
+              <button class="action-button" [class.active]="insight.isLiked" (click)="handleLike(insight)">
+                <i class="fa" [class.fa-thumbs-up]="!insight.isLiked" [class.fa-thumbs-up-fill]="insight.isLiked"></i>
+                <span>{{ insight.likes || 0 }}</span>
+              </button>
+              
+              <button class="action-button" [class.active]="insight.isDisliked" (click)="handleDislike(insight)">
+                <i class="fa" [class.fa-thumbs-down]="!insight.isDisliked" [class.fa-thumbs-down-fill]="insight.isDisliked"></i>
+                <span>{{ insight.dislikes || 0 }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!loading && !error && localInsights.length === 0">
+    <i class="fa fa-lightbulb-o"></i>
+    <p>No local insights available yet</p>
+    <span>Be the first to share your perspective!</span>
+  </div>
+</div>

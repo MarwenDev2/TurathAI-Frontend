@@ -79,30 +79,29 @@
     <!-- Rating -->
     <div class="mb-3">
       <label for="rating" class="form-label">Rating</label>
-      <div>
+      <div class="rating-container">
         <!-- Custom Star Template -->
         <ng-template #starTemplate let-fill="fill">
-          @if (fill > 0) {
-            <i
-              class="bx bxs-star text-warning fs-3"
-              [style.width.%]="fill"
-            ></i>
-          } @else {
-            <i class="bx bxs-star text-muted opacity-25 fs-3"></i>
-          }
+          <span class="star" [class.filled]="fill === 100">
+            <i class="bx" 
+               [class.bxs-star]="fill === 100" 
+               [class.bx-star]="fill < 100"></i>
+          </span>
         </ng-template>
+        
         <ngb-rating
           [(rate)]="review.rating"
           [starTemplate]="starTemplate"
-          (hover)="hovered = $event"
-          (leave)="hovered = 0"
           [max]="5"
-          class="d-inline-block"
+          class="d-block mb-2"
         ></ngb-rating>
-        <span class="ratingnum badge bg-info align-middle ms-2 mb-2">{{ review.rating || hovered || 0 }}</span>
+        
+        <div class="rating-value mt-1">
+          Selected rating: <strong>{{ review.rating || 0 }}</strong>/5
+        </div>
       </div>
       @if (!review.rating && errorMessage.includes('rating')) {
-        <div class="text-danger">Please provide a rating between 1 and 5.</div>
+        <div class="text-danger">Please select a rating.</div>
       }
     </div>
 

@@ -220,10 +220,10 @@
 
   .card-image {
     position: relative;
-    height: 300px;
+    height: 220px;
     overflow: hidden;
 
-    img {
+    .site-image-standard {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -248,7 +248,11 @@
 
       i {
         font-size: 1.5rem;
-        color: #dc3545;
+        color: #aaa;
+        
+        &.heart-red {
+          color: #dc3545;
+        }
       }
 
       &:hover {
@@ -291,6 +295,63 @@
   }
 }
 
+.list-view {
+  .site-list-item {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+    padding: 1.5rem;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .list-image-container {
+      height: 200px;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .list-image-standard {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .wishlist-btn-sm {
+      background: white;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      i {
+        font-size: 1.3rem;
+        color: #aaa;
+        
+        &.heart-red {
+          color: #dc3545;
+        }
+      }
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+
 // Popularity and Score Classes
 .badge {
   &.bg-success {
@@ -306,4 +367,3 @@
     background-color: #17a2b8 !important;
   }
 } 
-

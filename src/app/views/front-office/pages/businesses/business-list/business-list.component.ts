@@ -4,26 +4,30 @@ import { Business } from '@core/Models/business';
 import { BusinessService } from '@core/services/business.service';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { CarouselComponent, CarouselSlide } from '../../../components/carousel/carousel.component';
 
 @Component({
   selector: 'app-business-list',
   standalone: true,
-  imports: [CommonModule, NgbPaginationModule],
+  imports: [CommonModule, NgbPaginationModule, CarouselComponent],
   templateUrl: './business-list.component.html',
   styleUrls: ['./business-list.component.scss']
 })
 export class BusinessListComponent implements OnInit {
   businesses: Business[] = [];
-  carouselSlides = [
+  carouselSlides: CarouselSlide[] = [
     {
+      image: 'assets/images/businesses/business-banner1.jpg',
       title: 'Discover Local Businesses',
       description: 'Explore unique businesses that preserve and celebrate our heritage'
     },
     {
+      image: 'assets/images/businesses/business-banner2.jpg',
       title: 'Support Heritage Tourism',
       description: 'Find authentic experiences and traditional crafts in our community'
     },
     {
+      image: 'assets/images/businesses/business-banner3.jpg',
       title: 'Connect with Culture',
       description: 'Experience the living history through local businesses and artisans'
     }

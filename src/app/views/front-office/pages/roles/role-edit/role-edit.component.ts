@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
-import { ReviewService } from '../../../core/services/review.service';
-import { Review } from '../../../core/Models/review';
-import { User } from '../../../core/Models/user';
-import { HeritageSite } from '../../../core/Models/heritage-site';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
+import { Site } from '@core/Models/site';
+import { User } from '@core/Models/user';
+import { Review } from '@core/Models/review';
+import { ReviewService } from '@core/services/review.service';
 
 // Define a specific type for newReview
 interface NewReview {
@@ -16,7 +16,7 @@ interface NewReview {
   createdAt?: string;
   flagged?: boolean;
   user?: User;
-  heritageSite?: HeritageSite;
+  heritageSite?: Site;
 }
 
 @Component({
@@ -56,8 +56,9 @@ export class RoleEditComponent implements OnInit {
     originCountry: "Tunisia",
     spokenLanguage: 'Arabic',
     interests: 'test',
-    createdAt: new Date().toISOString(),
-    image: '1323165.png'
+    createdAt: new Date(),
+    image: '1323165.png',
+    password: ''
   };
 
   showReviewModal = false;
@@ -212,7 +213,7 @@ export class RoleEditComponent implements OnInit {
       createdAt: this.editingReview?.createdAt || new Date().toISOString(),
       flagged: false,
       user: this.mockUser,
-      heritageSite: { id: siteId } as HeritageSite,
+      heritageSite: { id: siteId } as Site,
     };
 
     if (this.editingReview) {

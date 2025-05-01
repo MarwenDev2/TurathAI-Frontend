@@ -10,6 +10,7 @@ import {
 } from '@angular/router'
 import { AuthService } from '@core/services/auth.service'
 import { TitleService } from '@core/services/title.service'
+import { UrlPersistenceService } from '@core/services/url-persistence.service'
 import {
   NgProgressComponent,
   NgProgressModule,
@@ -21,7 +22,7 @@ import {
   standalone: true,
   imports: [RouterOutlet, NgProgressModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   progressRef!: NgProgressRef
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
 
   private titleService = inject(TitleService)
   private router = inject(Router)
+  private urlPersistenceService = inject(UrlPersistenceService)
 
   constructor(private authService: AuthService) {
     this.router.events.subscribe((event: Event) => {
@@ -38,7 +40,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.init()
-    this.authService.authStateInitialized().subscribe();
+    this.authService.authStateInitialized().subscribe(() => {
+      // After auth state is initialized, restore the last URL if one exists
+      // This makes sure we don't attempt navigation before authentication is checked
+      if (this.authService.isAuthenticated) {
+        this.urlPersistenceService.restoreLastUrl();
+      }
+    });
   }
 
   checkRouteChange(routerEvent: Event) {

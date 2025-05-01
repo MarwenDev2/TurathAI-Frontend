@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
@@ -14,19 +14,18 @@ import { Observable } from 'rxjs';
   standalone: true,
   imports: [CommonModule, RouterModule, NgbDropdownModule]
 })
-export class FrontOfficeLayoutComponent {
+export class FrontOfficeLayoutComponent implements OnInit {
   navItems = [
     { label: 'Home', link: '/frontoffice' },
-    { label: 'Local', link: '/frontoffice/local-insight' },
     { label: 'Heritage Sites', link: '/frontoffice/heritage-sites' },
+    { label: 'Local', link: '/frontoffice/local-insight' },
     { label: 'Businesses', link: '/frontoffice/businesses' },
     { label: 'Itineraries', link: '/frontoffice/itineraries' },
-    { label: 'Forums', link: '/frontoffice/forums' },
-    { label: 'Services', link: '/frontoffice/services' },
-    { label: 'Contact', link: '/frontoffice/contact' }
+    { label: 'Forums', link: '/frontoffice/forums' }
   ];
 
   currentUser$: Observable<User | null>;
+  currentYear: number = new Date().getFullYear();
 
   constructor(private authService: AuthService) {
     this.currentUser$ = this.authService.currentUser$;
@@ -36,6 +35,10 @@ export class FrontOfficeLayoutComponent {
       ...item,
       link: item.link.replace('/front-office', '/frontoffice')
     }));
+  }
+
+  ngOnInit(): void {
+    // Initialize any additional resources here
   }
 
   logout(): void {

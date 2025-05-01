@@ -14,6 +14,7 @@
       <a *ngFor="let item of navItems" 
          [routerLink]="item.link" 
          routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: item.link === '/frontoffice'}"
          class="nav-link">
         {{item.label}}
       </a>
@@ -55,4 +56,71 @@
   <main class="main-content">
     <router-outlet></router-outlet>
   </main>
+
+  <!-- Modern, Beautiful Footer -->
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 footer-column">
+            <div class="footer-brand">
+              <img src="./assets/images/logo-dark.png" alt="TurathAI Logo" class="footer-logo" />
+              <p class="mt-3">Explore the richness of Tunisia's cultural heritage with our innovative AI-powered platform.</p>
+              <div class="social-icons mt-4">
+                <a href="#" class="social-icon"><i class="bx bxl-facebook"></i></a>
+                <a href="#" class="social-icon"><i class="bx bxl-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="bx bxl-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="bx bxl-youtube"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 footer-column">
+            <h3 class="footer-heading">Explore</h3>
+            <ul class="footer-links">
+              <li><a routerLink="/frontoffice/heritage-sites"><i class="bx bx-chevron-right"></i> Heritage Sites</a></li>
+              <li><a routerLink="/frontoffice/itineraries"><i class="bx bx-chevron-right"></i> Itineraries</a></li>
+              <li><a routerLink="/frontoffice/local-insights"><i class="bx bx-chevron-right"></i> Local Insights</a></li>
+              <li><a routerLink="/frontoffice/forums"><i class="bx bx-chevron-right"></i> Community Forum</a></li>
+              <li><a routerLink="/frontoffice/businesses"><i class="bx bx-chevron-right"></i> Cultural Business</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 footer-column">
+            <h3 class="footer-heading">Our Services</h3>
+            <ul class="footer-links">
+              <li><a href="#"><i class="bx bx-chevron-right"></i> Virtual Tours</a></li>
+              <li><a href="#"><i class="bx bx-chevron-right"></i> AI-Powered Recommendations</a></li>
+              <li><a href="#"><i class="bx bx-chevron-right"></i> Cultural Preservation</a></li>
+              <li><a href="#"><i class="bx bx-chevron-right"></i> Heritage Documentation</a></li>
+              <li><a href="#"><i class="bx bx-chevron-right"></i> Local Artisan Support</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 footer-column">
+            <h3 class="footer-heading">Subscribe to Our Newsletter</h3>
+            <p>Stay updated with the latest cultural heritage events and news.</p>
+            <div class="newsletter-form">
+              <div class="input-group mb-3">
+                <input type="email" class="form-control" placeholder="Your Email" aria-label="Your Email">
+                <button class="btn btn-primary" type="button">Subscribe</button>
+              </div>
+            </div>
+            <div class="contact-info mt-4">
+              <p><i class="bx bx-map"></i> Tunis, Tunisia</p>
+              <p><i class="bx bx-phone"></i> +216 71 123 456</p>
+              <p><i class="bx bx-envelope"></i> noreplyturathai&#64;gmail.com</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container d-flex justify-content-between align-items-center flex-wrap">
+        <p class="copyright mb-0"> {{currentYear}} TurathAI. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>

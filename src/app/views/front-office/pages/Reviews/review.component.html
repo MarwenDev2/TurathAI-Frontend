@@ -204,7 +204,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let review of paginatedReviews">
+      <tr *ngFor="let review of paginatedReviews()">
         <td><input type="checkbox" [(ngModel)]="review.selected" (change)="updateSelectAll()"></td>
         <td>
           <span [ngbTooltip]="review.heritageSite.description || 'No description available'" placement="top">

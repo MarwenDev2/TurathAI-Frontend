@@ -10,6 +10,10 @@ export interface Itinerary {
   endDate: Date;
   budget: number;
   userId?: number;
+  title?: string;
+  imageUrl?: string;
+  locations?: string;
+  user?: any;
 }
 
 @Injectable({
@@ -47,9 +51,8 @@ export class ItineraryService {
   }
 
   // Update existing itinerary
-  updateItinerary(id: number, itinerary: Partial<Itinerary>): Observable<Itinerary> {
-    const updatedItinerary = { ...itinerary, id };
-    return this.http.put<Itinerary>(`${this.apiUrl}/update`, updatedItinerary).pipe(
+  updateItinerary(itinerary: Partial<Itinerary>): Observable<Itinerary> {
+    return this.http.put<Itinerary>(`${this.apiUrl}/update`, itinerary).pipe(
       catchError(this.handleError)
     );
   }
