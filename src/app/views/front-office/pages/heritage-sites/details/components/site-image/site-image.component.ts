@@ -14,7 +14,6 @@ import {
 import { register } from 'swiper/element'
 import { SwiperOptions } from 'swiper/types';
 import { SwiperDirective } from "@/app/core/directive/swiper-directive.component";
-import { UIExamplesListComponent } from '@component/ui-examples-list/ui-examples-list.component';
 import { Site } from '@core/Models/site';
 
 
@@ -22,7 +21,7 @@ register()
 @Component({
   selector: 'app-heritage-site-image',
   standalone: true,
-  imports: [NgbCarouselModule, CommonModule, SwiperDirective, UIExamplesListComponent],
+  imports: [NgbCarouselModule, CommonModule, SwiperDirective],
   templateUrl: './site-image.component.html',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   styles: [`

@@ -20,25 +20,35 @@ export interface CarouselSlide {
 export class CarouselComponent implements OnInit, OnDestroy {
   @Input() slides: CarouselSlide[] = [];
   @Input() autoSlide: boolean = true;
-  @Input() slideInterval: number = 5000; // 5 seconds
-  @Input() showHeroSection: boolean = true;
-  @Input() heroTitle: string = 'Welcome to TurathAI';
-  @Input() heroDescription: string = 'Explore the rich cultural heritage and historical significance of our region\'s most treasured landmarks';
-  @Input() heroButtonText: string = 'Explore Now';
+  @Input() slideInterval: number = 5000;
   
   currentSlide = 0;
+  currentImageTransform = 'scale(1)';
+  hoveredSlideIndex: number | null = null;
   private autoSlideInterval: any;
-
-  constructor() {}
+  
+  checkImageLoad(index: number): void {
+    const img = new Image();
+    img.src = this.slides[index].image;
+    img.onload = () => console.log(`Image ${index} loaded successfully`);
+    img.onerror = () => console.error(`Error loading image ${index}: ${this.slides[index].image}`);
+  }
 
   ngOnInit(): void {
     if (this.autoSlide) {
       this.startAutoSlide();
     }
+    // Check all images on init
+    this.slides.forEach((_, i) => this.checkImageLoad(i));
   }
 
   ngOnDestroy(): void {
     this.stopAutoSlide();
+  }
+
+  onSlideHover(index: number, isHovering: boolean): void {
+    this.hoveredSlideIndex = isHovering ? index : null;
+    this.currentImageTransform = isHovering ? 'scale(1.03)' : 'scale(1)';
   }
 
   private startAutoSlide(): void {

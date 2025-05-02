@@ -174,27 +174,13 @@ export class FrontOfficeItinerariesComponent implements OnInit {
   
   // Show route map in a modal
   showRouteMap(itineraryId: number): void {
-    if (!this.hasStops(itineraryId)) {
-      Swal.fire({
-        title: 'No Route Available',
-        text: 'This itinerary does not have any stops to display on the map.',
-        icon: 'info',
-        confirmButtonText: 'OK',
-        customClass: {
-          confirmButton: 'btn btn-primary'
-        },
-        buttonsStyling: false
-      });
-      return;
-    }
-    
     const stops = this.getStopsForItinerary(itineraryId);
     
     Swal.fire({
-      title: 'Itinerary Route Map',
-      html: `<div id="route-map-modal" style="height: 500px; width: 100%;"></div>`,
-      width: '80%',
-      confirmButtonText: 'Close',
+      title: 'Itinerary Route Map is Above',
+      html: `<div id="route-map-modal" style="height: 100px; width: 60%;"></div>`,
+      width: '60%',
+      confirmButtonText: 'OK',
       customClass: {
         confirmButton: 'btn btn-primary'
       },

@@ -78,7 +78,7 @@
                    <div class="timeline-item" *ngFor="let addition of recentAdditions; let i = index">
                      <div class="timeline-dot"></div>
                      <div class="timeline-content">
-                       <strong class="me-2">{{ addition.heritageSite?.name || 'Unknown Site' }}</strong>
+                       <strong class="me-2">{{ addition.heritageSite.name || 'Unknown Site' }}</strong>
                        <p class="mb-1 text-muted">
                          Added on {{ addition.createdAt | date: 'medium' }}
                        </p>
@@ -142,25 +142,32 @@
                        >
                      </td>
                      <td>
-                        <!-- <img
-                         [src]="item.heritageSite?.image || 'https://via.placeholder.com/50'"
-                         alt="{{ item.heritageSite?.name || 'Unknown Site' }}"
-                         class="site-image"
-                       > -->
-
-                       <<img
-                       src="https://picsum.photos/80?random={{item.id}}"
-                       alt="{{ item.heritageSite?.name || 'Heritage Site' }}"
-                       class="site-image rounded"
-                       >
-                     </td>
-                     <td>{{ item.heritageSite?.name || 'Unknown Site' }}</td>
-                     <td>{{ item.heritageSite?.location || 'Unknown Location' }}</td>
+                      <div style="width: 120px; height: 80px;">
+                        <swiper-container [config]="swiperNavigation" init="false">
+                          @for (imageUrl of getImageUrls(item.heritageSite.imageIds); track imageUrl) {
+                            <swiper-slide class="swiper-slide">
+                              <img [src]="imageUrl" [alt]="item.heritageSite.name" class="img-fluid rounded" />
+                            </swiper-slide>
+                          }
+                          @empty {
+                            <swiper-slide class="swiper-slide">
+                              <img src="assets/images/qr-code.png" [alt]="item.heritageSite.name" class="img-fluid rounded" />
+                            </swiper-slide>
+                          }
+                        </swiper-container>
+                        <img *ngIf="!item.heritageSite?.imageIds?.length" 
+                             src="assets/images/default-heritage.jpg" 
+                             [alt]="item.heritageSite.name" 
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                      </div>
+                    </td>
+                     <td>{{ item.heritageSite.name || 'Unknown Site' }}</td>
+                     <td>{{ item.heritageSite.location || 'Unknown Location' }}</td>
                      <td>{{ item.createdAt | date: 'medium' }}</td>
                      <td>
                        <button
                          class="btn btn-sm btn-outline-info show-details-btn"
-                         [ngbTooltip]="item.heritageSite?.description || 'No description available'"
+                         [ngbTooltip]="item.heritageSite.description || 'No description available'"
                          placement="top"
                        >
                          Details

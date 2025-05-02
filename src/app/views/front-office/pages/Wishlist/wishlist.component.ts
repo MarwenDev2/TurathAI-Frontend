@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbRatingModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
@@ -6,6 +6,9 @@ import { User } from '@core/Models/user';
 import { Wishlist } from '@core/Models/wishlist';
 import { WishlistService } from '@core/services/wishlist.service';
 import { AuthService } from '@core/services/auth.service';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { SwiperOptions } from 'swiper/types';
+import { register } from 'swiper/element';
 
 @Component({
   selector: 'app-wishlist',
@@ -13,6 +16,7 @@ import { AuthService } from '@core/services/auth.service';
   imports: [CommonModule, FormsModule, NgbRatingModule, NgbTooltipModule],
   templateUrl: './wishlist.component.html',
   styleUrls: ['./wishlist.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] 
 })
 export class WishlistComponent implements OnInit {
   currentUser: User | null = null;
@@ -41,10 +45,20 @@ export class WishlistComponent implements OnInit {
   confirmMessage: string = '';
   confirmAction: 'single' | 'bulk' | null = null;
   wishlistIdToDelete: number | null = null;
-
+  swiperThumbConfig: SwiperOptions = {
+    modules: [Autoplay],
+    loop: true,
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+    slidesPerView: 1,
+    spaceBetween: 0,
+  };
   constructor(private wishlistService: WishlistService,private authService: AuthService) {}
 
   ngOnInit(): void {
+    register(); 
     this.authService.currentUser$.subscribe({
       next: (user) => {
         this.currentUser = user;
@@ -57,6 +71,50 @@ export class WishlistComponent implements OnInit {
     this.loadWishlist();
   }
 
+  getImageUrls(imageIds: number[] | undefined): string[] {
+    if (!imageIds || imageIds.length === 0) {
+      return ['assets/images/qr-code.png'];
+    }
+    return imageIds.map(id => `http://localhost:8080/images/${id}`);
+  }
+
+  swiperConfig: SwiperOptions = {
+    modules: [Autoplay],
+    loop: true,
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+    },
+  }
+  swiperNavigation: SwiperOptions = {
+    modules: [Autoplay, Pagination, Navigation],
+    loop: true,
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      clickable: true,
+      el: '.basic-pagination',
+    },
+    navigation: {
+      nextEl: '.basic-next',
+      prevEl: '.basic-prev',
+    },
+  }
+  swiperPagination: SwiperOptions = {
+    modules: [Autoplay, Pagination],
+    loop: true,
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      clickable: true,
+      el: '.dynamic-pagination',
+      dynamicBullets: true,
+    },
+  }
   loadWishlist(): void {
     this.isLoading = true;
     this.errorMessage = '';
@@ -66,7 +124,12 @@ export class WishlistComponent implements OnInit {
       this.isLoading = false;
       return;
     }
-
+// Add this to your component to debug image loading
+console.log('Wishlist items:', this.wishlist);
+this.wishlist.forEach(item => {
+  console.log('Heritage site:', item.heritageSite?.name);
+  console.log('Image IDs:', item.heritageSite?.imageIds);
+});
     this.wishlistService.getWishlist(this.currentUser.id).subscribe({
       next: (wishlist: Wishlist[]) => {
         this.wishlist = wishlist;
