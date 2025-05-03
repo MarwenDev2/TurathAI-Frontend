@@ -18,7 +18,6 @@ export class FrontOfficeLayoutComponent implements OnInit {
   navItems = [
     { label: 'Home', link: '/frontoffice' },
     { label: 'Heritage Sites', link: '/frontoffice/heritage-sites' },
-    { label: 'Local', link: '/frontoffice/local-insight' },
     { label: 'Businesses', link: '/frontoffice/businesses' },
     { label: 'Itineraries', link: '/frontoffice/itineraries' },
     { label: 'Forums', link: '/frontoffice/forums' }

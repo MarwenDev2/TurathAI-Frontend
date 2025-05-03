@@ -6,14 +6,14 @@ import { catchError, finalize, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 import { LocalInsightService } from '@core/services/local-insight.service';
-import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AuthService } from '@core/services/auth.service';
-import { User } from '@core/Models/user';
+import { VideoUploaderComponent } from '@component/file-uploader/video-uploader.component';
 
 @Component({
   selector: 'app-add-local-insight',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, VideoUploaderComponent],
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss']
 })
@@ -25,98 +25,117 @@ export class AddComponent implements OnInit {
   private authService = inject(AuthService);
 
   localInsightForm: FormGroup = this.fb.group({
-    title: ['', Validators.required],
+    title: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\u00C0-\u017F\s]+$/)]],
     description: ['', Validators.required],
     type: ['', Validators.required],
     videoURL: [''],
+    videoOriginalName: ['']
   });
 
-  heritageSite: any = null; // On va stocker l'objet complet ici
-
+  heritageSite: any = null;
   isLoading = false;
   errorMessage = '';
   successMessage = '';
-  selectedImage: string | ArrayBuffer | null = null;
-  imageFileName: string | null = null;
-  isGeneratingDescription = false;
+  uploadedVideoId: string | null = null;
 
   ngOnInit(): void {
     this.fetchHeritageSite();
   }
 
-  fetchHeritageSite() {
+  fetchHeritageSite(): void {
     this.http.get<any>('http://localhost:8080/api/Sites/get/1').subscribe({
-      next: (data) => {
-        this.heritageSite = data;
-      },
-      error: () => {
-        this.errorMessage = 'Impossible de charger le site patrimonial.';
-      }
+      next: (data) => this.heritageSite = data,
+      error: () => this.errorMessage = 'Impossible de charger le site patrimonial.'
     });
   }
 
-  onTypeChange(type: string) {
+  // onVideoUploaded(response: { fileName: string; originalName: string }): void {
+  //   this.uploadedVideoId = response.fileName;
+  //   const videoURL = `${response.fileName}`;
+  //   this.localInsightForm.patchValue({ 
+  //     videoURL,
+  //     videoOriginalName: response.originalName
+  //   });
+  //   this.errorMessage = '';
+  //   this.successMessage = 'Vidéo téléchargée avec succès!';
+  // }
+  onVideoUploaded(event: { url: string, originalName: string }) {
+    this.localInsightForm.patchValue({
+      videoURL: event.url,
+      videoOriginalName: event.originalName
+    });
+  }
+  
+  onVideoRemoved(): void {
+    this.uploadedVideoId = null;
+    this.localInsightForm.patchValue({ 
+      videoURL: '',
+      videoOriginalName: ''
+    });
+    this.successMessage = 'Vidéo supprimée avec succès!';
+    setTimeout(() => this.successMessage = '', 3000);
+  }
+
+  onTypeChange(type: string): void {
+    if (!type) return;
     this.http.post<any>('http://localhost:8080/api/local-insights/videos/generate', { type }).subscribe({
       next: (res) => {
-        // On met à jour le champ 'videoURL' avec l'URL de la vidéo générée
-        this.localInsightForm.patchValue({ videoURL: res.videoURL });
-        this.successMessage = 'Vidéo générée automatiquement.';
+        if (res.videoURL) {
+          this.localInsightForm.patchValue({ 
+            videoURL: res.videoURL,
+            videoOriginalName: res.videoURL.split('/').pop() || 'Generated Video'
+          });
+          this.successMessage = 'Vidéo générée automatiquement.';
+        }
       },
-      error: () => {
-        this.errorMessage = 'Erreur lors de la génération de la vidéo.';
-      }
+      error: () => this.errorMessage = 'Erreur lors de la génération de la vidéo.'
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.localInsightForm.invalid) {
       this.localInsightForm.markAllAsTouched();
       this.errorMessage = 'Veuillez remplir tous les champs requis correctement.';
       return;
     }
 
+    this.isLoading = true;
     const formValue = this.localInsightForm.value;
+    const currentUser = this.authService.currentUser;
 
     const payload = {
       title: formValue.title,
       description: formValue.description,
       type: formValue.type,
       videoURL: formValue.videoURL || null,
+      videoOriginalName: formValue.videoOriginalName || null,
       heritageSite: {
         id: this.heritageSite?.id || 2
       }
     };
 
-    this.isLoading = true;
-    const currentUser = this.authService.currentUser;
-
     this.localInsightService.createLocalInsight(payload)
       .pipe(
-        switchMap(createdInsight => {
-          // Only send notification if we have a user and the insight was created successfully
-          if (createdInsight && currentUser) {
-            // Get user's full name
-            const fullName = `${currentUser.firstName} ${currentUser.lastName}`;
-            
-            // Send email notification
-            return this.localInsightService.sendLocalInsightNotification(
-              createdInsight.id!, 
-              currentUser.email,
-              fullName
-            ).pipe(
-              catchError(error => {
-                console.error('Error sending notification email:', error);
-                // Return the created insight even if email fails
-                return of(createdInsight);
-              })
-            );
-          }
-          return of(createdInsight);
-        }),
-        catchError(error => {
-          this.errorMessage = error.error?.message || 'Erreur lors de l\'ajout.';
-          return of(null);
-        }),
+        // switchMap(createdInsight => {
+        //   if (createdInsight && currentUser) {
+        //     const fullName = `${currentUser.firstName} ${currentUser.lastName}`;
+        //     return this.localInsightService.sendLocalInsightNotification(
+        //       createdInsight.id!,
+        //       currentUser.email,
+        //       fullName
+        //     ).pipe(
+        //       catchError(error => {
+        //         console.error('Erreur lors de l\'envoi de l\'e-mail :', error);
+        //         return of(createdInsight);
+        //       })
+        //     );
+        //   }
+        //   return of(createdInsight);
+        // }),
+        // catchError(error => {
+        //   this.errorMessage = error.error?.message || 'Erreur lors de l\'ajout.';
+        //   return of(null);
+        // }),
         finalize(() => this.isLoading = false)
       )
       .subscribe(res => {
@@ -128,6 +147,12 @@ export class AddComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.router.navigate(['/local-insight/list']);
+    if (this.localInsightForm.dirty) {
+      if (confirm('Voulez-vous vraiment annuler? Les modifications non enregistrées seront perdues.')) {
+        this.router.navigate(['/local-insight/list']);
+      }
+    } else {
+      this.router.navigate(['/local-insight/list']);
+    }
   }
 }

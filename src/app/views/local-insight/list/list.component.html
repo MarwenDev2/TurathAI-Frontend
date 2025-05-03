@@ -106,23 +106,19 @@
                   @if (showVideo[i] && insight.videoURL) {
                     <tr>
                       <td colspan="3">
-                        @if (isEmbeddedVideo(insight.videoURL)) {
-                          <div class="ratio ratio-16x9">
-                            <iframe 
-                              [src]="getSafeEmbedUrl(insight.videoURL)" 
-                              allowfullscreen
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
-                            </iframe>
+                          <!-- Local video case -->
+                          <div class="video-container">
+                            <video controls class="w-100">
+                              <source [src]="getVideoUrl(insight.id || 28)" type="video/mp4">
+                            </video>
+                            <div class="video-info mt-2">
+                              <small class="text-muted">
+                                <i class="fas fa-file-video me-1"></i>
+                                {{ insight.videoURL || 'Uploaded video' }}
+                              </small>
+                            </div>
                           </div>
-                        } @else {
-                          <video 
-                            class="w-100" 
-                            controls
-                            (loadedmetadata)="onVideoLoaded()">
-                            <source [src]="insight.videoURL" type="video/mp4">
-                            Votre navigateur ne supporte pas les vidéos.
-                          </video>
-                        }
+                        
                       </td>
                     </tr>
                   }

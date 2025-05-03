@@ -43,39 +43,46 @@
       .card-media {
         position: relative;
         height: 180px;
-        background: linear-gradient(45deg, #2193b0, #6dd5ed);
-        overflow: hidden;
-
+        background: linear-gradient(45deg, #2193b0, #6dd5ed); /* Original gradient */
+        
         .video-preview {
           position: absolute;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+          }
+        }
+        
+        .video-placeholder {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: white;
+          text-align: center;
+          font-size: 1.2rem;
+          font-weight: 500;
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
-          color: white;
-          cursor: pointer;
-          transition: background-color 0.3s ease;
-
-          &:hover {
-            background-color: rgba(0, 0, 0, 0.3);
-          }
-
+          
           i {
             font-size: 3rem;
             margin-bottom: 0.5rem;
           }
-
-          span {
-            font-size: 1rem;
-            font-weight: 500;
-          }
         }
       }
-
+      
+      /* Speech icon visibility fix */
+      .action-button .fa-volume-up {
+        color: #1976d2 !important; // visible blue
+      }
       .card-content {
         padding: 1.5rem;
         flex: 1;
@@ -251,4 +258,142 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+.insight-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  background: white;
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.video-preview {
+  position: relative;
+  cursor: pointer;
+  background-color: #000;
+  
+  .video-thumbnail {
+    position: relative;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    
+    i {
+      font-size: 48px;
+      margin-bottom: 8px;
+    }
+    
+    span {
+      font-weight: 500;
+    }
+  }
+  
+  .insight-video {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    display: block;
+  }
+}
+
+.card-content {
+  padding: 16px;
+  
+  .insight-type {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    
+    &.video {
+      background-color: #ffebee;
+      color: #c62828;
+    }
+    
+    &.text {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+    }
+    
+    &.audio {
+      background-color: #e3f2fd;
+      color: #1565c0;
+    }
+  }
+  
+  .insight-title {
+    font-size: 18px;
+    margin: 8px 0;
+    color: #333;
+  }
+  
+  .insight-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+}
+
+.insight-actions {
+  display: flex;
+  gap: 8px;
+  
+  .action-button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: #f5f5f5;
+    }
+    
+    &.active {
+      border-color: #1976d2;
+      color: #1976d2;
+    }
+    
+    i {
+      font-size: 16px;
+    }
+    
+    span {
+      font-size: 14px;
+    }
+  }
+}
+
+.video-preview {
+  position: relative;
+  height: 180px;
+  cursor: pointer;
+  
+  .thumbnail-img {
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover .thumbnail-img {
+    opacity: 0.8;
+  }
+}
+
+.action-button .fa-volume-up {
+  color: #1976d2 !important; // visible blue
 }

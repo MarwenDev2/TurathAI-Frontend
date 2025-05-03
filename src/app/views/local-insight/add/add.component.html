@@ -22,7 +22,14 @@
                   [class.is-invalid]="localInsightForm.get('title')?.invalid && localInsightForm.get('title')?.touched"
                 />
                 @if (localInsightForm.get('title')?.invalid && localInsightForm.get('title')?.touched) {
-                  <div class="invalid-feedback">Titre requis (lettres et espaces uniquement)</div>
+                  <div class="invalid-feedback">
+                    @if (localInsightForm.get('title')?.errors?.['required']) {
+                      <div>Titre requis</div>
+                    }
+                    @if (localInsightForm.get('title')?.errors?.['pattern']) {
+                      <div>Lettres et espaces uniquement</div>
+                    }
+                  </div>
                 }
               </div>
             </div>
@@ -43,9 +50,6 @@
                 @if (localInsightForm.get('description')?.invalid && localInsightForm.get('description')?.touched) {
                   <div class="invalid-feedback">Description requise</div>
                 }
-                <div *ngIf="isGeneratingDescription" class="loading-indicator">
-                  Génération de la description en cours...
-                </div>
               </div>
             </div>
           </div>
@@ -59,6 +63,7 @@
                   id="type"
                   formControlName="type"
                   [class.is-invalid]="localInsightForm.get('type')?.invalid && localInsightForm.get('type')?.touched"
+                 
                 >
                   <option value="" disabled selected>Choisir un type</option>
                   <option value="culturel">Culturel</option>
@@ -75,14 +80,31 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="mb-3">
-                <label for="videoURL" class="form-label">Lien vidéo (optionnel)</label>
-                <input
-                  type="text"
-                  id="videoURL"
-                  class="form-control"
-                  formControlName="videoURL"
-                  placeholder="URL de la vidéo"
+                <label class="form-label">Vidéo</label>
+                <VideoUploader 
+                  (videoUploaded)="onVideoUploaded($event)" 
+                  (videoRemoved)="onVideoRemoved()" 
                 />
+                @if (localInsightForm.get('videoOriginalName')?.value) {
+                  <div class="mt-2">
+                    <span class="badge bg-info">
+                      <i class="fas fa-video me-1"></i>
+                      {{ localInsightForm.get('videoOriginalName')?.value }}
+                    </span>
+                  </div>
+                }
+                @if (localInsightForm.get('videoURL')?.value) {
+                  <div class="mt-3">
+                    <div class="ratio ratio-16x9">
+                      <video controls class="rounded">
+                        <source [src]="localInsightForm.get('videoURL')?.value" type="video/mp4">
+                        Votre navigateur ne supporte pas les vidéos HTML5.
+                      </video>
+                    </div>
+                  </div>
+                }
+                <input type="hidden" formControlName="videoURL">
+                <input type="hidden" formControlName="videoOriginalName">
               </div>
             </div>
           </div>
@@ -90,11 +112,13 @@
           <!-- Messages -->
           @if (errorMessage) {
             <div class="alert alert-danger mb-3">
+              <i class="fas fa-exclamation-circle me-2"></i>
               {{ errorMessage }}
             </div>
           }
           @if (successMessage) {
             <div class="alert alert-success mb-3">
+              <i class="fas fa-check-circle me-2"></i>
               {{ successMessage }}
             </div>
           }
@@ -106,6 +130,7 @@
                 class="btn btn-outline-secondary"
                 (click)="onCancel()"
               >
+                <i class="fas fa-times me-1"></i>
                 Annuler
               </button>
               <button
@@ -117,6 +142,7 @@
                   <span class="spinner-border spinner-border-sm me-1"></span>
                   Ajout en cours...
                 } @else {
+                  <i class="fas fa-plus me-1"></i>
                   Ajouter
                 }
               </button>
@@ -127,4 +153,3 @@
     </div>
   </div>
 </div>
-

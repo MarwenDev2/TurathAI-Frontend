@@ -55,6 +55,7 @@
     "ngx-clipboard": "^16.0.0",
     "ngx-cookie-service": "^18.0.0",
     "ngx-dropzone-wrapper": "^17.0.0",
+    "ngx-lightbox": "^3.0.0",
     "ngx-mask": "^18.0.0",
     "ngx-progressbar": "^11.1.0",
     "ngx-quill": "^26.0.5",

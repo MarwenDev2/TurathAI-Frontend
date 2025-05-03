@@ -27,7 +27,6 @@ export class ListComponent implements OnInit {
   // Ajoutez cette propriété à votre classe
 currentSpeech: SpeechSynthesisUtterance | null = null;
 
-  private videoPlatformsRegex = /(youtube\.com|youtu\.be|vimeo\.com|dailymotion\.com)/i;
 
   constructor(
     private localInsightService: LocalInsightService,
@@ -37,6 +36,31 @@ currentSpeech: SpeechSynthesisUtterance | null = null;
 
   ngOnInit(): void {
     this.fetchLocalInsights();
+  }
+  loadLocalInsights(): void {
+    this.isLoading = true;
+    this.localInsightService.getAllLocalInsights().subscribe({
+      next: (insights) => {
+        this.localInsights = insights;
+        this.filteredLocalInsights = [...insights];
+        this.showVideo = new Array(insights.length).fill(false);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.errorMessage = 'Failed to load local insights';
+        this.isLoading = false;
+      }
+    });
+  }
+
+  getVideoUrl(index: number): string {
+    return "http://localhost:8080/images/video/" + index;
+  }
+
+
+
+  toggleVideo(index: number): void {
+    this.showVideo[index] = !this.showVideo[index];
   }
 
   fetchLocalInsights(): void {
@@ -106,44 +130,6 @@ currentSpeech: SpeechSynthesisUtterance | null = null;
       this.showVideo[index] = false;
     }
     this.showMore[index] = !this.showMore[index];
-  }
-
-  toggleVideo(index: number): void {
-    // Ouvre la section more si elle est fermée
-    if (!this.showMore[index]) {
-      this.showMore[index] = true;
-    }
-    // Bascule l'état de la vidéo et ferme les autres
-    this.showVideo = this.showVideo.map((val, i) => i === index ? !val : false);
-  }
-
-  isEmbeddedVideo(url: string | undefined): boolean {
-    if (!url) return false;
-    return this.videoPlatformsRegex.test(url);
-  }
-
-  getSafeEmbedUrl(url: string | undefined): SafeResourceUrl | null {
-    if (!url) return null;
-
-    if (url.includes('embed')) {
-      return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-    }
-
-    if (url.includes('youtube.com/watch?v=')) {
-      const videoId = url.split('v=')[1].split('&')[0];
-      url = `https://www.youtube.com/embed/${videoId}`;
-    } else if (url.includes('youtu.be/')) {
-      const videoId = url.split('youtu.be/')[1];
-      url = `https://www.youtube.com/embed/${videoId}`;
-    } else if (url.includes('vimeo.com/')) {
-      const videoId = url.split('vimeo.com/')[1];
-      url = `https://player.vimeo.com/video/${videoId}`;
-    } else if (url.includes('dailymotion.com/video/')) {
-      const videoId = url.split('dailymotion.com/video/')[1].split('_')[0];
-      url = `https://www.dailymotion.com/embed/video/${videoId}`;
-    }
-
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   onVideoLoaded(): void {
