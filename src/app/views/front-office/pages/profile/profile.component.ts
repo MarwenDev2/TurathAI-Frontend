@@ -15,7 +15,7 @@ import { Wishlist } from '@core/Models/wishlist';
 import { StopService } from '@core/services/stop.service';
 import { Stop } from '@core/Models/stop';
 import { forkJoin, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import * as bootstrap from 'bootstrap';
 import { 
   trigger, 
@@ -25,7 +25,6 @@ import {
   transition 
 } from '@angular/animations';
 import Swal from 'sweetalert2';
-import { TimeUntilPipe } from '../../../../shared/pipes/time-until.pipe';
 import { ReviewService } from '@core/services/review.service';
 import { Review } from '@core/Models/review';
 import { Site } from '@core/Models/site';
@@ -41,36 +40,30 @@ import { Site } from '@core/Models/site';
     FormsModule,
     ReactiveFormsModule,
     NgbDropdownModule,
-    NgbDatepickerModule,
-    TimeUntilPipe
-  ],
-  animations: [
-    trigger('cardHover', [
-      state('normal', style({
-        transform: 'translateY(0)',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-      })),
-      state('hovered', style({
-        transform: 'translateY(-5px)',
-        boxShadow: '0 10px 15px rgba(0, 0, 0, 0.15)'
-      })),
-      transition('normal <=> hovered', animate('200ms ease-in-out'))
-    ]),
-    trigger('fadeInOut', [
-      state('void', style({
-        opacity: 0
-      })),
-      transition('void <=> *', animate('300ms ease-in-out')),
-    ])
-  ]
+    NgbDatepickerModule
+],
+animations: [  // <-- Add this animations array
+  trigger('cardHover', [
+    state('normal', style({
+      transform: 'translateY(0)',
+      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+    })),
+    state('hovered', style({
+      transform: 'translateY(-5px)',
+      boxShadow: '0 10px 15px rgba(0, 0, 0, 0.15)'
+    })),
+    transition('normal <=> hovered', animate('200ms ease-in-out'))
+  ])
+]
 })
 export class ProfileComponent implements OnInit {
+[x: string]: any;
   @ViewChild('fileInput') fileInput!: ElementRef;
   
   currentUser: User | null = null;
   isLoading = true;
   activeTab = 'info'; // Default tab
-  
+  hoverStates: { [key: number]: boolean } = {};
   // Profile form
   profileForm!: FormGroup;
   isSavingProfile = false;
@@ -94,8 +87,6 @@ export class ProfileComponent implements OnInit {
   // Trips and itineraries
   savedItineraries: any[] = [];  // Wishlist items
   wishlistItems: Wishlist[] = [];
-  upcomingItineraries: Itinerary[] = [];  // Itineraries where start date is in the future
-  currentItineraries: Itinerary[] = [];   // Itineraries where current date is between start and end dates
   itineraryStops: { [itineraryId: number]: Stop[] } = {}; // Store stops for each itinerary
   loadingItineraries = false;
   loadingTrips = false;
@@ -103,6 +94,10 @@ export class ProfileComponent implements OnInit {
   selectedItineraryStops: Stop[] = [];
   private bookingModal: any;
   private detailsModal: any;
+
+  pastItineraries: Itinerary[] = [];
+currentItineraries: Itinerary[] = [];
+upcomingItineraries: Itinerary[] = [];
 
   // User preferences
   userPreferences: UserPreferences | null = null;
@@ -294,24 +289,55 @@ export class ProfileComponent implements OnInit {
     
     this.itineraryService.getItinerariesByUserId(this.currentUser.id).subscribe({
       next: (itineraries) => {
-        console.log('Loaded user itineraries:', itineraries);
-        
         const now = new Date();
+        now.setHours(0, 0, 0, 0); // Normalize to start of day for comparison
         
-        // Categorize itineraries based on dates
-        this.upcomingItineraries = itineraries.filter(itinerary => {
-          const startDate = new Date(itinerary.startDate);
-          return startDate > now;
-        });
+        // Clear previous values
+        this.pastItineraries = [];
+        this.currentItineraries = [];
+        this.upcomingItineraries = [];
         
-        this.currentItineraries = itineraries.filter(itinerary => {
+        itineraries.forEach(itinerary => {
+          // Ensure dates are properly parsed
           const startDate = new Date(itinerary.startDate);
+          startDate.setHours(0, 0, 0, 0);
+          
           const endDate = new Date(itinerary.endDate);
-          return startDate <= now && endDate >= now;
+          endDate.setHours(0, 0, 0, 0);
+          
+          // Debug output to check dates
+          console.log('Processing itinerary:', {
+            id: itinerary.id,
+            title: itinerary.title,
+            startDate: startDate,
+            endDate: endDate,
+            now: now
+          });
+  
+          // Current trips: today is between start and end dates (inclusive)
+          if (now >= startDate && now <= endDate) {
+            console.log('Adding to current trips:', itinerary.title);
+            this.currentItineraries.push(itinerary);
+          } 
+          // Past trips: end date is before today
+          else if (now > endDate) {
+            console.log('Adding to past trips:', itinerary.title);
+            this.pastItineraries.push(itinerary);
+          } 
+          // Upcoming trips: start date is after today
+          else if (now < startDate) {
+            console.log('Adding to upcoming trips:', itinerary.title);
+            this.upcomingItineraries.push(itinerary);
+          }
         });
         
-        // Load stops for each itinerary
-        this.loadAllItineraryStops([...this.upcomingItineraries, ...this.currentItineraries]);
+        // Load stops for all itineraries
+        this.loadAllItineraryStops([...this.pastItineraries, ...this.currentItineraries, ...this.upcomingItineraries]);
+        
+        // Debug output
+        console.log('Past trips:', this.pastItineraries);
+        console.log('Current trips:', this.currentItineraries);
+        console.log('Upcoming trips:', this.upcomingItineraries);
         
         this.loadingTrips = false;
       },
@@ -322,7 +348,43 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
+  // In your ProfileComponent class:
+  getDaysUntilTrip(startDate: string | Date): number {
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0);
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const diffTime = start.getTime() - today.getTime();
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  }
+writeReview(itinerary: Itinerary): void {
+  if (!itinerary || !itinerary.id || !this.itineraryStops[itinerary.id]?.length) {
+    this.toastr.warning('No heritage sites available to review for this trip');
+    return;
+  }
+
+  // Get the first heritage site from the itinerary stops
+  const firstStopWithSite = this.itineraryStops[itinerary.id].find(stop => stop.heritageSite);
   
+  if (!firstStopWithSite?.heritageSite) {
+    this.toastr.warning('No heritage sites available to review for this trip');
+    return;
+  }
+
+  this.selectedReviewSite = firstStopWithSite.heritageSite;
+  this.reviewForm.reset({
+    rating: 5,
+    content: ''
+  });
+  
+  const modalElement = document.getElementById('addReviewModal');
+  if (modalElement) {
+    this.reviewModal = new bootstrap.Modal(modalElement);
+    this.reviewModal.show();
+  }
+}
   /**
    * Load stops for all itineraries
    */

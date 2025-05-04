@@ -70,6 +70,11 @@ export class WishlistComponent implements OnInit {
     });
     this.loadWishlist();
   }
+  handleImageError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = 'assets/images/default-site.jpg';
+    console.error('Failed to load image:', imgElement.src);
+  }
 
   getImageUrls(imageIds: number[] | undefined): string[] {
     if (!imageIds || imageIds.length === 0) {

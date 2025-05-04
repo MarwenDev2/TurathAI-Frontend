@@ -226,75 +226,140 @@
       
       <!-- My Trips Tab -->
       <div *ngIf="activeTab === 'trips'" [@fadeIn]="'in'">
-        <div class="card border-0 shadow-sm rounded-4">
-          <div class="card-header bg-white pt-4 pb-3 border-0">
-            <h5 class="mb-0"><i class="bx bx-trip me-2 text-primary"></i> My Trips</h5>
-          </div>
-          <div class="card-body">
-            
-            <div *ngIf="loadingTrips" class="text-center py-4">
-              <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-              <p class="mt-2 text-muted">Loading your trips...</p>
-            </div>
-            
-            <div *ngIf="!loadingTrips && currentItineraries.length === 0 && upcomingItineraries.length === 0" class="text-center py-4">
-              <div class="mb-3">
-                <i class="bx bx-map text-muted" style="font-size: 3rem;"></i>
-              </div>
-              <h6 class="text-muted">You don't have any booked trips yet</h6>
-              <p class="text-muted small">Explore our itineraries and book your next adventure!</p>
-              <a routerLink="/itineraries" class="btn btn-outline-primary">Discover Itineraries</a>
-            </div>
-            
-            <!-- Current Trips -->
-            <div *ngIf="currentItineraries.length > 0" class="mb-4">
-              <h6 class="mb-3">Current Trips</h6>
-              
-              <div class="row g-3">
-                <div *ngFor="let itinerary of currentItineraries" class="col-md-6">
-                  <div class="card h-100 border-0 shadow-sm hover-elevation">
-                    <div class="card-body p-0">
-                      <div class="position-relative">
-                        <!-- Visual representation instead of image -->
-                        <div class="trip-visual-header position-relative" 
-                             [style.background]="'linear-gradient(45deg, #3f51b5, #2196f3)'">
-                          <div class="itinerary-stops-icons">
-                            <ng-container *ngFor="let stop of itineraryStops[itinerary.id] || []; let i = index">
-                              <div class="stop-dot" [style.left]="(i * 30) + 10 + 'px'" *ngIf="i < 3">
-                                <i class="bx bx-map-pin"></i>
-                              </div>
-                            </ng-container>
-                          </div>
-                          <div class="p-3 text-white">
-                            <h5 class="mb-1">{{itinerary.title || 'Heritage Journey'}}</h5>
-                            <p class="mb-0 small">
-                              <i class="bx bx-map-alt me-1"></i>
-                              {{itinerary.locations || (itineraryStops[itinerary.id] ? itineraryStops[itinerary.id].length : 0) + ' stops'}}
-                            </p>
-                            <div class="d-flex align-items-center mt-2">
-                              <i class="bx bx-calendar me-1"></i>
-                              <span class="small">{{itinerary.startDate | date:'mediumDate'}} - {{itinerary.endDate | date:'mediumDate'}}</span>
-                            </div>
-                          </div>
+  <div class="card border-0 shadow-sm rounded-4">
+    <div class="card-header bg-white pt-4 pb-3 border-0">
+      <h5 class="mb-0"><i class="bx bx-trip me-2 text-primary"></i> My Trips</h5>
+    </div>
+    <div class="card-body">
+      
+      <div *ngIf="loadingTrips" class="text-center py-4">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2 text-muted">Loading your trips...</p>
+      </div>
+      
+      <div *ngIf="!loadingTrips && pastItineraries.length === 0 && currentItineraries.length === 0 && upcomingItineraries.length === 0" 
+           class="text-center py-4">
+        <div class="mb-3">
+          <i class="bx bx-map text-muted" style="font-size: 3rem;"></i>
+        </div>
+        <h6 class="text-muted">You don't have any booked trips yet</h6>
+        <p class="text-muted small">Explore our itineraries and book your next adventure!</p>
+        <a routerLink="/itineraries" class="btn btn-outline-primary">Discover Itineraries</a>
+      </div>
+      
+      <!-- Current Trips Section -->
+      <div *ngIf="currentItineraries.length > 0" class="mb-4">
+        <h6 class="mb-3">Current Trips</h6>
+        <p class="text-muted small mb-3">Trips you're currently on</p>
+        
+        <div class="row g-3">
+          <div *ngFor="let itinerary of currentItineraries" class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm hover-elevation">
+              <div class="card-body p-0">
+                <div class="position-relative">
+                  <!-- Different background for current trips -->
+                  <div class="trip-visual-header position-relative" 
+                      [style.background]="'linear-gradient(45deg, #4caf50, #8bc34a)'">
+                    <div class="itinerary-stops-icons">
+                      <ng-container *ngFor="let stop of itineraryStops[itinerary.id] || []; let i = index">
+                        <div class="stop-dot" [style.left]="(i * 30) + 10 + 'px'" *ngIf="i < 3">
+                          <i class="bx bx-map-pin"></i>
                         </div>
-                        <div class="p-3">
-                          <div class="d-flex align-items-center mb-2">
-                            <div class="flex-grow-1">
-                              <div class="d-flex align-items-center mb-1">
-                                <i class="bx bx-time-five me-1 text-primary"></i>
-                                <span class="small text-muted">{{itineraryStops[itinerary.id] ? itineraryStops[itinerary.id].length : 0}} stops</span>
-                              </div>
-                              <div class="d-flex align-items-center">
-                                <i class="bx bx-money me-1 text-success"></i>
-                                <span class="small text-muted">Budget: {{itinerary.budget | currency}}</span>
-                              </div>
-                            </div>
-                            <button class="btn btn-sm btn-outline-primary" (click)="openItineraryDetails(itinerary)">
-                              <i class="bx bx-info-circle me-1"></i> Details
-                            </button>
-                          </div>
+                      </ng-container>
+                    </div>
+                    <div class="p-3 text-white">
+                      <h5 class="mb-1">{{itinerary.title || 'Heritage Journey'}}</h5>
+                      <p class="mb-0 small">
+                        <i class="bx bx-map-alt me-1"></i>
+                        {{itinerary.locations || (itineraryStops[itinerary.id] ? itineraryStops[itinerary.id].length : 0) + ' stops'}}
+                      </p>
+                      <div class="d-flex align-items-center mt-2">
+                        <i class="bx bx-calendar me-1"></i>
+                        <span class="small">Currently ongoing until {{itinerary.endDate | date:'mediumDate'}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-3">
+                    <div class="d-flex align-items-center mb-2">
+                      <div class="flex-grow-1">
+                        <button class="btn btn-sm btn-outline-primary" (click)="openItineraryDetails(itinerary)">
+                          <i class="bx bx-info-circle me-1"></i> View Details
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Upcoming Trips Section -->
+      <div *ngIf="upcomingItineraries.length > 0" class="mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h6>Upcoming Trips</h6>
+          <span class="badge bg-primary rounded-pill">{{upcomingItineraries.length}} planned</span>
+        </div>
+        <p class="text-muted small mb-3">Trips you have planned for the future</p>
+        
+        <div class="row g-3">
+          <div *ngFor="let itinerary of upcomingItineraries" class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm hover-elevation"
+            [@cardHover]="hoverStates[itinerary.id] ? 'hovered' : 'normal'"
+           (mouseenter)="hoverStates[itinerary.id] = true"
+           (mouseleave)="hoverStates[itinerary.id] = false">
+              <div class="card-body p-0">
+                <div class="position-relative">
+                  <!-- Header with gradient background -->
+                  <div class="trip-visual-header position-relative" 
+                      [style.background]="'linear-gradient(45deg, #2196f3, #00bcd4)'">
+                    <!-- Visual representation of stops -->
+                    <div class="itinerary-stops-icons">
+                      <ng-container *ngFor="let stop of itineraryStops[itinerary.id] || []; let i = index">
+                        <div class="stop-dot" [style.left]="(i * 30) + 10 + 'px'" *ngIf="i < 3">
+                          <i class="bx bx-map-pin"></i>
+                        </div>
+                      </ng-container>
+                    </div>
+                    <div class="p-3 text-white">
+                      <h5 class="mb-1">{{itinerary.title || 'Heritage Journey'}}</h5>
+                      <p class="mb-0 small">
+                        <i class="bx bx-map-alt me-1"></i>
+                        {{itinerary.locations || (itineraryStops[itinerary.id] ? itineraryStops[itinerary.id].length : 0) + ' stops'}}
+                      </p>
+                      <div class="d-flex align-items-center mt-2">
+                        <i class="bx bx-calendar me-1"></i>
+                        <span class="small">Starts on {{itinerary.startDate | date:'mediumDate'}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Card content -->
+                  <div class="p-3">
+                    <div class="d-flex align-items-center mb-2">
+                      <div class="flex-grow-1">
+                        <!-- Days until trip starts -->
+                        <div class="d-flex align-items-center small text-muted mb-1">
+                          <i class="bx bx-time me-1 text-info"></i>
+                          <span>
+                            Starts in {{getDaysUntilTrip(itinerary.startDate)}} day{{getDaysUntilTrip(itinerary.startDate) !== 1 ? 's' : ''}}
+                          </span>
+                        </div>
+                        
+                        <!-- Action buttons -->
+                        <div class="d-flex">
+                          <button class="btn btn-sm btn-outline-primary" 
+                                  (click)="openItineraryDetails(itinerary)">
+                            <i class="bx bx-info-circle me-1"></i> Details
+                          </button>
+                          
+                          <button class="btn btn-sm btn-outline-danger ms-2" 
+                                  (click)="cancelTrip(itinerary.id)">
+                            <i class="bx bx-x me-1"></i> Cancel
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -302,55 +367,56 @@
                 </div>
               </div>
             </div>
-            
-            <!-- Upcoming Trips -->
-            <div *ngIf="upcomingItineraries.length > 0" class="mb-4">
-              <h6 class="mb-3">Upcoming Trips</h6>
-              
-              <div class="row g-3">
-                <div *ngFor="let itinerary of upcomingItineraries" class="col-md-6">
-                  <div class="card h-100 border-0 shadow-sm hover-elevation">
-                    <div class="card-body p-0">
-                      <div class="position-relative">
-                        <!-- Visual representation instead of image -->
-                        <div class="trip-visual-header position-relative"
-                             [style.background]="'linear-gradient(45deg, #ff9800, #ff5722)'">
-                          <div class="itinerary-stops-icons">
-                            <ng-container *ngFor="let stop of itineraryStops[itinerary.id] || []; let i = index">
-                              <div class="stop-dot" [style.left]="(i * 30) + 10 + 'px'" *ngIf="i < 3">
-                                <i class="bx bx-map-pin"></i>
-                              </div>
-                            </ng-container>
-                          </div>
-                          <div class="p-3 text-white">
-                            <h5 class="mb-1">{{itinerary.title || 'Heritage Journey'}}</h5>
-                            <p class="mb-0 small">
-                              <i class="bx bx-map-alt me-1"></i>
-                              {{itinerary.locations || (itineraryStops[itinerary.id] ? itineraryStops[itinerary.id].length : 0) + ' stops'}}
-                            </p>
-                            <div class="d-flex align-items-center mt-2">
-                              <i class="bx bx-calendar me-1"></i>
-                              <span class="small">{{itinerary.startDate | date:'mediumDate'}} - {{itinerary.endDate | date:'mediumDate'}}</span>
-                            </div>
-                          </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Past Trips -->
+      <div *ngIf="pastItineraries.length > 0">
+        <h6 class="mb-3">Past Trips</h6>
+        <p class="text-muted small mb-3">Trips you've completed</p>
+        
+        <div class="row g-3">
+          <div *ngFor="let itinerary of pastItineraries" class="col-md-6">
+            <!-- Your trip card template here -->
+            <div class="card h-100 border-0 shadow-sm hover-elevation">
+              <div class="card-body p-0">
+                <div class="position-relative">
+                  <!-- Different background for past trips -->
+                  <div class="trip-visual-header position-relative" 
+                       [style.background]="'linear-gradient(45deg, #9e9e9e, #607d8b)'">
+                    <div class="itinerary-stops-icons">
+                      <ng-container *ngFor="let stop of itineraryStops[itinerary.id] || []; let i = index">
+                        <div class="stop-dot" [style.left]="(i * 30) + 10 + 'px'" *ngIf="i < 3">
+                          <i class="bx bx-map-pin"></i>
                         </div>
-                        <div class="p-3">
-                          <div class="d-flex align-items-center mb-2">
-                            <div class="flex-grow-1">
-                              <div class="small text-muted mb-1">
-                                <i class="bx bx-time-five me-1 text-primary"></i>
-                                Starts in {{itinerary.startDate ? (itinerary.startDate | timeUntil) : 'soon'}}
-                              </div>
-                              <div class="small text-muted">
-                                <i class="bx bx-money me-1 text-success"></i>
-                                Budget: {{itinerary.budget | currency}}
-                              </div>
-                            </div>
-                            <button class="btn btn-sm btn-outline-primary" (click)="openItineraryDetails(itinerary)">
-                              <i class="bx bx-info-circle me-1"></i> Details
-                            </button>
-                          </div>
+                      </ng-container>
+                    </div>
+                    <div class="p-3 text-white">
+                      <h5 class="mb-1">{{itinerary.title || 'Heritage Journey'}}</h5>
+                      <p class="mb-0 small">
+                        <i class="bx bx-map-alt me-1"></i>
+                        {{itinerary.locations || (itineraryStops[itinerary.id] ? itineraryStops[itinerary.id].length : 0) + ' stops'}}
+                      </p>
+                      <div class="d-flex align-items-center mt-2">
+                        <i class="bx bx-calendar me-1"></i>
+                        <span class="small">Completed on {{itinerary.endDate | date:'mediumDate'}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-3">
+                    <div class="d-flex align-items-center mb-2">
+                      <div class="flex-grow-1">
+                        <div class="d-flex align-items-center small text-muted mb-1">
+                          <i class="bx bx-check-circle me-1 text-success"></i>
+                          <span>Completed trip</span>
                         </div>
+                        <button class="btn btn-sm btn-outline-primary" (click)="openItineraryDetails(itinerary)">
+                          <i class="bx bx-info-circle me-1"></i> View Details
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary ms-2" (click)="writeReview(itinerary)">
+                          <i class="bx bx-edit me-1"></i> Write Review
+                        </button>
                       </div>
                     </div>
                   </div>

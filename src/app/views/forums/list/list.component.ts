@@ -149,7 +149,7 @@ openContextMenu(event: MouseEvent, comment: any) {
         disliked: 0
       };
   
-      this.commentService.addComment(forum.id, comment).subscribe({
+      this.commentService.createComment(forum.id, comment).subscribe({
         next: (res) => {
           forum.comments.push(res);
           forum.newComment = '';
@@ -170,7 +170,7 @@ openContextMenu(event: MouseEvent, comment: any) {
   
 
   loadComments(forum: Forum): void {
-    this.commentService.getByForumId(forum.id!).subscribe({
+    this.commentService.getCommentsByForum(forum.id!).subscribe({
       next: (comments: ForumComment[]) => {
         forum.comments = comments;
       },

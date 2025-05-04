@@ -32,11 +32,11 @@
   <div *ngIf="!isLoading && forum" class="forum-content">
     <div class="forum-header">
       <div class="user-info">
-        <img [src]="getImageUrl(forum)" alt="User avatar" class="avatar" />
+        <img [src]="getUserImageUrl(forum.user)" alt="User avatar" class="avatar" />
         <div>
           <h1 class="forum-title">{{ forum.title }}</h1>
           <p class="forum-meta">
-            <span class="author">By {{ forum.username || 'Anonymous' }}</span>
+            <span class="author">By {{ forum.user?.firstName || 'Anonymous' }}</span>
             <span class="date">Posted on {{ forum.createdAt | date:'mediumDate' }}</span>
           </p>
         </div>
@@ -49,17 +49,13 @@
         <p *ngIf="forum.description">{{ forum.description }}</p>
         <p *ngIf="!forum.description" class="text-muted">Aucune description disponible pour ce forum.</p>
       </div>
-      <img *ngIf="forum.coverImage" [src]="forum.coverImage" alt="Forum cover image" class="cover-image" />
+      <img *ngIf="forum.image" [src]="getForumImageUrl(forum)" alt="Forum cover image" class="cover-image" />
     </div>
 
     <div class="forum-stats">
       <div class="stat-item">
         <i class="bx bx-message"></i>
         <span>{{ forum.comments?.length || 0 }} Comments</span>
-      </div>
-      <div class="stat-item">
-        <i class="bx bx-like"></i>
-        <span>{{ forum.likes || 0 }} Likes</span>
       </div>
     </div>
 
@@ -69,9 +65,11 @@
       <div *ngIf="forum.comments && forum.comments.length > 0" class="comments-list">
         <div *ngFor="let comment of forum.comments" class="comment">
           <div class="comment-header">
-            <img src="assets/images/default-avatar.png" alt="User avatar" class="avatar-small" />
+            <img [src]="getUserImageUrl(comment.user)" 
+                 alt="User avatar" 
+                 class="avatar-small" />
             <div class="comment-meta">
-              <span class="comment-author">{{ comment.username || 'Anonymous' }}</span>
+              <span class="comment-author">{{ comment.user?.firstName || 'Anonymous' }}</span>
               <span class="comment-date">{{ comment.createdAt | date:'medium' }}</span>
             </div>
             

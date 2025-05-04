@@ -18,7 +18,8 @@ export class EditComponent implements OnInit {
     id: 0,
     title: '',
     description: '',
-    image: ''
+    image: '',
+    userId: 0
   };
 
   constructor(

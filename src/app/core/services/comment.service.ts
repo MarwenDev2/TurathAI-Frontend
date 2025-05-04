@@ -1,27 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ForumComment } from '@core/Models/forumComment';
 import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
-  // L'URL de base pour les forums
-  private apiUrl = 'http://localhost:8080/api/forums';
   private baseUrl = 'http://localhost:8080/api/comments';
 
   constructor(private http: HttpClient) {}
-  addComment(forumId: number, comment: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${forumId}/comments`, comment);
-  }
-  deleteComment(commentId: number) {
-    return this.http.delete(`${this.baseUrl}/forums/:forumId/${commentId}`);
-  }
-  updateComment(commentId: number, updatedComment: any) {
-    return this.http.put(`${this.baseUrl}/forums/:forumId/${commentId}`, updatedComment);
-  }
+
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('authToken');
     let headers = new HttpHeaders({
@@ -34,56 +24,63 @@ export class CommentService {
     
     return headers;
   }
-  
-  // Update your getByForumId method:
-  getByForumId(forumId: number): Observable<ForumComment[]> {
-    console.log(`Fetching comments for forum ${forumId}`);
-    return this.http.get<ForumComment[]>(`${this.apiUrl}/${forumId}/comments`, {
-      headers: this.getHeaders()
-    }).pipe(
+
+  createComment(forumId: number, comment: ForumComment): Observable<ForumComment> {
+    return this.http.post<ForumComment>(
+      `${this.baseUrl}/forums/${forumId}`, 
+      comment, 
+      { headers: this.getHeaders() }
+    ).pipe(
+      catchError(error => {
+        console.error('Error creating comment:', error);
+        // Return an empty/default ForumComment object
+        return of({
+          id: 0,
+          content: '',
+          userId: 0,
+          forumId: forumId,
+          createdAt: new Date(),
+          liked: 0,
+          disliked: 0
+        });
+      })
+    );
+  }
+
+  getCommentsByForum(forumId: number): Observable<ForumComment[]> {
+    return this.http.get<ForumComment[]>(
+      `${this.baseUrl}/forum/${forumId}`,
+      { headers: this.getHeaders() }
+    ).pipe(
       catchError(error => {
         console.error(`Error fetching comments for forum ${forumId}:`, error);
-        // Return empty array to prevent component errors
         return of([]);
       })
     );
   }
-  
 
-  // 🔄 Récupérer tous les commentaires
-  getAll(): Observable<ForumComment[]> {
-    return this.http.get<ForumComment[]>(`${this.apiUrl}/comments`);
+  // Get a single comment by ID
+  getCommentById(id: number): Observable<ForumComment> {
+    return this.http.get<ForumComment>(
+      `${this.baseUrl}/${id}`,
+      { headers: this.getHeaders() }
+    );
   }
 
-  // 🔍 Récupérer un commentaire par son ID
-  getById(id: number): Observable<ForumComment> {
-    return this.http.get<ForumComment>(`${this.apiUrl}/comments/${id}`);
+  // Update a comment
+  updateComment(id: number, updatedComment: ForumComment): Observable<ForumComment> {
+    return this.http.put<ForumComment>(
+      `${this.baseUrl}/${id}`,
+      updatedComment,
+      { headers: this.getHeaders() }
+    );
   }
 
-  // 📝 Créer un nouveau commentaire
-  create(comment: ForumComment, forumId: number): Observable<ForumComment> {
-    // L'URL est modifiée pour correspondre à l'endpoint /forums/{forumId}/comments
-    return this.http.post<ForumComment>(`${this.apiUrl}/${forumId}/comments`, comment, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    });
+  // Delete a comment
+  deleteComment(id: number): Observable<void> {
+    return this.http.delete<void>(
+      `${this.baseUrl}/${id}`,
+      { headers: this.getHeaders() }
+    );
   }
-
-  // ❌ Supprimer un commentaire
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/comments/${id}`);
-  }
-  // 🛠 Modifier un commentaire existant
-update(id: number, comment: ForumComment): Observable<ForumComment> {
-  return this.http.put<ForumComment>(`${this.apiUrl}/comments/${id}`, comment, {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  });
-}
-
-
-  // 📝 Ajouter un commentaire à un forum spécifique
-  
 }

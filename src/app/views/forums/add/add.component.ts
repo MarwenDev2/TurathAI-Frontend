@@ -103,7 +103,8 @@ export class AddComponent implements OnInit {
         title: this.forumForm.value.title,
         description: this.forumForm.value.description,
         image: this.forumForm.value.image,
-        user: user
+        user: user,
+        userId: user.id
       };
 
       this.forumService.create(newForum).pipe(

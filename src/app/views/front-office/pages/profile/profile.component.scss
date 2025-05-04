@@ -153,3 +153,43 @@
 .itinerary-header {
   border-radius: 6px;
 }
+
+
+/* Add to your component's styles */
+.trip-visual-header {
+  height: 120px;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.itinerary-stops-icons {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  height: 30px;
+}
+
+.stop-dot {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3f51b5;
+  font-size: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hover-elevation {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-elevation:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
