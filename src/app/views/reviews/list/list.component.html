@@ -17,8 +17,8 @@
                 <span class="highlight" *ngIf="getHighlightedName(site.name).match">{{ getHighlightedName(site.name).match }}</span>
                 <span>{{ getHighlightedName(site.name).after }}</span>
               </span>
-              <span [class]="averageRatings[site.id]?.hasReviews ? 'badge bg-primary rounded-pill' : 'badge badge-no-reviews rounded-pill'">
-                @if (averageRatings[site.id]?.hasReviews) {
+              <span [class]="averageRatings[site.id].hasReviews ? 'badge bg-primary rounded-pill' : 'badge badge-no-reviews rounded-pill'">
+                @if (averageRatings[site.id].hasReviews) {
                   {{ averageRatings[site.id].average | number:'1.1-1' }}
                 } @else {
                   No Reviews
@@ -178,7 +178,7 @@
         <div class="card overflow-hidden">
           <div class="card-body">
             <p class="mb-2 text-dark fw-semibold fs-15">
-              Reviewed in {{ review.user?.originCountry || 'Unknown Country' }} on 
+              Reviewed in {{ review.user.originCountry || 'Unknown Country' }} on 
               {{ review.createdAt | date:'MMM d, yyyy' }}
             </p>
             
@@ -194,8 +194,8 @@
             </div>
             <p class="mb-0 mt-2">
               <strong>Heritage Site:</strong> 
-              {{ review.heritageSite?.name || 'Unknown Site' }} - 
-              {{ review.heritageSite?.location || 'Unknown Location' }}
+              {{ review.heritageSite.name || 'Unknown Site' }} - 
+              {{ review.heritageSite.location || 'Unknown Location' }}
             </p>
             <div class="d-flex align-items-center gap-2 mt-2 mb-1">
               <ul class="d-flex m-0 fs-20 list-unstyled">
@@ -208,13 +208,13 @@
                 </ng-template>
                 <ngb-rating [rate]="review.rating" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
               </ul>
-              <p class="fw-medium mb-0 text-dark fs-15">{{ review.rating?.toFixed(1) || 'N/A' }}</p>
+              <p class="fw-medium mb-0 text-dark fs-15">{{ review.rating.toFixed(1) || 'N/A' }}</p>
             </div>
           </div>
           <div class="card-footer bg-primary position-relative mt-3">
             <div class="position-absolute top-0 start-0 translate-middle-y ms-3">
               <img 
-                [src]="review.user?.image ? 'http://localhost:8080/assets/images/users/' + review.user.image : 'assets/images/default-avatar.png'"
+                [src]="review.user.image ? 'http://localhost:8080/assets/images/users/' + review.user.image : 'assets/images/default-avatar.png'"
                 alt="Reviewer Avatar" 
                 class="avatar-lg border border-light border-3 rounded-circle"
               >
@@ -224,9 +224,9 @@
             </div>
             <div class="mt-4">
               <h4 class="text-white mb-1">
-                {{ review.user?.firstName || 'Unknown' }} {{ review.user?.lastName || 'User' }}
+                {{ review.user.firstName || 'Unknown' }} {{ review.user.lastName || 'User' }}
               </h4>
-              <p class="text-white mb-0">{{ review.user?.interests || 'No interests provided' }}</p>
+              <p class="text-white mb-0">{{ review.user.interests || 'No interests provided' }}</p>
             </div>
           </div>
           <div class="text-end mt-1 mb-2">

@@ -7,7 +7,9 @@
   <!-- Replace Key Features with Recommended Sites -->
   <div class="container py-5">
     <app-recommended-sites
-      [title]="'Recommended For You'"
+      [useAiRecommendations]="true"
+      [currentSiteId]="recentlyViewedSiteId"
+      title="Heritage Sites Just For You"
       [showViewAllLink]="true">
     </app-recommended-sites>
   </div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgbRatingModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
@@ -7,10 +7,11 @@ import { SiteService } from '@core/services/site.service';
 import { ReviewService } from '@core/services/review.service';
 import { AuthService } from '@core/services/auth.service';
 import { WishlistService } from '@core/services/wishlist.service';
+import { AIRecommendationService } from '@core/services/ai-recommendation.service';
 import { User } from '@core/Models/user';
 import * as bootstrap from 'bootstrap';
 import Swal from 'sweetalert2';
-import { switchMap, of, catchError } from 'rxjs';
+import { of, catchError, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-recommended-sites',
@@ -19,19 +20,24 @@ import { switchMap, of, catchError } from 'rxjs';
   templateUrl: './recommended-sites.component.html',
   styleUrls: ['./recommended-sites.component.scss']
 })
-export class RecommendedSitesComponent implements OnInit {
+export class RecommendedSitesComponent implements OnInit, OnChanges {
   @Input() sites: Site[] = [];
   @Input() title: string = 'Recommended For You';
   @Input() showViewAllLink: boolean = true;
+  @Input() currentSiteId?: number; // Optional current site ID for context-based recommendations
+  @Input() useAiRecommendations: boolean = false; // Whether to use AI-powered recommendations
   
   wishlist: number[] = [];
   currentUser: User | null = null;
+  isLoading: boolean = false;
+  recommendationError: string | null = null;
 
   constructor(
     private siteService: SiteService,
     private authService: AuthService,
     private reviewService: ReviewService,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    private aiRecommendationService: AIRecommendationService
   ) {}
 
   ngOnInit(): void {
@@ -45,11 +51,37 @@ export class RecommendedSitesComponent implements OnInit {
     
     // If no sites provided, load them
     if (this.sites.length === 0) {
-      this.loadRecommendedSites();
+      this.loadRecommendations();
+    }
+  }
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    // If currentSiteId changes and we're using AI recommendations, reload recommendations
+    if (changes['currentSiteId'] && this.useAiRecommendations) {
+      this.loadRecommendations();
+    }
+    
+    // If useAiRecommendations changes, reload recommendations
+    if (changes['useAiRecommendations'] && this.sites.length === 0) {
+      this.loadRecommendations();
     }
   }
 
-  loadRecommendedSites() {
+  loadRecommendations() {
+    this.isLoading = true;
+    this.recommendationError = null;
+    
+    if (this.useAiRecommendations && this.currentSiteId) {
+      // Load AI-powered recommendations based on the current site context
+      this.loadAiRecommendations(this.currentSiteId);
+    } else {
+      // Load traditional recommendations based on popularity and ratings
+      this.loadDefaultRecommendedSites();
+    }
+  }
+  
+  loadDefaultRecommendedSites() {
+    this.isLoading = true;
     this.siteService.getAllWithRatings().subscribe({
       next: (sites) => {
         // Only get sites with a score greater than 6.5
@@ -57,9 +89,96 @@ export class RecommendedSitesComponent implements OnInit {
           .filter(site => site.popularityScore > 6.5)
           .sort((a, b) => (b.averageRating || 0) - (a.averageRating || 0))
           .slice(0, 3);
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error loading recommended sites:', error);
+        this.recommendationError = 'Failed to load recommended sites';
+        this.isLoading = false;
+      }
+    });
+  }
+  
+  loadAiRecommendations(siteId: number) {
+    this.isLoading = true;
+    console.log(`Requesting AI recommendations for site ID: ${siteId}`);
+    
+    this.aiRecommendationService.getRecommendations(siteId).subscribe({
+      next: (recommendations) => {
+        console.log('Received recommendations:', recommendations);
+        
+        // If we got empty recommendations or invalid data, fallback to default
+        if (!recommendations || !Array.isArray(recommendations) || recommendations.length === 0) {
+          console.log('No valid recommendations received, falling back to defaults');
+          this.loadDefaultRecommendedSites();
+          this.title = 'Popular Heritage Sites';
+          return;
+        }
+        
+        // Convert the AI recommendations to Site objects
+        try {
+          const recommendedSites = this.aiRecommendationService.convertToSites(recommendations);
+          console.log('Converted recommendations to sites:', recommendedSites);
+          
+          // Get detailed site information for each recommendation
+          if (recommendedSites.length > 0) {
+            // Load full site details for each recommendation
+            this.loadDetailedSiteInfo(recommendedSites);
+          } else {
+            // If no AI recommendations, fall back to default recommendations
+            this.loadDefaultRecommendedSites();
+            // Update title to indicate fallback
+            this.title = 'Popular Heritage Sites';
+          }
+        } catch (e) {
+          console.error('Error processing recommendations:', e);
+          this.recommendationError = 'Error processing recommendations';
+          this.loadDefaultRecommendedSites();
+          this.title = 'Popular Heritage Sites';
+          this.isLoading = false;
+        }
+      },
+      error: (error) => {
+        console.error('Error loading AI recommendations:', error);
+        this.recommendationError = 'AI recommendation service unavailable';
+        // Fall back to default recommendations
+        this.loadDefaultRecommendedSites();
+        // Update title to indicate fallback
+        this.title = 'Popular Heritage Sites';
+        this.isLoading = false;
+      }
+    });
+  }
+  
+  loadDetailedSiteInfo(recommendedSites: Site[]) {
+    // Create an array of observables for each site detail request
+    const siteDetailRequests = recommendedSites.map(site => {
+      return this.siteService.getById(site.id).pipe(
+        catchError((error: any) => {
+          console.error(`Error loading details for site ${site.id}:`, error);
+          return of(site); // Return basic site info on error
+        })
+      );
+    });
+    
+    // Use forkJoin to wait for all requests to complete
+    forkJoin(siteDetailRequests).subscribe({
+      next: (detailedSites: Site[]) => {
+        // Combine AI recommendation scores with detailed site info
+        this.sites = detailedSites.map((detailedSite: Site, index: number) => {
+          return {
+            ...detailedSite,
+            popularityScore: recommendedSites[index].popularityScore,
+            expectedPopularity: recommendedSites[index].expectedPopularity
+          };
+        });
+        this.isLoading = false;
+      },
+      error: (error: any) => {
+        console.error('Error loading detailed site information:', error);
+        // Use basic recommendation data
+        this.sites = recommendedSites;
+        this.isLoading = false;
       }
     });
   }
@@ -95,29 +214,37 @@ export class RecommendedSitesComponent implements OnInit {
     if (this.isInWishlist(siteId)) {
       // Find the wishlist item ID by site ID
       this.wishlistService.getWishlist(this.currentUser.id).pipe(
-        switchMap(wishlistItems => {
-          const wishlistItem = wishlistItems.find(item => item.heritageSite?.id === siteId);
-          if (wishlistItem) {
-            return this.wishlistService.removeWishlist(wishlistItem.id);
-          }
-          return of({ message: 'Item not found in wishlist' });
+        // Import switchMap method from rxjs
+        catchError((error: any) => {
+          console.error('Error fetching wishlist:', error);
+          return of([]);
         })
       ).subscribe({
-        next: () => {
-          // Remove from local array
-          const index = this.wishlist.indexOf(siteId);
-          if (index !== -1) {
-            this.wishlist.splice(index, 1);
+        next: (wishlistItems: any[]) => {
+          const wishlistItem = wishlistItems.find((item: any) => item.heritageSite?.id === siteId);
+          if (wishlistItem) {
+            this.wishlistService.removeWishlist(wishlistItem.id).subscribe({
+              next: () => {
+                // Remove from local array
+                const index = this.wishlist.indexOf(siteId);
+                if (index !== -1) {
+                  this.wishlist.splice(index, 1);
+                }
+              },
+              error: (error: any) => {
+                console.error('Error removing from wishlist:', error);
+                Swal.fire({
+                  title: 'Error',
+                  text: 'Could not remove item from wishlist',
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+                });
+              }
+            });
           }
         },
-        error: (error) => {
-          console.error('Error removing from wishlist:', error);
-          Swal.fire({
-            title: 'Error',
-            text: 'Could not remove item from wishlist',
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
+        error: (error: any) => {
+          console.error('Error fetching wishlist:', error);
         }
       });
     } else {
@@ -127,7 +254,7 @@ export class RecommendedSitesComponent implements OnInit {
           // Add to local array
           this.wishlist.push(siteId);
         },
-        error: (error) => {
+        error: (error: any) => {
           console.error('Error adding to wishlist:', error);
           Swal.fire({
             title: 'Error',

@@ -18,6 +18,7 @@ import { CategoryService } from '@core/services/category.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '@core/services/auth.service';
 import { ReviewService } from '@core/services/review.service';
+import { BrowsingHistoryService } from '@core/services/browsing-history.service';
 import { User } from '@core/Models/user';
 import * as bootstrap from 'bootstrap';
 import Swal from 'sweetalert2';
@@ -71,7 +72,8 @@ export class HeritageSiteDetailsComponent implements OnInit {
     private stopService: StopService,
     private authService: AuthService,
     private reviewService: ReviewService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private browsingHistoryService: BrowsingHistoryService
   ) {}
 
   ngOnInit(): void {
@@ -131,8 +133,26 @@ export class HeritageSiteDetailsComponent implements OnInit {
     this.siteService.getById(this.siteId).subscribe({
       next: (site: Site) => {
         this.siteData = site;
+        console.log('Site data loaded:', site);
+        
+        // Record this site view in browsing history for AI recommendations
+        this.browsingHistoryService.recordSiteView(this.siteId);
+        
+        // Get site images
         if (site.imageIds && site.imageIds.length > 0) {
-          this.siteImages = site.imageIds.map(id => this.getSiteImage([id]));
+          this.siteImages = site.imageIds.map(id => `http://localhost:8080/images/${id}`);
+        } else {
+          // Use default image if no images available
+          this.siteImages = ['assets/images/default-site.jpg'];
+        }
+        
+        // Load other featured sites from the same category if available
+        if (site.categoryId) {
+          this.siteService.getAll().subscribe(sites => {
+            this.featuredSites = sites
+              .filter(s => s.id !== this.siteId && s.categoryId === site.categoryId)
+              .slice(0, 3); // Limit to 3 featured sites
+          });
         }
       },
       error: (error: any) => {

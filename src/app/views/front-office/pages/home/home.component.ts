@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarouselComponent } from '../../components/carousel/carousel.component';
 import { RecommendedSitesComponent } from '../../components/recommended-sites/recommended-sites.component';
+import { BrowsingHistoryService } from '@core/services/browsing-history.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-front-office-home',
@@ -10,7 +12,11 @@ import { RecommendedSitesComponent } from '../../components/recommended-sites/re
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class FrontOfficeHomeComponent implements OnInit {
+export class FrontOfficeHomeComponent implements OnInit, OnDestroy {
+  // Track recently viewed site ID for AI recommendations
+  recentlyViewedSiteId?: number;
+  private subscription?: Subscription;
+  
   carouselSlides = [
     { image: 'assets/images/carousel/Tunis-Medina-Panorama-View.jpg' },
     { image: 'assets/images/carousel/tunisia-travel-guide-64.jpg' },
@@ -26,7 +32,22 @@ export class FrontOfficeHomeComponent implements OnInit {
     
   ];
 
-  constructor() {}
+  constructor(private browsingHistoryService: BrowsingHistoryService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Subscribe to recently viewed site changes
+    this.subscription = this.browsingHistoryService.recentSiteId$.subscribe(siteId => {
+      this.recentlyViewedSiteId = siteId;
+    });
+    
+    // Get the initial value
+    this.recentlyViewedSiteId = this.browsingHistoryService.getRecentSiteId();
+  }
+  
+  ngOnDestroy(): void {
+    // Clean up subscription when component is destroyed
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 }

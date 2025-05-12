@@ -143,20 +143,16 @@
                      </td>
                      <td>
                       <div style="width: 200px; height: 80px; overflow-x: auto; white-space: nowrap;">
-                        @if (item.heritageSite && item.heritageSite.imageIds && item.heritageSite.imageIds.length > 0) {
+                        @if (item.heritageSite) {
                           <div class="d-flex gap-2">
                             @for (imageId of item.heritageSite.imageIds; track imageId) {
-                              <img [src]="'http://localhost:8080/images/' + imageId" 
+                              <img [src]="getImageUrls(item.heritageSite.imageIds)" 
                                    [alt]="item.heritageSite.name" 
                                    class="img-thumbnail"
                                    style="width: 70px; height: 70px; object-fit: cover;"
                                    (error)="handleImageError($event)">
                             }
                           </div>
-                        } @else {
-                          <img src="assets/images/default-site.jpg" 
-                               [alt]="item.heritageSite.name || 'Heritage site'" 
-                               style="width: 70px; height: 70px; object-fit: cover;">
                         }
                       </div>
                     </td>
