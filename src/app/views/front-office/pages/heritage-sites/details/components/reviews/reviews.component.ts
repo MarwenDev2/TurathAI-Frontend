@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { environment } from '../../../../../../../../environments/environment';
 import { NgbRatingModule, NgbPaginationModule, NgbModal, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReviewService } from '@core/services/review.service';
 import { Review } from '@core/Models/review';
@@ -45,6 +46,12 @@ export class ReviewsComponent implements OnInit, OnChanges {
   showToast = false;
   toastMessage = '';
   toastType = 'success';
+
+  getImageUrl(imageName: string | String): string {
+    // Convert String object to primitive string if needed
+    const imageNameStr = typeof imageName === 'string' ? imageName : imageName.toString();
+    return `${environment.apiUrl}/assets/images/users/${imageNameStr}`;
+  }
   
   // Mock user for demo
   mockUser: User = {

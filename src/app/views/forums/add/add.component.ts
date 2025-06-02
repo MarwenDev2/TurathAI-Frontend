@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -65,7 +66,7 @@ export class AddComponent implements OnInit {
     };
     reader.readAsDataURL(file);
 
-    this.http.post<{ fileName: string, url: string }>('http://localhost:8080/api/upload', formData)
+    this.http.post<{ fileName: string, url: string }>('${environment.apiUrl}/api/upload', formData)
       .subscribe({
         next: (data) => {
           this.imageFileName = data.fileName;

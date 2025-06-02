@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -33,7 +34,7 @@ export interface SimilarSiteResponse {
   providedIn: 'root'
 })
 export class AIRecommendationService {
-  private apiUrl = 'http://localhost:8080/api/ai';
+  private apiUrl = `${environment.apiUrl}/api/ai`;
   
   constructor(private http: HttpClient) {}
 

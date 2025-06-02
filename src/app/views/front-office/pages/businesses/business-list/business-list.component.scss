@@ -1,217 +1,380 @@
-.business-list-container {
-  // Carousel Section
-  .carousel-section {
+// Star rating styles
+.star {
+  position: relative;
+  display: inline-block;
+  font-size: 1.5rem;
+  color: #d3d3d3;
+  
+  &.full {
+    color: #FFD700;
+  }
+}
+
+// Navigation and search elements
+.site-navigation {
+  .search-box {
     position: relative;
-    height: 500px;
-    overflow: hidden;
-    margin-bottom: 2rem;
-
-    .carousel-container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    .carousel-slides {
-      display: flex;
-      height: 100%;
-      transition: transform 0.5s ease-in-out;
-
-      .carousel-slide {
-        min-width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, #007bff 0%, #00bcd4 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        padding: 2rem;
-
-        .slide-content {
-          text-align: center;
-          max-width: 800px;
-
-          h2 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-          }
-
-          p {
-            font-size: 1.5rem;
-            opacity: 0.9;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-          }
-        }
+    
+    input {
+      padding-left: 40px;
+      border-radius: 20px;
+      border: 1px solid #e0e0e0;
+      height: 45px;
+      transition: all 0.3s ease;
+      
+      &:focus {
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        border-color: #80bdff;
       }
     }
-
-    .carousel-control {
+    
+    i {
       position: absolute;
+      left: 15px;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.2);
+      color: #6c757d;
+    }
+  }
+  
+  .category-filter, .sort-options {
+    select {
+      border-radius: 20px;
+      height: 45px;
+      border: 1px solid #e0e0e0;
+      transition: all 0.3s ease;
+      
+      &:focus {
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        border-color: #80bdff;
+      }
+    }
+  }
+}
+
+// Section headers
+.section-header {
+  border-bottom: 2px solid #f5f5f5;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+  
+  .section-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+  }
+  
+  .view-options {
+    button {
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      
+      i {
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+// Grid view styling
+.site-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    
+    .site-image-standard {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .wishlist-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.8);
       border: none;
-      width: 50px;
-      height: 50px;
       border-radius: 50%;
-      cursor: pointer;
+      width: 35px;
+      height: 35px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 1.5rem;
-      transition: background 0.3s;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.3);
-      }
-
-      &.prev {
-        left: 20px;
-      }
-
-      &.next {
-        right: 20px;
-      }
-    }
-
-    .carousel-indicators {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-
-      .indicator {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        border: 2px solid white;
-        background: transparent;
-        cursor: pointer;
-        padding: 0;
-        transition: background 0.3s;
-
-        &.active {
-          background: white;
-        }
-      }
-    }
-  }
-
-  // Hero Section
-  .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-                url('/assets/images/hero-bg.jpg') center/cover;
-    padding: 4rem 0;
-    text-align: center;
-    color: white;
-    margin-bottom: 3rem;
-
-    .hero-content {
-      max-width: 800px;
-      margin: 0 auto;
-
-      h1 {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-      }
-
-      p {
-        font-size: 1.2rem;
-        opacity: 0.9;
-      }
-    }
-  }
-
-  // Business Grid
-  .business-grid {
-    padding: 2rem 0;
-
-    .business-card {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
       cursor: pointer;
-
+      transition: all 0.3s ease;
+      z-index: 2;
+      
       &:hover {
-        transform: translateY(-5px);
+        background: white;
+        transform: scale(1.1);
       }
-
-      .card-image {
-        position: relative;
-        height: 200px;
-        overflow: hidden;
-
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-
-        .business-type {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          background: rgba(0, 0, 0, 0.7);
-          color: white;
-          padding: 0.5rem 1rem;
-          border-radius: 20px;
-          font-size: 0.9rem;
+      
+      i {
+        font-size: 1.2rem;
+        color: #6c757d;
+        
+        &.heart-red {
+          color: #dc3545;
         }
       }
-
-      .card-content {
-        padding: 1.5rem;
-
-        .business-name {
-          font-size: 1.4rem;
-          margin-bottom: 1rem;
-          color: #333;
+    }
+  }
+  
+  .card-content {
+    padding: 1.25rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    
+    .site-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      
+      a {
+        color: #333;
+        text-decoration: none;
+        cursor: pointer;
+        
+        &:hover {
+          color: #007bff;
         }
-
-        .business-location,
-        .business-contact {
+      }
+    }
+    
+    .site-location {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #6c757d;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      
+      i {
+        color: #007bff;
+      }
+    }
+    
+    .business-type-badge {
+      margin-bottom: 12px;
+      
+      .badge {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+        border-radius: 20px;
+      }
+    }
+    
+    .site-description {
+      color: #6c757d;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      flex-grow: 1;
+    }
+    
+    .site-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+      
+      .heritage-site-badge {
+        .badge {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-          color: #666;
-          margin-bottom: 0.5rem;
-          font-size: 0.95rem;
-
+          gap: 5px;
+          padding: 5px 10px;
+          border-radius: 20px;
+          font-weight: normal;
+          font-size: 0.8rem;
+          
           i {
-            color: #1a2a6c;
+            font-size: 1rem;
           }
         }
       }
     }
-  }
-
-  // Loading State
-  .loading-state {
-    text-align: center;
-    padding: 3rem;
-
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid #f3f3f3;
-      border-top: 3px solid #1a2a6c;
-      border-radius: 50%;
-      margin: 0 auto 1rem;
-      animation: spin 1s linear infinite;
+    
+    .card-actions {
+      margin-top: auto;
+      
+      .btn-primary {
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-weight: 500;
+      }
+      
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+      }
     }
   }
+}
 
-  // Error State
-  .error-state {
-    text-align: center;
+// List view styling
+.list-view {
+  .site-list-item {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    padding: 15px;
+    
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .list-image-container {
+      height: 180px;
+      border-radius: 8px;
+      overflow: hidden;
+      
+      .list-image-standard {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    
+    .wishlist-btn-sm {
+      background: transparent;
+      border: none;
+      font-size: 1.3rem;
+      color: #6c757d;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        transform: scale(1.1);
+      }
+      
+      i.heart-red {
+        color: #dc3545;
+      }
+    }
+    
+    .site-name {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      
+      a {
+        color: #333;
+        text-decoration: none;
+        cursor: pointer;
+        
+        &:hover {
+          color: #007bff;
+        }
+      }
+    }
+    
+    .contact-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #6c757d;
+      font-size: 0.9rem;
+      
+      i {
+        color: #007bff;
+      }
+    }
+    
+    .list-actions {
+      .btn {
+        border-radius: 20px;
+        padding: 8px 16px;
+      }
+    }
+  }
+}
+
+// Loading and error states
+.loading-state, .error-state {
+  text-align: center;
+  padding: 3rem;
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+  }
+  
+  .retry-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    margin-top: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s;
+    
+    &:hover {
+      background-color: #0069d9;
+    }
+    
+    i {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.error-state {
+  text-align: center;
+  padding: 2rem;
+  background: #fff5f5;
+  border-radius: 8px;
+  margin: 1rem auto;
+  max-width: 500px;
+
+  p {
+    color: #dc3545;
+    margin-bottom: 1rem;
+  }
+
+  .retry-button {
+    padding: 0.5rem 1.5rem;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     padding: 2rem;
     background: #fff5f5;
     border-radius: 8px;

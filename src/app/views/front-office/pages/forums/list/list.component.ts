@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { environment } from '../../../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { ForumService } from '@core/services/forum.service';
 import { Forum } from '@core/Models/forum';
@@ -98,7 +99,7 @@ export class ListComponent implements OnInit {
     if (!forum.image) {
       return 'assets/images/default-avatar.png';
     }
-    return `http://localhost:8080/assets/images/users/${forum.image}`;
+    return `${environment.apiUrl}/assets/images/users/${forum.image}`;
   }
 
   navigateToDetails(forum: Forum): void {
@@ -224,7 +225,7 @@ getUserImageUrl(user: User | undefined): string {
   if (!user?.image) {
     return 'assets/images/default-avatar.png';
   }
-  return `http://localhost:8080/assets/images/users/${user.image}`;
+  return `${environment.apiUrl}/assets/images/users/${user.image}`;
 }
 
 // Keep the existing one for forum images
@@ -232,7 +233,7 @@ getForumImageUrl(forum: Forum): string {
   if (!forum.image) {
     return 'assets/images/default-forum.jpg';
   }
-  return `http://localhost:8080/assets/images/users/${forum.image}`;
+  return `${environment.apiUrl}/assets/images/users/${forum.image}`;
 }
 
 private addNewComment(forum: Forum): void {

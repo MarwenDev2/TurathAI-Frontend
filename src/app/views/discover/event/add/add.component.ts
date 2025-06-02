@@ -26,7 +26,8 @@ export class AddComponent implements OnInit {
   sites: Site[] = [];
   imageIds: number[] = [];
   isLoading = false;
-  showMap = false; 
+  showMap = false;
+  selectedCoordinates: string = '';
   constructor(
     private fb: FormBuilder,
     private siteService: SiteService,
@@ -126,10 +127,11 @@ export class AddComponent implements OnInit {
   }
 
   onLocationSelected(coords: string) {
+    this.selectedCoordinates = coords;
     this.eventForm.patchValue({
       location: coords
     });
-    this.showMap = false;
+    // Keep the map open to see the selected marker
   }
 
   toggleMap() {

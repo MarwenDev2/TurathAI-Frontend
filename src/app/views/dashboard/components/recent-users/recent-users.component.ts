@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { User } from '@core/Models/user';
 import { UserStatisticsService } from '@core/services/user-statistics';
+import { environment } from '@environment/environment';
 
 @Component({
   selector: 'dashboard-recent-users',
@@ -34,6 +35,6 @@ export class RecentUsersComponent implements OnInit {
     }
     
     // For local images served by your backend
-    return `http://localhost:8080/assets/images/users/${imagePath}`;
+    return `${environment.apiUrl}/assets/images/users/${imagePath}`;
   }
 }

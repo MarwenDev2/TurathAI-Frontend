@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../Models/user'
 import { catchError, delay, Observable, of, retry, switchMap, throwError } from 'rxjs';
@@ -10,7 +11,7 @@ import { UserPreferences } from '@core/Models/user-preferences';
 })
 export class UserService {
 
-  private apiUrl = 'http://localhost:8080/api/users'; // ✅ change this to match your backend endpoint
+  private apiUrl = `${environment.apiUrl}/api/users`;
   userForm: any;
 
   constructor(private http: HttpClient, private userPreferencesService: UserPreferencesService) { }

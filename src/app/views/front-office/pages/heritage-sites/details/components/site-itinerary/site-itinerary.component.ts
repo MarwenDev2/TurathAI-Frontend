@@ -61,6 +61,48 @@ export class SiteItineraryComponent implements OnInit {
       this.getCurrentUser();
       this.loadItineraries();
     }
+    
+    // Get current user information
+    getCurrentUser() {
+      this.authService.currentUser$.subscribe({
+        next: (user: User | null) => {
+          this.currentUser = user;
+          this.loadUserActiveItineraries();
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error('Error fetching current user:', error);
+        }
+      });
+    }
+    
+    // Check if the itinerary is already booked by any user
+    isItineraryBooked(itinerary: Itinerary): boolean {
+      return !!itinerary.user;
+    }
+    
+    // Check if the itinerary is already booked by the current user
+    isItineraryBookedByUser(itinerary: Itinerary): boolean {
+      if (!this.currentUser || !itinerary.user) {
+        return false;
+      }
+      
+      // Compare user IDs to check if this itinerary is assigned to the current user
+      return itinerary.user.id === this.currentUser.id;
+    }
+    
+    // Get booking tooltip message based on who booked the itinerary
+    getBookingTooltip(itinerary: Itinerary): string {
+      if (!itinerary.user) {
+        return 'Book this itinerary';
+      }
+      
+      if (this.isItineraryBookedByUser(itinerary)) {
+        return 'You have already booked this itinerary';
+      }
+      
+      // Show who booked it if it's not the current user
+      return `${itinerary.user.firstName || 'Another user'} has already booked this itinerary`;
+    }
   
     loadItineraries() {
       this.loading = true;
@@ -105,8 +147,40 @@ export class SiteItineraryComponent implements OnInit {
     }
   
     onBookNow(itinerary: Itinerary) {
-      // Implement booking logic here
-      console.log('Booking itinerary:', itinerary);
+      // Check if user is logged in
+      if (!this.currentUser) {
+        Swal.fire('You must be logged in to book an itinerary.', '', 'warning');
+        return;
+      }
+      
+      // Check if the current user has already booked this itinerary
+      if (this.isItineraryBookedByUser(itinerary)) {
+        Swal.fire('Already Booked', 'This itinerary is already assigned to you.', 'info');
+        return;
+      }
+      
+      // Check if the itinerary is booked by another user
+      if (this.isItineraryBooked(itinerary) && !this.isItineraryBookedByUser(itinerary)) {
+        const userName = itinerary.user?.firstName || 'Another user';
+        Swal.fire('Already Booked', `This itinerary is already booked by ${userName}.`, 'info');
+        return;
+      }
+      
+      const updatedItinerary = {
+        ...itinerary,
+        user: this.currentUser // Adjust this to match your backend's expected format
+      };
+      
+      this.itineraryService.updateItinerary(updatedItinerary).subscribe({
+        next: () => {
+          Swal.fire('Booking Confirmed!', 'You have successfully booked the itinerary.', 'success');
+          this.loadItineraries(); // Refresh data
+        },
+        error: (err) => {
+          console.error('Booking failed:', err);
+          Swal.fire('Booking Failed', 'An error occurred while booking.', 'error');
+        }
+      });
     }
     
     showQRCode(id: number): void {
@@ -249,19 +323,6 @@ export class SiteItineraryComponent implements OnInit {
     // Get stops for a specific itinerary
     getStopsForItinerary(itineraryId: number): Stop[] {
       return this.itineraryStops.get(itineraryId) || [];
-    }
-  
-    // Get current user information
-    getCurrentUser() {
-      this.authService.currentUser$.subscribe({
-        next: (user: User | null) => {
-          this.currentUser = user;
-          this.loadUserActiveItineraries();
-        },
-        error: (error: HttpErrorResponse) => {
-          console.error('Error fetching current user:', error);
-        }
-      });
     }
   
     // Load user's active itineraries

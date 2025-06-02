@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -20,7 +21,7 @@ export interface Itinerary {
   providedIn: 'root'
 })
 export class ItineraryService {
-  private apiUrl = 'http://localhost:8080/api/itineries';
+  private apiUrl = `${environment.apiUrl}/api/itineries`;
 
   constructor(private http: HttpClient) { }
 
@@ -66,7 +67,7 @@ export class ItineraryService {
 
   // Get QR code for an itinerary
   getQRCode(id: number): string {
-    return `http://localhost:8080/api/qrcode/itinery/${id}`;
+    return `${environment.apiUrl}/api/qrcode/itinery/${id}`;
   }
 
   // Error handling method

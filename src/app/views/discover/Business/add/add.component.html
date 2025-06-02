@@ -128,6 +128,8 @@
                 @if (showMap) {
                   <app-map-picker 
                     [initialCoordinates]="coordinates.lat && coordinates.lng ? coordinates.lat + ',' + coordinates.lng : ''"
+                    [displayType]="'business'"
+                    [showAllLocationTypes]="true"
                     (locationSelected)="onLocationSelected($event)">
                   </app-map-picker>
                 }

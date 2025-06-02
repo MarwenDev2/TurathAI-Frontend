@@ -19,7 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
     console.log('Intercepting request to:', request.url);
     
     // Skip auth header for auth-related endpoints
-    if (request.url.includes('/api/auth/')) {
+    if (request.url.includes('${environment.apiUrl}/api/auth/')) {
       return next.handle(request);
     }
     

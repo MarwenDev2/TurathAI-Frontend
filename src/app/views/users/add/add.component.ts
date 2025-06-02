@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 import { FormsModule, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, finalize } from 'rxjs/operators';
@@ -127,7 +128,7 @@ export class AddComponent {
   
     this.imageFileName = file.name;
   
-    fetch('http://localhost:8080/api/upload', {
+    fetch('${environment.apiUrl}/api/upload', {
       method: 'POST',
       body: formData
     })

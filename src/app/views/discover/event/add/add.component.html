@@ -126,7 +126,12 @@
                   </button>
                 </div>
                 @if (showMap) {
-                  <app-map-picker (locationSelected)="onLocationSelected($event)"></app-map-picker>
+                  <app-map-picker 
+                    [initialCoordinates]="selectedCoordinates"
+                    [displayType]="'event'"
+                    [showAllLocationTypes]="true"
+                    (locationSelected)="onLocationSelected($event)">
+                  </app-map-picker>
                 }
                 @if (eventForm.get('location')?.invalid && eventForm.get('location')?.touched) {
                   <div class="invalid-feedback">Location is required</div>

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -6,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class StatisticsService {
-  private apiUrl = 'http://localhost:8080/api/local-insights';
+  private apiUrl = `${environment.apiUrl}/api/local-insights`;
 
   constructor(private http: HttpClient) { }
 

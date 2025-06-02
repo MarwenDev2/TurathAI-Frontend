@@ -90,6 +90,7 @@ user: User | null = null;
         }
       }
     });
+    // IMPORTANT: We don't save the itinerary here - only when the user explicitly submits the form
   }
 
   onSubmit() {
@@ -152,106 +153,10 @@ user: User | null = null;
   }
   
   
-  saveItinerary() {
-    this.isLoading = true;
-    
-    // Format dates properly before sending
-    const formData = {...this.itenaryForm.value};
-    if (formData.startDate) {
-      formData.startDate = new Date(formData.startDate);
-    }
-    if (formData.endDate) {
-      formData.endDate = new Date(formData.endDate);
-    }
-
-    this.itenaryService.add(formData)
-      .subscribe({
-        next: (createdItinerary) => {
-          console.log('Created itinerary:', createdItinerary);
-          
-          // If we have stops, create them
-          if (this.selectedStops.length > 0) {
-            this.createStops(createdItinerary.id);
-          } else {
-            this.showSuccessAlert('Itinerary added successfully!');
-            this.resetForm();
-            this.router.navigate(['/itenary/list']);
-          }
-        },
-        error: (err) => {
-          console.error('Error adding itinerary', err);
-          this.showErrorAlert('Failed to add itinerary. Please try again.');
-          this.isLoading = false;
-        }
-      });
-  }
+  // Removed redundant saveItinerary() method to prevent premature saving
+  // All saving functionality is now handled by onSubmit() method
   
-  createStops(itineraryId: number) {
-    // First validate total days match itinerary duration
-    const formData = this.itenaryForm.value;
-    const startDate = new Date(formData.startDate);
-    const endDate = new Date(formData.endDate);
-    
-    // Calculate total days of itinerary
-    const itineraryDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-    
-    // Calculate total days from stops
-    let totalStopDays = 0;
-    this.selectedStops.forEach(stop => {
-      // Parse the day value from the duration string (e.g., "2 days" -> 2)
-      const days = parseInt(stop.duration.split(' ')[0]);
-      if (!isNaN(days)) {
-        totalStopDays += days;
-      }
-    });
-    
-    // Check if total days exceed itinerary duration
-    if (totalStopDays > itineraryDays) {
-      this.showErrorAlert(`Your stops require ${totalStopDays} days, but your itinerary is only ${itineraryDays} days long. Please adjust your dates or reduce stop durations.`);
-      this.isLoading = false;
-      return;
-    }
-    
-    // Check if total days are significantly less than itinerary duration
-    if (totalStopDays < itineraryDays - 1) {
-      if (!confirm(`Your stops only account for ${totalStopDays} days, but your itinerary is ${itineraryDays} days long. Do you want to continue?`)) {
-        this.isLoading = false;
-        return;
-      }
-    }
-    
-    // Prepare stops data with duration and order from selected sites
-    const stopRequests = this.selectedStops.map(site => {
-      return this.stopService.add({
-        id: 0,
-        order: site.order,
-        duration: site.duration,
-        itineryId: itineraryId,
-        heritageSiteId: site.id  // Use heritageSiteId instead of a nested object
-      });
-    });
-    
-    // Use forkJoin to wait for all stop creations to complete
-    if (stopRequests.length > 0) {
-      forkJoin(stopRequests).subscribe({
-        next: (results) => {
-          console.log('Created stops:', results);
-          this.showSuccessAlert(`Itinerary with ${results.length} stops added successfully!`);
-          this.resetForm();
-          this.router.navigate(['/itenary/list']);
-        },
-        error: (err) => {
-          console.error('Error adding stops', err);
-          this.showErrorAlert('Itinerary was created, but there was a problem adding stops.');
-        },
-        complete: () => {
-          this.isLoading = false;
-        }
-      });
-    } else {
-      this.isLoading = false;
-    }
-  }
+  // Removed createStops method as its functionality is now handled in onSubmit
 
   resetForm() {
     this.itenaryForm.reset({

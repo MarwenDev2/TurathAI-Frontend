@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { LocalInsightService } from '@core/services/local-insight.service';
 import { Router } from '@angular/router';
@@ -54,7 +55,7 @@ currentSpeech: SpeechSynthesisUtterance | null = null;
   }
 
   getVideoUrl(index: number): string {
-    return "http://localhost:8080/images/video/" + index;
+    return "${environment.apiUrl}/images/video/" + index;
   }
 
 

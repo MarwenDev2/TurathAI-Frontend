@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 import { AuthService } from '@core/services/auth.service';
 import { User } from '@core/Models/user';
 import { 
@@ -193,7 +194,7 @@ export class ProfileComponent implements OnInit {
 
   getProfileImage(): string {
     if (!this.currentUser?.image) return 'assets/images/default-avatar.png';
-    return `http://localhost:8080/assets/images/users/${this.currentUser.image}`;
+    return `${environment.apiUrl}/assets/images/users/${this.currentUser.image}`;
   }
 
   getMemberSince(): string {
@@ -303,7 +304,7 @@ export class ProfileComponent implements OnInit {
     // Display loading indicator
     this.toastr.info('Uploading image...', '', { timeOut: 0, extendedTimeOut: 0, closeButton: true });
     
-    fetch('http://localhost:8080/api/upload', {
+    fetch('${environment.apiUrl}/api/upload', {
       method: 'POST',
       body: formData
     })

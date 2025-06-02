@@ -1,0 +1,138 @@
+<!-- Define the star template -->
+<ng-template #t let-fill="fill">
+  <span class="star" [class.full]="fill === 100">
+    <i class="bx" [class.bxs-star]="fill === 100" [class.bx-star]="fill < 100"></i>
+  </span>
+</ng-template>
+
+<div class="business-detail-container">
+  <!-- Back Button -->
+  <div class="back-nav">
+    <button class="back-button" (click)="goBack()">
+      <i class="bx bx-arrow-back"></i> Back to Businesses
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading business details...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="error">
+    <p>Failed to load business details. Please try again later.</p>
+    <button (click)="loadBusiness()" class="retry-button">
+      <i class="bx bx-refresh"></i> Retry
+    </button>
+  </div>
+
+  <!-- Business Detail Content -->
+  <div class="business-content" *ngIf="!loading && !error && business" [@fadeIn]>
+    <div class="business-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <h1 class="business-name">{{business.name}}</h1>
+            <div class="business-meta">
+              <span class="business-type badge bg-primary">{{business.type}}</span>
+              <span class="business-site" *ngIf="business.heritageSite">
+                <i class="bx bx-landmark"></i> {{business.heritageSite.name}}
+              </span>
+            </div>
+          </div>
+          <div class="col-md-4 text-end">
+            <button class="wishlist-btn-lg" 
+                   (click)="toggleWishlist(business.id!)"
+                   [ngbTooltip]="getWishlistTooltip(business.id!)"
+                   placement="left">
+              <i class="bx" 
+                 [class.bx-heart]="!isInWishlist(business.id!)" 
+                 [class.bxs-heart]="isInWishlist(business.id!)"
+                 [class.heart-red]="isInWishlist(business.id!)"></i>
+              {{isInWishlist(business.id!) ? 'Saved to Favorites' : 'Add to Favorites'}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container py-4">
+      <div class="row">
+        <!-- Image Carousel -->
+        <div class="col-lg-7 mb-4">
+          <div class="business-carousel">
+            <app-carousel [slides]="businessImages"></app-carousel>
+          </div>
+        </div>
+
+        <!-- Business Details -->
+        <div class="col-lg-5">
+          <div class="business-info card">
+            <div class="card-body">
+              <h3 class="section-title">About</h3>
+              <p *ngIf="business.description">{{business.description}}</p>
+              <p *ngIf="!business.description" class="text-muted">No description available</p>
+              
+              <hr>
+              
+              <h3 class="section-title">Contact</h3>
+              <div class="contact-info">
+                <div class="info-item" *ngIf="business.location">
+                  <i class="bx bx-map"></i>
+                  <span>{{business.location}}</span>
+                </div>
+                <div class="info-item" *ngIf="business.contact">
+                  <i class="bx bx-phone"></i>
+                  <span>{{business.contact}}</span>
+                </div>
+                <div class="info-item" *ngIf="business.email">
+                  <i class="bx bx-envelope"></i>
+                  <span>{{business.email}}</span>
+                </div>
+                <div class="info-item" *ngIf="business.website">
+                  <i class="bx bx-globe"></i>
+                  <a [href]="business.website" target="_blank">Visit Website</a>
+                </div>
+              </div>
+              
+              <hr>
+              
+              <div class="hours-info" *ngIf="business.hours">
+                <h3 class="section-title">Opening Hours</h3>
+                <p>{{business.hours}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Additional Information Sections -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="business-additional-info">
+            <h3 class="section-title">What to Expect</h3>
+            <p *ngIf="business.about">{{business.about}}</p>
+            <p *ngIf="!business.about" class="text-muted">No additional information available</p>
+          </div>
+          
+          <!-- Heritage Site Connection -->
+          <div class="heritage-connection mt-4" *ngIf="business.heritageSite">
+            <h3 class="section-title">Connected Heritage Site</h3>
+            <div class="heritage-site-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4>{{business.heritageSite.name}}</h4>
+                  <p *ngIf="business.heritageSite.description">{{business.heritageSite.description}}</p>
+                  <button class="btn btn-outline-primary mt-2" [routerLink]="['/front-office/heritage-sites', business.heritageSite.id]">
+                    Visit Heritage Site
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

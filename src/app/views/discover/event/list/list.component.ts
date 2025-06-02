@@ -1,4 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { environment } from '../../../../../environments/environment';
 import { DecimalPipe, DatePipe } from '@angular/common';
 import { NgbDropdownModule, NgbPaginationModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterLink } from '@angular/router';
@@ -38,6 +39,8 @@ export class ListComponent implements OnInit {
   currentSort = 'name'; // default sort
   searchSubject = new Subject<string>();
   loading = true;
+
+
 
   stateData = [
     {
@@ -170,8 +173,8 @@ export class ListComponent implements OnInit {
     return imageIds.map(id => `${this.getImageUrl(id)}?${Date.now()}`); // Add cache buster
   }
   
-  getImageUrl(imageId: number): string {
-    return this.eventService.getImageUrl(imageId);
+  getImageUrl(imageId: any): string {
+    return `${environment.apiUrl}/images/${imageId}`;
   }
   
   handleImageError(event: Event): void {

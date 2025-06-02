@@ -163,8 +163,14 @@
         </div>
         
         <div class="card-actions">
-          <button class="book-button" (click)="onBookNow(itinerary)">
-            <i class="fa fa-ticket-alt"></i> Book Now
+          <!-- Book Now button with conditional styling based on booking status -->
+          <button 
+            class="book-button" 
+            [class.booked]="isItineraryBooked(itinerary)" 
+            (click)="onBookNow(itinerary)" 
+            [attr.title]="getBookingTooltip(itinerary)">
+            <i class="fa" [class.fa-ticket-alt]="!isItineraryBooked(itinerary)" [class.fa-check]="isItineraryBooked(itinerary)"></i>
+            {{ isItineraryBooked(itinerary) ? 'Booked' : 'Book Now' }}
           </button>
           <button class="qr-button" (click)="showQRCode(itinerary.id)">
             <svg class="qr-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">

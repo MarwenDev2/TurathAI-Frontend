@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Itinery } from '../Models/itinerary';
 import { ItineraryStatistics } from '../Models/itinerary-statistics';
@@ -9,7 +10,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ItenaryService {
-  private apiUrl = 'http://localhost:8080/api/itineries'; // Adjust if your backend runs elsewhere
+  private apiUrl = `${environment.apiUrl}/api/itineries`;
 
   constructor(private http: HttpClient) {}
 
@@ -34,13 +35,13 @@ export class ItenaryService {
   }
   
   getQRCode(id: number): string {
-    return `http://localhost:8080/api/qrcode/itinery/${id}`;
+    return `${environment.apiUrl}/api/qrcode/itinery/${id}`;
   }
 
 
 
   exportToPdf(): Observable<Blob> {
-    return this.http.get(`http://localhost:8080/api/export/pdf`, {
+    return this.http.get(`${environment.apiUrl}/api/export/pdf`, {
       responseType: 'blob',
       headers: {
         'Accept': 'application/pdf'
@@ -57,7 +58,7 @@ export class ItenaryService {
   }
 
   exportToExcel(): Observable<Blob> {
-    return this.http.get(`http://localhost:8080/api/export/excel`, {
+    return this.http.get(`${environment.apiUrl}/api/export/excel`, {
       responseType: 'blob',
       headers: {
         'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'

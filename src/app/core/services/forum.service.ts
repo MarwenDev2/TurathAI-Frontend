@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, catchError } from 'rxjs';
 import { Forum } from '@core/Models/forum';
@@ -7,7 +8,7 @@ import { Forum } from '@core/Models/forum';
   providedIn: 'root',
 })
 export class ForumService {
-  private apiUrl = 'http://localhost:8080/api/forums';
+  private apiUrl = `${environment.apiUrl}/api/forums`;
 
   // 🔁 Sujet pour notifier les composants abonnés
   private forumsChanged = new BehaviorSubject<boolean>(false);

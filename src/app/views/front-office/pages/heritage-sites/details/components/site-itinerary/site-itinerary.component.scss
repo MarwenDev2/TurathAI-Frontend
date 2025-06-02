@@ -1019,6 +1019,11 @@
           background-color: #007bff;
           color: white;
           flex: 3;
+          
+          &.booked {
+            background-color: #28a745;
+            color: white;
+          }
 
           &:hover {
             background-color: #0056b3;

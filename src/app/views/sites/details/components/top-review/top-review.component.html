@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">Top Reviews</h4>
+  </div>
+  <div class="card-body">
+    @if (reviews.length === 0) {
+      <p class="text-muted">No reviews yet.</p>
+    } @else {
+      @for (review of reviews; track review.id) {
+        <div class="review-item">
+          <div class="d-flex align-items-center gap-2">
+            <img [src]="review.user.image || 'assets/images/users/avatar-6.jpg'" alt="" class="avatar-md rounded-circle">
+            <div>
+              <h5 class="mb-0">{{review.user.firstName}} {{review.user.lastName}}</h5>
+            </div>
+          </div>
+          <div class="d-flex align-items-center gap-2 mt-3 mb-1">
+            <ul class="d-flex text-warning m-0 fs-20 list-unstyled">
+              <ng-template #t let-fill="fill">
+                <i class="bx bx-star text-warning fs-20">
+                  @if (fill > 0) {   
+                  <i class="bx bxs-star text-warning fs-20 filled" [style.width.%]="fill"></i>
+                  }
+                </i>
+              </ng-template>
+
+              <ngb-rating [rate]="review.rating" [starTemplate]="t" [readonly]="true" [max]="5" />
+            </ul>
+            <p class="fw-medium mb-0 text-dark fs-15">{{getRatingText(review.rating)}}</p>
+          </div>
+
+          <p class="mb-0 text-dark fw-medium fs-15">Reviewed on {{review.createdAt | date}}</p>
+          <p class="text-muted">{{review.comment}}</p>
+          <div class="mt-2">
+            <a href="javascript:void(0);" class="fs-14 me-3 text-muted"><i class='bx bx-like'></i> Helpful</a>
+            <a href="javascript:void(0);" class="fs-14 text-muted"> Report</a>
+          </div>
+
+          @if (!$last) {
+            <hr class="my-3">
+          }
+        </div>
+      }
+    }
+  </div>
+</div>

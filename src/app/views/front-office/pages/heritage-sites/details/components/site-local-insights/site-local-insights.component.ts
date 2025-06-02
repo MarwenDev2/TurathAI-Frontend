@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { environment } from '../../../../../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { LocalInsight } from '@core/Models/localInsight';
 import { LocalInsightService } from '@core/services/local-insight.service';
@@ -70,7 +71,7 @@ export class SiteLocalInsightsComponent implements OnInit {
   }
 
   getVideoUrl(id: number | undefined): string {
-    return `http://localhost:8080/images/video/${id}`;
+    return `${environment.apiUrl}/images/video/${id}`;
   }
 
   getImageUrl(): string {

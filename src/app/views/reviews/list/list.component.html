@@ -214,7 +214,7 @@
           <div class="card-footer bg-primary position-relative mt-3">
             <div class="position-absolute top-0 start-0 translate-middle-y ms-3">
               <img 
-                [src]="review.user.image ? 'http://localhost:8080/assets/images/users/' + review.user.image : 'assets/images/default-avatar.png'"
+                [src]="review.user.image ? getImageUrl(review.user.image) : 'assets/images/default-avatar.png'"
                 alt="Reviewer Avatar" 
                 class="avatar-lg border border-light border-3 rounded-circle"
               >

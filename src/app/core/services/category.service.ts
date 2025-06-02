@@ -1,6 +1,7 @@
 // category.service.ts
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Category } from '../Models/category';
 
@@ -8,7 +9,7 @@ import { Category } from '../Models/category';
   providedIn: 'root'
 })
 export class CategoryService {
-  private apiUrl = 'http://localhost:8080/api/Categories'; // update to match your backend
+  private apiUrl = `${environment.apiUrl}/api/Categories`;
 
   constructor(private http: HttpClient) {}
 

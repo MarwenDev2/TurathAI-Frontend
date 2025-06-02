@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Site } from '../Models/site';
 import { Observable, forkJoin, throwError } from 'rxjs';
@@ -9,7 +10,7 @@ import { map, switchMap, catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class SiteService {
-  private apiUrl = 'http://localhost:8080/api/Sites';
+  private apiUrl = `${environment.apiUrl}/api/Sites`;
 
   constructor(private http: HttpClient) {}
 
@@ -82,7 +83,7 @@ export class SiteService {
     return this.http.get<Site[]>(`${this.apiUrl}/all`).pipe(
       switchMap(sites => {
         const requests = sites.map(site => 
-          this.http.get<number>(`http://localhost:8080/api/reviews/heritage-site/${site.id}/average-rating`).pipe(
+          this.http.get<number>(`${environment.apiUrl}/api/reviews/heritage-site/${site.id}/average-rating`).pipe(
             map(rating => {
               // Map average review ratings directly to popularity scores
               let newPopularityScore = site.popularityScore; // Default to current score

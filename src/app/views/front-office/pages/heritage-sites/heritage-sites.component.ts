@@ -1,4 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
+import { environment } from '../../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -308,7 +309,7 @@ export class HeritageSitesComponent implements OnInit {
     if (!imageIds || imageIds.length === 0) {
       return 'assets/images/default-site.png';
     }
-    return `http://localhost:8080/images/${imageIds[0]}`;
+    return `${environment.apiUrl}/images/${imageIds[0]}`;
   }
   
   formatLocation(location: string): string {

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -20,7 +21,7 @@ interface Page<T> {
   providedIn: 'root'
 })
 export class WishlistService {
-  private apiUrl = 'http://localhost:8080/api/wishlist';
+  private apiUrl = `${environment.apiUrl}/api/wishlist`;
 
   constructor(private http: HttpClient) {}
 

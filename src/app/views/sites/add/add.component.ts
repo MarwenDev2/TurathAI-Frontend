@@ -8,6 +8,7 @@ import { SiteService } from '@core/services/site.service';
 import { FileUploaderComponent } from '@component/file-uploader/file-uploader.component';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { MapPickerComponent } from '../../discover/event/map-picker/map-picker.component';
 
 @Component({
   selector: 'app-add',
@@ -15,7 +16,8 @@ import { Router } from '@angular/router';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FileUploaderComponent
+    FileUploaderComponent,
+    MapPickerComponent
   ],
   templateUrl: './add.component.html',
 })
@@ -24,6 +26,8 @@ export class AddComponent implements OnInit {
   categories: Category[] = [];
   imageIds: number[] = [];
   isLoading = false;
+  showMap = false;
+  selectedCoordinates: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -37,7 +41,7 @@ export class AddComponent implements OnInit {
       categoryId: ['', Validators.required],
       location: ['', Validators.required],
       historicalSignificance: [''],
-      popularityScore: [0, [Validators.min(0), Validators.max(100)]],
+      expectedPopularity: ['Low', Validators.required],
       description: ['']
     });
   }
@@ -72,19 +76,31 @@ export class AddComponent implements OnInit {
     
     const siteData: Site = {
       ...this.siteForm.value,
-      imageIds: this.imageIds
+      imageIds: this.imageIds,
+      popularityScore: 0 // Add default popularity score
     };
+
+    // Log the data being sent
+    console.log('Sending site data:', siteData);
 
     this.siteService.add(siteData)
       .subscribe({
-        next: () => {
+        next: (response) => {
+          console.log('Site added successfully:', response);
           this.showSuccessAlert('Site added successfully!');
           this.resetForm();
-          this.router.navigate(['/sites/list']); // Adjust the route as needed
+          this.router.navigate(['/sites/list']);
         },
-        error: (err) => {
-          console.error('Error adding site', err);
-          this.showErrorAlert('Failed to add site. Please try again.');
+        error: (error) => {
+          console.error('Error adding site:', error);
+          let errorMessage = 'Failed to add site. ';
+          if (error instanceof Error) {
+            errorMessage += error.message;
+          } else {
+            errorMessage += 'Please try again.';
+          }
+          this.showErrorAlert(errorMessage);
+          this.isLoading = false;
         },
         complete: () => {
           this.isLoading = false;
@@ -94,7 +110,7 @@ export class AddComponent implements OnInit {
 
   resetForm() {
     this.siteForm.reset({
-      popularityScore: 0
+      expectedPopularity: 'Low'
     });
     this.imageIds = [];
   }
@@ -103,13 +119,7 @@ export class AddComponent implements OnInit {
     Swal.fire({
       title: 'Success!',
       text: message,
-      icon: 'success',
-      showCancelButton: false,
-      confirmButtonText: 'OK',
-      customClass: {
-        confirmButton: 'btn btn-primary w-xs me-2 mt-2'
-      },
-      buttonsStyling: false
+      icon: 'success'
     });
   }
 
@@ -124,5 +134,43 @@ export class AddComponent implements OnInit {
       },
       buttonsStyling: false
     });
+  }
+  
+  onLocationSelected(coords: string) {
+    this.selectedCoordinates = coords;
+    this.siteForm.patchValue({
+      location: coords
+    });
+    // Keep the map open to see the selected marker
+  }
+
+  toggleMap() {
+    this.showMap = !this.showMap;
+  }
+
+  getPopularityClass(popularity: string): string {
+    switch (popularity) {
+      case 'High':
+        return 'text-success';
+      case 'Medium':
+        return 'text-warning';
+      case 'Low':
+        return 'text-danger';
+      default:
+        return 'text-muted';
+    }
+  }
+
+  getPopularityIcon(popularity: string): string {
+    switch (popularity) {
+      case 'High':
+        return 'bx bx-trending-up';
+      case 'Medium':
+        return 'bx bx-trending-flat';
+      case 'Low':
+        return 'bx bx-trending-down';
+      default:
+        return 'bx bx-question-mark';
+    }
   }
 }

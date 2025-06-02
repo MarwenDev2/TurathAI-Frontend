@@ -1,17 +1,89 @@
 /* Fix for Leaflet default icon paths */
 .leaflet-default-icon-path {
-    background-image: url(https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png);
+  background-image: url(https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png);
+}
+
+/* Fix for missing marker icons */
+.leaflet-div-icon {
+  background: transparent;
+  border: none;
+}
+
+.leaflet-marker-icon {
+  background-image: url('https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Map container */
+#map {
+  height: 400px;
+  width: 100%;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  margin-bottom: 1rem;
+}
+
+/* Custom marker styling */
+:host ::ng-deep {
+  .selected-marker-icon {
+    filter: hue-rotate(0deg) brightness(1.2) drop-shadow(0 0 5px rgba(255, 0, 0, 0.7));
+    z-index: 1000 !important;
   }
   
-  /* Fix for missing marker icons */
-  .leaflet-div-icon {
-    background: transparent;
-    border: none;
+  .event-marker-icon {
+    filter: hue-rotate(320deg); /* Red-ish */
   }
   
-  .leaflet-marker-icon {
-    background-image: url('https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+  .business-marker-icon {
+    filter: hue-rotate(200deg); /* Blue-ish */
   }
+  
+  .heritage-marker-icon {
+    filter: hue-rotate(100deg); /* Green-ish */
+  }
+}
+
+/* Legend and coordinates */
+.legend {
+  background: white;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+      border-radius: 50%;
+    }
+    
+    &.selected .legend-color {
+      background-color: #ff0000;
+    }
+    
+    &.event .legend-color {
+      background-color: #ff5252;
+    }
+    
+    &.business .legend-color {
+      background-color: #2196f3;
+    }
+    
+    &.heritage .legend-color {
+      background-color: #4caf50;
+    }
+  }
+}
+
+.coordinates-display {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}

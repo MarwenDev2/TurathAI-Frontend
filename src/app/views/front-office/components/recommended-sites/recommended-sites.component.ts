@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { environment } from '../../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgbRatingModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
@@ -298,7 +299,7 @@ export class RecommendedSitesComponent implements OnInit, OnChanges {
     if (!imageIds || imageIds.length === 0) {
       return 'assets/images/default-site.jpg';
     }
-    return `http://localhost:8080/images/${imageIds[0]}`;
+    return `${environment.apiUrl}/images/${imageIds[0]}`;
   }
   
   formatLocation(location: string): string {

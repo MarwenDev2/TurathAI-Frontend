@@ -119,9 +119,22 @@ export class FrontOfficeItinerariesComponent implements OnInit {
   }
 
   onBookNow(itinerary: Itinerary) {
-  
+    // Check if user is logged in
     if (!this.currentUser) {
       Swal.fire('You must be logged in to book an itinerary.', '', 'warning');
+      return;
+    }
+
+    // Check if the current user has already booked this itinerary
+    if (this.isItineraryBookedByUser(itinerary)) {
+      Swal.fire('Already Booked', 'This itinerary is already assigned to you.', 'info');
+      return;
+    }
+    
+    // Check if the itinerary is booked by another user
+    if (this.isItineraryBooked(itinerary) && !this.isItineraryBookedByUser(itinerary)) {
+      const userName = itinerary.user?.firstName || 'Another user';
+      Swal.fire('Already Booked', `This itinerary is already booked by ${userName}.`, 'info');
       return;
     }
   
@@ -143,6 +156,35 @@ export class FrontOfficeItinerariesComponent implements OnInit {
   }
   
   
+  // Check if the itinerary is already booked by any user
+  isItineraryBooked(itinerary: Itinerary): boolean {
+    return !!itinerary.user;
+  }
+
+  // Check if the itinerary is already booked by the current user
+  isItineraryBookedByUser(itinerary: Itinerary): boolean {
+    if (!this.currentUser || !itinerary.user) {
+      return false;
+    }
+    
+    // Compare user IDs to check if this itinerary is assigned to the current user
+    return itinerary.user.id === this.currentUser.id;
+  }
+  
+  // Get booking tooltip message based on who booked the itinerary
+  getBookingTooltip(itinerary: Itinerary): string {
+    if (!itinerary.user) {
+      return 'Book this itinerary';
+    }
+    
+    if (this.isItineraryBookedByUser(itinerary)) {
+      return 'You have already booked this itinerary';
+    }
+    
+    // Show who booked it if it's not the current user
+    return `${itinerary.user.firstName || 'Another user'} has already booked this itinerary`;
+  }
+
   showQRCode(id: number): void {
     // Create a modal to display the QR code
     Swal.fire({

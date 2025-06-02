@@ -11,4 +11,11 @@ export interface Business {
   heritageSite?: Site;
   images?: ImageData[];
   imageIds?: number[];
+  // Additional properties for enhanced business detail page
+  description?: string;
+  location?: string;
+  email?: string;
+  website?: string;
+  hours?: string;
+  about?: string;
 }

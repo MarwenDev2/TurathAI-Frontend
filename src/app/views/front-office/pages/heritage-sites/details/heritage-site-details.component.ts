@@ -1,4 +1,5 @@
 import { Component, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { environment } from '../../../../../../environments/environment';
 import { Stop } from '@core/Models/stop';
 import { StopService } from '@core/services/stop.service';
 import { Itinery } from '@core/Models/itinerary';
@@ -140,7 +141,7 @@ export class HeritageSiteDetailsComponent implements OnInit {
         
         // Get site images
         if (site.imageIds && site.imageIds.length > 0) {
-          this.siteImages = site.imageIds.map(id => `http://localhost:8080/images/${id}`);
+          this.siteImages = site.imageIds.map(id => `${environment.apiUrl}/images/${id}`);
         } else {
           // Use default image if no images available
           this.siteImages = ['assets/images/default-site.jpg'];
@@ -290,6 +291,6 @@ export class HeritageSiteDetailsComponent implements OnInit {
     if (!imageIds || imageIds.length === 0) {
       return 'assets/images/default-site.jpg';
     }
-    return `http://localhost:8080/images/${imageIds[0]}`;
+    return `${environment.apiUrl}/images/${imageIds[0]}`;
   }
 }

@@ -1,4 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { environment } from '../../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbRatingModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
@@ -80,7 +81,7 @@ export class WishlistComponent implements OnInit {
     if (!imageIds || imageIds.length === 0) {
       return ['assets/images/qr-code.png'];
     }
-    return imageIds.map(id => `http://localhost:8080/images/${id}`);
+    return imageIds.map(id => `${environment.apiUrl}/images/${id}`);
   }
 
   swiperConfig: SwiperOptions = {

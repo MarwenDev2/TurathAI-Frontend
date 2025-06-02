@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { Observable, catchError, throwError, map, switchMap, of } from 'rxjs';
 import { Review } from '../Models/review';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
@@ -7,13 +8,12 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
   providedIn: 'root'
 })
 export class ReviewService {
-  private baseUrl = 'http://localhost:8080';
-  private apiUrl = `${this.baseUrl}/api/reviews`;
+  private apiUrl = `${environment.apiUrl}/api/reviews`;
 
   constructor(private http: HttpClient) { }
 
   getBaseUrl(): string {
-    return this.baseUrl;
+    return environment.apiUrl;
   }
 
   getReviews(): Observable<Review[]> {

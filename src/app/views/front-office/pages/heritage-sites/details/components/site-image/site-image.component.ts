@@ -1,4 +1,5 @@
 import { Component,CUSTOM_ELEMENTS_SCHEMA ,  Input } from '@angular/core';
+import { environment } from '../../../../../../../../environments/environment';
 import { CommonModule } from '@angular/common'
 import { NgbCarouselModule, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap'
 import {
@@ -48,7 +49,7 @@ export class HeritageSiteImageComponent {
     if (!imageIds || imageIds.length === 0) {
       return ['assets/images/qr-code.png'];
     }
-    return imageIds.map(id => `http://localhost:8080/images/${id}`);
+    return imageIds.map(id => `${environment.apiUrl}/images/${id}`);
   }
 
   swiperConfig: SwiperOptions = {

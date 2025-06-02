@@ -75,6 +75,25 @@
                 }
               </div>
             </div>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label for="heritageSiteId" class="form-label">Site patrimonial *</label>
+                <select
+                  class="form-control"
+                  id="heritageSiteId"
+                  formControlName="heritageSiteId"
+                  [class.is-invalid]="localInsightForm.get('heritageSiteId')?.invalid && localInsightForm.get('heritageSiteId')?.touched"
+                >
+                  <option value="" disabled selected>Choisir un site patrimonial</option>
+                  @for (site of heritageSites; track site.id) {
+                    <option [value]="site.id">{{ site.name }}</option>
+                  }
+                </select>
+                @if (localInsightForm.get('heritageSiteId')?.invalid && localInsightForm.get('heritageSiteId')?.touched) {
+                  <div class="invalid-feedback">Site patrimonial requis</div>
+                }
+              </div>
+            </div>
           </div>
 
           <div class="row">

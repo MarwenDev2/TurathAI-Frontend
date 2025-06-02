@@ -1,0 +1,78 @@
+<!-- Chat Toggle Button -->
+<div class="chat-button-container">
+  <!-- New message notification badge -->
+  <div class="notification-badge" *ngIf="!isChatOpen && showInitialNotification">
+    <span>1</span>
+  </div>
+  
+  <!-- Tooltip/Message bubble that appears on hover -->
+  <div class="chat-tooltip" [class.show-tooltip]="showTooltip" [class.hide-tooltip]="isChatOpen">
+    <div class="tooltip-text">How can I help you explore Tunisian heritage today?</div>
+  </div>
+  
+  <div class="chat-button" 
+       [class.active]="isChatOpen" 
+       (click)="toggleChat()" 
+       (mouseenter)="showTooltip = true" 
+       (mouseleave)="showTooltip = false">
+    <i class="bx bx-message-dots" *ngIf="!isChatOpen"></i>
+    <i class="bx bx-x" *ngIf="isChatOpen"></i>
+  </div>
+</div>
+
+<!-- Chat Window -->
+<div class="chat-container" [class.open]="isChatOpen">
+  <div class="chat-header">
+    <div class="header-content">
+      <div class="chat-logo">
+        <i class="bx bx-bulb"></i>
+      </div>
+      <span class="chat-title">TurathAI Assistant</span>
+    </div>
+    <div class="header-actions">
+      <button class="clear-btn" (click)="clearChat()" title="Clear Chat">
+        <i class="bx bx-trash"></i>
+      </button>
+      <button class="close-btn" (click)="toggleChat()">
+        <i class="bx bx-x"></i>
+      </button>
+    </div>
+  </div>
+  
+  <div class="chat-messages" #chatContainer>
+    <div class="message-wrapper" *ngFor="let msg of messages" [ngClass]="{'user-message': msg.sender === 'user', 'bot-message': msg.sender === 'bot'}">
+      <div class="message-content">
+        <div class="message-avatar" *ngIf="msg.sender === 'bot'">
+          <i class="bx bx-bot"></i>
+        </div>
+        <div class="message-bubble">
+          <div class="message-text">{{ msg.message }}</div>
+          <div class="message-time">{{ msg.timestamp | date:'shortTime' }}</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="typing-indicator" *ngIf="isLoading">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
+  </div>
+  
+  <div class="chat-input">
+    <input 
+      type="text" 
+      [(ngModel)]="message" 
+      placeholder="Ask about Tunisian heritage..." 
+      (keyup.enter)="sendMessage()" 
+      [disabled]="isLoading"
+    >
+    <button 
+      class="send-btn" 
+      (click)="sendMessage()" 
+      [disabled]="!message.trim() || isLoading"
+    >
+      <i class="bx bx-send"></i>
+    </button>
+  </div>
+</div>

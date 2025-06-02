@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../../environments/environment';
 import { Component, Input } from '@angular/core';
 import { User } from '@core/Models/user';
 import { UserPreferences } from '@core/Models/user-preferences';
@@ -55,7 +56,7 @@ export class DetailsComponent {
 
   getProfileImage(): string {
     if (!this.user?.image) return 'assets/images/default-avatar.png';
-    return `http://localhost:8080/assets/images/users/${this.user.image}`;
+    return `${environment.apiUrl}/assets/images/users/${this.user.image}`;
   }
 
   getCountryFlag(country: string | undefined): string {

@@ -19,6 +19,7 @@ import { ActivitiStremComponent } from './component/activiti-strem/activiti-stre
 import { notificationsData } from './data';
 import { User } from '@core/Models/user';
 import { AuthService } from '@core/services/auth.service';
+import { environment } from '@environment/environment';
 
 @Component({
   selector: 'app-topbar',
@@ -69,7 +70,7 @@ export class TopbarComponent {
   }
   getProfileImage(): string {
     if (!this.currentUser?.image) return 'assets/images/default-avatar.png';
-    return `http://localhost:8080/assets/images/users/${this.currentUser.image}`;
+    return `${environment.apiUrl}/assets/images/users/${this.currentUser.image}`;
   }
   
   open() {

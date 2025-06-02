@@ -1,77 +1,219 @@
-<div class="business-list-container">
-  <!-- Carousel Section -->
-  <section class="carousel-section">
-    <app-carousel [slides]="carouselSlides" [autoSlide]="true" [slideInterval]="5000"></app-carousel>
-  </section>
+<!-- Define the star template -->
+<ng-template #t let-fill="fill">
+  <span class="star" [class.full]="fill === 100">
+    <i class="bx" [class.bxs-star]="fill === 100" [class.bx-star]="fill < 100"></i>
+  </span>
+</ng-template>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Local Heritage Businesses</h1>
-      <p>Discover and support businesses that preserve our cultural heritage</p>
-    </div>
-  </section>
 
-  <!-- Business Grid Section -->
-  <section class="business-grid">
-    <div class="container">
-      <!-- Loading State -->
-      <div class="loading-state" *ngIf="loading">
-        <div class="spinner"></div>
-        <p>Loading businesses...</p>
+<div class="container py-5">
+  <!-- Navigation Bar -->
+  <div class="site-navigation mb-4">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="search-box">
+          <input type="text" 
+                 class="form-control" 
+                 placeholder="Search businesses..." 
+                 [(ngModel)]="searchTerm"
+                 (input)="onSearchInput()">
+          <i class="bx bx-search"></i>
+        </div>
       </div>
-
-      <!-- Error State -->
-      <div class="error-state" *ngIf="error">
-        <p>Failed to load businesses. Please try again later.</p>
-        <button (click)="loadBusinesses()" class="retry-button">
-          <i class="fas fa-redo"></i> Retry
+      <div class="col-md-4">
+        <div class="category-filter">
+          <select class="form-select" [(ngModel)]="selectedCategory" (change)="filterByCategory()">
+            <option value="">All Categories</option>
+            <option *ngFor="let category of categories" [value]="category.id">
+              {{category.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="sort-options">
+          <select class="form-select" [(ngModel)]="sortBy" (change)="sortSites()">
+            <option value="name">Sort by Name</option>
+            <option value="category">Sort by Category</option>
+            <option value="heritageSite">Sort by Heritage Site</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+  <!-- All Businesses Section -->
+  <div class="all-sites-section">
+    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+      <h2 class="section-title">Local Heritage Businesses</h2>
+      <div class="view-options">
+        <button class="btn btn-outline-primary me-2" (click)="toggleView()">
+          <i class="bx" [class.bx-grid-alt]="!isGridView" [class.bx-list-ul]="isGridView"></i>
+          {{isGridView ? 'Grid View' : 'List View'}}
         </button>
       </div>
+    </div>
+    
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>Loading businesses...</p>
+    </div>
 
-      <!-- Business Grid -->
-      <div class="row" *ngIf="!loading && !error">
-        <div class="col-md-4 mb-4" *ngFor="let business of paginatedBusinesses">
-          <div class="business-card" (click)="viewBusinessDetails(business.id!)">
+    <!-- Error State -->
+    <div class="error-state" *ngIf="error">
+      <p>Failed to load businesses. Please try again later.</p>
+      <button (click)="loadBusinesses()" class="retry-button">
+        <i class="bx bx-refresh"></i> Retry
+      </button>
+    </div>
+    
+    <!-- Grid View -->
+    <div *ngIf="!loading && !error">
+      <div class="row" *ngIf="isGridView" [@viewChange]>
+        <div class="col-lg-4 col-md-6 mb-4" *ngFor="let business of paginatedBusinesses" [@fadeIn]>
+          <div class="site-card">
             <div class="card-image">
               <!-- Handle images from API response -->
               <div *ngIf="business.images && business.images.length > 0">
-                <img
-                [src]="getBusinessImage(business)" 
-                [alt]="business.name"
-                (error)="handleImageError($event)">
+                <img [src]="getBusinessImage(business)" 
+                     [alt]="business.name"
+                     class="site-image-standard"
+                     (error)="handleImageError($event)">
               </div>
               <!-- Handle imageIds for backward compatibility -->
               <div *ngIf="(!business.images || business.images.length === 0) && business.imageIds && business.imageIds.length > 0">
                 <img [src]="businessService.getImageUrl(business.imageIds[0])" 
                      [alt]="business.name"
+                     class="site-image-standard"
                      (error)="handleImageError($event)">
               </div>
               <!-- No images case -->
               <div *ngIf="(!business.images || business.images.length === 0) && (!business.imageIds || business.imageIds.length === 0)">
                 <img src="assets/images/placeholder.jpg" 
                      [alt]="business.name"
+                     class="site-image-standard"
                      style="opacity: 0.7;">
               </div>
-              <div class="business-type">{{business.type}}</div>
+              <button class="wishlist-btn" 
+                     (click)="toggleWishlist(business.id!); $event.stopPropagation()"
+                     [ngbTooltip]="getWishlistTooltip(business.id!)"
+                     placement="top">
+                <i class="bx" 
+                   [class.bx-heart]="!isInWishlist(business.id!)" 
+                   [class.bxs-heart]="isInWishlist(business.id!)"
+                   [class.heart-red]="isInWishlist(business.id!)"></i>
+              </button>
             </div>
             <div class="card-content">
-              <h3 class="business-name">{{business.name}}</h3>
-              <div class="business-location" *ngIf="business.heritageSite">
-                <i class="fas fa-map-marker-alt"></i>
-                Related to Heritage site : {{business.heritageSite.name}}
+              <h3 class="site-name">
+                <a (click)="viewBusinessDetails(business.id!)">{{business.name}}</a>
+              </h3>
+              <div class="business-type-badge">
+                <span class="badge bg-primary">{{business.type}}</span>
               </div>
-              <div class="business-contact">
-                <i class="fas fa-phone"></i>
-                {{business.contact}}
+              
+              <div class="site-meta">
+                <div *ngIf="business.heritageSite" class="heritage-site-badge">
+                  <span class="badge bg-info">
+                    <i class="bx bx-landmark"></i> {{business.heritageSite.name}}
+                  </span>
+                </div>
+              </div>
+
+              <div class="card-actions d-flex justify-content-between align-items-center mt-3">
+                <a (click)="viewBusinessDetails(business.id!)" class="btn btn-primary">
+                  View Details
+                </a>
+                <div class="action-buttons">
+                  <button class="btn btn-outline-danger wishlist-btn" 
+                          (click)="toggleWishlist(business.id!); $event.stopPropagation()"
+                          [ngbTooltip]="getWishlistTooltip(business.id!)"
+                          placement="top">
+                    <i class="bx" 
+                        [class.bx-heart]="!isInWishlist(business.id!)" 
+                        [class.bxs-heart]="isInWishlist(business.id!)"
+                        [class.heart-red]="isInWishlist(business.id!)"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
+      
+      <!-- List View -->
+      <div class="list-view" *ngIf="!isGridView" [@viewChange]>
+        <div class="site-list-item mb-4" *ngFor="let business of paginatedBusinesses" [@fadeIn]>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="list-image-container">
+                <!-- Handle images from API response -->
+                <div *ngIf="business.images && business.images.length > 0">
+                  <img [src]="getBusinessImage(business)" 
+                       [alt]="business.name"
+                       class="list-image-standard"
+                       (error)="handleImageError($event)">
+                </div>
+                <!-- Handle imageIds for backward compatibility -->
+                <div *ngIf="(!business.images || business.images.length === 0) && business.imageIds && business.imageIds.length > 0">
+                  <img [src]="businessService.getImageUrl(business.imageIds[0])" 
+                       [alt]="business.name"
+                       class="list-image-standard"
+                       (error)="handleImageError($event)">
+                </div>
+                <!-- No images case -->
+                <div *ngIf="(!business.images || business.images.length === 0) && (!business.imageIds || business.imageIds.length === 0)">
+                  <img src="assets/images/placeholder.jpg" 
+                       [alt]="business.name"
+                       class="list-image-standard"
+                       style="opacity: 0.7;">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-9">
+              <div class="d-flex justify-content-between align-items-start">
+                <h3 class="site-name">
+                  <a (click)="viewBusinessDetails(business.id!)">{{business.name}}</a>
+                </h3>
+                <button class="wishlist-btn-sm" 
+                       (click)="toggleWishlist(business.id!); $event.stopPropagation()"
+                       [ngbTooltip]="getWishlistTooltip(business.id!)"
+                       placement="left">
+                  <i class="bx" 
+                     [class.bx-heart]="!isInWishlist(business.id!)" 
+                     [class.bxs-heart]="isInWishlist(business.id!)"
+                     [class.heart-red]="isInWishlist(business.id!)"></i>
+                </button>
+              </div>
+              <div class="d-flex align-items-center mb-2">
+                <span class="badge bg-primary me-2">{{business.type}}</span>
+              </div>
+              
+              <div *ngIf="business.heritageSite" class="heritage-site-badge mb-3">
+                <span class="badge bg-info">
+                  <i class="bx bx-landmark"></i> Related to: {{business.heritageSite.name}}
+                </span>
+              </div>
+              
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="contact-info" *ngIf="business.contact">
+                  <i class="bx bx-phone"></i> {{business.contact}}
+                </div>
+                
+                <div class="list-actions d-flex justify-content-end align-items-center">
+                  <a (click)="viewBusinessDetails(business.id!)" class="btn btn-primary">
+                    View Details
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <!-- Pagination -->
-      <div class="d-flex justify-content-center mt-4" *ngIf="businesses.length > pageSize">
+      <div class="d-flex justify-content-center mt-4" *ngIf="filteredBusinesses.length > pageSize">
         <ngb-pagination
           [collectionSize]="totalItems"
           [(page)]="page"
@@ -82,5 +224,5 @@
         </ngb-pagination>
       </div>
     </div>
-  </section>
+  </div>
 </div>

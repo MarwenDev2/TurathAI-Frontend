@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 import { ForumService } from '@core/services/forum.service';
 import { Forum } from '@core/Models/forum';
 import { CommonModule } from '@angular/common';
@@ -198,10 +199,10 @@ getImageUrl(forum: Forum): string {
   }
   
   // If you have headers available from your auth service
-  // return `http://localhost:8080/images/${forum.image}`;
+  // return `${environment.apiUrl}/images/${forum.image}`;
   
   // Or, if images are stored as static assets on your server:
-  return `http://localhost:8080/assets/images/forums/${forum.image}`;
+  return `${environment.apiUrl}/assets/images/forums/${forum.image}`;
 }
 
   deleteForum(forumId: number): void {

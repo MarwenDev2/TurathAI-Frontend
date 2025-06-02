@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -9,6 +10,8 @@ import { LocalInsightService } from '@core/services/local-insight.service';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '@core/services/auth.service';
 import { VideoUploaderComponent } from '@component/file-uploader/video-uploader.component';
+import { SiteService } from '@core/services/site.service';
+import { Site } from '@core/Models/site';
 
 @Component({
   selector: 'app-add-local-insight',
@@ -23,29 +26,32 @@ export class AddComponent implements OnInit {
   private localInsightService = inject(LocalInsightService);
   private http = inject(HttpClient);
   private authService = inject(AuthService);
+  private siteService = inject(SiteService);
 
   localInsightForm: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\u00C0-\u017F\s]+$/)]],
     description: ['', Validators.required],
     type: ['', Validators.required],
     videoURL: [''],
-    videoOriginalName: ['']
+    videoOriginalName: [''],
+    heritageSiteId: ['', Validators.required]
   });
 
   heritageSite: any = null;
+  heritageSites: Site[] = [];
   isLoading = false;
   errorMessage = '';
   successMessage = '';
   uploadedVideoId: string | null = null;
 
   ngOnInit(): void {
-    this.fetchHeritageSite();
+    this.fetchHeritageSites();
   }
 
-  fetchHeritageSite(): void {
-    this.http.get<any>('http://localhost:8080/api/Sites/get/1').subscribe({
-      next: (data) => this.heritageSite = data,
-      error: () => this.errorMessage = 'Impossible de charger le site patrimonial.'
+  fetchHeritageSites(): void {
+    this.siteService.getAll().subscribe({
+      next: (data) => this.heritageSites = data,
+      error: () => this.errorMessage = 'Impossible de charger les sites patrimoniaux.'
     });
   }
 
@@ -78,7 +84,7 @@ export class AddComponent implements OnInit {
 
   onTypeChange(type: string): void {
     if (!type) return;
-    this.http.post<any>('http://localhost:8080/api/local-insights/videos/generate', { type }).subscribe({
+    this.http.post<any>('${environment.apiUrl}/api/local-insights/videos/generate', { type }).subscribe({
       next: (res) => {
         if (res.videoURL) {
           this.localInsightForm.patchValue({ 
@@ -103,16 +109,24 @@ export class AddComponent implements OnInit {
     const formValue = this.localInsightForm.value;
     const currentUser = this.authService.currentUser;
 
+    // Log the form values to verify they're being captured correctly
+    console.log('Form values:', formValue);
+    
+    // Try both structures to ensure compatibility
     const payload = {
       title: formValue.title,
       description: formValue.description,
       type: formValue.type,
       videoURL: formValue.videoURL || null,
       videoOriginalName: formValue.videoOriginalName || null,
+      // Send both formats to ensure compatibility with backend
       heritageSite: {
-        id: this.heritageSite?.id || 2
-      }
+        id: Number(formValue.heritageSiteId) || null
+      },
+      heritageSiteId: Number(formValue.heritageSiteId) || null
     };
+    
+    console.log('Sending payload:', payload);
 
     this.localInsightService.createLocalInsight(payload)
       .pipe(

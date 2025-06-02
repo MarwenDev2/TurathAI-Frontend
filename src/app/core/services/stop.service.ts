@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Stop } from '../Models/stop';
 import { Observable } from 'rxjs';
@@ -8,7 +9,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class StopService {
-  private apiUrl = 'http://localhost:8080/api/stops'; // Adjust if your backend runs elsewhere
+  private apiUrl = `${environment.apiUrl}/api/stops`;
 
   constructor(private http: HttpClient) {}
 

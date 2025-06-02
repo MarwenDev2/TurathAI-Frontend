@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { environment } from '../../../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -48,7 +49,7 @@ export class EditComponent implements OnInit {
           });
           
           if (this.originalForum.image) {
-            this.imagePreview = `http://localhost:8080/assets/images/users/${this.originalForum.image}`;
+            this.imagePreview = `${environment.apiUrl}/assets/images/users/${this.originalForum.image}`;
           }
           
           this.isLoading = false;
@@ -88,7 +89,7 @@ export class EditComponent implements OnInit {
         });
         
         if (data.image) {
-          this.imagePreview = `http://localhost:8080/assets/images/users/${data.image}`;
+          this.imagePreview = `${environment.apiUrl}/assets/images/users/${data.image}`;
         }
         
         this.isLoading = false;

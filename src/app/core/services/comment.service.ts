@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ForumComment } from '@core/Models/forumComment';
@@ -8,7 +9,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CommentService {
-  private baseUrl = 'http://localhost:8080/api/comments';
+  private baseUrl = `${environment.apiUrl}/api/comments`;
 
   constructor(private http: HttpClient) {}
 

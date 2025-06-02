@@ -138,7 +138,7 @@ export class SignUpComponent {
     // Optionally store it in the form too
     // this.signUpForm.patchValue({ image: this.imageFileName });
 
-    fetch('http://localhost:8080/api/upload', {
+    fetch('${environment.apiUrl}/api/upload', {
       method: 'POST',
       body: formData
     })

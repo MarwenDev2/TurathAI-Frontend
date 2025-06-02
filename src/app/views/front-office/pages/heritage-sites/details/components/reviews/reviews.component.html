@@ -54,7 +54,7 @@
         @for (review of pagedReviews; track review.id) {
           <div class="review-item">
             <div class="d-flex align-items-center gap-2">
-              <img [src]="'http://localhost:8080/assets/images/users/' + review.user.image" alt="User avatar" class="avatar-md rounded-circle">
+              <img [src]="review.user && review.user.image ? getImageUrl(review.user.image) : 'assets/images/default-avatar.png'" alt="User avatar" class="avatar-md rounded-circle">
               <div>
                 <h5 class="mb-0">{{review.user.firstName || 'Anonymous'}} {{review.user.lastName || ''}}</h5>
               </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { environment } from '../../../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -616,7 +617,7 @@ writeReview(itinerary: Itinerary): void {
     if (!imageIds || imageIds.length === 0) {
       return 'assets/images/default-site.jpg';
     }
-    return `http://localhost:8080/images/${imageIds[0]}`;
+    return `${environment.apiUrl}/images/${imageIds[0]}`;
   }
   
   /**
@@ -630,7 +631,7 @@ writeReview(itinerary: Itinerary): void {
   
   getProfileImage(): string {
     if (!this.currentUser?.image) return 'assets/images/default-avatar.png';
-    return `http://localhost:8080/assets/images/users/${this.currentUser.image}`;
+    return `${environment.apiUrl}/assets/images/users/${this.currentUser.image}`;
   }
   
   setActiveTab(tab: string): void {
@@ -673,7 +674,7 @@ writeReview(itinerary: Itinerary): void {
     // Display loading indicator
     this.toastr.info('Uploading image...', '', { timeOut: 0, extendedTimeOut: 0, closeButton: true });
     
-    fetch('http://localhost:8080/api/upload', {
+    fetch('${environment.apiUrl}/api/upload', {
       method: 'POST',
       body: formData
     })

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 import { ReviewService } from '../../../core/services/review.service';
 import { SiteService } from '../../../core/services/site.service';
 import { NgbRatingModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -70,6 +71,8 @@ export class ListComponent implements OnInit {
     private datePipe: DatePipe,
     private modalService: NgbModal
   ) {}
+
+
 
   ngOnInit(): void {
     this.loadHeritageSites();
@@ -168,6 +171,12 @@ export class ListComponent implements OnInit {
 
   getTotalPages(): number {
     return this.totalAnalyticsItems ? Math.ceil(this.totalAnalyticsItems / this.analyticsPageSize) : 1;
+  }
+
+  getImageUrl(imageName: string | String): string {
+    // Convert String object to primitive string if needed
+    const imageNameStr = typeof imageName === 'string' ? imageName : imageName.toString();
+    return `${environment.apiUrl}/assets/images/users/${imageNameStr}`;
   }
 
   // Pagination controls for analytics

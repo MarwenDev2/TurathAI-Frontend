@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, retry, tap } from 'rxjs';
 import { UserPreferences } from '@core/Models/user-preferences';
@@ -7,7 +8,7 @@ import { UserPreferences } from '@core/Models/user-preferences';
   providedIn: 'root'
 })
 export class UserPreferencesService {
-  private apiUrl = 'http://localhost:8080/api/user-preferences';
+  private apiUrl = `${environment.apiUrl}/api/user-preferences`;
 
   constructor(private http: HttpClient) { }
 

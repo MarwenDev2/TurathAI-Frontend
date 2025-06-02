@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -8,7 +9,7 @@ import { Itinery } from '@core/Models/itinerary';
   providedIn: 'root'
 })
 export class ItineraryBookingService {
-  private apiUrl = 'http://localhost:8080/api/itineraries';
+  private apiUrl = `${environment.apiUrl}/api/itineraries`;
 
   constructor(private http: HttpClient) { }
 

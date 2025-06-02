@@ -8,6 +8,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { WishlistComponent } from './pages/Wishlist/wishlist.component';
 import { ReviewComponent } from './pages/Reviews/review.component';
 import { BusinessListComponent } from './pages/businesses/business-list/business-list.component';
+import { BusinessDetailComponent } from './pages/businesses/business-detail/business-detail.component';
 import { HeritageSiteDetailsComponent } from './pages/heritage-sites/details/heritage-site-details.component';
 import { HeritageSitesComponent } from './pages/heritage-sites/heritage-sites.component';
 
@@ -53,6 +54,11 @@ const routes: Routes = [
         path: 'businesses',
         component: BusinessListComponent,
         data: { title: 'Local Businesses' }
+      },
+      {
+        path: 'businesses/:id',
+        component: BusinessDetailComponent,
+        data: { title: 'Business Details' }
       },
       {
         path: 'forums',

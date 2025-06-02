@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Stop } from '../Models/stop';
@@ -13,7 +14,7 @@ interface SmsResponse {
   providedIn: 'root'
 })
 export class SmsService {
-  private apiUrl = 'http://localhost:8080/api/sms'; // Adjust this URL to match your backend API
+  private apiUrl = `${environment.apiUrl}/api/sms`;
 
   constructor(private http: HttpClient) { }
 

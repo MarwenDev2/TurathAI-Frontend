@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EventSite } from '../Models/event';
@@ -7,8 +8,8 @@ import { EventSite } from '../Models/event';
   providedIn: 'root'
 })
 export class EventService {
-  private apiUrl = 'http://localhost:8080/api/events';
-  private imageApiUrl = 'http://localhost:8080/images';
+  private apiUrl = `${environment.apiUrl}/api/events`;
+  private imageApiUrl = `${environment.apiUrl}/images`;
 
   constructor(private http: HttpClient) { }
 

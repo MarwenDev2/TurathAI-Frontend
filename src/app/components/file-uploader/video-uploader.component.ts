@@ -11,7 +11,7 @@ import { VideoService } from '@core/services/video.service';
       <div class="upload-area" (click)="fileInput.click()">
         <i class="fas fa-video fs-48 text-primary"></i>
         <h3 class="mt-4">Drop your video here, or <span class="text-primary">click to browse</span></h3>
-        <span class="text-muted fs-13">MP4 files recommended (max 50MB)</span>
+        <span class="text-muted fs-13">MP4 files recommended (max 200MB)</span>
         <input #fileInput type="file" style="display: none" 
                (change)="onFileSelected($event)" 
                accept="video/*">

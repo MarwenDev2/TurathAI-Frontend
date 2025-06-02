@@ -1,5 +1,6 @@
 // local-insight.service.ts
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { LocalInsight } from '@core/Models/localInsight';
@@ -10,7 +11,7 @@ import { User } from '@core/Models/user';
 })
 export class LocalInsightService {
   [x: string]: any;
-  private apiUrl = `http://localhost:8080/api/local-insights`;
+  private apiUrl = `${environment.apiUrl}/api/local-insights`;
 
   constructor(private http: HttpClient) { }
 
@@ -50,7 +51,7 @@ export class LocalInsightService {
    * @returns Observable with the notification result
    */
   sendLocalInsightNotification(localInsightId: number, userEmail: string, userName: string): Observable<any> {
-    return this.http.post(`http://localhost:8080/api/local-insights/notify`, {
+    return this.http.post(`${environment.apiUrl}/api/local-insights/notify`, {
       localInsightId,
       userEmail,
       userName
@@ -61,7 +62,7 @@ export class LocalInsightService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
   updateLocalInsight(localInsight: any) {
-    return this.http.put(`http://localhost:8080/api/local-insights/edit/${localInsight.id}`, localInsight);
+    return this.http.put(`${environment.apiUrl}/api/local-insights/edit/${localInsight.id}`, localInsight);
   }
   
   getInsightStats() {

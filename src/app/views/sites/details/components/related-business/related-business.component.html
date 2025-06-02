@@ -1,0 +1,49 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">Related Businesses</h4>
+  </div>
+  <div class="card-body">
+    @if (businesses.length === 0) {
+      <p class="text-muted">No related businesses found.</p>
+    } @else {
+      <div class="swiper-container rounded" data-swiper="navigation">
+        <swiper-container [config]="swiperConfig" init="false">
+          @for (business of businesses; track business.id) {
+            <swiper-slide class="swiper-slide">
+              <div class="business-card">
+                <div class="business-image">
+                  <img [src]="business.images?.[0]?.url || 'assets/images/default-business.jpg'" 
+                       [alt]="business.name" 
+                       class="img-fluid rounded">
+                </div>
+                <div class="business-info">
+                  <h5 class="business-name">{{business.name}}</h5>
+                  <div class="business-type">
+                    <i class="bx bx-category"></i> {{business.type}}
+                  </div>
+                  <div class="business-contact">
+                    <i class="bx bx-phone"></i> {{business.contact}}
+                  </div>
+                  <div class="business-location">
+                    <i class="bx bx-map"></i> {{business.latitude}}, {{business.longitude}}
+                  </div>
+                  <div class="business-actions mt-3">
+                    <button class="btn btn-light btn-sm" title="Save to wishlist">
+                      <i class="bx bx-heart fs-18"></i>
+                    </button>
+                    <button class="btn btn-light btn-sm" title="Share">
+                      <i class="bx bx-share-alt fs-18"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </swiper-slide>
+          }
+        </swiper-container>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+    }
+  </div>
+</div> 

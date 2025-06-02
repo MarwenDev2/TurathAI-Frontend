@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, filter, from, map, of, switchMap, take, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
@@ -10,7 +11,7 @@ import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 export class AuthService {
   private readonly TOKEN_KEY = 'turathai_auth_token';
   private readonly USER_KEY = 'turathai_user_data';
-  private readonly API_URL = 'http://localhost:8080/api/auth';
+  private readonly API_URL = `${environment.apiUrl}/api/auth`;
   private tokenSubject = new BehaviorSubject<string | null>(null);
   private userSubject = new BehaviorSubject<User | null>(null);
   private authStateChecked = false;
@@ -78,7 +79,7 @@ export class AuthService {
     const email = this.extractEmailFromToken(token);
     if (!email) return of(null);
   
-    return this.http.get<User>(`http://localhost:8080/api/users/email/${email}`).pipe(
+    return this.http.get<User>(`${environment.apiUrl}/api/users/email/${email}`).pipe(
       tap(user => {
         const rememberMe = !!localStorage.getItem(this.TOKEN_KEY);
         this.userSubject.next(user);
