@@ -24,15 +24,15 @@ export class SignUpComponent {
   // Form initialization with proper types
   signUpForm = this.fb.group({
     firstName: ['', [Validators.required, Validators.maxLength(50), Validators.pattern('[a-zA-Z ]*')]],
-  lastName: ['', [Validators.required, Validators.maxLength(50), Validators.pattern('[a-zA-Z ]*')]],
-  email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
-  password: ['', [
-    Validators.required, 
-    Validators.minLength(8),
-    Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$')
-  ]],
-    originCountry: ['', Validators.required], // Will store full country name
-    spokenLanguages: [[] as string[], Validators.required], // Will store language codes temporarily
+    lastName: ['', [Validators.required, Validators.maxLength(50), Validators.pattern('[a-zA-Z ]*')]],
+    email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
+    password: ['', [
+      Validators.required, 
+      Validators.minLength(8),
+      Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$')
+    ]],
+    originCountry: ['', Validators.required],
+    nativeLanguage: ['', Validators.required], // Changed from spokenLanguages to nativeLanguage
     interests: ['', [Validators.required, Validators.maxLength(200)]],
     role: ['USER'],
     image: [null as string | null],
@@ -58,8 +58,7 @@ export class SignUpComponent {
   filteredLanguages = [...languages];
 
   constructor() {
-    // Initialize spokenLanguages as empty array
-    this.signUpForm.get('spokenLanguages')?.setValue([]);
+    // Constructor is now empty since we don't need to initialize spokenLanguages anymore
   }
 
   // Filter countries based on search term
@@ -89,27 +88,19 @@ export class SignUpComponent {
     return this.countries.find(c => c.code === code)?.name || 'Not specified';
   }
 
-  // Get language names from codes
-  getLanguageNames(codes: string[]): string {
-    if (!codes || codes.length === 0) return 'Not specified';
-    return codes.map(code => 
-      this.languages.find(l => l.code === code)?.name || code
-    ).join(', ');
+
+
+  // Select native language
+  selectNativeLanguage(languageCode: string) {
+    this.signUpForm.get('nativeLanguage')?.setValue(languageCode.toLowerCase());
+    this.showLanguageDropdown = false;
   }
 
-  // Toggle language selection
-  toggleLanguage(language: string) {
-    const current = this.signUpForm.get('spokenLanguages')?.value || [];
-    const newValue = current.includes(language) 
-      ? current.filter(l => l !== language)
-      : [...current, language];
-    
-    this.signUpForm.get('spokenLanguages')?.setValue(newValue);
-  }
-
-  // Check if language is selected
-  isLanguageSelected(language: string): boolean {
-    return (this.signUpForm.get('spokenLanguages')?.value || []).includes(language);
+  // Get selected language name
+  getSelectedLanguageName(): string {
+    const code = this.signUpForm.get('nativeLanguage')?.value;
+    if (!code) return 'Select your native language';
+    return this.languages.find(l => l.code === code)?.name || code;
   }
 
   // Handle image upload
@@ -178,8 +169,8 @@ export class SignUpComponent {
       lastName: this.signUpForm.value.lastName,
       email: this.signUpForm.value.email,
       password: this.signUpForm.value.password,
-      originCountry: this.signUpForm.value.originCountry, // This should already be the country name
-      spokenLanguage: this.getLanguageNames(this.signUpForm.value.spokenLanguages || []),
+      originCountry: this.signUpForm.value.originCountry,
+      nativeLanguage: this.signUpForm.value.nativeLanguage?.toLowerCase(), // Ensure lowercase
       interests: this.signUpForm.value.interests,
       role: 'USER',
       image: this.imageFileName || 'default-avatar.png'

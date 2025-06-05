@@ -105,8 +105,19 @@
 
     <!-- Description -->
     <div class="mb-4">
-      <h3 class="text-dark fw-medium mb-3">Description:</h3>
-      <p class="text-muted fs-16">{{site.description}} <a href="javascript:void(0);" class="link-primary">Read more</a></p>
+      <h3 class="text-dark fw-medium mb-3 d-flex justify-content-between align-items-center">
+        Description:
+        <button class="btn btn-sm btn-outline-primary" 
+                (click)="toggleSpeak(site.description)"
+                [class.btn-outline-danger]="isSpeaking">
+          <i class="bx" 
+             [class.bx-volume-full]="!isSpeaking" 
+             [class.bx-stop]="isSpeaking">
+          </i>
+          {{ isSpeaking ? 'Stop' : 'Listen' }}
+        </button>
+      </h3>
+      <p class="text-muted fs-16">{{site.description}}</p>
     </div>
 
     <!-- Visitor Information -->

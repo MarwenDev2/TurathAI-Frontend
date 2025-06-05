@@ -14,6 +14,7 @@ import { User } from '@core/Models/user';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import * as bootstrap from 'bootstrap';
 import Swal from 'sweetalert2';
+import { TranslationService } from '@core/services/Translation.service';
 
 @Component({
   selector: 'app-heritage-site-info',
@@ -25,6 +26,16 @@ import Swal from 'sweetalert2';
       position: absolute;
       left: 0;
       overflow: hidden;
+    }
+    .heart-red {
+      color: #ff4136;
+    }
+    .speak-button {
+      font-size: 0.8rem;
+      padding: 0.25rem 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
     }
     .heart-red {
       color: #ff4136;
@@ -43,7 +54,9 @@ export class HeritageSiteInfoComponent implements OnChanges, OnInit {
   // Review modal
   reviewForm!: FormGroup;
   private reviewModal: any;
-
+  isSpeaking = false;
+  audioPlayer: HTMLAudioElement | null = null;
+  
   categoriesMap = new Map<number, string>();
 
   constructor(
@@ -53,7 +66,8 @@ export class HeritageSiteInfoComponent implements OnChanges, OnInit {
     private reviewService: ReviewService,
     private wishlistService: WishlistService,
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private translationService: TranslationService
   ) {}
 
   ngOnInit(): void {
@@ -76,7 +90,48 @@ export class HeritageSiteInfoComponent implements OnChanges, OnInit {
       this.updateRating();
     }
   }
-  
+
+  toggleSpeak(text: string): void {
+    if (this.isSpeaking) {
+      this.stopSpeaking();
+    } else {
+      this.playNarration(text);
+    }
+  }
+
+  playNarration(text: string): void {
+    if (!this.currentUser || !text) {
+      console.warn('Missing user or text.');
+      return;
+    }
+
+    this.translationService.generateNarrationWithUserEmail(text, this.currentUser.email).subscribe({
+      next: (blob: Blob) => {
+        const url = URL.createObjectURL(blob);
+        this.audioPlayer = new Audio(url);
+        this.isSpeaking = true;
+
+        this.audioPlayer.play();
+        this.audioPlayer.onended = () => this.isSpeaking = false;
+        this.audioPlayer.onerror = () => {
+          console.error('Audio playback failed.');
+          this.isSpeaking = false;
+        };
+      },
+      error: (err) => {
+        console.error('Narration failed:', err);
+        this.isSpeaking = false;
+      }
+    });
+  }
+
+  stopSpeaking(): void {
+    if (this.audioPlayer) {
+      this.audioPlayer.pause();
+      this.audioPlayer.currentTime = 0;
+      this.isSpeaking = false;
+    }
+  }
   /**
    * Initialize the review form
    */

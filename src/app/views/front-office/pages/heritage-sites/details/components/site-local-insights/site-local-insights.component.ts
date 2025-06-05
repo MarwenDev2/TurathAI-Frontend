@@ -7,6 +7,9 @@ import { SwiperOptions } from 'swiper/types';
 import { register } from 'swiper/element/bundle';
 import { Lightbox, LightboxModule } from 'ngx-lightbox';
 import * as bootstrap from 'bootstrap';
+import { TranslationService } from '@core/services/Translation.service';
+import { User } from '@core/Models/user';
+import { AuthService } from '@core/services/auth.service';
 
 register();
 
@@ -29,6 +32,10 @@ export class SiteLocalInsightsComponent implements OnInit {
   selectedVideoTitle: string = '';
   videoModal: any; // Bootstrap modal instance
 
+  pendingTextToSpeak: string | null = null;
+  availableLanguages: string[] = [];
+  selectedLanguageForSpeech: string | null = null;
+
   swiperConfig: SwiperOptions = {
     slidesPerView: 'auto',
     spaceBetween: 20,
@@ -43,7 +50,9 @@ export class SiteLocalInsightsComponent implements OnInit {
   };
 
   constructor(private localInsightService: LocalInsightService,
-    private lightbox: Lightbox
+    private lightbox: Lightbox,
+    private translationService: TranslationService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -103,23 +112,46 @@ export class SiteLocalInsightsComponent implements OnInit {
       }
     });
   }
+  
+  getUserLanguages(): string[] {
+    const currentUser = this.authService.currentUser;
+    if (!currentUser?.spokenLanguage) return [];
+    return currentUser.spokenLanguage.split(',').map(l => l.trim().toLowerCase());
+  }
 
-  speak(text: string | undefined): void {
+  
+  speakWithOption(text: string | undefined, mode: 'original' | 'native'): void {
     if (!text) return;
-    
-    // If speech is already in progress
-    if (window.speechSynthesis.speaking && this.currentSpeech) {
-      window.speechSynthesis.cancel();
-      this.currentSpeech = null;
+  
+    const currentUser: User = this.authService.currentUser!;
+    if (!currentUser) {
+      console.warn('User not authenticated.');
       return;
     }
   
-    // Create new speech
-    this.currentSpeech = new SpeechSynthesisUtterance(text);
-    this.currentSpeech.onend = () => {
-      this.currentSpeech = null;
-    };
-    window.speechSynthesis.speak(this.currentSpeech);
+    if (mode === 'original') {
+      // Use English directly (Python API)
+      this.translationService.generateSpeech(text, 'english').subscribe(blob => {
+        const url = URL.createObjectURL(blob);
+        new Audio(url).play();
+      });
+    } else if (mode === 'native') {
+      // ✅ Use Spring Boot API to fetch spokenLanguage from email
+      this.translationService.generateNarrationWithUserEmail(text, currentUser.email).subscribe(blob => {
+        const url = URL.createObjectURL(blob);
+        new Audio(url).play();
+      });
+    }
+  }
+  
+  confirmLanguageSelection(selected: string): void {
+    if (!this.pendingTextToSpeak) return;
+    this.translationService.generateSpeech(this.pendingTextToSpeak, selected).subscribe(blob => {
+      const url = URL.createObjectURL(blob);
+      new Audio(url).play();
+    });
+    this.pendingTextToSpeak = null;
+    this.selectedLanguageForSpeech = null;
   }
 
   handleLike(insight: LocalInsight): void {

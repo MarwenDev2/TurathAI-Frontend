@@ -119,16 +119,18 @@
                 </div>
               </div>              
 
-              <!-- Spoken Languages -->
+              <!-- Native Language -->
               <div class="mb-3">
-                <label class="form-label">Spoken Languages <span class="text-danger">*</span></label>
+                <label class="form-label">Native Language <span class="text-danger">*</span></label>
                 <div class="dropdown" [class.show]="showLanguageDropdown">
-                  <button class="form-control text-start dropdown-toggle" 
+                  <button class="form-control text-start dropdown-toggle d-flex align-items-center" 
                           type="button" (click)="showLanguageDropdown = !showLanguageDropdown">
-                    <span *ngIf="(signUpForm.get('spokenLanguages')?.value || []).length > 0; else selectLanguages">
-                      {{ getLanguageNames(signUpForm.get('spokenLanguages')?.value || []) }}
+                    <span *ngIf="signUpForm.get('nativeLanguage')?.value; else selectLanguageTpl">
+                      <img [src]="'assets/flags/' + signUpForm.get('nativeLanguage')?.value + '.png'" 
+                          width="20" class="me-2">
+                      {{ getSelectedLanguageName() }}
                     </span>
-                    <ng-template #selectLanguages>Select languages you speak</ng-template>
+                    <ng-template #selectLanguageTpl>Select your native language</ng-template>
                   </button>
                   <div class="dropdown-menu w-100" [class.show]="showLanguageDropdown">
                     <div class="px-2 py-1">
@@ -138,23 +140,16 @@
                     </div>
                     <div class="dropdown-list">
                       <a *ngFor="let language of filteredLanguages" class="dropdown-item" 
-                          (click)="toggleLanguage(language.code)">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" 
-                                [checked]="isLanguageSelected(language.code)"
-                                (click)="$event.stopPropagation()">
-                          <label class="form-check-label">
-                            <img [src]="'assets/flags/' + language.code + '.png'" width="20" class="me-2">
-                            {{ language.name }}
-                          </label>
-                        </div>
+                          (click)="selectNativeLanguage(language.code)">
+                        <img [src]="'assets/flags/' + language.code + '.png'" width="20" class="me-2">
+                        {{ language.name }}
                       </a>
                     </div>
                   </div>
                 </div>
-                <div *ngIf="signUpForm.get('spokenLanguages')?.invalid && signUpForm.get('spokenLanguages')?.touched" 
+                <div *ngIf="signUpForm.get('nativeLanguage')?.invalid && signUpForm.get('nativeLanguage')?.touched" 
                     class="text-danger small mt-1">
-                  Please select at least one language
+                  Please select your native language
                 </div>
               </div>
 

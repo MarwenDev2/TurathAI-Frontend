@@ -43,27 +43,54 @@
             <p class="insight-description">{{ insight.description }}</p>
             
             <div class="insight-actions">
+              <!-- Voice in original English -->
               <button class="action-button" 
-                      (click)="speak(insight.description || '')" 
-                      title="Listen to description"
-                      aria-label="Listen to description">
-                <i class="fa fa-volume-up" aria-hidden="true"></i>
+                      (click)="speakWithOption(insight.description, 'original')" 
+                      title="Listen in English">
+                <i class="fas fa-volume-up"></i> EN
               </button>
-              <button class="action-button" [class.active]="insight.isLiked" (click)="handleLike(insight)">
-                <i class="fa" [class.fa-thumbs-up]="!insight.isLiked" [class.fa-thumbs-up-fill]="insight.isLiked"></i>
+            
+              <!-- Voice in user native language -->
+              <button class="action-button" 
+                      (click)="speakWithOption(insight.description, 'native')" 
+                      title="Listen in your language">
+                <i class="fas fa-globe"></i> 🌍
+              </button>
+            
+              <!-- Like and Dislike buttons unchanged -->
+              <button class="action-button" (click)="handleLike(insight)">
+                <i class="fa fa-thumbs-up"></i>
                 <span>{{ insight.likes || 0 }}</span>
               </button>
-              
-              <button class="action-button" [class.active]="insight.isDisliked" (click)="handleDislike(insight)">
-                <i class="fa" [class.fa-thumbs-down]="!insight.isDisliked" [class.fa-thumbs-down-fill]="insight.isDisliked"></i>
+            
+              <button class="action-button" (click)="handleDislike(insight)">
+                <i class="fa fa-thumbs-down"></i>
                 <span>{{ insight.dislikes || 0 }}</span>
               </button>
-            </div>
+            </div>            
           </div>
         </div>
       </swiper-slide>
     </swiper-container>
   </div>
+<!-- Language Selection Modal -->
+<div class="modal fade" id="languageSelectModal" tabindex="-1" aria-labelledby="langModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="langModalLabel">Choose a Language</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngFor="let lang of availableLanguages">
+          <button class="btn btn-outline-primary w-100 mb-2" (click)="confirmLanguageSelection(lang)">
+            {{ lang | titlecase }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
   <!-- Empty State -->
   <div class="empty-state" *ngIf="!loading && !error && localInsights.length === 0">
